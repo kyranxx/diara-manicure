@@ -252,7 +252,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t py-12 bg-neutral-50">
+      <footer className="border-t py-12 bg-white">
         <div className="container mx-auto px-6">
           <div className="flex flex-col items-center space-y-8">
             {/* Logo */}
