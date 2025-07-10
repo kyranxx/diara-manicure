@@ -52,81 +52,65 @@ export default function Home() {
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
                   <h4 className="text-lg font-light">Klasická manikúra</h4>
-                  <p className="text-sm text-neutral-600">Základná starostlivosť o nechty a lak</p>
+                  <p className="text-sm text-neutral-600">Čistenie nechtov, odstránenie kožičky, úprava - bez lakovania</p>
                 </div>
-                <span className="text-lg font-light">€25</span>
+                <span className="text-lg font-light">17 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
-                  <h4 className="text-lg font-light">Gélová manikúra</h4>
-                  <p className="text-sm text-neutral-600">Dlhotrvajúci gélový lak</p>
+                  <h4 className="text-lg font-light">Spevnenie prirodzených nechtov gélovou bázou</h4>
+                  <p className="text-sm text-neutral-600">Vhodné na krátke nechty v naturálnych farbách</p>
                 </div>
-                <span className="text-lg font-light">€35</span>
+                <span className="text-lg font-light">25 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
-                  <h4 className="text-lg font-light">Francúzska manikúra</h4>
-                  <p className="text-sm text-neutral-600">Klasické elegantné francúzske špičky</p>
+                  <h4 className="text-lg font-light">Spevnenie prirodzených nechtov gélovou bázou + farebný gél lak alebo francúzska manikúra</h4>
+                  <p className="text-sm text-neutral-600">Klasická manikúra s aplikáciou gélovej bázy</p>
                 </div>
-                <span className="text-lg font-light">€40</span>
+                <span className="text-lg font-light">27 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
-                  <h4 className="text-lg font-light">Nail art dizajn</h4>
-                  <p className="text-sm text-neutral-600">Umelecké dizajny na mieru</p>
+                  <h4 className="text-lg font-light">Doplnenie</h4>
+                  <p className="text-sm text-neutral-600">Doplnenie gélovej bázy</p>
                 </div>
-                <span className="text-lg font-light">€45</span>
+                <span className="text-lg font-light">27 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
-                  <h4 className="text-lg font-light">Gélové predĺženie</h4>
-                  <p className="text-sm text-neutral-600">Predĺženie a posilnenie nechtov</p>
+                  <h4 className="text-lg font-light">Modelácia gélových nechtov (nové)</h4>
+                  <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
                 </div>
-                <span className="text-lg font-light">€55</span>
+                <span className="text-lg font-light">34 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
-                  <h4 className="text-lg font-light">Luxusná pedikúra</h4>
-                  <p className="text-sm text-neutral-600">Kompletná starostlivosť o nohy</p>
+                  <h4 className="text-lg font-light">Modelácia gélových nechtov (doplnenie)</h4>
+                  <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
                 </div>
-                <span className="text-lg font-light">€45</span>
+                <span className="text-lg font-light">29 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
-                  <h4 className="text-lg font-light">Oprava nechtov</h4>
-                  <p className="text-sm text-neutral-600">Oprava zlomených alebo poškodených nechtov</p>
+                  <h4 className="text-lg font-light">Odstránenie gélových nechtov</h4>
+                  <p className="text-sm text-neutral-600">Odstránenie materiálu</p>
                 </div>
-                <span className="text-lg font-light">€15</span>
+                <span className="text-lg font-light">10 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
                 <div>
-                  <h4 className="text-lg font-light">Ošetrenie nechtovej kožičky</h4>
-                  <p className="text-sm text-neutral-600">Profesionálna starostlivosť o kožičku</p>
+                  <h4 className="text-lg font-light">Odstránenie gélových nechtov z iného salónu</h4>
+                  <p className="text-sm text-neutral-600">Odstránenie materiálu z iného salónu</p>
                 </div>
-                <span className="text-lg font-light">€20</span>
-              </div>
-
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
-                  <h4 className="text-lg font-light">Posilnenie nechtov</h4>
-                  <p className="text-sm text-neutral-600">Ošetrenie pre slabé nechty</p>
-                </div>
-                <span className="text-lg font-light">€30</span>
-              </div>
-
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
-                  <h4 className="text-lg font-light">Premium balíček</h4>
-                  <p className="text-sm text-neutral-600">Kompletný luxusný zážitok</p>
-                </div>
-                <span className="text-lg font-light">€85</span>
+                <span className="text-lg font-light">15 €</span>
               </div>
             </div>
           </div>
@@ -234,7 +218,7 @@ export default function Home() {
           <div className="flex justify-center">
             <div className="w-full max-w-[40%] h-96 rounded-lg overflow-hidden">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=17.5700%2C48.3700%2C17.6000%2C48.3900&layer=mapnik&marker=48.3777%2C17.5855"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=17.5824,48.3707,17.5886,48.3732&layer=mapnik&marker=48.37195,17.5855"
                 width="100%"
                 height="100%"
                 style={{
@@ -262,7 +246,9 @@ export default function Home() {
 
             {/* Address */}
             <div className="text-center text-neutral-600">
-              <p className="mb-2">Hlavná 123, Trnava, Slovensko</p>
+              <p className="mb-2">Ul. Generála Goliana 33, 917 01 Trnava</p>
+              <p className="mb-2">0902 163 144</p>
+              <p>andrea.heckova92@gmail.com</p>
             </div>
 
             {/* Social Media */}
