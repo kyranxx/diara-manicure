@@ -24,7 +24,7 @@ export default function Home() {
           </div>
 
           <p className="text-xl text-neutral-600 mb-8 font-light leading-relaxed">
-            Zažite najkvalitnejšie gélové manikúry v atmosfére čistej elegancie
+            Zaslúžite si manikúru, ktorá vydrží a vyzerá skvele.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -50,67 +50,67 @@ export default function Home() {
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Klasická manikúra</h4>
                   <p className="text-sm text-neutral-600">Čistenie nechtov, odstránenie kožičky, úprava - bez lakovania</p>
                 </div>
-                <span className="text-lg font-light">17 €</span>
+                <span className="text-lg font-light ml-4">17 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Spevnenie prirodzených nechtov gélovou bázou</h4>
                   <p className="text-sm text-neutral-600">Vhodné na krátke nechty v naturálnych farbách</p>
                 </div>
-                <span className="text-lg font-light">25 €</span>
+                <span className="text-lg font-light ml-4">25 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Spevnenie prirodzených nechtov gélovou bázou + farebný gél lak alebo francúzska manikúra</h4>
                   <p className="text-sm text-neutral-600">Klasická manikúra s aplikáciou gélovej bázy</p>
                 </div>
-                <span className="text-lg font-light">27 €</span>
+                <span className="text-lg font-light ml-4">27 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Doplnenie</h4>
                   <p className="text-sm text-neutral-600">Doplnenie gélovej bázy</p>
                 </div>
-                <span className="text-lg font-light">27 €</span>
+                <span className="text-lg font-light ml-4">27 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Modelácia gélových nechtov (nové)</h4>
                   <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
                 </div>
-                <span className="text-lg font-light">34 €</span>
+                <span className="text-lg font-light ml-4">34 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Modelácia gélových nechtov (doplnenie)</h4>
                   <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
                 </div>
-                <span className="text-lg font-light">29 €</span>
+                <span className="text-lg font-light ml-4">29 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Odstránenie gélových nechtov</h4>
                   <p className="text-sm text-neutral-600">Odstránenie materiálu</p>
                 </div>
-                <span className="text-lg font-light">10 €</span>
+                <span className="text-lg font-light ml-4">10 €</span>
               </div>
 
               <div className="flex justify-between items-center py-4 border-b border-neutral-200">
-                <div>
+                <div className="flex-grow">
                   <h4 className="text-lg font-light">Odstránenie gélových nechtov z iného salónu</h4>
                   <p className="text-sm text-neutral-600">Odstránenie materiálu z iného salónu</p>
                 </div>
-                <span className="text-lg font-light">15 €</span>
+                <span className="text-lg font-light ml-4">15 €</span>
               </div>
             </div>
           </div>
@@ -127,7 +127,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=300&h=300&fit=crop&crop=center"
+                src="/gallery-1.jpg"
                 alt="Francúzska manikúra"
                 width={300}
                 height={300}
@@ -137,7 +137,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=300&h=300&fit=crop&crop=center"
+                src="/gallery-2.jpg"
                 alt="Gélové predĺženie"
                 width={300}
                 height={300}
@@ -147,7 +147,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=300&h=300&fit=crop&crop=center"
+                src="/gallery-3.jpg"
                 alt="Nail art dizajn"
                 width={300}
                 height={300}
@@ -218,7 +218,7 @@ export default function Home() {
           <div className="flex justify-center">
             <div className="w-full max-w-[40%] h-96 rounded-lg overflow-hidden">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=17.5824,48.3707,17.5886,48.3732&layer=mapnik&marker=48.37195,17.5855"
+                src="https://www.openstreetmap.org/export/embed.html?bbox=17.5814814,48.3575849,17.5834814,48.3595849&layer=mapnik&marker=48.3585849,17.5824814"
                 width="100%"
                 height="100%"
                 style={{
