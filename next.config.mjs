@@ -9,6 +9,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  transpilePackages: ['@stagewise/toolbar-next', '@stagewise-plugins/react'],
 }
 
 export default nextConfig

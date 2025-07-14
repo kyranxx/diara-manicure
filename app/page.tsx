@@ -20,7 +20,7 @@ export default function Home() {
       <section className="py-16 text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="mb-8">
-            <Image src="/logo.png" alt="diara manicure" width={600} height={300} className="mx-auto" />
+            <Image src="/logo.png" alt="diara manicure" width={600} height={300} className="mx-auto" priority />
           </div>
 
           <p className="text-xl text-neutral-600 mb-8 font-light leading-relaxed">
@@ -127,7 +127,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="/gallery-1.jpg"
+                src="https://images.unsplash.com/photo-1604902396837-42a6a273633a?w=300&h=300&fit=crop&crop=center"
                 alt="Francúzska manikúra"
                 width={300}
                 height={300}
@@ -137,7 +137,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="/gallery-2.jpg"
+                src="https://images.unsplash.com/photo-1515696925393-41465b295e78?w=300&h=300&fit=crop&crop=center"
                 alt="Gélové predĺženie"
                 width={300}
                 height={300}
@@ -147,7 +147,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="/gallery-3.jpg"
+                src="https://images.unsplash.com/photo-1633861773413-36b5f34a943a?w=300&h=300&fit=crop&crop=center"
                 alt="Nail art dizajn"
                 width={300}
                 height={300}
@@ -216,9 +216,9 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center">
-            <div className="w-full max-w-[40%] h-96 rounded-lg overflow-hidden">
+            <div className="w-full max-w-[60%] h-[500px] rounded-lg overflow-hidden">
               <iframe
-                src="https://www.openstreetmap.org/export/embed.html?bbox=17.5814814,48.3575849,17.5834814,48.3595849&layer=mapnik&marker=48.3585849,17.5824814"
+                src="https://www.google.com/maps/embed/v1/search?key=AIzaSyAA0doPM3l4bRISKcrlHAh2eOB-drPkei8&q=diara%20manicure%2C%20Ul.%20Generála%20Goliana%2033%2C%20Trnava&zoom=17&maptype=satellite"
                 width="100%"
                 height="100%"
                 style={{

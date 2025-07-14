@@ -1,6 +1,7 @@
 import type React from "react"
 import "@/app/globals.css"
 import { Poppins } from "next/font/google"
+import StagewiseToolbarProvider from "@/components/StagewiseProvider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
 
@@ -18,7 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sk">
-      <body className={poppins.className}>{children}</body>
+      <body className={poppins.className}>
+        {children}
+        <StagewiseToolbarProvider />
+      </body>
     </html>
   )
 }

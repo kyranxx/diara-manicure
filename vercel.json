@@ -1,5 +1,5 @@
 {
-  "production": {
-    "branch": "main"
+  "git": {
+    "productionBranch": "main"
   }
 }
