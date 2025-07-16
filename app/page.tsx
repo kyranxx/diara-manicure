@@ -49,68 +49,86 @@ export default function Home() {
 
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
                   <h4 className="text-lg font-light">Klasická manikúra</h4>
                   <p className="text-sm text-neutral-600">Čistenie nechtov, odstránenie kožičky, úprava - bez lakovania</p>
                 </div>
-                <span className="text-lg font-light ml-4">17 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">17 €</span>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
                   <h4 className="text-lg font-light">Spevnenie prirodzených nechtov gélovou bázou</h4>
                   <p className="text-sm text-neutral-600">Vhodné na krátke nechty v naturálnych farbách</p>
                 </div>
-                <span className="text-lg font-light ml-4">25 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">25 €</span>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
-                  <h4 className="text-lg font-light">Spevnenie prirodzených nechtov gélovou bázou + farebný gél lak alebo francúzska manikúra</h4>
+                  <h4 className="text-lg font-light">
+                    Spevnenie prirodzených nechtov gélovou bázou + farebný gél lak alebo francúzska manikúra
+                  </h4>
                   <p className="text-sm text-neutral-600">Klasická manikúra s aplikáciou gélovej bázy</p>
                 </div>
-                <span className="text-lg font-light ml-4">27 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">27 €</span>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
                   <h4 className="text-lg font-light">Doplnenie</h4>
                   <p className="text-sm text-neutral-600">Doplnenie gélovej bázy</p>
                 </div>
-                <span className="text-lg font-light ml-4">27 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">27 €</span>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
                   <h4 className="text-lg font-light">Modelácia gélových nechtov (nové)</h4>
                   <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
                 </div>
-                <span className="text-lg font-light ml-4">34 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">34 €</span>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
                   <h4 className="text-lg font-light">Modelácia gélových nechtov (doplnenie)</h4>
                   <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
                 </div>
-                <span className="text-lg font-light ml-4">29 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">29 €</span>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
                   <h4 className="text-lg font-light">Odstránenie gélových nechtov</h4>
                   <p className="text-sm text-neutral-600">Odstránenie materiálu</p>
                 </div>
-                <span className="text-lg font-light ml-4">10 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">10 €</span>
+                </div>
               </div>
 
-              <div className="flex justify-between items-center py-4 border-b border-neutral-200">
+              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
                 <div className="flex-grow">
                   <h4 className="text-lg font-light">Odstránenie gélových nechtov z iného salónu</h4>
                   <p className="text-sm text-neutral-600">Odstránenie materiálu z iného salónu</p>
                 </div>
-                <span className="text-lg font-light ml-4">15 €</span>
+                <div className="w-24 text-right">
+                  <span className="text-lg font-bold">15 €</span>
+                </div>
               </div>
             </div>
           </div>
