@@ -7,9 +7,14 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
   },
-  transpilePackages: ['@stagewise/toolbar-next', '@stagewise-plugins/react'],
+  transpilePackages: [],
 }
 
 export default nextConfig

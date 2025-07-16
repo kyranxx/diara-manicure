@@ -127,31 +127,34 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1604902396837-42a6a273633a?w=300&h=300&fit=crop&crop=center"
+                src="/pic1.jpeg"
                 alt="Francúzska manikúra"
                 width={300}
                 height={300}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                priority
               />
             </div>
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1515696925393-41465b295e78?w=300&h=300&fit=crop&crop=center"
+                src="/pic2.jpeg"
                 alt="Gélové predĺženie"
                 width={300}
                 height={300}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                priority
               />
             </div>
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1633861773413-36b5f34a943a?w=300&h=300&fit=crop&crop=center"
+                src="/pic3.jpeg"
                 alt="Nail art dizajn"
                 width={300}
                 height={300}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                priority
               />
             </div>
 
@@ -162,6 +165,7 @@ export default function Home() {
                 width={300}
                 height={300}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                priority
               />
             </div>
 
@@ -216,14 +220,14 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center">
-            <div className="w-full max-w-[60%] h-[500px] rounded-lg overflow-hidden">
+            <div className="w-full max-w-[50%] h-[500px] rounded-lg overflow-hidden">
               <iframe
-                src="https://www.google.com/maps/embed/v1/search?key=AIzaSyAA0doPM3l4bRISKcrlHAh2eOB-drPkei8&q=diara%20manicure%2C%20Ul.%20Generála%20Goliana%2033%2C%20Trnava&zoom=17&maptype=satellite"
+                className="grayscale"
+                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAA0doPM3l4bRISKcrlHAh2eOB-drPkei8&q=place_id:ChIJ4QlldRZfa0cRJniFYeWSC1M&maptype=satellite"
                 width="100%"
                 height="100%"
                 style={{
                   border: 0,
-                  filter: "grayscale(100%) contrast(120%) brightness(90%) invert(0%)",
                 }}
                 allowFullScreen
                 loading="lazy"
