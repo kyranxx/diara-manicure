@@ -160,7 +160,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1583797227225-4233106c5a2a?w=300&h=300&fit=crop&crop=center"
+                src="/pic4.jpg"
                 alt="Klasická gélová manikúra"
                 width={300}
                 height={300}
@@ -181,7 +181,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=300&h=300&fit=crop&crop=center"
+                src="/pic5.jpg"
                 alt="Trblietavé nechty"
                 width={300}
                 height={300}
@@ -191,7 +191,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=300&h=300&fit=crop&crop=center"
+                src="/pic6.jpg"
                 alt="Mramorový efekt"
                 width={300}
                 height={300}
