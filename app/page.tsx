@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Instagram, Facebook } from "lucide-react"
+import Map from "@/components/ui/custom-map"
 
 export default function Home() {
   const scrollToVisit = () => {
@@ -239,19 +240,7 @@ export default function Home() {
 
           <div className="flex justify-center">
             <div className="w-full max-w-[50%] h-[500px] rounded-lg overflow-hidden">
-              <iframe
-                className="grayscale"
-                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAA0doPM3l4bRISKcrlHAh2eOB-drPkei8&q=place_id:ChIJ4QlldRZfa0cRJniFYeWSC1M&maptype=satellite"
-                width="100%"
-                height="100%"
-                style={{
-                  border: 0,
-                }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="diara manicure Poloha v Trnave"
-              />
+              <Map />
             </div>
           </div>
         </div>
