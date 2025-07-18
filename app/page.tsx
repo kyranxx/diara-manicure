@@ -239,7 +239,7 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center">
-            <div className="w-full max-w-[50%] h-[500px] rounded-lg overflow-hidden">
+            <div className="w-[600px] h-[600px] rounded-lg overflow-hidden" style={{ height: '600px', width: '600px' }}>
               <Map />
             </div>
           </div>
