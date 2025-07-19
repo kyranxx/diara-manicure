@@ -12,6 +12,7 @@ const Map = () => {
       style={{ border: 0 }}
       src={mapSrc}
       allowFullScreen
+      loading="lazy"
     ></iframe>
   )
 }
