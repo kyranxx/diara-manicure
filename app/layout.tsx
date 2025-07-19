@@ -8,7 +8,9 @@ export const metadata = {
   title: "diara manicure | Luxusný nechtový salón Trnava",
   description:
     "Prémiové gélové manikúry a nail art v Trnave, Slovensko. Zažite luxusnú starostlivosť o nechty v elegantnej atmosfére.",
-    generator: 'v0.dev'
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({
@@ -18,9 +20,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sk">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
       <body className={poppins.className}>
         {children}
       </body>
