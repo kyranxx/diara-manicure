@@ -7,7 +7,7 @@ const Map = () => {
   const mapSrc = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(address + ', diara manicure')}&maptype=satellite&zoom=16`
 
   return (
-    <div style={{ border: '2px solid #000000', padding: '0', borderRadius: '8px', overflow: 'hidden', width: '100%', height: '100%' }}>
+    <div style={{ border: '3px solid #000000', padding: '0', borderRadius: '8px', overflow: 'hidden', width: '100%', height: '100%' }}>
       <iframe
         width="100%"
         height="100%"
