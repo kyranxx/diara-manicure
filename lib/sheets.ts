@@ -123,11 +123,10 @@ async function fetchSheetsData(): Promise<Service[]> {
       errors: (error as any)?.errors,
     });
 
-    // Return more detailed error for debugging
     return [
       {
         title: 'Error loading services',
-        description: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        description: 'Please contact support',
         price: '',
       }
     ];
