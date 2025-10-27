@@ -1,0 +1,7 @@
+- [x] Create todo list
+- [x] Search for existing addresses in the codebase
+- [x] Identify location(s) where address needs to be updated
+- [x] Check map component for address/coordinates
+- [x] Update address to new location in footer
+- [x] Update map component to new location
+- [x] Verify changes

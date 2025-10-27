@@ -1,0 +1,5 @@
+- [x] Create todo list
+- [ ] Search for existing addresses in the codebase
+- [ ] Identify location(s) where address needs to be updated
+- [ ] Update address to new location
+- [ ] Verify changes

@@ -4,8 +4,33 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Instagram, Facebook } from "lucide-react"
 import Map from "@/components/ui/custom-map"
+import { useState, useEffect } from "react"
+
+interface Service {
+  title: string
+  description: string
+  price: string
+}
 
 export default function Home() {
+  const [services, setServices] = useState<Service[]>([])
+  const [loadingServices, setLoadingServices] = useState(true)
+  useEffect(() => {
+    fetch('/api/services')
+      .then(async res => {
+        if (!res.ok) {
+          const error = await res.json()
+          throw new Error(error.error || 'Failed to fetch services')
+        }
+        return res.json()
+      })
+      .then(setServices)
+      .catch(error => {
+        console.error('Error fetching services:', error)
+        setServices([])
+      })
+      .finally(() => setLoadingServices(false))
+  }, [])
   const scrollToVisit = () => {
     document.getElementById("visit")?.scrollIntoView({ behavior: "smooth" })
   }
@@ -49,89 +74,25 @@ export default function Home() {
           </div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">Klasická manikúra</h4>
-                  <p className="text-sm text-neutral-600">Čistenie nechtov, odstránenie kožičky, úprava - bez lakovania</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">17 €</span>
-                </div>
+            {loadingServices ? (
+              <div className="text-center text-neutral-500">Načítavam služby...</div>
+            ) : services.length > 0 ? (
+              <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
+                {services.map((service, index) => (
+                  <div key={index} className="flex justify-between items-start py-4 border-b border-neutral-200">
+                    <div className="flex-grow">
+                      <h4 className="text-lg font-light">{service.title}</h4>
+                      <p className="text-sm text-neutral-600">{service.description}</p>
+                    </div>
+                    <div className="w-24 text-right">
+                      <span className="text-lg font-bold">{service.price}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">Spevnenie prirodzených nechtov gélovou bázou</h4>
-                  <p className="text-sm text-neutral-600">Vhodné na krátke nechty v naturálnych farbách</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">25 €</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">
-                    Spevnenie prirodzených nechtov gélovou bázou + farebný gél lak alebo francúzska manikúra
-                  </h4>
-                  <p className="text-sm text-neutral-600">Klasická manikúra s aplikáciou gélovej bázy</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">27 €</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">Doplnenie</h4>
-                  <p className="text-sm text-neutral-600">Doplnenie gélovej bázy</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">27 €</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">Modelácia gélových nechtov (nové)</h4>
-                  <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">34 €</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">Modelácia gélových nechtov (doplnenie)</h4>
-                  <p className="text-sm text-neutral-600">Zahŕňa aj klasickú manikúru</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">29 €</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">Odstránenie gélových nechtov</h4>
-                  <p className="text-sm text-neutral-600">Odstránenie materiálu</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">10 €</span>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-start py-4 border-b border-neutral-200">
-                <div className="flex-grow">
-                  <h4 className="text-lg font-light">Odstránenie gélových nechtov z iného salónu</h4>
-                  <p className="text-sm text-neutral-600">Odstránenie materiálu z iného salónu</p>
-                </div>
-                <div className="w-24 text-right">
-                  <span className="text-lg font-bold">15 €</span>
-                </div>
-              </div>
-            </div>
+            ) : (
+              <div className="text-center text-neutral-500">Žiadne služby nie sú dostupné.</div>
+            )}
           </div>
         </div>
       </section>
