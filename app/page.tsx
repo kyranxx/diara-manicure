@@ -257,7 +257,7 @@ export default function Home() {
 
             {/* Address */}
             <div className="text-center text-neutral-600">
-              <p className="mb-2">Ul. Generála Goliana 33, 917 01 Trnava</p>
+              <p className="mb-2">Nám. Jozefa Herdu 1, 91701 Trnava</p>
               <p className="mb-2">0902 163 144</p>
               <p>andrea.heckova92@gmail.com</p>
             </div>
