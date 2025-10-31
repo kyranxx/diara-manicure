@@ -50,6 +50,16 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black">
+      {/* Preload dark logo for instant switching */}
+      <Image
+        src="/logo_black.png"
+        alt=""
+        width={840}
+        height={420}
+        className="hidden"
+        priority
+      />
+
       {/* Header */}
       <header className="py-6">
         <div className="container mx-auto px-6 flex justify-end">
