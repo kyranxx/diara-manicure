@@ -206,16 +206,6 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=300&h=300&fit=crop&crop=center"
-                alt="Ombre dizajn"
-                width={300}
-                height={300}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-
-            <div className="aspect-square overflow-hidden rounded-lg">
-              <Image
                 src="/pic5.jpg"
                 alt="Trblietavé nechty"
                 width={300}
@@ -236,8 +226,18 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=300&h=300&fit=crop&crop=center"
-                alt="Kvetinový dizajn"
+                src="/pic7.jpeg"
+                alt="Nail art vzory"
+                width={300}
+                height={300}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            <div className="aspect-square overflow-hidden rounded-lg">
+              <Image
+                src="/pic8.jpeg"
+                alt="Kreatívne nechty"
                 width={300}
                 height={300}
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
