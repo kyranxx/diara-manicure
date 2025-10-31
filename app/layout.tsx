@@ -1,6 +1,7 @@
 import type React from "react"
 import "./globals.css"
 import { Poppins } from "next/font/google"
+import { ThemeProvider } from "./providers"
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
 
@@ -21,7 +22,14 @@ export default function RootLayout({
   return (
     <html lang="sk">
       <body className={poppins.className}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
