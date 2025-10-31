@@ -79,7 +79,8 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col gap-4 justify-center max-w-md mx-auto">
-            <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
+            {/* Reservation button temporarily hidden */}
+            {/* <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-neutral-900 hover:bg-neutral-800 dark:bg-gray-200 dark:text-black dark:hover:bg-gray-300 px-16 py-6 text-xl font-light w-full">Rezervovať termín</Button>
               </DialogTrigger>
@@ -106,7 +107,7 @@ export default function Home() {
                   ></iframe>
                 </div>
               </DialogContent>
-            </Dialog>
+            </Dialog> */}
             <Button
               variant="outline"
               onClick={scrollToVisit}
