@@ -195,7 +195,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="/pic4.jpg"
+                src="/pic4.jpeg"
                 alt="Klasická gélová manikúra"
                 width={300}
                 height={300}
@@ -206,7 +206,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="/pic5.jpg"
+                src="/pic5.jpeg"
                 alt="Trblietavé nechty"
                 width={300}
                 height={300}
@@ -216,7 +216,7 @@ export default function Home() {
 
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
-                src="/pic6.jpg"
+                src="/pic6.jpeg"
                 alt="Mramorový efekt"
                 width={300}
                 height={300}
