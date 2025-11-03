@@ -71,7 +71,7 @@ export default function Home() {
       <section className="py-16 text-center">
         <div className="container mx-auto px-6 max-w-4xl">
           <div className="mb-4">
-            <Image src={logoSrc} alt="diara manicure" width={840} height={420} className="mx-auto" priority />
+            <Image src={logoSrc} alt="diara manicure" width={840} height={420} className="mx-auto" style={{ width: 'auto', height: 'auto' }} priority />
           </div>
 
           <p className="text-xl text-neutral-600 dark:text-white mb-8 font-light leading-relaxed">
@@ -269,7 +269,7 @@ export default function Home() {
           <div className="flex flex-col items-center space-y-8">
             {/* Logo */}
             <div className="mb-4">
-              <Image src={logoSrc} alt="diara manicure" width={200} height={100} className="mx-auto" />
+              <Image src={logoSrc} alt="diara manicure" width={840} height={420} className="mx-auto" style={{ width: '400px', height: 'auto' }} priority />
             </div>
 
             {/* Address */}
