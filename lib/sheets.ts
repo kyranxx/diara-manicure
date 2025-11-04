@@ -1,6 +1,4 @@
 import { google } from 'googleapis'
-import fs from 'fs'
-import path from 'path'
 import { unstable_cache } from 'next/cache'
 
 export type Service = {
@@ -9,15 +7,34 @@ export type Service = {
   price: string
 }
 
+// Simple logger that only logs in development
+const debugLog = (...args: any[]) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.log(...args);
+  }
+};
+
+// Secure error logging without sensitive data
+const logError = (message: string, error: any) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.error(message, {
+      message: error?.message || 'Unknown error',
+      // Never log stack traces in production
+      ...(process.env.NODE_ENV === 'development' && { stack: error?.stack })
+    });
+  }
+  // In production, just log to external monitoring service if needed
+};
+
 // Internal function that actually fetches data
 async function fetchSheetsData(): Promise<Service[]> {
   try {
-    console.log('Starting Google Sheets data fetch...');
+    debugLog('Starting Google Sheets data fetch...');
 
     // Use credentials from environment variable instead of file
     const credentialsEnv = process.env.GOOGLE_CREDENTIALS;
     if (!credentialsEnv) {
-      console.error('GOOGLE_CREDENTIALS environment variable not found');
+      logError('GOOGLE_CREDENTIALS environment variable not found', new Error('Missing credentials'));
       return [
         {
           title: 'Configuration Error',
@@ -28,17 +45,17 @@ async function fetchSheetsData(): Promise<Service[]> {
     }
 
     const credentials = JSON.parse(credentialsEnv);
-    console.log('Credentials parsed, client_email:', credentials.client_email);
+    debugLog('Credentials parsed successfully');
 
     // Clean the private key to remove carriage returns
     if (credentials.private_key) {
-      credentials.private_key = credentials.private_key.replace(/\r/g, '')
-      console.log('Private key cleaned')
+      credentials.private_key = credentials.private_key.replace(/\r/g, '');
+      debugLog('Private key cleaned');
     }
 
     const spreadsheetId = process.env.SPREADSHEET_ID;
     if (!spreadsheetId) {
-      console.error('SPREADSHEET_ID environment variable not found');
+      logError('SPREADSHEET_ID environment variable not found', new Error('Missing spreadsheet ID'));
       return [
         {
           title: 'Configuration Error',
@@ -47,46 +64,46 @@ async function fetchSheetsData(): Promise<Service[]> {
         }
       ];
     }
-    console.log('Using spreadsheet ID:', spreadsheetId);
+    debugLog('Using spreadsheet ID for data fetch');
 
     const auth = new google.auth.GoogleAuth({
       credentials,
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });
 
-    console.log('Google Auth created');
+    debugLog('Google Auth created');
     const client = await auth.getClient();
-    console.log('Auth client obtained');
+    debugLog('Auth client obtained');
 
     const googleSheets = google.sheets({ version: 'v4', auth: client });
-    console.log('Google Sheets API client created');
+    debugLog('Google Sheets API client created');
 
     // First get spreadsheet metadata to see available sheets
-    console.log('Getting spreadsheet metadata...');
+    debugLog('Getting spreadsheet metadata...');
     const metaResponse = await googleSheets.spreadsheets.get({
       spreadsheetId,
     });
 
     const sheets = metaResponse.data.sheets || [];
-    console.log('Available sheets:', sheets.map(s => ({ title: s.properties?.title, index: s.properties?.index })));
+    debugLog(`Found ${sheets.length} sheets in spreadsheet`);
 
     // Use the first sheet or fall back to default
     const sheetName = sheets[0]?.properties?.title || 'Sheet1';
-    console.log('Using sheet:', sheetName);
+    debugLog('Using sheet:', sheetName);
 
     // Try a simpler range first to test
-    console.log('Fetching data with simpler range first...');
+    debugLog('Fetching data with simpler range first...');
     const testResponse = await googleSheets.spreadsheets.values.get({
       spreadsheetId,
       range: sheetName,
     });
 
-    console.log('Test response received, values length:', testResponse.data.values?.length);
+    debugLog('Test response received, values found');
     const testRows = testResponse.data.values || [];
-    console.log('First few rows:', testRows.slice(0, 3));
+    debugLog('First few rows received for validation');
 
     if (testRows.length === 0) {
-      console.log('No data in test range');
+      debugLog('No data in test range');
       return [];
     }
 
@@ -96,9 +113,9 @@ async function fetchSheetsData(): Promise<Service[]> {
       range: `${sheetName}!A2:Z`,
     });
 
-    console.log('API response received');
+    debugLog('API response received');
     const rows = response.data.values;
-    console.log('Rows found:', rows ? rows.length : 0);
+    debugLog(`Found ${rows?.length || 0} data rows`);
 
     if (rows && rows.length > 0) {
       const services = rows.map((row: string[]) => ({
@@ -107,21 +124,14 @@ async function fetchSheetsData(): Promise<Service[]> {
         price: row[2] || '',
       })).filter(s => s.title); // skip empty titles
 
-      console.log('Services processed:', services.length);
+      debugLog(`Processed ${services.length} services`);
       return services;
     }
 
-    console.log('No rows found');
+    debugLog('No data rows found');
     return [];
   } catch (error) {
-    console.error('Error fetching sheets data:', error);
-    console.error('Error details:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      code: (error as any)?.code,
-      status: (error as any)?.status,
-      errors: (error as any)?.errors,
-    });
+    logError('Error fetching sheets data', error);
 
     return [
       {

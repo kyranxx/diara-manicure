@@ -6,9 +6,37 @@ import { ThemeProvider } from "./providers"
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
 
 export const metadata = {
-  title: "diara manicure | Luxusný nechtový salón Trnava",
+  title: "Gélová Manikúra Trnava | Nechtový Salón Diara | Nail Art & Design",
   description:
-    "Prémiové gélové manikúry a nail art v Trnave, Slovensko. Zažite luxusnú starostlivosť o nechty v elegantnej atmosfére.",
+    "Najlepšia gel manikúra v Trnave! Luxusné nechtové služby, nail art a predĺženie nechtov. Rezervujte si termín: 0902 163 144. Profesionálne salón v centre Trnavy.",
+  keywords: [
+    "gel manikúra Trnava", 
+    "nechtový salón Trnava", 
+    "nail art Trnava", 
+    "predĺženie nechtov Trnava",
+    "gélová manikúra",
+    "manikúra Trnava",
+    "najlepšia gel manikúra",
+    "luxusný nechtový salón"
+  ],
+  openGraph: {
+    title: "Diara Manicure - Gélová Manikúra Trnava",
+    description: "Najlepšia gel manikúra v Trnave! Profesionálne nechtové služby a nail art.",
+    url: "https://diara-manicure.com",
+    siteName: "Diara Manicure",
+    images: [
+      {
+        url: "/logo.png",
+        width: 840,
+        height: 420,
+      },
+    ],
+    locale: "sk_SK",
+    type: "website",
+  },
+  alternates: {
+    canonical: "https://diara-manicure.com",
+  },
   icons: {
     icon: '/favicon.ico',
   },

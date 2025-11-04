@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog"
+import SchemaMarkup from "@/components/schema-markup"
 
 interface Service {
   title: string
@@ -50,6 +51,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black">
+      <SchemaMarkup />
+      
       {/* Preload dark logo for instant switching */}
       <Image
         src="/logo_black.png"
@@ -274,7 +277,7 @@ export default function Home() {
 
             {/* Address */}
             <div className="text-center text-neutral-600 dark:text-white">
-              <p className="mb-2">Nám. Jozefa Herdu 1, 91701 Trnava</p>
+              <p className="mb-2">Starohájska 11, 91701 Trnava</p>
               <p className="mb-2">0902 163 144</p>
               <p>andrea.heckova92@gmail.com</p>
             </div>
