@@ -32,7 +32,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; frame-src 'self' https://www.google.com https://maps.googleapis.com https://maps.gstatic.com; img-src 'self' https://images.unsplash.com https://*.googleapis.com https://maps.gstatic.com https://*.gstatic.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.google.com; style-src 'self' 'unsafe-inline' https://maps.googleapis.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://maps.googleapis.com https://www.google.com https://maps.gstatic.com;",
+            value: "default-src 'self'; frame-src 'self' https://www.google.com https://maps.googleapis.com https://maps.gstatic.com https://services.bookio.com; img-src 'self' https://images.unsplash.com https://*.googleapis.com https://maps.gstatic.com https://*.gstatic.com data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com https://www.google.com https://services.bookio.com; style-src 'self' 'unsafe-inline' https://maps.googleapis.com https://fonts.googleapis.com https://services.bookio.com; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https://maps.googleapis.com https://www.google.com https://maps.gstatic.com https://services.bookio.com;",
           },
           {
             key: 'Permissions-Policy',

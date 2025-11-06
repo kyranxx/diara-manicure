@@ -26,6 +26,12 @@ export default function Home() {
   const [services, setServices] = useState<Service[]>([])
   const [loadingServices, setLoadingServices] = useState(true)
   const [bookingOpen, setBookingOpen] = useState(false)
+  const [iframeLoaded, setIframeLoaded] = useState(false)
+  const [iframeError, setIframeError] = useState(false)
+  
+  const { resolvedTheme } = useTheme()
+  const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
+
   useEffect(() => {
     fetch('/api/services')
       .then(async res => {
@@ -42,11 +48,71 @@ export default function Home() {
       })
       .finally(() => setLoadingServices(false))
   }, [])
-  const { resolvedTheme } = useTheme()
-  const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
+
+  // Handle theme changes for iframe
+  useEffect(() => {
+    if (bookingOpen && iframeLoaded && resolvedTheme === 'dark') {
+      try {
+        const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.postMessage({
+            type: 'SET_THEME',
+            theme: 'dark'
+          }, '*')
+        }
+      } catch (error) {
+        console.log('Dark mode application failed:', error)
+      }
+    }
+  }, [resolvedTheme, bookingOpen, iframeLoaded, setIframeLoaded, setIframeError])
 
   const scrollToVisit = () => {
     document.getElementById("visit")?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  const handleIframeLoad = () => {
+    console.log('Bookio iframe loaded successfully')
+    setIframeLoaded(true)
+    setIframeError(false)
+    
+    // Call initBookioWidget if it exists
+    if (typeof window !== 'undefined' && (window as any).initBookioWidget) {
+      try {
+        (window as any).initBookioWidget()
+        console.log('initBookioWidget called successfully')
+      } catch (error) {
+        console.log('initBookioWidget call failed:', error)
+      }
+    }
+    
+    // Apply dark mode styling if in dark theme
+    if (resolvedTheme === 'dark') {
+      try {
+        const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.postMessage({
+            type: 'SET_THEME',
+            theme: 'dark'
+          }, '*')
+        }
+      } catch (error) {
+        console.log('Dark mode application failed:', error)
+      }
+    }
+  }
+
+  const handleIframeError = (error: any) => {
+    console.error('Bookio iframe failed to load:', error)
+    setIframeError(true)
+  }
+
+  const retryIframe = () => {
+    setIframeError(false)
+    setIframeLoaded(false)
+    const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement
+    if (iframe) {
+      iframe.src = iframe.src // Force reload
+    }
   }
 
   return (
@@ -82,35 +148,84 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col gap-4 justify-center max-w-md mx-auto">
-            {/* Reservation button temporarily hidden */}
-            {/* <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
+            <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
               <DialogTrigger asChild>
                 <Button className="bg-neutral-900 hover:bg-neutral-800 dark:bg-gray-200 dark:text-black dark:hover:bg-gray-300 px-16 py-6 text-xl font-light w-full">Rezervovať termín</Button>
               </DialogTrigger>
-              <DialogContent className="max-w-4xl w-full h-[80vh]">
+              <DialogContent className="max-w-4xl w-full h-[95vh]">
                 <DialogTitle className="sr-only">Rezervácia termínu</DialogTitle>
                 <DialogDescription className="sr-only">
                   Rezervujte si termín na manikúru prostredníctvom našej online rezervačnej platformy.
                 </DialogDescription>
-                <div className="w-full h-full">
-                  <script type="text/javascript" src="https://bookio-services-eu.s3.eu-central-1.amazonaws.com/assets/widget.bookio.js"></script>
-                  <iframe
-                    id="bookio-iframe"
-                    src="https://services.bookio.com/diaramanicure/widget?lang=sk"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 'none' }}
-                    scrolling="auto"
-                    onLoad={() => {
-                      // Call initBookioWidget if it exists
-                      if (typeof window !== 'undefined' && (window as any).initBookioWidget) {
-                        (window as any).initBookioWidget();
-                      }
-                    }}
-                  ></iframe>
+                <div className="w-full h-full flex flex-col">
+                  <div className="flex-1 relative">
+                    {!iframeLoaded && !iframeError && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <div className="text-center">
+                          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 dark:border-gray-100 mx-auto mb-4"></div>
+                          <p className="text-gray-600 dark:text-gray-400">Načítavam rezervačný systém...</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {iframeError && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <div className="text-center p-6">
+                          <p className="text-red-600 dark:text-red-400 mb-4">Rezervačný systém sa nepodarilo načítať.</p>
+                          <Button 
+                            onClick={retryIframe}
+                            variant="outline"
+                            className="text-sm"
+                          >
+                            Skúsiť znovu
+                          </Button>
+                          <div className="mt-4">
+                            <p className="text-sm text-gray-500 mb-2">Nebo môžete rezervovať:</p>
+                            <a 
+                              href="https://services.bookio.com/diaramanicure/widget?lang=sk" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
+                            >
+                              Otvoriť v novom okne →
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    <iframe
+                      id="bookio-iframe"
+                      src="https://services.bookio.com/diaramanicure/widget?lang=sk"
+                      width="100%"
+                      height="100%"
+                      style={{ 
+                        border: 'none',
+                        display: 'block'
+                      }}
+                      scrolling="auto"
+                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      onLoad={handleIframeLoad}
+                      onError={handleIframeError}
+                      title="Rezervačný systém"
+                    />
+                  </div>
+                  
+                  <div className="text-center py-3 text-sm text-gray-500 bg-white dark:bg-black">
+                    <p>Problém s načítaním? Skúste obnoviť alebo otvoriť v novom okne.</p>
+                    <a 
+                      href="https://services.bookio.com/diaramanicure/widget?lang=sk" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      Otvoriť rezervačný systém v novom okne
+                    </a>
+                  </div>
                 </div>
               </DialogContent>
-            </Dialog> */}
+            </Dialog>
             <Button
               variant="outline"
               onClick={scrollToVisit}
@@ -256,6 +371,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Navštívte nás</h3>
+            <p className="text-lg text-neutral-600 dark:text-white font-light mt-2">na Starohájska 11 v Trnave</p>
           </div>
 
           <div className="flex justify-center">

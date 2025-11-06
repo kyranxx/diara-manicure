@@ -6,6 +6,7 @@ import { ThemeProvider } from "./providers"
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
 
 export const metadata = {
+  metadataBase: 'https://diara-manicure.com',
   title: "Gélová Manikúra Trnava | Nechtový Salón Diara | Nail Art & Design",
   description:
     "Najlepšia gel manikúra v Trnave! Luxusné nechtové služby, nail art a predĺženie nechtov. Rezervujte si termín: 0902 163 144. Profesionálne salón v centre Trnavy.",

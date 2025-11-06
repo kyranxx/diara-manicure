@@ -26,8 +26,32 @@ const logError = (message: string, error: any) => {
   // In production, just log to external monitoring service if needed
 };
 
+// Cache storage for development mode
+let cache: {
+  data: Service[] | null
+  timestamp: number
+} = {
+  data: null,
+  timestamp: 0
+}
+
+const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes in development
+
+// Check if we can use cached data in development
+function canUseCache(): boolean {
+  if (process.env.NODE_ENV !== 'development') return false;
+  const now = Date.now();
+  return cache.data !== null && (now - cache.timestamp) < CACHE_DURATION;
+}
+
 // Internal function that actually fetches data
 async function fetchSheetsData(): Promise<Service[]> {
+  // Return cached data if available and valid
+  if (canUseCache()) {
+    debugLog('Using cached services data');
+    return cache.data!;
+  }
+
   try {
     debugLog('Starting Google Sheets data fetch...');
 
@@ -75,7 +99,7 @@ async function fetchSheetsData(): Promise<Service[]> {
     const client = await auth.getClient();
     debugLog('Auth client obtained');
 
-    const googleSheets = google.sheets({ version: 'v4', auth: client });
+    const googleSheets = google.sheets({ version: 'v4', auth: client as any });
     debugLog('Google Sheets API client created');
 
     // First get spreadsheet metadata to see available sheets
@@ -117,19 +141,25 @@ async function fetchSheetsData(): Promise<Service[]> {
     const rows = response.data.values;
     debugLog(`Found ${rows?.length || 0} data rows`);
 
+    let services: Service[] = [];
     if (rows && rows.length > 0) {
-      const services = rows.map((row: string[]) => ({
+      services = rows.map((row: string[]) => ({
         title: row[0] || '',
         description: row[1] || '',
         price: row[2] || '',
       })).filter(s => s.title); // skip empty titles
 
       debugLog(`Processed ${services.length} services`);
-      return services;
     }
 
-    debugLog('No data rows found');
-    return [];
+    // Cache the data in development mode
+    if (process.env.NODE_ENV === 'development') {
+      cache.data = services;
+      cache.timestamp = Date.now();
+      debugLog('Services data cached for development');
+    }
+
+    return services;
   } catch (error) {
     logError('Error fetching sheets data', error);
 

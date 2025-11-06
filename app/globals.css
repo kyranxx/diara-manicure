@@ -92,3 +92,27 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Fix for touch event warnings - optimize passive event listeners */
+@layer utilities {
+  /* Optimize iframe touch handling to prevent scroll-blocking warnings */
+  .map-container iframe {
+    touch-action: pan-x pan-y;
+    overscroll-behavior: contain;
+  }
+  
+  /* Global touch optimization for better performance */
+  body {
+    touch-action: manipulation;
+  }
+  
+  /* Prevent scroll-blocking on mobile */
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  /* Optimize passive event listeners for touch events */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+  }
+}
