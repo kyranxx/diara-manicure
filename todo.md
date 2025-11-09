@@ -1,4 +1,0 @@
-- [x] Analyze iframe scrolling and dark mode issues
-- [x] Fix iframe scrolling by enabling scroll behavior  
-- [ ] Improve iframe dark mode support
-- [ ] Test the iframe functionality
