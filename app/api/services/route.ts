@@ -66,7 +66,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(sanitizedData, {
       headers: {
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=300', // 5 minutes cache
+        'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=30', // 30 seconds cache
         'X-Content-Type-Options': 'nosniff',
       },
     })

@@ -36,7 +36,7 @@ let cache: {
   timestamp: 0
 }
 
-const CACHE_DURATION = 30 * 1000 // 30 seconds in development
+const CACHE_DURATION = 10 * 1000 // 10 seconds in development
 
 // Check if we can use cached data in development
 function canUseCache(): boolean {
@@ -175,12 +175,12 @@ async function fetchSheetsData(): Promise<Service[]> {
   }
 }
 
-// Cached wrapper function - revalidates every 1 minute
+// Cached wrapper function - revalidates every 30 seconds
 export const getSheetsData = unstable_cache(
   fetchSheetsData,
   ['services-pricelist'],
   {
-    revalidate: 60, // 1 minute
+    revalidate: 30, // 30 seconds
     tags: ['services']
   }
 )
