@@ -2,7 +2,7 @@
 
 const Map = () => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-  const address = "Starohájska 11, 91701 Trnava"
+  const address = "Hospodárska 53, 91701 Trnava"
   
   // Create the map URL with optimized parameters
   const mapSrc = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(address + ', Slovakia')}&maptype=satellite&zoom=16`

@@ -20,6 +20,7 @@ interface Service {
   title: string
   description: string
   price: string
+  discountedPrice?: string
 }
 
 export default function Home() {
@@ -28,7 +29,7 @@ export default function Home() {
   const [bookingOpen, setBookingOpen] = useState(false)
   const [iframeLoaded, setIframeLoaded] = useState(false)
   const [iframeError, setIframeError] = useState(false)
-  
+
   const { resolvedTheme } = useTheme()
   const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
 
@@ -241,10 +242,10 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section className="py-16 bg-white dark:bg-black">
+      <section className="py-8 bg-white dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Služby</h3>
+            <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Cenník</h3>
           </div>
 
           <div className="max-w-4xl mx-auto">
@@ -252,17 +253,27 @@ export default function Home() {
               <div className="text-center text-neutral-500 dark:text-white">Načítavam služby...</div>
             ) : services.length > 0 ? (
               <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
-                {services.map((service, index) => (
-                  <div key={index} className="flex justify-between items-start py-4 border-b border-neutral-200 dark:border-neutral-700">
-                    <div className="flex-grow">
-                      <h4 className="text-lg font-light text-black dark:text-white">{service.title}</h4>
-                      <p className="text-sm text-neutral-600 dark:text-white">{service.description}</p>
+                {services.map((service, index) => {
+                  const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
+                  return (
+                    <div key={index} className="flex justify-between items-start py-4 border-b border-neutral-200 dark:border-neutral-700">
+                      <div className="flex-grow">
+                        <h4 className="text-lg font-light text-black dark:text-white">{service.title}</h4>
+                        <p className="text-sm text-neutral-600 dark:text-white">{service.description}</p>
+                      </div>
+                      <div className="w-32 text-right">
+                        {hasDiscount ? (
+                          <div className="flex flex-col items-end">
+                            <span className="text-sm text-red-600 dark:text-red-400 line-through">{service.price}</span>
+                            <span className="text-lg font-bold text-green-600 dark:text-green-400">{service.discountedPrice}</span>
+                          </div>
+                        ) : (
+                          <span className="text-lg font-light text-black dark:text-white">{service.price}</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="w-24 text-right">
-                      <span className="text-lg font-bold text-black dark:text-white">{service.price}</span>
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             ) : (
               <div className="text-center text-neutral-500 dark:text-white">Žiadne služby nie sú dostupné.</div>
@@ -271,14 +282,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-16 bg-white dark:bg-black">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Naše klientky:</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 max-w-5xl mx-auto">
+            {[
+              {
+                text: "Andrea je skvelá manikérka! Vždy mi urobí presne to, čo chcem a nechty vyzerajú perfektne. Odporúčam každému!",
+                author: "Mária K."
+              },
+              {
+                text: "Najlepšia manikúra v Trnave! Profesionálne služby, príjemná atmosféra a výsledok stojí za to. Vrátim sa určite.",
+                author: "Jana P."
+              },
+              {
+                text: "Už tretíkrát som tu na manikúre a vždy som maximálne spokojná. Andrea má cit pre detail a nechty vydržia dlho.",
+                author: "Lucia M."
+              },
+              {
+                text: "Milujem výsledok každého môjho návštevu. Modneké dizajny a dlhotrvajúce gélové nechty. Skvelá práca!",
+                author: "Petra S."
+              },
+              {
+                text: "Andrea je majster svojho remesla. Viem, že môžem vždy očakávať profesionálny servis a úžasné výsledky.",
+                author: "Ivana H."
+              },
+              {
+                text: "Hľadala som kvalitnú manikúru a našla som ju tu. Určite odporučím priateľkam!",
+                author: "Katka R."
+              },
+              {
+                text: "Perfektný servis, rýchly a precízny. Andrea vie, čo robí a výsledok hovorí za všetko.",
+                author: "Veronika L."
+              },
+              {
+                text: "Som veľmi spokojná s dlhotrvajúcimi efektmi. Nechty vyzerajú skvele celé týždne vďaka kvalitnému materiálu.",
+                author: "Zuzana F."
+              }
+            ].map((testimonial, index) => (
+              <div key={index} className="bg-white dark:bg-black p-3 rounded-lg shadow-sm">
+                <div className="flex items-center mb-2">
+                  <div className="flex text-yellow-400">
+                    ★★★★★
+                  </div>
+                </div>
+                <p className="text-gray-600 dark:text-white mb-2 italic text-sm">
+                  "{testimonial.text}"
+                </p>
+                <p className="text-sm font-medium text-gray-800 dark:text-white">-{testimonial.author}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Gallery */}
       <section className="py-16 dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Galéria</h3>
+            <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Naše práce</h3>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
             <div className="aspect-square overflow-hidden rounded-lg">
               <Image
                 src="/pic1.jpeg"
@@ -371,7 +440,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Navštívte nás</h3>
-            <p className="text-lg text-neutral-600 dark:text-white font-light mt-2">na Starohájska 11 v Trnave</p>
+            <p className="text-lg text-neutral-600 dark:text-white font-light mt-2">na Hospodárska 53 v Trnave</p>
           </div>
 
           <div className="flex justify-center">
@@ -393,7 +462,7 @@ export default function Home() {
 
             {/* Address */}
             <div className="text-center text-neutral-600 dark:text-white">
-              <p className="mb-2">Starohájska 11, 91701 Trnava</p>
+              <p className="mb-2">Hospodárska 53, 91701 Trnava</p>
               <p className="mb-2">0902 163 144</p>
               <p>andrea.heckova92@gmail.com</p>
             </div>

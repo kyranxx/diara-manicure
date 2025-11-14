@@ -60,7 +60,8 @@ export async function GET(request: Request) {
     const sanitizedData = data.map(service => ({
       title: String(service.title || '').slice(0, 100), // Limit length
       description: String(service.description || '').slice(0, 500), // Limit length
-      price: String(service.price || '').slice(0, 50) // Limit length
+      price: String(service.price || '').slice(0, 50), // Limit length
+      discountedPrice: service.discountedPrice ? String(service.discountedPrice).slice(0, 50) : undefined // Include discounted price
     }))
 
     return NextResponse.json(sanitizedData, {

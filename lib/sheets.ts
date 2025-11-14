@@ -5,6 +5,7 @@ export type Service = {
   title: string
   description: string
   price: string
+  discountedPrice?: string
 }
 
 // Simple logger that only logs in development
@@ -35,7 +36,7 @@ let cache: {
   timestamp: 0
 }
 
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes in development
+const CACHE_DURATION = 30 * 1000 // 30 seconds in development
 
 // Check if we can use cached data in development
 function canUseCache(): boolean {
@@ -147,6 +148,7 @@ async function fetchSheetsData(): Promise<Service[]> {
         title: row[0] || '',
         description: row[1] || '',
         price: row[2] || '',
+        discountedPrice: row[3] || undefined,
       })).filter(s => s.title); // skip empty titles
 
       debugLog(`Processed ${services.length} services`);
@@ -173,12 +175,12 @@ async function fetchSheetsData(): Promise<Service[]> {
   }
 }
 
-// Cached wrapper function - revalidates every 5 minutes
+// Cached wrapper function - revalidates every 1 minute
 export const getSheetsData = unstable_cache(
   fetchSheetsData,
   ['services-pricelist'],
   {
-    revalidate: 300, // 5 minutes
+    revalidate: 60, // 1 minute
     tags: ['services']
   }
 )
