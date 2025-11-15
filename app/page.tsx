@@ -214,10 +214,9 @@ export default function Home() {
                   </div>
                   
                   <div className="text-center py-3 text-sm text-gray-500 bg-white dark:bg-black">
-                    <p>Problém s načítaním? Skúste obnoviť alebo otvoriť v novom okne.</p>
-                    <a 
-                      href="https://services.bookio.com/diaramanicure/widget?lang=sk" 
-                      target="_blank" 
+                    <a
+                      href="https://services.bookio.com/diaramanicure/widget?lang=sk"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 dark:text-blue-400 hover:underline"
                     >
@@ -242,10 +241,11 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section className="py-8 bg-white dark:bg-black">
+      <section className="-mt-16 py-8 bg-white dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Cenník</h3>
+            <h3 className="text-4xl font-light mb-0 tracking-wide text-black dark:text-white">Cenník</h3>
+            <p className="text-lg text-red-600 dark:text-red-400 font-medium">Promo ceny do 31.12.2025!</p>
           </div>
 
           <div className="max-w-4xl mx-auto">
@@ -292,36 +292,28 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 max-w-5xl mx-auto">
             {[
               {
-                text: "Andrea je skvelá manikérka! Vždy mi urobí presne to, čo chcem a nechty vyzerajú perfektne. Odporúčam každému!",
+                text: "Nechty vyzerajú super a vydržia. Pekná práca, chválim.",
                 author: "Mária K."
               },
               {
-                text: "Najlepšia manikúra v Trnave! Profesionálne služby, príjemná atmosféra a výsledok stojí za to. Vrátim sa určite.",
-                author: "Jana P."
+                text: "Manikúra za dobrú cenu, Andrea je šikovná, určite sa vrátim.",
+                author: "Janka P."
               },
               {
-                text: "Už tretíkrát som tu na manikúre a vždy som maximálne spokojná. Andrea má cit pre detail a nechty vydržia dlho.",
+                text: "Maximálna spokojnosť. Manikérka je ústretová, milá, vždy sa snaží urobiť čo chcem. Nechty mi vydržia dlho. Budem odporúčať.",
                 author: "Lucia M."
               },
               {
-                text: "Milujem výsledok každého môjho návštevu. Modneké dizajny a dlhotrvajúce gélové nechty. Skvelá práca!",
+                text: "Dobré rozhodnutie prísť sem. Gélové nechty som mala krásne a vydržali mi perfektne do ďalšej dorábky. Odporúčam aj kamoškám.",
                 author: "Petra S."
               },
               {
-                text: "Andrea je majster svojho remesla. Viem, že môžem vždy očakávať profesionálny servis a úžasné výsledky.",
-                author: "Ivana H."
-              },
-              {
-                text: "Hľadala som kvalitnú manikúru a našla som ju tu. Určite odporučím priateľkam!",
+                text: "Veľmi pekná a detajlná práca. Naozaj som spokojná s nechtami. Sú prirodzené a vydržia.",
                 author: "Katka R."
               },
               {
-                text: "Perfektný servis, rýchly a precízny. Andrea vie, čo robí a výsledok hovorí za všetko.",
-                author: "Veronika L."
-              },
-              {
-                text: "Som veľmi spokojná s dlhotrvajúcimi efektmi. Nechty vyzerajú skvele celé týždne vďaka kvalitnému materiálu.",
-                author: "Zuzana F."
+                text: "Som veľmi spokojná, nechty sú mi vydržali celé týždne do dalšieho termínu. Vidno, že použiva pani manikérka kvalitný materiál. Spokojnosť.",
+                author: "Peťa S."
               }
             ].map((testimonial, index) => (
               <div key={index} className="bg-white dark:bg-black p-3 rounded-lg shadow-sm">
