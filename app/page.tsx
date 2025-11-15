@@ -312,7 +312,7 @@ export default function Home() {
                 author: "Katka R."
               },
               {
-                text: "Som veľmi spokojná, nechty sú mi vydržali celé týždne do dalšieho termínu. Vidno, že použiva pani manikérka kvalitný materiál. Spokojnosť.",
+                text: "Som veľmi spokojná, nechty mi vydržali celé t",
                 author: "Peťa S."
               }
             ].map((testimonial, index) => (
