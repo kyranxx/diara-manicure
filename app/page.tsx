@@ -75,7 +75,7 @@ export default function Home() {
     console.log('Bookio iframe loaded successfully')
     setIframeLoaded(true)
     setIframeError(false)
-    
+
     // Call initBookioWidget if it exists
     if (typeof window !== 'undefined' && (window as any).initBookioWidget) {
       try {
@@ -85,7 +85,7 @@ export default function Home() {
         console.log('initBookioWidget call failed:', error)
       }
     }
-    
+
     // Apply dark mode styling if in dark theme
     if (resolvedTheme === 'dark') {
       try {
@@ -119,7 +119,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white dark:bg-black">
       <SchemaMarkup />
-      
+
       {/* Preload dark logo for instant switching */}
       <Image
         src="/logo_black.png"
@@ -168,12 +168,12 @@ export default function Home() {
                         </div>
                       </div>
                     )}
-                    
+
                     {iframeError && (
                       <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-lg">
                         <div className="text-center p-6">
                           <p className="text-red-600 dark:text-red-400 mb-4">Rezervačný systém sa nepodarilo načítať.</p>
-                          <Button 
+                          <Button
                             onClick={retryIframe}
                             variant="outline"
                             className="text-sm"
@@ -182,9 +182,9 @@ export default function Home() {
                           </Button>
                           <div className="mt-4">
                             <p className="text-sm text-gray-500 mb-2">Nebo môžete rezervovať:</p>
-                            <a 
-                              href="https://services.bookio.com/diaramanicure/widget?lang=sk" 
-                              target="_blank" 
+                            <a
+                              href="https://services.bookio.com/diaramanicure/widget?lang=sk"
+                              target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
                             >
@@ -200,7 +200,7 @@ export default function Home() {
                       src="https://services.bookio.com/diaramanicure/widget?lang=sk"
                       width="100%"
                       height="100%"
-                      style={{ 
+                      style={{
                         border: 'none',
                         display: 'block'
                       }}
@@ -212,7 +212,7 @@ export default function Home() {
                       title="Rezervačný systém"
                     />
                   </div>
-                  
+
                   <div className="text-center py-3 text-sm text-gray-500 bg-white dark:bg-black">
                     <a
                       href="https://services.bookio.com/diaramanicure/widget?lang=sk"
@@ -333,7 +333,7 @@ export default function Home() {
       </section>
 
       {/* Gallery */}
-      <section id="gallery" className="py-16 dark:bg-black">
+      <section id="galeria" className="py-16 dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Naše práce</h3>
