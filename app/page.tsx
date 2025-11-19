@@ -241,7 +241,7 @@ export default function Home() {
       </section>
 
       {/* Services */}
-      <section className="-mt-16 py-8 bg-white dark:bg-black">
+      <section id="cennik" className="-mt-16 py-8 bg-white dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-4xl font-light mb-0 tracking-wide text-black dark:text-white">Cenník</h3>
@@ -283,7 +283,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-white dark:bg-black">
+      <section id="recenzie" className="py-16 bg-white dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Naše klientky:</h3>
@@ -333,7 +333,7 @@ export default function Home() {
       </section>
 
       {/* Gallery */}
-      <section className="py-16 dark:bg-black">
+      <section id="gallery" className="py-16 dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-4xl font-light mb-4 tracking-wide text-black dark:text-white">Naše práce</h3>
