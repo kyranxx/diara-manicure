@@ -1,6 +1,7 @@
 import type React from "react"
 import "./globals.css"
 import { Poppins } from "next/font/google"
+import Script from "next/script"
 import { ThemeProvider } from "./providers"
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
@@ -11,9 +12,9 @@ export const metadata = {
   description:
     "Najlepšia gel manikúra v Trnave! Luxusné nechtové služby, nail art a predĺženie nechtov. Rezervujte si termín: 0902 163 144. Profesionálne salón v centre Trnavy.",
   keywords: [
-    "gel manikúra Trnava", 
-    "nechtový salón Trnava", 
-    "nail art Trnava", 
+    "gel manikúra Trnava",
+    "nechtový salón Trnava",
+    "nail art Trnava",
     "predĺženie nechtov Trnava",
     "gélová manikúra",
     "manikúra Trnava",
@@ -50,6 +51,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sk">
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-655587665"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-655587665');
+          `}
+        </Script>
+      </head>
       <body className={poppins.className}>
         <ThemeProvider
           attribute="class"
