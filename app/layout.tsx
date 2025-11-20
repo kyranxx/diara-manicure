@@ -53,7 +53,7 @@ export default function RootLayout({
     <html lang="sk">
       <head>
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-655587665"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17746151386"
           strategy="afterInteractive"
         />
         <Script id="google-analytics" strategy="afterInteractive">
@@ -63,6 +63,7 @@ export default function RootLayout({
             gtag('js', new Date());
 
             gtag('config', 'AW-655587665');
+            gtag('config', 'AW-17746151386');
           `}
         </Script>
       </head>
