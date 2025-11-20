@@ -6,6 +6,15 @@ import { Button } from "@/components/ui/button"
 import { CheckCircle2, Instagram, Facebook } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+    title: "Ďakujeme | Diara Manicure",
+    robots: {
+        index: false,
+        follow: false,
+    },
+}
 
 export default function ThankYouPage() {
     const { resolvedTheme } = useTheme()
