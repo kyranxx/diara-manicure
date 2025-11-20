@@ -14,6 +14,13 @@ export default function ThankYouPage() {
 
     useEffect(() => {
         setMounted(true)
+
+        // Track conversion event
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'conversion', {
+                'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
+            })
+        }
     }, [])
 
     if (!mounted) {
