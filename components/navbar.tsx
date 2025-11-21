@@ -1,22 +1,22 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { cn } from "@/lib/utils"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { Button } from "@/components/ui/button"
+import * as React from "react"
+import Link from "next/link"
 import { Menu, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { ThemeToggle } from "@/components/theme-toggle"
+import { motion, AnimatePresence } from "framer-motion"
+import Image from "next/image"
+import { useTheme } from "next-themes"
 
 export function Navbar() {
-    const [scrolled, setScrolled] = useState(false)
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [isOpen, setIsOpen] = React.useState(false)
+    const { resolvedTheme } = useTheme()
+    const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
 
-    useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 20)
-        window.addEventListener("scroll", handleScroll)
-        return () => window.removeEventListener("scroll", handleScroll)
-    }, [])
+    const toggleMenu = () => setIsOpen(!isOpen)
 
-    const navLinks = [
+    const menuItems = [
         { href: "#cennik", label: "Cenník" },
         { href: "#recenzie", label: "Recenzie" },
         { href: "#galeria", label: "Galéria" },
@@ -24,55 +24,66 @@ export function Navbar() {
     ]
 
     return (
-        <>
-            <nav className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-500 px-6 py-4 flex justify-between items-center",
-                scrolled ? "bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm py-3" : "bg-transparent pt-6"
-            )}>
-                <div className="container mx-auto flex justify-between items-center">
-                    <a href="#" className="text-2xl font-bold tracking-tighter text-foreground">
-                        DIARA
-                    </a>
+        <nav className="w-full bg-beige z-50 border-b border-primary/5 relative">
+            <div className="container mx-auto px-6 h-24 flex items-center justify-between">
+                <Link href="/" className="flex-shrink-0">
+                    <Image
+                        src={logoSrc}
+                        alt="DIARA"
+                        width={160}
+                        height={80}
+                        className="h-16 w-auto object-contain"
+                        priority
+                    />
+                </Link>
 
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.href}
-                                href={link.href}
-                                className="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors uppercase tracking-widest"
-                            >
-                                {link.label}
-                            </a>
-                        ))}
-                        <ThemeToggle />
-                    </div>
-
-                    {/* Mobile Nav Toggle */}
-                    <div className="flex md:hidden items-center gap-4">
-                        <ThemeToggle />
-                        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="p-2">
-                            {mobileMenuOpen ? <X /> : <Menu />}
-                        </button>
-                    </div>
+                {/* Desktop Menu */}
+                <div className="hidden md:flex items-center gap-8">
+                    {menuItems.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className="text-sm font-medium tracking-wide hover:text-primary/60 transition-colors uppercase"
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                    <ThemeToggle />
                 </div>
-            </nav>
+
+                {/* Mobile Menu Button */}
+                <div className="md:hidden flex items-center gap-4">
+                    <ThemeToggle />
+                    <Button variant="ghost" size="icon" onClick={toggleMenu} className="text-primary">
+                        {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    </Button>
+                </div>
+            </div>
 
             {/* Mobile Menu Overlay */}
-            {mobileMenuOpen && (
-                <div className="fixed inset-0 z-40 bg-background flex flex-col items-center justify-center gap-8 md:hidden animate-in fade-in slide-in-from-top-10 duration-300">
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.href}
-                            href={link.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="text-2xl font-light text-foreground hover:text-primary transition-colors"
-                        >
-                            {link.label}
-                        </a>
-                    ))}
-                </div>
-            )}
-        </>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="md:hidden bg-beige border-t border-primary/5 overflow-hidden"
+                    >
+                        <div className="flex flex-col p-6 gap-4">
+                            {menuItems.map((item) => (
+                                <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    onClick={() => setIsOpen(false)}
+                                    className="text-lg font-medium py-2 border-b border-primary/5"
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </nav>
     )
 }

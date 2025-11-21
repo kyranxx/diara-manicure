@@ -132,8 +132,8 @@ export default function Home() {
         priority
       />
 
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex flex-col justify-center items-center text-center px-6 pt-24 overflow-hidden">
+      {/* Hero Section - Beige Background */}
+      <section className="relative min-h-[90vh] flex flex-col justify-center items-center text-center px-6 pt-24 overflow-hidden bg-beige">
         {/* Background Elements */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-40 pointer-events-none">
           <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-3xl" />
@@ -163,7 +163,7 @@ export default function Home() {
                 Rezervovať termín
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-4xl w-full h-[95vh] p-0 overflow-hidden rounded-2xl border-none">
+            <DialogContent className="max-w-2xl w-full h-[85vh] p-0 overflow-hidden rounded-2xl border-none">
               <DialogTitle className="sr-only">Rezervácia termínu</DialogTitle>
               <DialogDescription className="sr-only">
                 Rezervujte si termín na manikúru prostredníctvom našej online rezervačnej platformy.
@@ -220,7 +220,7 @@ export default function Home() {
           <Button
             variant="outline"
             onClick={scrollToVisit}
-            className="h-14 text-lg rounded-full px-8 border-primary/20 hover:bg-secondary hover:text-foreground transition-all duration-300 w-full sm:w-auto"
+            className="h-14 text-lg rounded-full px-8 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full sm:w-auto"
           >
             Kde nás nájdete
           </Button>
@@ -231,12 +231,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="cennik" className="py-24 bg-secondary/30">
+      {/* Services Section - White Background */}
+      <section id="cennik" className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-light mb-4 tracking-tight">Cenník Služieb</h2>
+              <h2 className="text-3xl md:text-5xl font-light mb-4 tracking-tight text-black">Cenník Služieb</h2>
               <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Doprajte si profesionálnu starostlivosť s použitím najkvalitnejších materiálov.
@@ -255,9 +255,9 @@ export default function Home() {
                   const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
                   return (
                     <FadeIn key={index} delay={index * 0.05}>
-                      <div className="group flex justify-between items-start p-8 bg-background rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full">
+                      <div className="group flex justify-between items-start p-8 bg-beige/30 rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full">
                         <div className="flex-grow pr-4">
-                          <h4 className="text-xl font-normal mb-2 group-hover:text-primary transition-colors">{service.title}</h4>
+                          <h4 className="text-xl font-normal mb-2 group-hover:text-primary transition-colors text-black">{service.title}</h4>
                           <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
                         </div>
                         <div className="text-right whitespace-nowrap">
@@ -267,7 +267,7 @@ export default function Home() {
                               <span className="text-xl font-medium text-primary">{service.discountedPrice}</span>
                             </div>
                           ) : (
-                            <span className="text-xl font-medium">{service.price}</span>
+                            <span className="text-xl font-medium text-black">{service.price}</span>
                           )}
                         </div>
                       </div>
@@ -282,12 +282,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section id="recenzie" className="py-24 overflow-hidden">
+      {/* Testimonials Section - White Background */}
+      <section id="recenzie" className="py-24 overflow-hidden bg-white">
         <div className="container mx-auto px-6">
           <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-light mb-4 tracking-tight">Čo hovoria naše klientky</h2>
+              <h2 className="text-3xl md:text-5xl font-light mb-4 tracking-tight text-black">Čo hovoria naše klientky</h2>
               <div className="flex justify-center gap-1 text-primary mb-4">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <Star key={i} className="w-5 h-5 fill-current" />
@@ -324,15 +324,15 @@ export default function Home() {
               }
             ].map((testimonial, index) => (
               <FadeIn key={index} delay={index * 0.1}>
-                <div className="bg-secondary/20 p-8 rounded-[2rem] h-full flex flex-col justify-between hover:bg-secondary/40 transition-colors duration-300">
-                  <p className="text-foreground/80 italic text-lg leading-relaxed mb-6 font-light">
+                <div className="bg-beige/50 p-6 rounded-[1.5rem] h-full flex flex-col justify-between hover:bg-beige transition-colors duration-300">
+                  <p className="text-black/80 italic text-base leading-relaxed mb-4 font-light">
                     "{testimonial.text}"
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif italic">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif italic text-sm">
                       {testimonial.author.charAt(0)}
                     </div>
-                    <p className="font-medium text-sm tracking-wide uppercase text-muted-foreground">{testimonial.author}</p>
+                    <p className="font-medium text-xs tracking-wide uppercase text-muted-foreground">{testimonial.author}</p>
                   </div>
                 </div>
               </FadeIn>
@@ -341,12 +341,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Gallery Section */}
-      <section id="galeria" className="py-24 bg-secondary/30">
+      {/* Gallery Section - White Background */}
+      <section id="galeria" className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <FadeIn>
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-5xl font-light mb-4 tracking-tight">Galéria prác</h2>
+              <h2 className="text-3xl md:text-5xl font-light mb-4 tracking-tight text-black">Galéria prác</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">Inšpirujte sa našimi najnovšími výtvormi.</p>
             </div>
           </FadeIn>
@@ -382,40 +382,40 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="visit" className="py-24">
+      {/* Contact Section - Beige Background (Merged with Footer) */}
+      <section id="visit" className="py-24 bg-beige">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             <FadeIn direction="right">
               <div>
-                <h2 className="text-3xl md:text-5xl font-light mb-8 tracking-tight">Kde nás nájdete</h2>
+                <h2 className="text-3xl md:text-5xl font-light mb-8 tracking-tight text-black">Kde nás nájdete</h2>
                 <div className="space-y-8">
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-full bg-secondary/50 text-primary">
+                    <div className="p-3 rounded-full bg-white text-primary shadow-sm">
                       <MapPin className="w-6 h-6" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-medium mb-1">Adresa</h4>
+                      <h4 className="text-xl font-medium mb-1 text-black">Adresa</h4>
                       <p className="text-muted-foreground text-lg">Hospodárska 53<br />91701 Trnava</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-full bg-secondary/50 text-primary">
+                    <div className="p-3 rounded-full bg-white text-primary shadow-sm">
                       <Phone className="w-6 h-6" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-medium mb-1">Telefón</h4>
+                      <h4 className="text-xl font-medium mb-1 text-black">Telefón</h4>
                       <p className="text-muted-foreground text-lg">0902 163 144</p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-full bg-secondary/50 text-primary">
+                    <div className="p-3 rounded-full bg-white text-primary shadow-sm">
                       <Mail className="w-6 h-6" />
                     </div>
                     <div>
-                      <h4 className="text-xl font-medium mb-1">Email</h4>
+                      <h4 className="text-xl font-medium mb-1 text-black">Email</h4>
                       <p className="text-muted-foreground text-lg">andrea.heckova92@gmail.com</p>
                     </div>
                   </div>
@@ -433,7 +433,7 @@ export default function Home() {
             </FadeIn>
 
             <FadeIn direction="left" delay={0.2}>
-              <div className="w-full aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white dark:border-neutral-800">
+              <div className="w-full aspect-square rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white">
                 <Map />
               </div>
             </FadeIn>
@@ -441,12 +441,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 bg-secondary/20 border-t border-border/50">
+      {/* Footer - Beige Background (Merged with Contact) */}
+      <footer className="py-12 bg-beige border-t border-primary/5">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
-              <p className="text-2xl font-bold tracking-tighter mb-2">DIARA</p>
+              <div className="flex items-center gap-2 mb-2 justify-center md:justify-start">
+                <Image
+                  src={logoSrc}
+                  alt="DIARA"
+                  width={100}
+                  height={50}
+                  className="h-8 w-auto object-contain"
+                />
+              </div>
               <p className="text-sm text-muted-foreground">© 2025 Diara Manicure. Všetky práva vyhradené.</p>
             </div>
 
@@ -455,7 +463,7 @@ export default function Home() {
                 href="https://instagram.com/diaramanicure"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-background hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
               >
                 <Instagram className="h-5 w-5" />
               </a>
@@ -463,7 +471,7 @@ export default function Home() {
                 href="https://facebook.com/diaramanicure"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-background hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
               >
                 <Facebook className="h-5 w-5" />
               </a>

@@ -65,6 +65,9 @@ const config = {
           800: "#92400e",
           900: "#78350f",
         },
+        beige: {
+          DEFAULT: "hsl(var(--beige))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
