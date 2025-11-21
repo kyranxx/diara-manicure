@@ -1,10 +1,10 @@
 import type React from "react"
 import "./globals.css"
-import { Poppins } from "next/font/google"
+import { DM_Sans } from "next/font/google"
 import Script from "next/script"
 import { ThemeProvider } from "./providers"
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
+const dmSans = DM_Sans({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
 
 export const metadata = {
   metadataBase: 'https://diara-manicure.com',
@@ -67,7 +67,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={poppins.className}>
+      <body className={dmSans.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

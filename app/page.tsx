@@ -151,7 +151,7 @@ export default function Home() {
           <div className="flex flex-col gap-4 justify-center max-w-md mx-auto">
             <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-neutral-900 hover:bg-neutral-800 dark:bg-gray-200 dark:text-black dark:hover:bg-gray-300 px-16 py-6 text-xl font-light w-full">Rezervovať termín</Button>
+                <Button className="bg-primary text-primary-foreground hover:bg-primary/90 dark:bg-white dark:text-black dark:hover:bg-gray-200 px-16 py-6 text-xl font-normal w-full rounded-full transition-all duration-300">Rezervovať termín</Button>
               </DialogTrigger>
               <DialogContent className="max-w-4xl w-full h-[95vh]">
                 <DialogTitle className="sr-only">Rezervácia termínu</DialogTitle>
@@ -229,7 +229,7 @@ export default function Home() {
             <Button
               variant="outline"
               onClick={scrollToVisit}
-              className="border-neutral-800 text-neutral-800 hover:bg-neutral-800 hover:text-white dark:border-gray-300 dark:text-gray-200 dark:hover:bg-gray-200 dark:hover:text-black px-12 py-4 text-lg font-light"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-black px-12 py-4 text-lg font-normal rounded-full transition-all duration-300"
             >
               Kde nás nájdete
             </Button>
@@ -252,23 +252,23 @@ export default function Home() {
             {loadingServices ? (
               <div className="text-center text-neutral-500 dark:text-white">Načítavam služby...</div>
             ) : services.length > 0 ? (
-              <div className="grid md:grid-cols-2 gap-x-16 gap-y-8">
+              <div className="grid md:grid-cols-2 gap-6">
                 {services.map((service, index) => {
                   const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
                   return (
-                    <div key={index} className="flex justify-between items-start py-4 border-b border-neutral-200 dark:border-neutral-700">
+                    <div key={index} className="flex justify-between items-start p-6 bg-card rounded-2xl hover:bg-secondary/50 transition-colors duration-300">
                       <div className="flex-grow">
-                        <h4 className="text-lg font-light text-black dark:text-white">{service.title}</h4>
-                        <p className="text-sm text-neutral-600 dark:text-white">{service.description}</p>
+                        <h4 className="text-lg font-medium text-foreground">{service.title}</h4>
+                        <p className="text-sm text-muted-foreground mt-1">{service.description}</p>
                       </div>
                       <div className="w-32 text-right">
                         {hasDiscount ? (
                           <div className="flex flex-col items-end">
-                            <span className="text-sm text-red-600 dark:text-red-400 line-through">{service.price}</span>
-                            <span className="text-lg font-bold text-green-600 dark:text-green-400">{service.discountedPrice}</span>
+                            <span className="text-sm text-muted-foreground line-through">{service.price}</span>
+                            <span className="text-lg font-bold text-foreground">{service.discountedPrice}</span>
                           </div>
                         ) : (
-                          <span className="text-lg font-light text-black dark:text-white">{service.price}</span>
+                          <span className="text-lg font-medium text-foreground">{service.price}</span>
                         )}
                       </div>
                     </div>
@@ -316,16 +316,16 @@ export default function Home() {
                 author: "Peťa S."
               }
             ].map((testimonial, index) => (
-              <div key={index} className="bg-white dark:bg-black p-3 rounded-lg shadow-sm">
-                <div className="flex items-center mb-2">
-                  <div className="flex text-yellow-400">
+              <div key={index} className="bg-card p-6 rounded-2xl transition-transform hover:-translate-y-1 duration-300">
+                <div className="flex items-center mb-4">
+                  <div className="flex text-foreground/80 text-xs tracking-widest">
                     ★★★★★
                   </div>
                 </div>
-                <p className="text-gray-600 dark:text-white mb-2 italic text-sm">
+                <p className="text-foreground/80 mb-4 italic text-sm leading-relaxed">
                   "{testimonial.text}"
                 </p>
-                <p className="text-sm font-medium text-gray-800 dark:text-white">-{testimonial.author}</p>
+                <p className="text-sm font-medium text-foreground">-{testimonial.author}</p>
               </div>
             ))}
           </div>
@@ -340,7 +340,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic1.jpeg"
                 alt="Francúzska manikúra"
@@ -351,7 +351,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic2.jpeg"
                 alt="Gélové predĺženie"
@@ -362,7 +362,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic3.jpeg"
                 alt="Nail art dizajn"
@@ -373,7 +373,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic4.jpeg"
                 alt="Klasická gélová manikúra"
@@ -384,7 +384,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic5.jpeg"
                 alt="Trblietavé nechty"
@@ -394,7 +394,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic6.jpeg"
                 alt="Mramorový efekt"
@@ -404,7 +404,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic7.jpeg"
                 alt="Nail art vzory"
@@ -414,7 +414,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="aspect-square overflow-hidden rounded-lg">
+            <div className="aspect-square overflow-hidden rounded-2xl">
               <Image
                 src="/pic8.jpeg"
                 alt="Kreatívne nechty"
@@ -436,7 +436,7 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center">
-            <div className="w-[600px] h-[600px] rounded-lg overflow-hidden" style={{ height: '600px', width: '600px' }}>
+            <div className="w-[600px] h-[600px] rounded-2xl overflow-hidden" style={{ height: '600px', width: '600px' }}>
               <Map />
             </div>
           </div>
