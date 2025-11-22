@@ -7,7 +7,6 @@ import { CheckCircle2, Instagram, Facebook } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
-
 export default function ThankYouPage() {
     const { resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
@@ -30,17 +29,17 @@ export default function ThankYouPage() {
     const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
 
     return (
-        <div className="min-h-screen bg-white dark:bg-black flex flex-col">
+        <div className="min-h-screen bg-beige dark:bg-black flex flex-col">
             {/* Header */}
-            <header className="py-6">
+            <header className="py-8">
                 <div className="container mx-auto px-6 flex justify-center">
                     <Link href="/">
                         <Image
                             src={logoSrc}
                             alt="diara manicure"
-                            width={200}
-                            height={100}
-                            className="w-40 h-auto"
+                            width={300}
+                            height={150}
+                            className="w-60 h-auto"
                             priority
                         />
                     </Link>
@@ -49,24 +48,31 @@ export default function ThankYouPage() {
 
             {/* Main Content */}
             <main className="flex-grow flex items-center justify-center py-12">
-                <div className="container mx-auto px-6 text-center max-w-2xl">
-                    <div className="mb-8 flex justify-center">
-                        <div className="rounded-full bg-green-100 dark:bg-green-900/30 p-6">
-                            <CheckCircle2 className="w-16 h-16 text-green-600 dark:text-green-400" />
+                <div className="container mx-auto px-6 text-center max-w-3xl">
+                    <div className="mb-12 flex justify-center">
+                        <div className="rounded-full bg-primary/10 p-8 shadow-xl">
+                            <CheckCircle2 className="w-20 h-20 text-primary" />
                         </div>
                     </div>
 
-                    <h1 className="text-4xl md:text-5xl font-light mb-6 text-black dark:text-white tracking-wide">
-                        Ďakujeme za rezerváciu
+                    <h1 className="text-5xl md:text-7xl font-extralight mb-8 text-black dark:text-white tracking-tight leading-[1.1]">
+                        Ďakujeme za <br />
+                        <span className="italic font-serif text-primary/70 font-light">rezerváciu</span>
                     </h1>
 
-                    <p className="text-xl text-neutral-600 dark:text-neutral-300 mb-12 font-light leading-relaxed">
+                    <p className="text-xl md:text-2xl text-muted-foreground mb-12 font-extralight leading-relaxed max-w-2xl mx-auto tracking-wide">
                         Vaša rezervácia bola úspešne prijatá. Tešíme sa na vašu návštevu v našom salóne.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="bg-white/50 dark:bg-neutral-900/50 rounded-[2rem] p-8 mb-16 border border-primary/10 shadow-lg backdrop-blur-sm">
+                        <p className="text-lg text-black dark:text-white font-light">
+                            📧 Potvrdenie rezervácie s detailmi bolo zaslané na váš e-mail.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row gap-5 justify-center">
                         <Link href="/">
-                            <Button className="bg-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 px-8 py-6 text-lg font-light w-full sm:w-auto">
+                            <Button className="h-16 text-lg font-light tracking-wide rounded-full px-12 shadow-2xl hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-500 bg-primary text-primary-foreground hover:scale-105 w-full sm:w-auto">
                                 Späť na domovskú stránku
                             </Button>
                         </Link>
@@ -75,11 +81,11 @@ export default function ThankYouPage() {
             </main>
 
             {/* Footer */}
-            <footer className="border-t py-12 bg-white dark:bg-black mt-auto">
+            <footer className="py-12 bg-white/50 dark:bg-black/50 backdrop-blur-sm">
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col items-center space-y-8">
                         {/* Address */}
-                        <div className="text-center text-neutral-600 dark:text-white">
+                        <div className="text-center text-muted-foreground font-light text-lg">
                             <p className="mb-2">Hospodárska 53, 91701 Trnava</p>
                             <p className="mb-2">0902 163 144</p>
                             <p>andrea.heckova92@gmail.com</p>
@@ -91,23 +97,23 @@ export default function ThankYouPage() {
                                 href="https://instagram.com/diaramanicure"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-neutral-600 dark:text-white hover:text-neutral-900 dark:hover:text-neutral-300 transition-colors"
+                                className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
                             >
-                                <Instagram className="h-6 w-6" />
+                                <Instagram className="h-6 w-6 text-gray-600 hover:text-gray-400" />
                             </a>
                             <a
                                 href="https://facebook.com/diaramanicure"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-neutral-600 dark:text-white hover:text-neutral-900 dark:hover:text-neutral-300 transition-colors"
+                                className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
                             >
-                                <Facebook className="h-6 w-6" />
+                                <Facebook className="h-6 w-6 text-gray-600 hover:text-gray-400" />
                             </a>
                         </div>
 
                         {/* Copyright */}
-                        <div className="text-center pt-4 border-t border-neutral-200 dark:border-neutral-700 w-full">
-                            <p className="text-neutral-500 dark:text-white font-light">© 2025 diara manicure</p>
+                        <div className="text-center pt-4 border-t border-primary/10 w-full max-w-xs mx-auto">
+                            <p className="text-sm text-muted-foreground font-light">© 2025 diara manicure</p>
                         </div>
                     </div>
                 </div>

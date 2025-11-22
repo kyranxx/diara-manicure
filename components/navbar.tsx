@@ -2,17 +2,15 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Instagram, Facebook } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { motion, AnimatePresence } from "framer-motion"
-import Image from "next/image"
 import { useTheme } from "next-themes"
 
 export function Navbar() {
     const [isOpen, setIsOpen] = React.useState(false)
     const { resolvedTheme } = useTheme()
-    const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
 
     const toggleMenu = () => setIsOpen(!isOpen)
 
@@ -24,17 +22,10 @@ export function Navbar() {
     ]
 
     return (
-        <nav className="w-full bg-beige z-50 border-b border-primary/5 relative">
-            <div className="container mx-auto px-6 h-24 flex items-center justify-between">
+        <nav className="w-full bg-beige dark:bg-black z-50 relative">
+            <div className="container mx-auto px-6 h-16 flex items-center justify-between">
                 <Link href="/" className="flex-shrink-0">
-                    <Image
-                        src={logoSrc}
-                        alt="DIARA"
-                        width={160}
-                        height={80}
-                        className="h-16 w-auto object-contain"
-                        priority
-                    />
+                    {/* Logo removed as requested */}
                 </Link>
 
                 {/* Desktop Menu */}
@@ -48,11 +39,27 @@ export function Navbar() {
                             {item.label}
                         </Link>
                     ))}
+                    <div className="flex items-center gap-4 px-2">
+                        <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                            <Instagram className="h-5 w-5" />
+                        </a>
+                        <a href="https://facebook.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                            <Facebook className="h-5 w-5" />
+                        </a>
+                    </div>
                     <ThemeToggle />
                 </div>
 
                 {/* Mobile Menu Button */}
                 <div className="md:hidden flex items-center gap-4">
+                    <div className="flex items-center gap-4 px-2">
+                        <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                            <Instagram className="h-5 w-5" />
+                        </a>
+                        <a href="https://facebook.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                            <Facebook className="h-5 w-5" />
+                        </a>
+                    </div>
                     <ThemeToggle />
                     <Button variant="ghost" size="icon" onClick={toggleMenu} className="text-primary">
                         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -67,7 +74,7 @@ export function Navbar() {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-beige border-t border-primary/5 overflow-hidden"
+                        className="md:hidden bg-beige dark:bg-black border-t border-primary/5 overflow-hidden"
                     >
                         <div className="flex flex-col p-6 gap-4">
                             {menuItems.map((item) => (

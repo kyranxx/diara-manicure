@@ -67,6 +67,7 @@ const config = {
         },
         beige: {
           DEFAULT: "hsl(var(--beige))",
+          light: "hsl(var(--beige-light))",
         },
       },
       borderRadius: {
@@ -86,6 +87,10 @@ const config = {
         "marquee": {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-100%)" },
+        },
+        "shimmer": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
         },
       },
       animation: {
