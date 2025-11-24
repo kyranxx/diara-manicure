@@ -7,23 +7,30 @@ import { ThemeProvider } from "./providers"
 const dmSans = DM_Sans({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
 
 export const metadata = {
-  metadataBase: 'https://diara-manicure.com',
-  title: "Gélová Manikúra Trnava | Nechtový Salón Diara | Nail Art & Design",
+  metadataBase: new URL('https://diara-manicure.com'),
+  title: "Nechty Trnava | Gélová Manikúra & Modeláž | Salón Diara",
   description:
-    "Najlepšia gel manikúra v Trnave! Luxusné nechtové služby, nail art a predĺženie nechtov. Rezervujte si termín: 0902 163 144. Profesionálne salón v centre Trnavy.",
+    "Hľadáte najlepšie nechty v Trnave? Navštívte nechtové štúdio Diara. Ponúkame gélové nechty, manikúru a modeláž nechtov. Objednanie online. Pozrite si recenzie a cenník.",
   keywords: [
+    "nechty trnava",
+    "manikura trnava",
+    "nails trnava",
+    "gelove nechty trnava",
+    "nechtove studio trnava",
+    "gelove nechty trnava recenzie",
+    "modelaz nechtov trnava",
+    "nechty trnava cennik",
+    "nechty trnava objednanie",
+    "nechty trnava volne terminy",
     "gel manikúra Trnava",
     "nechtový salón Trnava",
     "nail art Trnava",
     "predĺženie nechtov Trnava",
-    "gélová manikúra",
-    "manikúra Trnava",
-    "najlepšia gel manikúra",
     "luxusný nechtový salón"
   ],
   openGraph: {
-    title: "Diara Manicure - Gélová Manikúra Trnava",
-    description: "Najlepšia gel manikúra v Trnave! Profesionálne nechtové služby a nail art.",
+    title: "Nechty Trnava - Diara Manicure",
+    description: "Najlepšie gélové nechty a manikúra v Trnave. Profesionálne služby a nail art.",
     url: "https://diara-manicure.com",
     siteName: "Diara Manicure",
     images: [
@@ -54,9 +61,9 @@ export default function RootLayout({
       <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17746151386"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
