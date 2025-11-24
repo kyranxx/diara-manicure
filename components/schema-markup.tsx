@@ -8,9 +8,9 @@ const SchemaMarkup = () => {
     "name": "Diara Manicure",
     "alternateName": "diara manicure",
     "image": [
-      "https://diara-manicure.com/logo.png",
-      "https://diara-manicure.com/pic1.jpeg",
-      "https://diara-manicure.com/pic2.jpeg"
+      "https://diara-manicure.com/diara-manicure-logo-trnava.png",
+      "https://diara-manicure.com/gelove-nechty-trnava-gallery-1.jpeg",
+      "https://diara-manicure.com/gelove-nechty-trnava-gallery-2.jpeg"
     ],
     "description": "Luxusný nechtový salón v Trnave. Prémiové gélové manikúry, nail art a predĺženie nechtov v elegantnej atmosfére.",
     "url": "https://diara-manicure.com",

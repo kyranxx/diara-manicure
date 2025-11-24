@@ -39,9 +39,9 @@ export const metadata = {
     siteName: "Diara Manicure",
     images: [
       {
-        url: "/logo.png",
-        width: 840,
-        height: 420,
+        url: "/diara-manicure-logo-trnava.png",
+        width: 1536,
+        height: 600,
       },
     ],
     locale: "sk_SK",

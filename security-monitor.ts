@@ -22,14 +22,14 @@ const MAX_EVENTS = 1000
 // Simple security monitoring
 export class SecurityMonitor {
   private static instance: SecurityMonitor
-  
+
   public static getInstance(): SecurityMonitor {
     if (!SecurityMonitor.instance) {
       SecurityMonitor.instance = new SecurityMonitor()
     }
     return SecurityMonitor.instance
   }
-  
+
   /**
    * Log a security event
    */
@@ -38,26 +38,26 @@ export class SecurityMonitor {
       ...event,
       timestamp: Date.now()
     }
-    
+
     // Store event (in production, send to monitoring service)
     securityEvents.push(fullEvent)
-    
+
     // Keep only recent events
     if (securityEvents.length > MAX_EVENTS) {
       securityEvents.splice(0, securityEvents.length - MAX_EVENTS)
     }
-    
+
     // In production, send critical events to external monitoring
     if (process.env.NODE_ENV === 'production' && fullEvent.severity === 'critical') {
       this.sendToExternalMonitoring(fullEvent)
     }
-    
+
     // Log to console in development only
     if (process.env.NODE_ENV === 'development') {
-      console.log('Security Event:', fullEvent)
+      // console.log('Security Event:', fullEvent)
     }
   }
-  
+
   /**
    * Log rate limit exceeded event
    */
@@ -71,7 +71,7 @@ export class SecurityMonitor {
       userAgent
     })
   }
-  
+
   /**
    * Log suspicious request
    */
@@ -85,14 +85,14 @@ export class SecurityMonitor {
       userAgent
     })
   }
-  
+
   /**
    * Get recent security events
    */
   public getRecentEvents(limit: number = 50): SecurityEvent[] {
     return securityEvents.slice(-limit)
   }
-  
+
   /**
    * Get security statistics
    */
@@ -105,22 +105,22 @@ export class SecurityMonitor {
     const eventsByType: Record<string, number> = {}
     const eventsBySeverity: Record<string, number> = {}
     const oneHourAgo = Date.now() - (60 * 60 * 1000)
-    
+
     let recentActivity = 0
-    
+
     securityEvents.forEach(event => {
       // Count by type
       eventsByType[event.type] = (eventsByType[event.type] || 0) + 1
-      
+
       // Count by severity
       eventsBySeverity[event.severity] = (eventsBySeverity[event.severity] || 0) + 1
-      
+
       // Recent activity
       if (event.timestamp > oneHourAgo) {
         recentActivity++
       }
     })
-    
+
     return {
       totalEvents: securityEvents.length,
       eventsByType,
@@ -128,7 +128,7 @@ export class SecurityMonitor {
       recentActivity
     }
   }
-  
+
   /**
    * Send critical events to external monitoring service
    * This is a placeholder - integrate with your monitoring service
@@ -136,7 +136,7 @@ export class SecurityMonitor {
   private sendToExternalMonitoring(event: SecurityEvent): void {
     // Placeholder for external monitoring integration
     // Examples: Sentry, LogRocket, DataDog, etc.
-    
+
     if (process.env.SENTRY_DSN) {
       // Example: Send to Sentry
       // Sentry.captureException(new Error(event.message), {
@@ -144,7 +144,7 @@ export class SecurityMonitor {
       //   extra: event
       // })
     }
-    
+
     // Add other monitoring services as needed
   }
 }

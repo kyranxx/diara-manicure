@@ -26,7 +26,7 @@ export default function ThankYouPage() {
         return null
     }
 
-    const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
+    const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava.png" : "/diara-manicure-logo-trnava.png"
 
     return (
         <div className="min-h-screen bg-beige dark:bg-black flex flex-col">
@@ -37,8 +37,8 @@ export default function ThankYouPage() {
                         <Image
                             src={logoSrc}
                             alt="diara manicure"
-                            width={300}
-                            height={150}
+                            width={1536}
+                            height={600}
                             className="w-60 h-auto"
                             priority
                         />
@@ -98,6 +98,7 @@ export default function ThankYouPage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                                aria-label="Instagram Diara Manicure"
                             >
                                 <Instagram className="h-6 w-6 text-gray-600 hover:text-gray-400" />
                             </a>
@@ -106,6 +107,7 @@ export default function ThankYouPage() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                                aria-label="Facebook Diara Manicure"
                             >
                                 <Facebook className="h-6 w-6 text-gray-600 hover:text-gray-400" />
                             </a>

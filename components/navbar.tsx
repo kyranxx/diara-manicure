@@ -40,10 +40,10 @@ export function Navbar() {
                         </Link>
                     ))}
                     <div className="flex items-center gap-4 px-2">
-                        <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                        <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors" aria-label="Instagram Diara Manicure">
                             <Instagram className="h-5 w-5" />
                         </a>
-                        <a href="https://facebook.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                        <a href="https://facebook.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors" aria-label="Facebook Diara Manicure">
                             <Facebook className="h-5 w-5" />
                         </a>
                     </div>
@@ -53,15 +53,21 @@ export function Navbar() {
                 {/* Mobile Menu Button */}
                 <div className="md:hidden flex items-center gap-4">
                     <div className="flex items-center gap-4 px-2">
-                        <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                        <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors" aria-label="Instagram Diara Manicure">
                             <Instagram className="h-5 w-5" />
                         </a>
-                        <a href="https://facebook.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors">
+                        <a href="https://facebook.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors" aria-label="Facebook Diara Manicure">
                             <Facebook className="h-5 w-5" />
                         </a>
                     </div>
                     <ThemeToggle />
-                    <Button variant="ghost" size="icon" onClick={toggleMenu} className="text-primary">
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={toggleMenu}
+                        className="text-primary"
+                        aria-label={isOpen ? "Zavrieť menu" : "Otvoriť menu"}
+                    >
                         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
                     </Button>
                 </div>
