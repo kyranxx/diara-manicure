@@ -36,7 +36,9 @@ export default function Home() {
   const logoSrc = resolvedTheme === "dark" ? "/logo_black.png" : "/logo.png"
 
   useEffect(() => {
-    fetch('/api/services')
+    const controller = new AbortController()
+
+    fetch('/api/services', { signal: controller.signal })
       .then(async res => {
         if (!res.ok) {
           const error = await res.json()
@@ -46,10 +48,17 @@ export default function Home() {
       })
       .then(setServices)
       .catch(error => {
+        if (error.name === 'AbortError') return
         console.error('Error fetching services:', error)
         setServices([])
       })
-      .finally(() => setLoadingServices(false))
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoadingServices(false)
+        }
+      })
+
+    return () => controller.abort()
   }, [])
 
   // Handle theme changes for iframe
@@ -147,7 +156,7 @@ export default function Home() {
             alt="Diara Manicure - Nechty Trnava"
             width={840}
             height={420}
-            className="mx-auto w-full max-w-[660px] h-auto"
+            className="mx-auto w-full max-w-full md:max-w-[660px] h-auto"
             priority
             sizes="(max-width: 768px) 100vw, 660px"
           />
@@ -243,15 +252,65 @@ export default function Home() {
         </div>
       </section>
 
+      {/* About Section - Founder & Shop */}
+      <section className="py-16 bg-beige/30 dark:bg-black overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
+            {/* Images Column */}
+            <div className="relative h-[400px] w-full max-w-md mx-auto md:mx-0">
+              <div className="absolute left-0 top-0 w-[55%] h-[90%] z-10 shadow-xl rounded-2xl overflow-hidden border-4 border-white/50">
+                <Image
+                  src="/Andrea_Heckova_diara_manicure_necht_nails_trnava.jpeg"
+                  alt="Andrea Hecková - Zakladateľka Diara Manicure Trnava"
+                  fill
+                  className="object-cover object-top hover:scale-105 transition-transform duration-700 sepia-[.15]"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+              <div className="absolute right-0 bottom-0 w-[55%] h-[70%] z-20 shadow-xl rounded-2xl overflow-hidden border-4 border-white/50">
+                <Image
+                  src="/diara_nails_nechty_trnava_hospodarska.jpeg"
+                  alt="Interiér salónu Diara Manicure"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700 sepia-[.15]"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+              </div>
+            </div>
+
+            {/* Content Column */}
+            <div className="md:pl-8 text-center md:text-left">
+              <h2 className="text-3xl md:text-4xl font-light mb-4 tracking-tight text-black dark:text-white">
+                O nás
+              </h2>
+              <h3 className="text-lg text-primary/80 font-serif italic mb-6">
+                Andrea Hecková & diara manicure.
+              </h3>
+              <p className="text-base text-muted-foreground leading-relaxed mb-4 font-light">
+                Vítame vás v našom salóne, kde sa staráme o krásu a zdravie vašich nechtov s láskou a profesionalitou.
+                Ako zakladateľka <strong>diara manicure.</strong> som si splnila sen o vytvorení miesta, kde sa každá klientka bude cítiť výnimočne.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed mb-6 font-light">
+                Používame len tie najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch, aby sme vám priniesli tú najlepšiu starostlivosť v Trnave.
+              </p>
+              <div className="flex items-center justify-center md:justify-start gap-4">
+                <div className="h-px w-12 bg-primary/30"></div>
+                <span className="text-xs uppercase tracking-widest text-primary/60">Zakladateľka</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section - White Background */}
-      <section id="cennik" className="py-24 bg-white dark:bg-black">
+      < section id="cennik" className="py-24 bg-white dark:bg-black" >
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník Služieb</h2>
             <h3 className="text-xl text-muted-foreground font-light mb-4">Nechty Trnava Cenník</h3>
             <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              <span className="text-primary font-medium mt-2 block">Pozrite si náš cenník pre <strong>gélové nechty</strong> a ďalšie služby. Platné do 31.12.2025</span>
+              <span className="text-primary font-medium mt-2 block">Pozrite si náš cenník pre <strong>gelové nechty</strong> a ďalšie služby. Otváracia akcia nového salónu! Promo ceny platné do 31.12.2025</span>
             </p>
           </div>
 
@@ -271,7 +330,7 @@ export default function Home() {
                       <div className="text-right whitespace-nowrap">
                         {hasDiscount ? (
                           <div className="flex flex-col items-end">
-                            <span className="text-sm text-muted-foreground/60 line-through decoration-1">{service.price}</span>
+                            <span className="text-sm text-black line-through decoration-1">{service.price}</span>
                             <span className="text-xl font-medium text-primary">{service.discountedPrice}</span>
                           </div>
                         ) : (
@@ -287,10 +346,10 @@ export default function Home() {
             )}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Testimonials Section - White Background */}
-      <section id="recenzie" className="pt-12 pb-24 overflow-hidden bg-white dark:bg-black">
+      < section id="recenzie" className="pt-12 pb-24 overflow-hidden bg-white dark:bg-black" >
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Čo hovoria naše klientky</h2>
@@ -343,10 +402,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Gallery Section - White Background */}
-      <section id="galeria" className="pt-12 pb-24 bg-white dark:bg-black">
+      < section id="galeria" className="pt-12 pb-24 bg-white dark:bg-black" >
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nechty našich klientiek</h2>
@@ -379,10 +438,10 @@ export default function Home() {
             </Button>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Contact Section - Beige Background (Merged with Footer) */}
-      <section id="visit" className="py-24 bg-beige dark:bg-black">
+      < section id="visit" className="py-24 bg-beige dark:bg-black" >
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             <div>
@@ -429,10 +488,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section >
 
       {/* Footer - Beige Background (Merged with Contact) */}
-      <footer className="py-12 bg-beige dark:bg-black">
+      < footer className="py-12 bg-beige dark:bg-black" >
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-2">
@@ -467,7 +526,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </footer>
-    </div>
+      </footer >
+    </div >
   )
 }
