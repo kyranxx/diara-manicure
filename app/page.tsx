@@ -156,10 +156,13 @@ export default function Home() {
         <div className="max-w-2xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
             Exkluzívna starostlivosť <br />
-            <span className="italic font-serif text-primary/80">o vaše ruky a nechty Trnava</span>
+            <span className="italic font-serif text-primary/80">o vaše ruky</span>
           </h1>
+          <h2 className="text-xl md:text-2xl text-primary/60 font-light mb-6">
+            Nechtové štúdio Trnava | Gélové nechty & Manikúra
+          </h2>
           <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light leading-relaxed max-w-lg mx-auto">
-            V srdci Trnavy. <strong>Nechtové štúdio Trnava</strong>, kde sa krása stretáva s relaxom. Ponúkame <strong>gélové nechty</strong>, <strong>manikúru</strong> a <strong>modeláž nechtov</strong>.
+            V srdci Trnavy. Kde sa krása stretáva s relaxom a precíznosťou.
           </p>
         </div>
 
@@ -244,10 +247,11 @@ export default function Home() {
       <section id="cennik" className="py-24 bg-white dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nechty Trnava Cenník</h2>
+            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník Služieb</h2>
+            <h3 className="text-xl text-muted-foreground font-light mb-4">Nechty Trnava Cenník</h3>
             <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              <span className="text-primary font-medium mt-2 block">Pozrite si náš cenník pre <strong>gélové nechty Trnava</strong> a ďalšie služby. Platné do 31.12.2025</span>
+              <span className="text-primary font-medium mt-2 block">Promo ceny platné do 31.12.2025</span>
             </p>
           </div>
 
@@ -289,7 +293,8 @@ export default function Home() {
       <section id="recenzie" className="pt-12 pb-24 overflow-hidden bg-white dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Gélové nechty Trnava recenzie</h2>
+            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Čo hovoria naše klientky</h2>
+            <h3 className="text-xl text-muted-foreground font-light mb-4">Gélové nechty Trnava recenzie</h3>
             <div className="flex justify-center gap-1 text-primary mb-4">
               {[1, 2, 3, 4, 5].map((i) => (
                 <Star key={i} className="w-5 h-5 fill-current" />
@@ -344,7 +349,8 @@ export default function Home() {
       <section id="galeria" className="pt-12 pb-24 bg-white dark:bg-black">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nails Trnava - Galéria</h2>
+            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nechty našich klientiek</h2>
+            <h3 className="text-xl text-muted-foreground font-light mb-4">Nails Trnava - Galéria</h3>
             <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
           </div>
 
@@ -381,7 +387,8 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
             <div>
               <div>
-                <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white text-center lg:text-left">Nechty Trnava objednanie</h2>
+                <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white text-center lg:text-left">Kde nás nájdete</h2>
+                <h3 className="text-xl text-muted-foreground font-light mb-4 text-center lg:text-left">Nechty Trnava objednanie</h3>
                 <div className="w-24 h-1 bg-primary/20 mx-auto lg:mx-0 mb-8 rounded-full" />
                 <div className="space-y-8">
                   <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 text-center lg:text-left">
@@ -405,14 +412,13 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="mt-12 flex flex-col items-center lg:items-start gap-4">
+                <div className="mt-12 flex justify-center lg:justify-start">
                   <Button
                     onClick={() => setBookingOpen(true)}
                     className="h-16 md:h-20 text-xl rounded-full px-16 md:px-20 bg-primary text-primary-foreground hover:bg-primary/90 min-w-[250px]"
                   >
                     Rezervovať termín
                   </Button>
-                  <p className="text-sm text-muted-foreground">Hľadáte <strong>nechty Trnava voľné termíny</strong>? Rezervujte online.</p>
                 </div>
               </div>
             </div>
