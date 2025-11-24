@@ -162,7 +162,7 @@ export default function Home() {
             Nechtové štúdio Trnava
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light leading-relaxed max-w-lg mx-auto">
-            V srdci Trnavy. Kde sa krása stretáva s relaxom a precíznosťou.
+            V srdci mesta. Kde sa krása stretáva s relaxom a precíznosťou.
           </p>
         </div>
 
@@ -251,7 +251,7 @@ export default function Home() {
             <h3 className="text-xl text-muted-foreground font-light mb-4">Nechty Trnava Cenník</h3>
             <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              <span className="text-primary font-medium mt-2 block">Pozrite si náš cenník pre <strong>gélové nechty Trnava</strong> a ďalšie služby. Platné do 31.12.2025</span>
+              <span className="text-primary font-medium mt-2 block">Pozrite si náš cenník pre <strong>gélové nechty</strong> a ďalšie služby. Platné do 31.12.2025</span>
             </p>
           </div>
 
@@ -419,7 +419,7 @@ export default function Home() {
                   >
                     Rezervovať termín
                   </Button>
-                  <p className="text-sm text-muted-foreground">Hľadáte <strong>nechty Trnava voľné termíny</strong>? Rezervujte online.</p>
+                  <p className="text-sm text-muted-foreground text-center lg:text-left">Hľadáte <strong>nechty Trnava voľné termíny</strong>? Rezervujte online.</p>
                 </div>
               </div>
             </div>
