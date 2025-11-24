@@ -24,7 +24,7 @@ export function Navbar() {
     return (
         <nav className="w-full bg-beige dark:bg-black z-50 relative">
             <div className="container mx-auto px-6 h-16 flex items-center justify-between">
-                <Link href="/" className="flex-shrink-0">
+                <Link href="/" className="flex-shrink-0" aria-label="Domov">
                     {/* Logo removed as requested */}
                 </Link>
 

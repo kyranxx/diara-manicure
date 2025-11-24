@@ -150,6 +150,7 @@ export default function Home() {
               height={600}
               className="mx-auto w-full max-w-full md:max-w-[660px] h-auto"
               priority
+              fetchPriority="high"
               sizes="(max-width: 768px) 100vw, 660px"
             />
           </div>
