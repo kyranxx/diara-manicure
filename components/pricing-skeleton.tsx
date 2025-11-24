@@ -1,7 +1,5 @@
 "use client"
 
-import { motion } from "framer-motion"
-
 export function PricingSkeleton() {
     return (
         <div className="flex flex-col items-center justify-center py-20">

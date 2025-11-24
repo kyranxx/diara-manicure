@@ -1,4 +1,5 @@
 import type React from "react"
+import type { Metadata } from "next"
 import "./globals.css"
 import { DM_Sans } from "next/font/google"
 import Script from "next/script"
@@ -10,7 +11,29 @@ const dmSans = DM_Sans({
   display: 'swap',
   variable: '--font-dm-sans',
 })
-// ... (metadata export remains unchanged)
+export const metadata: Metadata = {
+  metadataBase: new URL('https://diaramanicure.sk'),
+  title: "Diara Manicure - Nechtové štúdio Trnava | Gélové nechty",
+  description: "Exkluzívne nechtové štúdio v Trnave. Ponúkame profesionálne gélové nechty, manikúru a starostlivosť o ruky. Objednajte sa online.",
+  keywords: ["nechty trnava", "gelove nechty trnava", "manikura trnava", "nechtove studio trnava", "diara manicure"],
+  authors: [{ name: "Andrea Hečková" }],
+  openGraph: {
+    title: "Diara Manicure - Nechtové štúdio Trnava",
+    description: "Exkluzívna starostlivosť o vaše ruky v srdci Trnavy. Profesionálne gélové nechty a manikúra.",
+    type: "website",
+    locale: "sk_SK",
+    url: "https://diaramanicure.sk",
+    siteName: "Diara Manicure",
+    images: [
+      {
+        url: "/diara-manicure-logo-trnava.png",
+        width: 1200,
+        height: 630,
+        alt: "Diara Manicure Trnava",
+      },
+    ],
+  },
+}
 export default function RootLayout({
   children,
 }: {

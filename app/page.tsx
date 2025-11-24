@@ -16,7 +16,6 @@ import {
 import SchemaMarkup from "@/components/schema-markup"
 import { Navbar } from "@/components/navbar"
 import { PricingSkeleton } from "@/components/pricing-skeleton"
-import { FadeIn } from "@/components/ui/fade-in"
 
 interface Service {
   title: string
@@ -142,13 +141,13 @@ export default function Home() {
             <div className="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-gradient-to-bl from-primary/5 to-transparent blur-3xl" />
           </div>
 
-          <div className="mb-8 relative">
+          <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
             <Image
               src={logoSrc}
               alt="Diara Manicure - Nechty Trnava"
               width={1536}
               height={600}
-              className="mx-auto w-full max-w-full md:max-w-[660px] h-auto"
+              className="w-full h-auto"
               priority
               fetchPriority="high"
               sizes="(max-width: 768px) 100vw, 660px"
