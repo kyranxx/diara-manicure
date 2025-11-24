@@ -4,7 +4,11 @@ import { DM_Sans } from "next/font/google"
 import Script from "next/script"
 import { ThemeProvider } from "./providers"
 
-const dmSans = DM_Sans({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] })
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: 'swap',
+})
 
 export const metadata = {
   metadataBase: new URL('https://diara-manicure.com'),
