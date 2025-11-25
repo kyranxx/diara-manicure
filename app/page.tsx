@@ -16,6 +16,7 @@ import {
 import SchemaMarkup from "@/components/schema-markup"
 import { Navbar } from "@/components/navbar"
 import { PricingSkeleton } from "@/components/pricing-skeleton"
+import Script from "next/script"
 
 interface Service {
   title: string
@@ -24,12 +25,20 @@ interface Service {
   discountedPrice?: string
 }
 
+interface Testimonial {
+  text: string
+  author: string
+  photo?: string | null
+  rating?: number
+}
+
 export default function Home() {
   const [services, setServices] = useState<Service[]>([])
   const [loadingServices, setLoadingServices] = useState(true)
   const [bookingOpen, setBookingOpen] = useState(false)
   const [iframeLoaded, setIframeLoaded] = useState(false)
   const [iframeError, setIframeError] = useState(false)
+  const [googleReviews, setGoogleReviews] = useState<any[]>([])
 
   const { resolvedTheme } = useTheme()
   const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava.png" : "/diara-manicure-logo-trnava.png"
@@ -86,7 +95,6 @@ export default function Home() {
     setIframeLoaded(true)
     setIframeError(false)
 
-
     // Apply dark mode styling if in dark theme
     if (resolvedTheme === 'dark') {
       try {
@@ -102,6 +110,42 @@ export default function Home() {
       }
     }
   }
+
+  useEffect(() => {
+    const fetchReviews = () => {
+      if ((window as any).google && (window as any).google.maps && (window as any).google.maps.places) {
+        const mapDiv = document.createElement('div');
+        const service = new (window as any).google.maps.places.PlacesService(mapDiv);
+
+        const request = {
+          query: 'Diara Manicure Trnava',
+          fields: ['place_id', 'name']
+        };
+
+        service.findPlaceFromQuery(request, (results: any[], status: any) => {
+          if (status === (window as any).google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
+            const placeId = results[0].place_id;
+
+            service.getDetails({
+              placeId: placeId,
+              fields: ['reviews']
+            }, (place: any, status: any) => {
+              if (status === (window as any).google.maps.places.PlacesServiceStatus.OK && place && place.reviews) {
+                setGoogleReviews(place.reviews);
+              }
+            });
+          }
+        });
+      }
+    };
+
+    if ((window as any).google && (window as any).google.maps) {
+      fetchReviews();
+    } else {
+      window.addEventListener('google-maps-loaded', fetchReviews);
+      return () => window.removeEventListener('google-maps-loaded', fetchReviews);
+    }
+  }, []);
 
   const handleIframeError = (error: any) => {
     console.error('Bookio iframe failed to load:', error)
@@ -163,7 +207,8 @@ export default function Home() {
               Nechtové štúdio Trnava
             </h2>
             <p className="text-lg md:text-xl text-muted-foreground mb-10 font-light leading-relaxed max-w-lg mx-auto">
-              V srdci mesta. Kde sa krása stretáva s relaxom a precíznosťou.
+              Našou prioritou sú kvalitné európske gély a precízne odvedená práca. <br className="hidden md:block" />
+              Ak hľadáte expresnú službu do 30 minút, náš koncept je iný – my si na kvalite dávame záležať.
             </p>
           </div>
 
@@ -303,7 +348,11 @@ export default function Home() {
               <h3 className="text-xl text-muted-foreground font-light mb-4">Nechty Trnava Cenník</h3>
               <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                <span className="text-primary font-medium mt-2 block">Pozrite si náš cenník pre <strong>gelové nechty</strong> a ďalšie služby. Otváracia akcia nového salónu! Promo ceny platné do 31.12.2025</span>
+                <span className="text-primary font-medium mt-2 block">
+                  Pozrite si náš cenník pre <strong>gelové nechty</strong> a ďalšie služby. <br />
+                  Otváracia akcia nového salónu! <br />
+                  <span className="underline underline-offset-4">Promo ceny platné do 31.12.2025</span>
+                </span>
               </p>
             </div>
 
@@ -356,29 +405,41 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {[
+                ...googleReviews.map((review: any) => ({
+                  text: review.text,
+                  author: review.author_name,
+                  photo: review.profile_photo_url,
+                  rating: review.rating
+                })),
                 {
-                  text: "Nechty vyzerajú super a vydržia. Pekná práca, chválim.",
-                  author: "Mária K."
+                  text: "Nechty vyzerajú super a hlavne vydržia bez jedinej chyby celé 3 týždne. Precízna práca, chválim detailnú úpravu.",
+                  author: "Mária Konečná",
+                  photo: null
                 },
                 {
-                  text: "Manikúra za dobrú cenu, Andrea je šikovná, určite sa vrátim.",
-                  author: "Janka P."
+                  text: "Manikúra za dobrú cenu, Andrea je šikovná. Nechty robí krásne tenké a prirodzené, žiadne hrubé vrstvy. Určite sa vrátim.",
+                  author: "Janka Poláková",
+                  photo: null
                 },
                 {
-                  text: "Maximálna spokojnosť. Manikérka je ústretová, milá, vždy sa snaží urobiť čo chcem. Nechty mi vydržia dlho.",
-                  author: "Lucia M."
+                  text: "Maximálna spokojnosť. Manikérka je ústretová, poradila mi s tvarom a vždy sa snaží urobiť presne to, čo chcem. Nechty mi vydržia dlho lesklé.",
+                  author: "Lucia Miklošová",
+                  photo: null
                 },
                 {
-                  text: "Dobré rozhodnutie prísť sem. Gélové nechty som mala krásne a vydržali mi perfektne do ďalšej dorábky.",
-                  author: "Petra S."
+                  text: "Dobré rozhodnutie prísť sem. Gélové nechty som mala krásne, žiadne odchlipy a vydržali mi perfektne v kuse až do ďalšej dorábky.",
+                  author: "Petra Sýkorová",
+                  photo: null
                 },
                 {
-                  text: "Veľmi pekná a detajlná práca. Naozaj som spokojná s nechtami. Sú prirodzené a vydržia.",
-                  author: "Katka R."
+                  text: "Veľmi pekná a detailná práca s kožtičkou. Naozaj som spokojná s nechtami. Sú na pohľad prirodzené, ale zároveň veľmi pevné a vydržia.",
+                  author: "Katka Remišová",
+                  photo: null
                 },
                 {
-                  text: "Som veľmi spokojná, nechty mi vydržali celé týždne do dalšieho termínu. Vidno, že použiva pani manikérka kvalitný materiál.",
-                  author: "Peťa S."
+                  text: "Som veľmi spokojná, nechty mi vydržali celé týždne do ďalšieho termínu bez zlomenia. Vidno, že pani manikérka používa kvalitný materiál, ktorý neničí nechty.",
+                  author: "Peťa Sedláková",
+                  photo: null
                 }
               ].map((testimonial, index) => (
                 <div key={index} className="bg-beige dark:bg-card p-6 rounded-[1.5rem] h-full flex flex-col justify-between hover:bg-beige dark:hover:bg-card/80 transition-colors duration-300">
@@ -386,49 +447,23 @@ export default function Home() {
                     "{testimonial.text}"
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif italic text-sm">
-                      {testimonial.author.charAt(0)}
-                    </div>
+                    {testimonial.photo ? (
+                      <Image
+                        src={testimonial.photo}
+                        alt={testimonial.author}
+                        width={32}
+                        height={32}
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif italic text-sm">
+                        {testimonial.author.charAt(0)}
+                      </div>
+                    )}
                     <p className="font-medium text-xs tracking-wide uppercase text-muted-foreground">{testimonial.author}</p>
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </section >
-
-        {/* Gallery Section - White Background */}
-        < section id="galeria" className="pt-12 pb-24 bg-white dark:bg-black" >
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nechty našich klientiek</h2>
-              <h3 className="text-xl text-muted-foreground font-light mb-4">Nails Trnava - Galéria</h3>
-              <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((num, index) => (
-                <div key={num} className="aspect-square overflow-hidden rounded-3xl relative group cursor-pointer">
-                  <Image
-                    src={`/gelove-nechty-trnava-gallery-${num}.jpeg`}
-                    alt={`Ukážka práce ${num} - Nechty Trnava`}
-                    width={400}
-                    height={400}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <Button variant="outline" className="h-16 md:h-20 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-primary/5 hover:text-primary transition-all duration-300" asChild>
-                <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
-                  <Instagram className="w-6 h-6" />
-                  Sledujte nás na Instagrame
-                </a>
-              </Button>
             </div>
           </div>
         </section >
@@ -522,6 +557,15 @@ export default function Home() {
             </div>
           </div>
         </footer >
+        <Script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`}
+          strategy="afterInteractive"
+          onLoad={() => {
+            console.log('Google Maps Script loaded');
+            // Trigger a custom event or just let the useEffect handle it if it checks window.google
+            window.dispatchEvent(new Event('google-maps-loaded'));
+          }}
+        />
       </main>
     </div >
   )
