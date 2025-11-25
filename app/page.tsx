@@ -204,16 +204,16 @@ export default function Home() {
               <span className="italic font-serif text-primary/80">o vaše ruky</span>
             </h1>
             <p className="text-xl md:text-2xl text-primary/60 font-light mb-10 leading-relaxed max-w-lg mx-auto">
-              Našou prioritou sú kvalitné európske gély a precízne odvedená práca. <br className="hidden md:block" />
-              Ak hľadáte expresnú službu do 30 minút, náš koncept je iný – my si na kvalite dávame záležať.
+              Našou prioritou sú <span className="underline decoration-2 underline-offset-4">kvalitné európske gély</span> a precízne odvedená práca. <br className="hidden md:block" />
+              Ak hľadáte expresnú službu do 30 minút, <span className="underline decoration-2 underline-offset-4">náš koncept je iný – my si na kvalite dávame záležať</span>.
             </p>
           </div>
 
-          <div className="flex flex-col items-center gap-8 w-full max-w-md mx-auto">
-            <div className="flex flex-col sm:flex-row justify-center gap-4 w-full">
+          <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
+            <div className="flex flex-col justify-center gap-4 w-full">
               <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
                 <DialogTrigger asChild>
-                  <Button className="h-16 md:h-20 text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto">
+                  <Button className="h-16 md:h-20 text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full">
                     Pozrieť voľné termíny
                   </Button>
                 </DialogTrigger>
@@ -275,7 +275,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 onClick={scrollToVisit}
-                className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full sm:w-auto"
+                className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full"
               >
                 Kde nás nájdete
               </Button>
