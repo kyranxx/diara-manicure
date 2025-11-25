@@ -41,7 +41,7 @@ export default function Home() {
   const [googleReviews, setGoogleReviews] = useState<any[]>([])
 
   const { resolvedTheme } = useTheme()
-  const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava.png" : "/diara-manicure-logo-trnava.png"
+  const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava-v2.png" : "/diara-manicure-logo-trnava.png"
 
   useEffect(() => {
     const controller = new AbortController()
@@ -128,10 +128,17 @@ export default function Home() {
 
             service.getDetails({
               placeId: placeId,
-              fields: ['reviews']
+              fields: ['reviews', 'rating', 'user_ratings_total']
             }, (place: any, status: any) => {
               if (status === (window as any).google.maps.places.PlacesServiceStatus.OK && place && place.reviews) {
-                setGoogleReviews(place.reviews);
+                // Map reviews to our testimonial format
+                const mappedReviews = place.reviews.map((review: any) => ({
+                  text: review.text,
+                  author: review.author_name,
+                  photo: review.profile_photo_url,
+                  rating: review.rating
+                }));
+                setGoogleReviews(mappedReviews);
               }
             });
           }
@@ -139,11 +146,18 @@ export default function Home() {
       }
     };
 
-    if ((window as any).google && (window as any).google.maps) {
+    const handleMapsLoaded = () => {
+      //Add delay to ensure Places library is fully initialized
+      setTimeout(() => {
+        fetchReviews();
+      }, 1000);
+    };
+
+    if ((window as any).google && (window as any).google.maps && (window as any).google.maps.places) {
       fetchReviews();
     } else {
-      window.addEventListener('google-maps-loaded', fetchReviews);
-      return () => window.removeEventListener('google-maps-loaded', fetchReviews);
+      window.addEventListener('google-maps-loaded', handleMapsLoaded);
+      return () => window.removeEventListener('google-maps-loaded', handleMapsLoaded);
     }
   }, []);
 
@@ -169,7 +183,7 @@ export default function Home() {
       <main>
         {/* Preload dark logo for instant switching */}
         <Image
-          src="/diara-manicure-logo-black-trnava.png"
+          src="/diara-manicure-logo-black-trnava-v2.png"
           alt=""
           width={1536}
           height={600}
@@ -199,14 +213,10 @@ export default function Home() {
           </div>
 
           <div className="max-w-2xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
+            <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-10 leading-tight">
               Exkluzívna starostlivosť <br />
               <span className="italic font-serif text-primary/80">o vaše ruky</span>
             </h1>
-            <p className="text-xl md:text-2xl text-primary/60 font-light mb-10 leading-relaxed max-w-lg mx-auto">
-              Našou prioritou sú <span className="underline decoration-2 underline-offset-4">kvalitné európske gély</span> a precízne odvedená práca. <br className="hidden md:block" />
-              Ak hľadáte expresnú službu do 30 minút, <span className="underline decoration-2 underline-offset-4">náš koncept je iný – my si na kvalite dávame záležať</span>.
-            </p>
           </div>
 
           <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
@@ -217,7 +227,7 @@ export default function Home() {
                     Pozrieť voľné termíny
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="max-w-2xl w-full h-[85vh] p-0 overflow-hidden rounded-2xl border-none">
+                <DialogContent className="max-w-4xl w-full h-[85vh] p-0 overflow-hidden rounded-2xl border-none">
                   <DialogTitle className="sr-only">Rezervácia termínu</DialogTitle>
                   <DialogDescription className="sr-only">
                     Rezervujte si termín na manikúru prostredníctvom našej online rezervačnej platformy.
@@ -275,14 +285,19 @@ export default function Home() {
               <Button
                 variant="outline"
                 onClick={scrollToVisit}
-                className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full"
+                className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full mb-8"
               >
                 Kde nás nájdete
               </Button>
             </div>
 
-            <div className="animate-bounce text-muted-foreground/50">
-              <ChevronDown className="w-6 h-6" />
+            {/* Floating Bubble - Desktop: Upper Left, Mobile: Above Arrow */}
+            <div className="relative mt-0 xl:absolute xl:left-8 xl:top-0 xl:mt-0 w-80 max-w-full mx-auto p-6 rounded-[2rem] bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl z-10">
+              <p className="text-lg font-light leading-relaxed text-black dark:text-white">
+                Našou prioritou sú <span className="italic font-serif text-primary">kvalitné európske gély</span> a precízne odvedená práca.
+                <br className="my-6 block" />
+                Ak hľadáte expresnú službu do 30 minút, <span className="italic font-serif text-primary">náš koncept je iný – my si na kvalite dávame záležať</span>.
+              </p>
             </div>
           </div>
         </section>
@@ -318,14 +333,15 @@ export default function Home() {
                 <h2 className="text-3xl md:text-4xl font-light mb-4 tracking-tight text-black dark:text-white">
                   O nás
                 </h2>
+                <div className="w-24 h-1 bg-primary/20 mx-auto md:mx-0 mb-6 rounded-full" />
                 <h3 className="text-lg text-primary/80 font-serif italic mb-6">
                   Andrea Hečková & diara manicure.
                 </h3>
-                <p className="text-base text-muted-foreground leading-relaxed mb-4 font-light">
+                <p className="text-lg text-muted-foreground leading-relaxed mb-4 font-light">
                   Vítame vás v našom salóne, kde sa staráme o krásu a zdravie vašich nechtov s láskou a profesionalitou.
                   Ako zakladateľka <strong>diara manicure.</strong> som si splnila sen o vytvorení miesta, kde sa každá klientka bude cítiť výnimočne.
                 </p>
-                <p className="text-base text-muted-foreground leading-relaxed mb-6 font-light">
+                <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
                   Používame len tie najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch, aby sme vám priniesli tú najlepšiu starostlivosť v Trnave.
                 </p>
                 <div className="flex items-center justify-center md:justify-start gap-4">
@@ -342,11 +358,9 @@ export default function Home() {
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník služieb</h2>
-              <h3 className="text-xl text-muted-foreground font-light mb-4">Nechty Trnava Cenník</h3>
               <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 <span className="text-primary font-medium mt-2 block">
-                  Pozrite si náš cenník pre <strong>gélové nechty</strong> a ďalšie služby. <br />
                   Otváracia akcia nového salónu! <br />
                   <span className="underline underline-offset-4">Promo ceny platné do 31.12.2025</span>
                 </span>
@@ -392,7 +406,6 @@ export default function Home() {
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Čo hovoria naše klientky</h2>
-              <h3 className="text-xl text-muted-foreground font-light mb-4">Gélové nechty Trnava recenzie</h3>
               <div className="flex justify-center gap-1 text-primary mb-4">
                 {[1, 2, 3, 4, 5].map((i) => (
                   <Star key={i} className="w-5 h-5 fill-current" />
@@ -402,47 +415,78 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {[
-                ...googleReviews.map((review: any) => ({
-                  text: review.text,
-                  author: review.author_name,
-                  photo: review.profile_photo_url,
-                  rating: review.rating
-                })),
+                ...googleReviews,
                 {
                   text: "Nechty vyzerajú super a hlavne vydržia bez jedinej chyby celé 3 týždne. Precízna práca, chválim detailnú úpravu.",
                   author: "Mária Konečná",
-                  photo: null
+                  photo: null,
+                  rating: 5
                 },
                 {
                   text: "Manikúra za dobrú cenu, Andrea je šikovná. Nechty robí krásne tenké a prirodzené, žiadne hrubé vrstvy. Určite sa vrátim.",
                   author: "Janka Poláková",
-                  photo: null
+                  photo: null,
+                  rating: 5
                 },
                 {
-                  text: "Maximálna spokojnosť. Manikérka je ústretová, poradila mi s tvarom a vždy sa snaží urobiť presne to, čo chcem. Nechty mi vydržia dlho lesklé.",
+                  text: "Maximálna spokojnosť. Mamikérka je ústretová, poradila mi s tvarom a vždy sa snaží urobiť presne to, čo chcem. Nechty mi vydržia dlho lesklé.",
                   author: "Lucia Miklošová",
-                  photo: null
+                  photo: null,
+                  rating: 5
                 },
                 {
                   text: "Dobré rozhodnutie prísť sem. Gélové nechty som mala krásne, žiadne odchlipy a vydržali mi perfektne v kuse až do ďalšej dorábky.",
                   author: "Petra Sýkorová",
-                  photo: null
+                  photo: null,
+                  rating: 5
                 },
                 {
                   text: "Veľmi pekná a detailná práca s kožtičkou. Naozaj som spokojná s nechtami. Sú na pohľad prirodzené, ale zároveň veľmi pevné a vydržia.",
                   author: "Katka Remišová",
-                  photo: null
+                  photo: null,
+                  rating: 5
                 },
                 {
                   text: "Som veľmi spokojná, nechty mi vydržali celé týždne do ďalšieho termínu bez zlomenia. Vidno, že pani manikérka používa kvalitný materiál, ktorý neničí nechty.",
                   author: "Peťa Sedláková",
-                  photo: null
+                  photo: null,
+                  rating: 5
                 }
               ].map((testimonial, index) => (
                 <div key={index} className="bg-beige dark:bg-card p-6 rounded-[1.5rem] h-full flex flex-col justify-between hover:bg-beige dark:hover:bg-card/80 transition-colors duration-300">
-                  <p className="text-black/80 dark:text-white/80 italic text-base leading-relaxed mb-4 font-light">
-                    "{testimonial.text}"
-                  </p>
+                  <div>
+                    {testimonial.rating && (
+                      <div className="flex items-center gap-2 mb-3">
+                        <div className="flex gap-0.5">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              className={`w-4 h-4 ${star <= testimonial.rating
+                                ? 'fill-primary text-primary'
+                                : 'fill-gray-200 text-gray-200 dark:fill-gray-700 dark:text-gray-700'
+                                }`}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-sm font-medium text-black dark:text-white">
+                          {testimonial.rating.toFixed(1)}
+                        </span>
+                        {testimonial.photo && testimonial.photo.includes('googleusercontent') && (
+                          <div className="ml-1 flex-shrink-0" title="Recenzia z Google Maps">
+                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
+                              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
+                              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+                            </svg>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <p className="text-black/80 dark:text-white/80 italic text-base leading-relaxed mb-4 font-light">
+                      "{testimonial.text}"
+                    </p>
+                  </div>
                   <div className="flex items-center gap-3">
                     {testimonial.photo ? (
                       <Image
@@ -465,14 +509,56 @@ export default function Home() {
           </div>
         </section >
 
+        {/* Gallery Section - Beige Background */}
+        <section id="galeria" className="pt-12 pb-24 bg-white dark:bg-black overflow-hidden">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nechty našich klientiek</h2>
+              <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                <div key={num} className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-300">
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10" />
+                  <Image
+                    src={`/gelove-nechty-trnava-gallery-${num}.jpeg`}
+                    alt={`Ukážka práce ${num}`}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                </div>
+              ))}
+            </div>
+            
+            <div className="mt-12 text-center">
+              <Button
+                variant="outline"
+                className="rounded-full h-16 md:h-20 px-10 md:px-12 text-xl font-normal"
+                asChild
+              >
+                <a 
+                  href="https://instagram.com/diaramanicure" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2"
+                >
+                  <Instagram className="w-6 h-6" />
+                  Sledujte nás na Instagrame
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
         {/* Contact Section - Beige Background (Merged with Footer) */}
-        < section id="visit" className="py-24 bg-beige dark:bg-black" >
+        < section id="visit" className="pt-24 pb-12 bg-beige dark:bg-black" >
           <div className="container mx-auto px-6">
             <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
               <div>
                 <div>
                   <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white text-center lg:text-left">Kde nás nájdete</h2>
-                  <h3 className="text-xl text-muted-foreground font-light mb-4 text-center lg:text-left">Nechty Trnava objednanie</h3>
                   <div className="w-24 h-1 bg-primary/20 mx-auto lg:mx-0 mb-8 rounded-full" />
                   <div className="space-y-8">
                     <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 text-center lg:text-left">
@@ -491,7 +577,9 @@ export default function Home() {
                       </div>
                       <div>
                         <h4 className="text-xl font-medium mb-1 text-black dark:text-white">Telefón</h4>
-                        <p className="text-muted-foreground text-lg">0902 163 144</p>
+                        <p className="text-muted-foreground text-lg">
+                          0902 <span className="hidden">null</span>163 <span className="hidden">null</span>144
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -501,9 +589,8 @@ export default function Home() {
                       onClick={() => setBookingOpen(true)}
                       className="h-16 md:h-20 text-xl rounded-full px-16 md:px-20 bg-primary text-primary-foreground hover:bg-primary/90 min-w-[250px]"
                     >
-                      Rezervovať termín
+                      Pozrieť voľné termíny
                     </Button>
-                    <p className="text-sm text-muted-foreground text-center lg:text-left">Hľadáte <strong>nechty Trnava voľné termíny</strong>? Rezervujte online.</p>
                   </div>
                 </div>
               </div>
@@ -529,7 +616,7 @@ export default function Home() {
                 />
               </div>
 
-              <p className="text-sm text-muted-foreground text-center">© 2025 Diara Manicure. Všetky práva vyhradené.</p>
+              <p className="text-sm text-muted-foreground text-center">© 2025 diara manicure. Všetky práva vyhradené.</p>
 
               <div className="flex gap-6">
                 <a

@@ -26,7 +26,7 @@ export default function ThankYouPage() {
         return null
     }
 
-    const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava.png" : "/diara-manicure-logo-trnava.png"
+    const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava-v2.png" : "/diara-manicure-logo-trnava.png"
 
     return (
         <div className="min-h-screen bg-beige dark:bg-black flex flex-col">
