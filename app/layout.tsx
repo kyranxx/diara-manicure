@@ -4,6 +4,7 @@ import "./globals.css"
 import { DM_Sans } from "next/font/google"
 import Script from "next/script"
 import { ThemeProvider } from "./providers"
+import { FacebookChat } from "@/components/facebook-chat"
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <FacebookChat />
         </ThemeProvider>
       </body>
     </html>
