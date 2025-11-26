@@ -1,8 +1,17 @@
 'use client'
 
+import { useEffect } from 'react'
 import Script from 'next/script'
 
 export function FacebookChat() {
+  useEffect(() => {
+    const chatbox = document.getElementById('fb-customer-chat')
+    if (chatbox) {
+      chatbox.setAttribute("page_id", "791288010744786")
+      chatbox.setAttribute("attribution", "biz_inbox")
+    }
+  }, [])
+
   return (
     <>
       <div id="fb-root" />
@@ -12,10 +21,6 @@ export function FacebookChat() {
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
-            var chatbox = document.getElementById('fb-customer-chat');
-            chatbox.setAttribute("page_id", "791288010744786");
-            chatbox.setAttribute("attribution", "biz_inbox");
-
             window.fbAsyncInit = function() {
               FB.init({
                 xfbml            : true,
