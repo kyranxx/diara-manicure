@@ -39,9 +39,18 @@ export default function Home() {
   const [iframeLoaded, setIframeLoaded] = useState(false)
   const [iframeError, setIframeError] = useState(false)
   const [googleReviews, setGoogleReviews] = useState<any[]>([])
+  const [bookingUrl, setBookingUrl] = useState('https://services.bookio.com/diaramanicure/widget?lang=sk')
 
   const { resolvedTheme } = useTheme()
   const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava-v2.png" : "/diara-manicure-logo-trnava.png"
+
+  // Set booking URL with success redirect on client side only
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const successUrl = `${window.location.origin}/dakujeme`
+      setBookingUrl(`https://services.bookio.com/diaramanicure/widget?lang=sk&success_url=${encodeURIComponent(successUrl)}`)
+    }
+  }, [])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -344,7 +353,7 @@ export default function Home() {
 
                       <iframe
                         id="bookio-iframe"
-                        src={`https://services.bookio.com/diaramanicure/widget?lang=sk&success_url=${encodeURIComponent(window.location.origin + '/dakujeme')}`}
+                        src={bookingUrl}
                         width="100%"
                         height="100%"
                         style={{ border: 'none', display: 'block' }}
