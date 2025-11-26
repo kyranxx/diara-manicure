@@ -161,6 +161,84 @@ export default function Home() {
     }
   }, []);
 
+  // Listen for Bookio booking completion and redirect to thank you page
+  useEffect(() => {
+    const handleBookioMessage = (event: MessageEvent) => {
+      // Only accept messages from Bookio domain
+      if (!event.origin.includes('bookio.com')) {
+        return;
+      }
+
+      console.log('Received message from Bookio:', event.data);
+
+      // Check if booking was completed
+      // Bookio may send different event types, we'll listen for common completion indicators
+      if (
+        event.data?.type === 'booking_completed' ||
+        event.data?.type === 'reservation_completed' ||
+        event.data?.event === 'booking_completed' ||
+        event.data?.event === 'reservation_completed' ||
+        event.data?.status === 'completed' ||
+        event.data?.success === true
+      ) {
+        console.log('Booking completed! Redirecting to thank you page...');
+        // Close the dialog
+        setBookingOpen(false);
+        // Redirect to thank you page
+        window.location.href = '/dakujeme';
+      }
+    };
+
+    // Also monitor iframe URL for completion indicators
+    let iframeCheckInterval: NodeJS.Timeout | null = null;
+
+    if (bookingOpen) {
+      iframeCheckInterval = setInterval(() => {
+        try {
+          const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement;
+          if (iframe && iframe.contentWindow) {
+            // Try to access iframe location (this may fail due to CORS, which is expected)
+            try {
+              const iframeUrl = iframe.contentWindow.location.href;
+              console.log('Checking Bookio iframe URL:', iframeUrl);
+
+              // Check for success/completion indicators in URL
+              if (
+                iframeUrl.includes('/success') ||
+                iframeUrl.includes('/confirmed') ||
+                iframeUrl.includes('/booking-confirmed') ||
+                iframeUrl.includes('/completed') ||
+                iframeUrl.includes('?status=success') ||
+                iframeUrl.includes('&status=success')
+              ) {
+                console.log('Booking completion detected in URL! Redirecting...');
+                setBookingOpen(false);
+                window.location.href = '/dakujeme';
+                if (iframeCheckInterval) clearInterval(iframeCheckInterval);
+              }
+            } catch (e) {
+              // CORS error - expected, iframe is cross-origin
+              // Continue listening for postMessage instead
+            }
+          }
+        } catch (error) {
+          // Silently handle errors
+        }
+      }, 1000); // Check every second
+    }
+
+    // Add event listener for postMessage
+    window.addEventListener('message', handleBookioMessage);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('message', handleBookioMessage);
+      if (iframeCheckInterval) {
+        clearInterval(iframeCheckInterval);
+      }
+    };
+  }, [bookingOpen]);
+
   const handleIframeError = (error: any) => {
     console.error('Bookio iframe failed to load:', error)
     setIframeError(true)
@@ -266,11 +344,11 @@ export default function Home() {
 
                       <iframe
                         id="bookio-iframe"
-                        src="https://services.bookio.com/diaramanicure/widget?lang=sk"
+                        src={`https://services.bookio.com/diaramanicure/widget?lang=sk&success_url=${encodeURIComponent(window.location.origin + '/dakujeme')}`}
                         width="100%"
                         height="100%"
                         style={{ border: 'none', display: 'block' }}
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
                         allow="microphone 'none'; camera 'none'; geolocation 'none'; unload 'none'"
                         referrerPolicy="strict-origin-when-cross-origin"
                         onLoad={handleIframeLoad}
