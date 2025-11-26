@@ -43,6 +43,94 @@ export default function Home() {
   const [bookingStartTime, setBookingStartTime] = useState<number | null>(null)
   const [bookingCompleted, setBookingCompleted] = useState(false)
   const [previousHeight, setPreviousHeight] = useState<number>(0)
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([
+    {
+      text: "Nechty vyzerajú super a hlavne vydržia bez jedinej chyby celé 3 týždne. Precízna práca, chválim detailnú úpravu.",
+      author: "Mária Konečná",
+      photo: null,
+      rating: 5
+    },
+    {
+      text: "Manikúra za dobrú cenu, Andrea je šikovná. Nechty robí krásne tenké a prirodzené, žiadne hrubé vrstvy. Určite sa vrátim.",
+      author: "Janka Poláková",
+      photo: null,
+      rating: 5
+    },
+    {
+      text: "Maximálna spokojnosť. Mamikérka je ústretová, poradila mi s tvarom a vždy sa snaží urobiť presne to, čo chcem. Nechty mi vydržia dlho lesklé.",
+      author: "Lucia Miklošová",
+      photo: null,
+      rating: 5
+    },
+    {
+      text: "Dobré rozhodnutie prísť sem. Gélové nechty som mala krásne, žiadne odchlipy a vydržali mi perfektne v kuse až do ďalšej dorábky.",
+      author: "Petra Sýkorová",
+      photo: null,
+      rating: 5
+    },
+    {
+      text: "Veľmi pekná a detailná práca s kožtičkou. Naozaj som spokojná s nechtami. Sú na pohľad prirodzené, ale zároveň veľmi pevné a vydržia.",
+      author: "Katka Remišová",
+      photo: null,
+      rating: 5
+    },
+    {
+      text: "Som veľmi spokojná, nechty mi vydržali celé týždne do ďalšieho termínu bez zlomenia. Vidno, že pani manikérka používa kvalitný materiál, ktorý neničí nechty.",
+      author: "Peťa Sedláková",
+      photo: null,
+      rating: 5
+    }
+  ])
+
+  useEffect(() => {
+    const fetchGoogleReviews = () => {
+      if (!window.google || !window.google.maps || !window.google.maps.places) return;
+
+      const mapDiv = document.createElement('div');
+      const service = new window.google.maps.places.PlacesService(mapDiv);
+
+      const request = {
+        query: 'Diara Manicure Trnava',
+        fields: ['name', 'place_id'],
+      };
+
+      service.findPlaceFromQuery(request, (results: any, status: any) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
+          const placeId = results[0].place_id;
+          if (!placeId) return;
+
+          service.getDetails({
+            placeId: placeId,
+            fields: ['reviews']
+          }, (place: any, detailStatus: any) => {
+            if (detailStatus === window.google.maps.places.PlacesServiceStatus.OK && place && place.reviews) {
+              const googleReviews: Testimonial[] = place.reviews
+                .filter((review: any) => review.rating && review.rating >= 4)
+                .slice(0, 5)
+                .map((review: any) => ({
+                  text: review.text || '',
+                  author: review.author_name,
+                  photo: review.profile_photo_url,
+                  rating: review.rating
+                }));
+
+              setTestimonials(prev => {
+                // Avoid duplicates based on author name
+                const newReviews = googleReviews.filter(gr => !prev.some(pr => pr.author === gr.author));
+                return [...newReviews, ...prev];
+              });
+            }
+          });
+        }
+      });
+    };
+
+    if ((window as any).google && (window as any).google.maps) {
+      fetchGoogleReviews();
+    } else {
+      (window as any).initMap = fetchGoogleReviews;
+    }
+  }, []);
 
   const { resolvedTheme } = useTheme()
   const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava-v2.png" : "/diara-manicure-logo-trnava.png"
@@ -324,8 +412,16 @@ export default function Home() {
                 }
               }}>
                 <DialogTrigger asChild>
-                  <Button className="h-16 md:h-20 text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full">
-                    Pozrieť voľné termíny
+                  <Button className="h-auto py-4 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2">
+                    <span>Pozrieť voľné termíny</span>
+                    <div className="relative h-5 w-20 opacity-80">
+                      <Image
+                        src="/bookio_logo.png"
+                        alt="Bookio"
+                        fill
+                        className="object-contain brightness-0 invert"
+                      />
+                    </div>
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-4xl w-full h-[85vh] p-0 overflow-hidden rounded-2xl border-none">
@@ -524,44 +620,7 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
-              {[
-                {
-                  text: "Nechty vyzerajú super a hlavne vydržia bez jedinej chyby celé 3 týždne. Precízna práca, chválim detailnú úpravu.",
-                  author: "Mária Konečná",
-                  photo: null,
-                  rating: 5
-                },
-                {
-                  text: "Manikúra za dobrú cenu, Andrea je šikovná. Nechty robí krásne tenké a prirodzené, žiadne hrubé vrstvy. Určite sa vrátim.",
-                  author: "Janka Poláková",
-                  photo: null,
-                  rating: 5
-                },
-                {
-                  text: "Maximálna spokojnosť. Mamikérka je ústretová, poradila mi s tvarom a vždy sa snaží urobiť presne to, čo chcem. Nechty mi vydržia dlho lesklé.",
-                  author: "Lucia Miklošová",
-                  photo: null,
-                  rating: 5
-                },
-                {
-                  text: "Dobré rozhodnutie prísť sem. Gélové nechty som mala krásne, žiadne odchlipy a vydržali mi perfektne v kuse až do ďalšej dorábky.",
-                  author: "Petra Sýkorová",
-                  photo: null,
-                  rating: 5
-                },
-                {
-                  text: "Veľmi pekná a detailná práca s kožtičkou. Naozaj som spokojná s nechtami. Sú na pohľad prirodzené, ale zároveň veľmi pevné a vydržia.",
-                  author: "Katka Remišová",
-                  photo: null,
-                  rating: 5
-                },
-                {
-                  text: "Som veľmi spokojná, nechty mi vydržali celé týždne do ďalšieho termínu bez zlomenia. Vidno, že pani manikérka používa kvalitný materiál, ktorý neničí nechty.",
-                  author: "Peťa Sedláková",
-                  photo: null,
-                  rating: 5
-                }
-              ].map((testimonial: Testimonial, index) => (
+              {testimonials.map((testimonial: Testimonial, index) => (
                 <div key={index} className="bg-beige dark:bg-card p-6 rounded-[1.5rem] h-full flex flex-col justify-between hover:bg-beige dark:hover:bg-card/80 transition-colors duration-300">
                   <div>
                     {testimonial.rating && (
@@ -753,6 +812,10 @@ export default function Home() {
           </div>
         </footer >
       </main >
+      <Script
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`}
+        strategy="afterInteractive"
+      />
     </div >
   )
 }

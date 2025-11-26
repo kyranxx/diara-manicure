@@ -43,6 +43,7 @@ export function FacebookChat() {
         id="fb-customer-chat"
         className="fb-customerchat"
         ref={chatboxRef}
+        style={{ zIndex: 2147483647 }}
       />
       <Script
         id="messenger-tag"
