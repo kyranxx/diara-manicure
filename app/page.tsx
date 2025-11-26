@@ -414,13 +414,15 @@ export default function Home() {
                 <DialogTrigger asChild>
                   <Button className="h-auto py-4 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2">
                     <span>Pozrieť voľné termíny</span>
-                    <div className="relative h-5 w-20 opacity-80">
-                      <Image
-                        src="/bookio_logo.png"
-                        alt="Bookio"
-                        fill
-                        className="object-contain brightness-0 invert"
-                      />
+                    <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
+                      <div className="relative h-4 w-16">
+                        <Image
+                          src="/bookio_logo.png"
+                          alt="Bookio"
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
                     </div>
                   </Button>
                 </DialogTrigger>
