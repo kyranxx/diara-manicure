@@ -195,14 +195,28 @@ export default function Home() {
       if (
         event.data?.type === 'booking_completed' ||
         event.data?.type === 'reservation_completed' ||
+        event.data?.type === 'booking_created' ||
         event.data?.event === 'booking_completed' ||
         event.data?.event === 'reservation_completed' ||
+        event.data?.event === 'booking_created' ||
         event.data?.status === 'completed' ||
         event.data?.success === true ||
         event.data?.action === 'booking_success' ||
+        event.data?.step === 'finish' ||
         (event.data?.type === 'navigation' && event.data?.path?.includes('success'))
       ) {
-        console.log('Booking completed! Marking as done (waiting for user to close)...');
+        console.log('Booking completed! Firing conversion tag and marking as done...');
+
+        // Fire Google Ads conversion tag immediately
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          console.log('Firing Google Ads conversion tag...');
+          (window as any).gtag('event', 'conversion', {
+            'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
+          });
+        } else {
+          console.warn('Google Tag (gtag) not found on window object');
+        }
+
         setBookingCompleted(true);
         // We don't close automatically anymore, waiting for user to close
       }
@@ -230,7 +244,16 @@ export default function Home() {
                 iframeUrl.includes('?status=success') ||
                 iframeUrl.includes('&status=success')
               ) {
-                console.log('Booking completion detected in URL! Marking as done...');
+                console.log('Booking completion detected in URL! Firing conversion tag and marking as done...');
+
+                // Fire Google Ads conversion tag immediately
+                if (typeof window !== 'undefined' && (window as any).gtag) {
+                  console.log('Firing Google Ads conversion tag (from URL check)...');
+                  (window as any).gtag('event', 'conversion', {
+                    'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
+                  });
+                }
+
                 setBookingCompleted(true);
                 if (iframeCheckInterval) clearInterval(iframeCheckInterval);
               }
@@ -334,7 +357,19 @@ export default function Home() {
                   <DialogDescription className="sr-only">
                     Rezervujte si termín na manikúru prostredníctvom našej online rezervačnej platformy.
                   </DialogDescription>
-                  <div className="w-full h-full flex flex-col bg-background">
+                  <div className="w-full h-full flex flex-col bg-background relative">
+                    {/* Success Banner - Shows when booking is completed */}
+                    {bookingCompleted && (
+                      <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 z-50 flex items-center justify-center gap-2 animate-in slide-in-from-top duration-500 shadow-lg">
+                        <div className="bg-white rounded-full p-1">
+                          <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <span className="font-medium">Rezervácia bola úspešne zaznamenaná!</span>
+                      </div>
+                    )}
+
                     <div className="flex-1 relative">
                       {!iframeLoaded && !iframeError && (
                         <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
