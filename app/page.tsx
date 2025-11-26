@@ -40,6 +40,8 @@ export default function Home() {
   const [iframeError, setIframeError] = useState(false)
   const [googleReviews, setGoogleReviews] = useState<any[]>([])
   const [bookingUrl, setBookingUrl] = useState('https://services.bookio.com/diaramanicure/widget?lang=sk')
+  const [bookingStartTime, setBookingStartTime] = useState<number | null>(null)
+  const [bookingCompleted, setBookingCompleted] = useState(false)
 
   const { resolvedTheme } = useTheme()
   const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava-v2.png" : "/diara-manicure-logo-trnava.png"
@@ -170,6 +172,14 @@ export default function Home() {
     }
   }, []);
 
+  // Track when booking dialog opens
+  useEffect(() => {
+    if (bookingOpen) {
+      setBookingStartTime(Date.now());
+      setBookingCompleted(false);
+    }
+  }, [bookingOpen]);
+
   // Listen for Bookio booking completion and redirect to thank you page
   useEffect(() => {
     const handleBookioMessage = (event: MessageEvent) => {
@@ -188,13 +198,13 @@ export default function Home() {
         event.data?.event === 'booking_completed' ||
         event.data?.event === 'reservation_completed' ||
         event.data?.status === 'completed' ||
-        event.data?.success === true
+        event.data?.success === true ||
+        event.data?.action === 'booking_success' ||
+        (event.data?.type === 'navigation' && event.data?.path?.includes('success'))
       ) {
-        console.log('Booking completed! Redirecting to thank you page...');
-        // Close the dialog
-        setBookingOpen(false);
-        // Redirect to thank you page
-        window.location.href = '/dakujeme';
+        console.log('Booking completed! Marking as done (waiting for user to close)...');
+        setBookingCompleted(true);
+        // We don't close automatically anymore, waiting for user to close
       }
     };
 
@@ -220,9 +230,8 @@ export default function Home() {
                 iframeUrl.includes('?status=success') ||
                 iframeUrl.includes('&status=success')
               ) {
-                console.log('Booking completion detected in URL! Redirecting...');
-                setBookingOpen(false);
-                window.location.href = '/dakujeme';
+                console.log('Booking completion detected in URL! Marking as done...');
+                setBookingCompleted(true);
                 if (iframeCheckInterval) clearInterval(iframeCheckInterval);
               }
             } catch (e) {
@@ -308,7 +317,13 @@ export default function Home() {
 
           <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
             <div className="flex flex-col justify-center gap-4 w-full">
-              <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
+              <Dialog open={bookingOpen} onOpenChange={(open) => {
+                setBookingOpen(open);
+                // If closing and booking was completed, redirect to thank you page
+                if (!open && bookingCompleted) {
+                  window.location.href = '/dakujeme';
+                }
+              }}>
                 <DialogTrigger asChild>
                   <Button className="h-16 md:h-20 text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full">
                     Pozrieť voľné termíny
