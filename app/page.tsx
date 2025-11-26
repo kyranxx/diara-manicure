@@ -377,7 +377,7 @@ export default function Home() {
                     return (
                       <div key={index} className="group flex justify-between items-start p-8 bg-beige dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full">
                         <div className="flex-grow pr-4">
-                          <h4 className="text-xl font-normal mb-2 group-hover:text-primary transition-colors text-black dark:text-white">{service.title}</h4>
+                          <h3 className="text-xl font-normal mb-2 group-hover:text-primary transition-colors text-black dark:text-white">{service.title}</h3>
                           <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
                         </div>
                         <div className="text-right whitespace-nowrap">
@@ -531,16 +531,16 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-12 text-center">
               <Button
                 variant="outline"
                 className="rounded-full h-16 md:h-20 px-10 md:px-12 text-xl font-normal"
                 asChild
               >
-                <a 
-                  href="https://instagram.com/diaramanicure" 
-                  target="_blank" 
+                <a
+                  href="https://instagram.com/diaramanicure"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2"
                 >
@@ -566,7 +566,7 @@ export default function Home() {
                         <MapPin className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-medium mb-1 text-black dark:text-white">Adresa</h4>
+                        <h3 className="text-xl font-medium mb-1 text-black dark:text-white">Adresa</h3>
                         <p className="text-muted-foreground text-lg">Hospodárska 53<br />91701 Trnava</p>
                       </div>
                     </div>
@@ -576,7 +576,7 @@ export default function Home() {
                         <Phone className="w-6 h-6" />
                       </div>
                       <div>
-                        <h4 className="text-xl font-medium mb-1 text-black dark:text-white">Telefón</h4>
+                        <h3 className="text-xl font-medium mb-1 text-black dark:text-white">Telefón</h3>
                         <p className="text-muted-foreground text-lg">
                           0902 <span className="hidden">null</span>163 <span className="hidden">null</span>144
                         </p>
