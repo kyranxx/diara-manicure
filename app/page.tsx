@@ -190,6 +190,13 @@ export default function Home() {
 
       console.log('Received message from Bookio:', event.data);
 
+      // Check for height change (Thank you page is often shorter)
+      if (event.data?.type === 'WIDGET_HEIGHT' && typeof event.data?.widgetHeight === 'number') {
+        console.log('Widget height update:', event.data.widgetHeight);
+        // If height drops significantly (e.g. below 900px), it might be the thank you page
+        // But we won't auto-trigger on this alone yet, just log it
+      }
+
       // Check if booking was completed
       // Bookio may send different event types, we'll listen for common completion indicators
       if (
@@ -414,6 +421,29 @@ export default function Home() {
                         onError={handleIframeError}
                         title="Rezervačný systém"
                       />
+                    </div>
+
+                    {/* Manual Confirmation Footer - Fallback if auto-detection fails */}
+                    <div className="p-4 bg-beige/50 dark:bg-neutral-900 border-t border-primary/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                      <p className="text-sm text-muted-foreground text-center sm:text-left">
+                        Dokončili ste rezerváciu?
+                      </p>
+                      <Button
+                        onClick={() => {
+                          console.log('User manually confirmed booking completion');
+                          // Fire Google Ads conversion tag
+                          if (typeof window !== 'undefined' && (window as any).gtag) {
+                            (window as any).gtag('event', 'conversion', {
+                              'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
+                            });
+                          }
+                          setBookingCompleted(true);
+                          window.location.href = '/dakujeme';
+                        }}
+                        className="bg-green-600 hover:bg-green-700 text-white rounded-full px-6"
+                      >
+                        Áno, hotovo
+                      </Button>
                     </div>
                   </div>
                 </DialogContent>
