@@ -2,28 +2,45 @@
 
 import { useEffect, useRef } from 'react'
 import Script from 'next/script'
+import { useTheme } from 'next-themes'
+
+declare global {
+  interface Window {
+    FB: any;
+    fbAsyncInit: () => void;
+  }
+}
 
 export function FacebookChat() {
   const chatboxRef = useRef<HTMLDivElement>(null)
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     // Ensure attributes are set
     if (chatboxRef.current) {
       chatboxRef.current.setAttribute("page_id", "791288010744786")
       chatboxRef.current.setAttribute("attribution", "biz_inbox")
+
+      // Update theme color based on current theme
+      if (resolvedTheme === 'dark') {
+        chatboxRef.current.setAttribute("theme_color", "#000000")
+      } else {
+        // Remove attribute to use default Facebook blue
+        chatboxRef.current.removeAttribute("theme_color")
+      }
     }
 
-    // If FB SDK is already loaded, re-parse
+    // If FB SDK is already loaded, re-parse to apply changes
     if (window.FB) {
       window.FB.XFBML.parse()
     }
-  }, [])
+  }, [resolvedTheme])
 
   return (
     <>
       <div id="fb-root" />
-      <div 
-        id="fb-customer-chat" 
+      <div
+        id="fb-customer-chat"
         className="fb-customerchat"
         ref={chatboxRef}
       />
