@@ -14,7 +14,6 @@ export default function ThankYouPage() {
     useEffect(() => {
         setMounted(true)
 
-        // Track conversion event
         if (typeof window !== 'undefined' && (window as any).gtag) {
             (window as any).gtag('event', 'conversion', {
                 'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
@@ -30,7 +29,6 @@ export default function ThankYouPage() {
 
     return (
         <div className="min-h-screen bg-beige dark:bg-black flex flex-col">
-            {/* Header */}
             <header className="py-8">
                 <div className="container mx-auto px-6 flex justify-center">
                     <Link href="/">
@@ -46,7 +44,6 @@ export default function ThankYouPage() {
                 </div>
             </header>
 
-            {/* Main Content */}
             <main className="flex-grow flex items-center justify-center py-12">
                 <div className="container mx-auto px-6 text-center max-w-3xl">
                     <div className="mb-12 flex justify-center">
@@ -80,18 +77,15 @@ export default function ThankYouPage() {
                 </div>
             </main>
 
-            {/* Footer */}
             <footer className="py-12 bg-white/50 dark:bg-black/50 backdrop-blur-sm">
                 <div className="container mx-auto px-6">
                     <div className="flex flex-col items-center space-y-8">
-                        {/* Address */}
                         <div className="text-center text-muted-foreground font-light text-lg">
                             <p className="mb-2">Hospodárska 53, 91701 Trnava</p>
                             <p className="mb-2">0902 163 144</p>
                             <p>andrea.heckova92@gmail.com</p>
                         </div>
 
-                        {/* Social Media */}
                         <div className="flex gap-6">
                             <a
                                 href="https://instagram.com/diaramanicure"
@@ -113,7 +107,6 @@ export default function ThankYouPage() {
                             </a>
                         </div>
 
-                        {/* Copyright */}
                         <div className="text-center pt-4 border-t border-primary/10 w-full max-w-xs mx-auto">
                             <p className="text-sm text-muted-foreground font-light">© 2025 diara manicure</p>
                         </div>

@@ -15,11 +15,9 @@ export interface SecurityEvent {
   userAgent?: string
 }
 
-// In-memory storage for security events (replace with proper logging service in production)
 const securityEvents: SecurityEvent[] = []
 const MAX_EVENTS = 1000
 
-// Simple security monitoring
 export class SecurityMonitor {
   private static instance: SecurityMonitor
 
@@ -39,22 +37,14 @@ export class SecurityMonitor {
       timestamp: Date.now()
     }
 
-    // Store event (in production, send to monitoring service)
     securityEvents.push(fullEvent)
 
-    // Keep only recent events
     if (securityEvents.length > MAX_EVENTS) {
       securityEvents.splice(0, securityEvents.length - MAX_EVENTS)
     }
 
-    // In production, send critical events to external monitoring
     if (process.env.NODE_ENV === 'production' && fullEvent.severity === 'critical') {
       this.sendToExternalMonitoring(fullEvent)
-    }
-
-    // Log to console in development only
-    if (process.env.NODE_ENV === 'development') {
-      // console.log('Security Event:', fullEvent)
     }
   }
 
@@ -109,13 +99,9 @@ export class SecurityMonitor {
     let recentActivity = 0
 
     securityEvents.forEach(event => {
-      // Count by type
       eventsByType[event.type] = (eventsByType[event.type] || 0) + 1
-
-      // Count by severity
       eventsBySeverity[event.severity] = (eventsBySeverity[event.severity] || 0) + 1
 
-      // Recent activity
       if (event.timestamp > oneHourAgo) {
         recentActivity++
       }
@@ -129,25 +115,11 @@ export class SecurityMonitor {
     }
   }
 
-  /**
-   * Send critical events to external monitoring service
-   * This is a placeholder - integrate with your monitoring service
-   */
   private sendToExternalMonitoring(event: SecurityEvent): void {
-    // Placeholder for external monitoring integration
-    // Examples: Sentry, LogRocket, DataDog, etc.
-
     if (process.env.SENTRY_DSN) {
-      // Example: Send to Sentry
-      // Sentry.captureException(new Error(event.message), {
-      //   level: event.severity,
-      //   extra: event
-      // })
+      // Integration point for Sentry or other monitoring service
     }
-
-    // Add other monitoring services as needed
   }
 }
 
-// Export singleton instance
 export const securityMonitor = SecurityMonitor.getInstance()

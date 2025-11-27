@@ -26,7 +26,6 @@ const Map = () => {
     return () => observer.disconnect()
   }, [])
 
-  // Create the map URL with optimized parameters
   const mapSrc = `https://www.google.com/maps/embed/v1/place?key=${apiKey}&q=${encodeURIComponent(address + ', Slovakia')}&maptype=satellite&zoom=16`
 
   return (
@@ -39,7 +38,7 @@ const Map = () => {
         overflow: 'hidden',
         width: '100%',
         height: '100%',
-        touchAction: 'none' // Prevent touch scroll blocking
+        touchAction: 'none'
       }}
       className="dark:saturate-0 map-container relative bg-neutral-100 dark:bg-neutral-800"
     >
@@ -49,7 +48,6 @@ const Map = () => {
           height="100%"
           style={{
             border: 'none',
-            // Prevent scroll-blocking touch events
             touchAction: 'pan-x pan-y',
             overscrollBehavior: 'contain'
           }}

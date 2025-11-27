@@ -16,21 +16,17 @@ export function FacebookChat() {
   const { resolvedTheme } = useTheme()
 
   useEffect(() => {
-    // Ensure attributes are set
     if (chatboxRef.current) {
       chatboxRef.current.setAttribute("page_id", "791288010744786")
       chatboxRef.current.setAttribute("attribution", "biz_inbox")
 
-      // Update theme color based on current theme
       if (resolvedTheme === 'dark') {
         chatboxRef.current.setAttribute("theme_color", "#000000")
       } else {
-        // Remove attribute to use default Facebook blue
         chatboxRef.current.removeAttribute("theme_color")
       }
     }
 
-    // If FB SDK is already loaded, re-parse to apply changes
     if (window.FB) {
       window.FB.XFBML.parse()
     }

@@ -25,10 +25,8 @@ export function Navbar() {
         <nav className="w-full bg-beige dark:bg-black z-50 relative">
             <div className="container mx-auto px-6 h-16 flex items-center justify-between">
                 <Link href="/" className="flex-shrink-0" aria-label="Domov">
-                    {/* Logo removed as requested */}
                 </Link>
 
-                {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-8">
                     {menuItems.map((item) => (
                         <Link
@@ -50,7 +48,6 @@ export function Navbar() {
                     <ThemeToggle />
                 </div>
 
-                {/* Mobile Menu Button */}
                 <div className="md:hidden flex items-center gap-4">
                     <div className="flex items-center gap-4 px-2">
                         <a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" className="hover:text-primary/60 transition-colors" aria-label="Instagram Diara Manicure">
@@ -73,7 +70,6 @@ export function Navbar() {
                 </div>
             </div>
 
-            {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div

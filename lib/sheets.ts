@@ -8,26 +8,6 @@ export type Service = {
   discountedPrice?: string
 }
 
-// Simple logger that only logs in development
-const debugLog = (...args: any[]) => {
-  if (process.env.NODE_ENV === 'development') {
-    // console.log(...args);
-  }
-};
-
-// Secure error logging without sensitive data
-const logError = (message: string, error: any) => {
-  if (process.env.NODE_ENV === 'development') {
-    console.error(message, {
-      message: error?.message || 'Unknown error',
-      // Never log stack traces in production
-      ...(process.env.NODE_ENV === 'development' && { stack: error?.stack })
-    });
-  }
-  // In production, just log to external monitoring service if needed
-};
-
-// Cache storage for development mode
 let cache: {
   data: Service[] | null
   timestamp: number
@@ -36,111 +16,64 @@ let cache: {
   timestamp: 0
 }
 
-const CACHE_DURATION = 10 * 1000 // 10 seconds in development
+const CACHE_DURATION = 10 * 1000
 
-// Check if we can use cached data in development
 function canUseCache(): boolean {
   if (process.env.NODE_ENV !== 'development') return false;
   const now = Date.now();
   return cache.data !== null && (now - cache.timestamp) < CACHE_DURATION;
 }
 
-// Internal function that actually fetches data
 async function fetchSheetsData(): Promise<Service[]> {
-  // Return cached data if available and valid
   if (canUseCache()) {
-    debugLog('Using cached services data');
     return cache.data!;
   }
 
   try {
-    debugLog('Starting Google Sheets data fetch...');
-
-    // Use credentials from environment variable instead of file
     const credentialsEnv = process.env.GOOGLE_CREDENTIALS;
-    if (!credentialsEnv) {
-      logError('GOOGLE_CREDENTIALS environment variable not found', new Error('Missing credentials'));
+    const spreadsheetId = process.env.SPREADSHEET_ID;
+
+    // Fallback data if credentials are missing
+    if (!credentialsEnv || !spreadsheetId) {
+      console.warn('Google Sheets credentials not found, using fallback data');
       return [
-        {
-          title: 'Configuration Error',
-          description: 'Google credentials not found',
-          price: '',
-        }
+        { title: 'Gélové nechty - nová modelácia', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €' },
+        { title: 'Dorábka gélových nechtov', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
+        { title: 'Gellak (spevnenie prírodných nechtov)', description: 'Úprava kožtičky, spevnenie kaučukovým bázovým gélom, farba.', price: '25 €' },
+        { title: 'Japonská manikúra', description: 'Hĺbková výživa a leštenie prírodných nechtov včelím voskom.', price: '20 €' },
+        { title: 'Klasická manikúra', description: 'Úprava tvaru nechtov, zatlačenie kožtičky, výživný olejček.', price: '15 €' },
+        { title: 'Odstránenie gélových nechtov', description: 'Bez ďalšej úpravy.', price: '10 €' },
+        { title: 'Nail Art (zdobenie)', description: 'Podľa náročnosti (kamienky, kreslenie, fólie...).', price: 'od 1 €' },
       ];
     }
 
     const credentials = JSON.parse(credentialsEnv);
-    debugLog('Credentials parsed successfully');
 
-    // Clean the private key to remove carriage returns
     if (credentials.private_key) {
       credentials.private_key = credentials.private_key.replace(/\r/g, '');
-      debugLog('Private key cleaned');
     }
-
-    const spreadsheetId = process.env.SPREADSHEET_ID;
-    if (!spreadsheetId) {
-      logError('SPREADSHEET_ID environment variable not found', new Error('Missing spreadsheet ID'));
-      return [
-        {
-          title: 'Configuration Error',
-          description: 'Spreadsheet ID not found',
-          price: '',
-        }
-      ];
-    }
-    debugLog('Using spreadsheet ID for data fetch');
 
     const auth = new google.auth.GoogleAuth({
       credentials,
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     });
 
-    debugLog('Google Auth created');
     const client = await auth.getClient();
-    debugLog('Auth client obtained');
-
     const googleSheets = google.sheets({ version: 'v4', auth: client as any });
-    debugLog('Google Sheets API client created');
 
-    // First get spreadsheet metadata to see available sheets
-    debugLog('Getting spreadsheet metadata...');
     const metaResponse = await googleSheets.spreadsheets.get({
       spreadsheetId,
     });
 
     const sheets = metaResponse.data.sheets || [];
-    debugLog(`Found ${sheets.length} sheets in spreadsheet`);
-
-    // Use the first sheet or fall back to default
     const sheetName = sheets[0]?.properties?.title || 'Sheet1';
-    debugLog('Using sheet:', sheetName);
 
-    // Try a simpler range first to test
-    debugLog('Fetching data with simpler range first...');
-    const testResponse = await googleSheets.spreadsheets.values.get({
-      spreadsheetId,
-      range: sheetName,
-    });
-
-    debugLog('Test response received, values found');
-    const testRows = testResponse.data.values || [];
-    debugLog('First few rows received for validation');
-
-    if (testRows.length === 0) {
-      debugLog('No data in test range');
-      return [];
-    }
-
-    // Now get the data excluding header row
     const response = await googleSheets.spreadsheets.values.get({
       spreadsheetId,
       range: `${sheetName}!A2:Z`,
     });
 
-    debugLog('API response received');
     const rows = response.data.values;
-    debugLog(`Found ${rows?.length || 0} data rows`);
 
     let services: Service[] = [];
     if (rows && rows.length > 0) {
@@ -149,38 +82,32 @@ async function fetchSheetsData(): Promise<Service[]> {
         description: row[1] || '',
         price: row[2] || '',
         discountedPrice: row[3] || undefined,
-      })).filter(s => s.title); // skip empty titles
-
-      debugLog(`Processed ${services.length} services`);
+      })).filter(s => s.title);
     }
 
-    // Cache the data in development mode
     if (process.env.NODE_ENV === 'development') {
       cache.data = services;
       cache.timestamp = Date.now();
-      debugLog('Services data cached for development');
     }
 
     return services;
   } catch (error) {
-    logError('Error fetching sheets data', error);
-
+    console.error('Error fetching sheets data:', error);
+    // Return fallback data on error too
     return [
-      {
-        title: 'Error loading services',
-        description: 'Please contact support',
-        price: '',
-      }
+      { title: 'Gélové nechty - nová modelácia', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €' },
+      { title: 'Dorábka gélových nechtov', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
+      { title: 'Gellak (spevnenie prírodných nechtov)', description: 'Úprava kožtičky, spevnenie kaučukovým bázovým gélom, farba.', price: '25 €' },
+      { title: 'Japonská manikúra', description: 'Hĺbková výživa a leštenie prírodných nechtov včelím voskom.', price: '20 €' },
     ];
   }
 }
 
-// Cached wrapper function - revalidates every 30 seconds
 export const getSheetsData = unstable_cache(
   fetchSheetsData,
   ['services-pricelist'],
   {
-    revalidate: 30, // 30 seconds
+    revalidate: 30,
     tags: ['services']
   }
 )

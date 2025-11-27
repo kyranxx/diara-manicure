@@ -344,6 +344,20 @@ export default function Home() {
     };
   }, [bookingOpen]);
 
+  // Timeout check for iframe loading (detects AdBlock)
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (bookingOpen && !iframeLoaded && !iframeError) {
+      timeout = setTimeout(() => {
+        if (!iframeLoaded) {
+          console.warn('Iframe load timeout - likely blocked by client');
+          setIframeError(true);
+        }
+      }, 5000); // 5 seconds timeout
+    }
+    return () => clearTimeout(timeout);
+  }, [bookingOpen, iframeLoaded, iframeError]);
+
   const handleIframeError = (error: any) => {
     console.error('Bookio iframe failed to load:', error)
     setIframeError(true)
@@ -421,6 +435,7 @@ export default function Home() {
                           alt="Bookio"
                           fill
                           className="object-contain"
+                          sizes="64px"
                         />
                       </div>
                     </div>
@@ -455,21 +470,31 @@ export default function Home() {
                       )}
 
                       {iframeError && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-background">
-                          <div className="text-center p-6">
-                            <p className="text-destructive mb-4">Rezervačný systém sa nepodarilo načítať.</p>
-                            <Button onClick={retryIframe} variant="outline" className="text-sm">
-                              Skúsiť znovu
-                            </Button>
-                            <div className="mt-8">
-                              <a
-                                href="https://services.bookio.com/diaramanicure/widget?lang=sk"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-primary hover:underline text-sm"
-                              >
-                                Otvoriť v novom okne →
-                              </a>
+                        <div className="absolute inset-0 flex items-center justify-center bg-background p-6">
+                          <div className="text-center max-w-md mx-auto">
+                            <div className="mb-4 text-destructive">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <h3 className="text-lg font-semibold">Rezervačný systém sa nepodarilo načítať</h3>
+                            </div>
+                            <p className="text-muted-foreground mb-6">
+                              Váš prehliadač alebo <strong>AdBlock</strong> pravdepodobne blokuje rezervačný systém.
+                              Prosím, vypnite blokovanie reklám pre túto stránku alebo otvorte rezerváciu v novom okne.
+                            </p>
+                            <div className="flex flex-col gap-3">
+                              <Button onClick={retryIframe} variant="outline">
+                                Skúsiť znovu
+                              </Button>
+                              <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
+                                <a
+                                  href="https://services.bookio.com/diaramanicure/widget?lang=sk"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  Otvoriť rezerváciu v novom okne
+                                </a>
+                              </Button>
                             </div>
                           </div>
                         </div>
@@ -478,11 +503,12 @@ export default function Home() {
                       <iframe
                         id="bookio-iframe"
                         src={bookingUrl}
+                        onLoad={handleIframeLoad}
+                        onError={handleIframeError}
                         width="100%"
                         height="100%"
                         style={{ border: 'none', display: 'block' }}
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
-                        allow="microphone 'none'; camera 'none'; geolocation 'none'; unload 'none'"
+                        allow="microphone 'none'; camera 'none'; geolocation 'none'"
                         referrerPolicy="strict-origin-when-cross-origin"
                       />
                     </div>
@@ -815,7 +841,7 @@ export default function Home() {
         </footer >
       </main >
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&loading=async`}
         strategy="afterInteractive"
       />
     </div >

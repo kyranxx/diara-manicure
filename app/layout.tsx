@@ -12,6 +12,7 @@ const dmSans = DM_Sans({
   display: 'swap',
   variable: '--font-dm-sans',
 })
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://diaramanicure.sk'),
   title: "Diara Manicure - Nechtové štúdio Trnava | Gélové nechty",
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
     ],
   },
 }
+
 export default function RootLayout({
   children,
 }: {
@@ -43,11 +45,18 @@ export default function RootLayout({
   return (
     <html lang="sk">
       <head>
+        {/* Passive Events Patch - Loads synchronously FIRST before all scripts */}
+        {/* Passive Events Patch - Loads synchronously FIRST before all scripts */}
+        {/* Passive Events Patch - Loads synchronously FIRST before all scripts */}
+        <Script
+          src="/passive-fix.js"
+          strategy="beforeInteractive"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17746151386"
-          strategy="lazyOnload"
+          strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="lazyOnload">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
