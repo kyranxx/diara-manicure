@@ -871,6 +871,20 @@ export default function Home() {
                 <a
                   href="https://instagram.com/diaramanicure"
                   target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white hover:bg-primary text-black hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                  aria-label="Instagram Diara Manicure"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a
+                  href="https://facebook.com/diaramanicure"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 rounded-full bg-white hover:bg-primary text-black hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                  aria-label="Facebook Diara Manicure"
+                >
+                  <Facebook className="h-5 w-5" />
                 </a>
               </div>
             </div>
