@@ -83,8 +83,19 @@ export default function Home() {
     }
   ])
 
+
+
+  // Check if Google Maps is already loaded (e.g. from cache)
+  useEffect(() => {
+    if ((window as any).google?.maps) {
+      setIsGoogleApiLoaded(true);
+    }
+  }, []);
+
   useEffect(() => {
     const fetchGoogleReviews = async () => {
+      console.log('Attempting to fetch reviews. API Loaded:', isGoogleApiLoaded);
+
       if (typeof window === 'undefined' || !isGoogleApiLoaded) {
         return;
       }
@@ -118,10 +129,18 @@ export default function Home() {
         });
 
         if (place.reviews && place.reviews.length > 0) {
+          console.log('Raw Google Reviews:', place.reviews);
+
           const googleReviews: Testimonial[] = place.reviews
             .filter((review: any) => {
               const text = review.text?.text || review.text || '';
-              return review.rating && review.rating >= 4 && text.trim().length > 0;
+              const hasText = text && text.trim().length > 0;
+              const isHighRating = review.rating && review.rating >= 4;
+
+              if (!hasText) console.log('Filtered out review (no text):', review);
+              if (!isHighRating) console.log('Filtered out review (low rating):', review);
+
+              return isHighRating && hasText;
             })
             .slice(0, 5)
             .map((review: any) => ({
@@ -130,6 +149,8 @@ export default function Home() {
               photo: review.authorAttribution?.photoURI || null,
               rating: review.rating
             }));
+
+          console.log('Filtered Google Reviews:', googleReviews);
 
           if (googleReviews.length > 0) {
             setTestimonials(prev => {
@@ -899,7 +920,7 @@ export default function Home() {
         </footer >
       </main >
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=weekly`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=weekly&loading=async`}
         strategy="afterInteractive"
         onReady={() => {
           setIsGoogleApiLoaded(true);
