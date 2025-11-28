@@ -35,7 +35,6 @@ async function fetchSheetsData(): Promise<Service[]> {
 
     // Fallback data if credentials are missing
     if (!credentialsEnv || !spreadsheetId) {
-      console.warn('Google Sheets credentials not found, using fallback data');
       return [
         { title: 'Gélové nechty - nová modelácia', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €' },
         { title: 'Dorábka gélových nechtov', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
@@ -92,8 +91,6 @@ async function fetchSheetsData(): Promise<Service[]> {
 
     return services;
   } catch (error) {
-    console.error('Error fetching sheets data:', error);
-    // Return fallback data on error too
     return [
       { title: 'Gélové nechty - nová modelácia', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €' },
       { title: 'Dorábka gélových nechtov', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },

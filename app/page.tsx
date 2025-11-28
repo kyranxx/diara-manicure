@@ -38,6 +38,7 @@ export default function Home() {
   const [bookingOpen, setBookingOpen] = useState(false)
   const [iframeLoaded, setIframeLoaded] = useState(false)
   const [iframeError, setIframeError] = useState(false)
+  const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false)
 
   const [bookingUrl, setBookingUrl] = useState('https://services.bookio.com/diaramanicure/widget?lang=sk')
   const [bookingStartTime, setBookingStartTime] = useState<number | null>(null)
@@ -83,53 +84,78 @@ export default function Home() {
   ])
 
   useEffect(() => {
-    const fetchGoogleReviews = () => {
-      if (!window.google || !window.google.maps || !window.google.maps.places) return;
+    const fetchGoogleReviews = async () => {
+      if (typeof window === 'undefined') {
+        return;
+      }
 
-      const mapDiv = document.createElement('div');
-      const service = new window.google.maps.places.PlacesService(mapDiv);
+      if (!(window as any).google?.maps) {
+        return;
+      }
 
-      const request = {
-        query: 'Diara Manicure Trnava',
-        fields: ['name', 'place_id'],
-      };
+      try {
+        const { Place } = await (window as any).google.maps.importLibrary('places');
 
-      service.findPlaceFromQuery(request, (results: any, status: any) => {
-        if (status === window.google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
-          const placeId = results[0].place_id;
-          if (!placeId) return;
+        // Search for the place by text instead of using hardcoded ID
+        const request = {
+          textQuery: 'Diara Manicure, Hospodárska 53, Trnava, Slovakia',
+          fields: ['id', 'displayName'],
+          language: 'sk',
+        };
 
-          service.getDetails({
-            placeId: placeId,
-            fields: ['reviews']
-          }, (place: any, detailStatus: any) => {
-            if (detailStatus === window.google.maps.places.PlacesServiceStatus.OK && place && place.reviews) {
-              const googleReviews: Testimonial[] = place.reviews
-                .filter((review: any) => review.rating && review.rating >= 4)
-                .slice(0, 5)
-                .map((review: any) => ({
-                  text: review.text || '',
-                  author: review.author_name,
-                  photo: review.profile_photo_url,
-                  rating: review.rating
-                }));
+        const { places } = await Place.searchByText(request);
 
-              setTestimonials(prev => {
-                // Avoid duplicates based on author name
-                const newReviews = googleReviews.filter(gr => !prev.some(pr => pr.author === gr.author));
-                return [...newReviews, ...prev];
-              });
-            }
+        if (!places || places.length === 0) {
+          return;
+        }
+
+        const place = places[0];
+
+        // Fetch reviews for the found place
+        await place.fetchFields({
+          fields: ['reviews']
+        });
+
+        if (place.reviews && place.reviews.length > 0) {
+          const googleReviews: Testimonial[] = place.reviews
+            .filter((review: any) => review.rating && review.rating >= 4)
+            .slice(0, 5)
+            .map((review: any) => ({
+              text: review.text?.text || review.text || '',
+              author: review.authorAttribution?.displayName || 'Anonymous',
+              photo: review.authorAttribution?.photoURI || null,
+              rating: review.rating
+            }));
+
+          setTestimonials(prev => {
+            const uniqueHardcoded = prev.filter(pr => !googleReviews.some(gr => gr.author === pr.author));
+            const merged = [...googleReviews, ...uniqueHardcoded];
+            const shuffled = merged.sort(() => Math.random() - 0.5);
+            return shuffled;
           });
         }
-      });
+      } catch (error) {
+        // Silent error handling - fallback to hardcoded reviews
+      }
     };
 
-    if ((window as any).google && (window as any).google.maps) {
-      fetchGoogleReviews();
-    } else {
-      (window as any).initMap = fetchGoogleReviews;
-    }
+    // Wait for Google Maps to be available
+    const checkInterval = setInterval(() => {
+      if ((window as any).google?.maps) {
+        clearInterval(checkInterval);
+        fetchGoogleReviews();
+      }
+    }, 500);
+
+    // Cleanup after 15 seconds
+    const timeout = setTimeout(() => {
+      clearInterval(checkInterval);
+    }, 15000);
+
+    return () => {
+      clearInterval(checkInterval);
+      clearTimeout(timeout);
+    };
   }, []);
 
   const { resolvedTheme } = useTheme()
@@ -157,7 +183,6 @@ export default function Home() {
       .then(setServices)
       .catch(error => {
         if (error.name === 'AbortError') return
-        console.error('Error fetching services:', error)
         setServices([])
       })
       .finally(() => {
@@ -181,7 +206,7 @@ export default function Home() {
           }, '*')
         }
       } catch (error) {
-        console.log('Dark mode application failed:', error)
+        // Silent error handling
       }
     }
   }, [resolvedTheme, bookingOpen, iframeLoaded, setIframeLoaded, setIframeError])
@@ -191,11 +216,9 @@ export default function Home() {
   }
 
   const handleIframeLoad = () => {
-    console.log('Bookio iframe loaded successfully')
     setIframeLoaded(true)
     setIframeError(false)
 
-    // Apply dark mode styling if in dark theme
     if (resolvedTheme === 'dark') {
       try {
         const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement
@@ -206,7 +229,7 @@ export default function Home() {
           }, '*')
         }
       } catch (error) {
-        console.log('Dark mode application failed:', error)
+        // Silent error handling
       }
     }
   }
@@ -224,26 +247,15 @@ export default function Home() {
   // Listen for Bookio booking completion and redirect to thank you page
   useEffect(() => {
     const handleBookioMessage = (event: MessageEvent) => {
-      // Only accept messages from Bookio domain
       if (!event.origin.includes('bookio.com')) {
         return;
       }
 
-      console.log('Received message from Bookio:', event.data);
-
-      // Check for height change (Thank you page is often shorter)
       if (event.data?.type === 'WIDGET_HEIGHT' && typeof event.data?.widgetHeight === 'number') {
         const currentHeight = event.data.widgetHeight;
-        console.log(`Widget height update: ${currentHeight}px (Previous: ${previousHeight}px)`);
 
-        // Logic: If height drops significantly (e.g. below 900px) after being tall (e.g. > 950px)
-        // This usually indicates moving from calendar/form to the thank you page
         if (currentHeight < 900 && previousHeight > 950 && !bookingCompleted) {
-          console.log('Height drop detected (likely Thank You page)! Firing conversion...');
-
-          // Fire Google Ads conversion tag immediately
           if (typeof window !== 'undefined' && (window as any).gtag) {
-            console.log('Firing Google Ads conversion tag (from height drop)...');
             (window as any).gtag('event', 'conversion', {
               'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
             });
@@ -254,8 +266,6 @@ export default function Home() {
         setPreviousHeight(currentHeight);
       }
 
-      // Check if booking was completed
-      // Bookio may send different event types, we'll listen for common completion indicators
       if (
         event.data?.type === 'booking_completed' ||
         event.data?.type === 'reservation_completed' ||
@@ -269,24 +279,16 @@ export default function Home() {
         event.data?.step === 'finish' ||
         (event.data?.type === 'navigation' && event.data?.path?.includes('success'))
       ) {
-        console.log('Booking completed! Firing conversion tag and marking as done...');
-
-        // Fire Google Ads conversion tag immediately
         if (typeof window !== 'undefined' && (window as any).gtag) {
-          console.log('Firing Google Ads conversion tag...');
           (window as any).gtag('event', 'conversion', {
             'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
           });
-        } else {
-          console.warn('Google Tag (gtag) not found on window object');
         }
 
         setBookingCompleted(true);
-        // We don't close automatically anymore, waiting for user to close
       }
     };
 
-    // Also monitor iframe URL for completion indicators
     let iframeCheckInterval: NodeJS.Timeout | null = null;
 
     if (bookingOpen) {
@@ -294,12 +296,9 @@ export default function Home() {
         try {
           const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement;
           if (iframe && iframe.contentWindow) {
-            // Try to access iframe location (this may fail due to CORS, which is expected)
             try {
               const iframeUrl = iframe.contentWindow.location.href;
-              console.log('Checking Bookio iframe URL:', iframeUrl);
 
-              // Check for success/completion indicators in URL
               if (
                 iframeUrl.includes('/success') ||
                 iframeUrl.includes('/confirmed') ||
@@ -308,11 +307,7 @@ export default function Home() {
                 iframeUrl.includes('?status=success') ||
                 iframeUrl.includes('&status=success')
               ) {
-                console.log('Booking completion detected in URL! Firing conversion tag and marking as done...');
-
-                // Fire Google Ads conversion tag immediately
                 if (typeof window !== 'undefined' && (window as any).gtag) {
-                  console.log('Firing Google Ads conversion tag (from URL check)...');
                   (window as any).gtag('event', 'conversion', {
                     'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
                   });
@@ -322,27 +317,24 @@ export default function Home() {
                 if (iframeCheckInterval) clearInterval(iframeCheckInterval);
               }
             } catch (e) {
-              // CORS error - expected, iframe is cross-origin
-              // Continue listening for postMessage instead
+              // CORS error - expected
             }
           }
         } catch (error) {
-          // Silently handle errors
+          // Silent error handling
         }
-      }, 1000); // Check every second
+      }, 1000);
     }
 
-    // Add event listener for postMessage
     window.addEventListener('message', handleBookioMessage);
 
-    // Cleanup
     return () => {
       window.removeEventListener('message', handleBookioMessage);
       if (iframeCheckInterval) {
         clearInterval(iframeCheckInterval);
       }
     };
-  }, [bookingOpen]);
+  }, [bookingOpen, previousHeight, bookingCompleted]);
 
   // Timeout check for iframe loading (detects AdBlock)
   useEffect(() => {
@@ -350,7 +342,6 @@ export default function Home() {
     if (bookingOpen && !iframeLoaded && !iframeError) {
       timeout = setTimeout(() => {
         if (!iframeLoaded) {
-          console.warn('Iframe load timeout - likely blocked by client');
           setIframeError(true);
         }
       }, 5000); // 5 seconds timeout
@@ -359,7 +350,6 @@ export default function Home() {
   }, [bookingOpen, iframeLoaded, iframeError]);
 
   const handleIframeError = (error: any) => {
-    console.error('Bookio iframe failed to load:', error)
     setIframeError(true)
   }
 
@@ -426,7 +416,7 @@ export default function Home() {
                 }
               }}>
                 <DialogTrigger asChild>
-                  <Button className="h-auto py-4 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2">
+                  <Button className="h-auto py-2 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2">
                     <span>Pozrieť voľné termíny</span>
                     <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
                       <div className="relative h-4 w-16">
@@ -664,19 +654,22 @@ export default function Home() {
                             />
                           ))}
                         </div>
-                        <span className="text-sm font-medium text-black dark:text-white">
-                          {testimonial.rating?.toFixed(1) ?? '0.0'}
-                        </span>
-                        {testimonial.photo && testimonial.photo.includes('googleusercontent') && (
-                          <div className="ml-1 flex-shrink-0" title="Recenzia z Google Maps">
-                            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none">
-                              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
-                              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
-                              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
-                              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
-                            </svg>
-                          </div>
-                        )}
+                        <div className="flex items-center gap-1">
+                          {testimonial.photo && testimonial.photo.includes('googleusercontent') && (
+                            <div className="relative w-4 h-4 flex-shrink-0" title="Recenzia z Google Maps">
+                              <Image
+                                src="/Google_Favicon_2025.png"
+                                alt="Google"
+                                width={16}
+                                height={16}
+                                className="w-4 h-4 object-contain"
+                              />
+                            </div>
+                          )}
+                          <span className="text-sm font-medium text-black dark:text-white">
+                            {testimonial.rating?.toFixed(1) ?? '0.0'}
+                          </span>
+                        </div>
                       </div>
                     )}
                     <p className="text-black/80 dark:text-white/80 italic text-base leading-relaxed mb-4 font-light">
@@ -841,8 +834,11 @@ export default function Home() {
         </footer >
       </main >
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&loading=async`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=weekly`}
         strategy="afterInteractive"
+        onReady={() => {
+          setIsGoogleApiLoaded(true);
+        }}
       />
     </div >
   )

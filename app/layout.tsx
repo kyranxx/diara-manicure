@@ -45,9 +45,6 @@ export default function RootLayout({
   return (
     <html lang="sk">
       <head>
-        {/* Passive Events Patch - Loads synchronously FIRST before all scripts */}
-        {/* Passive Events Patch - Loads synchronously FIRST before all scripts */}
-        {/* Passive Events Patch - Loads synchronously FIRST before all scripts */}
         <Script
           src="/passive-fix.js"
           strategy="beforeInteractive"

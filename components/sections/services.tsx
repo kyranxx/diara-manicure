@@ -28,7 +28,6 @@ export function ServicesSection() {
             .then(setServices)
             .catch(error => {
                 if (error.name === 'AbortError') return
-                console.error('Error fetching services:', error)
                 setServices([])
             })
             .finally(() => {
