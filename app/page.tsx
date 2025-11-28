@@ -400,10 +400,12 @@ export default function Home() {
           </div>
 
           <div className="max-w-2xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-10 leading-tight">
-              Exkluzívna starostlivosť <br />
-              <span className="italic font-serif text-primary/80">o vaše ruky</span>
+            <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
+              Gélové nechty a manikúra Trnava
             </h1>
+            <p className="text-xl md:text-2xl font-light text-muted-foreground mb-10">
+              Exkluzívna starostlivosť o vaše ruky. <span className="italic font-serif text-primary/80">Best nails Trnava can offer.</span>
+            </p>
           </div>
 
           <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
@@ -498,13 +500,17 @@ export default function Home() {
                         width="100%"
                         height="100%"
                         style={{ border: 'none', display: 'block' }}
-                        allow="microphone 'none'; camera 'none'; geolocation 'none'"
                         referrerPolicy="strict-origin-when-cross-origin"
                       />
                     </div>
                   </div>
                 </DialogContent>
               </Dialog>
+
+              {/* Micro-copy below booking button */}
+              <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
+                Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
+              </p>
 
               <Button
                 variant="outline"
@@ -566,7 +572,7 @@ export default function Home() {
                   Ako zakladateľka <strong>diara manicure.</strong> som si splnila sen o vytvorení miesta, kde sa každá klientka bude cítiť výnimočne.
                 </p>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
-                  Používame len tie najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch, aby sme vám priniesli tú najlepšiu starostlivosť v Trnave.
+                  Používame len tie najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch, aby sme vám priniesli tú najlepšiu starostlivosť a najkrajšie nails v Trnave.
                 </p>
                 <div className="flex items-center justify-center md:justify-start gap-4">
                   <div className="h-px w-12 bg-primary/30"></div>
@@ -599,7 +605,13 @@ export default function Home() {
                   {services.map((service, index) => {
                     const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
                     return (
-                      <div key={index} className="group flex justify-between items-start p-8 bg-beige dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full">
+                      <div key={index} className="group relative flex justify-between items-start p-8 bg-beige dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full">
+                        {/* TIP Badge for discounted services */}
+                        {hasDiscount && (
+                          <div className="absolute top-2 right-4 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full shadow-sm">
+                            Najžiadanejšie
+                          </div>
+                        )}
                         <div className="flex-grow pr-4">
                           <h3 className="text-xl font-normal mb-2 group-hover:text-primary transition-colors text-black dark:text-white">{service.title}</h3>
                           <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
@@ -741,6 +753,60 @@ export default function Home() {
           </div>
         </section >
 
+        {/* FAQ Section - White Background */}
+        <section id="faq" className="py-24 bg-white dark:bg-black">
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">
+                Časté otázky<br />o našom nechtovom štúdiu
+              </h2>
+              <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
+            </div>
+
+            <div className="max-w-4xl mx-auto space-y-6">
+              {/* FAQ Item 1 */}
+              <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
+                <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
+                  Kde nájdem vaše nechtové štúdio v Trnave?
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Náš salón Diara Nails Trnava sa nachádza na Hospodárskej 53. Máme vlastné parkovanie zdarma priamo pred vchodom.
+                </p>
+              </div>
+
+              {/* FAQ Item 2 */}
+              <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
+                <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
+                  Aká je cena za nové gélové nechty?
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Aktuálne máme akciu. Cenník začína na sume 29 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov.
+                </p>
+              </div>
+
+              {/* FAQ Item 3 */}
+              <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
+                <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
+                  Musím sa objednať telefonicky?
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Nie, preferujeme online rezervácie. Kliknite na tlačidlo "Pozrieť voľné termíny" a vyberte si čas, ktorý vám vyhovuje. Objednanie na nechty trvá menej ako minútu.
+                </p>
+              </div>
+
+              {/* FAQ Item 4 */}
+              <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
+                <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
+                  Robíte aj iné služby ako gélové nechty?
+                </h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  Áno, špecializujeme sa na gélové nechty, ale v ponuke je aj japonská manikúra, gél lak a klasická manikúra Trnava.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Contact Section - Beige Background (Merged with Footer) */}
         < section id="visit" className="pt-24 pb-12 bg-beige dark:bg-black" >
           <div className="container mx-auto px-6">
@@ -797,7 +863,7 @@ export default function Home() {
         < footer className="py-12 bg-beige dark:bg-black" >
           <div className="container mx-auto px-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col items-center gap-3">
                 <Image
                   src={logoSrc}
                   alt="DIARA"
@@ -805,6 +871,7 @@ export default function Home() {
                   height={600}
                   className="h-20 w-auto object-contain"
                 />
+                <p className="text-sm font-medium text-black dark:text-white tracking-wide">Professional Nails & Manicure in Trnava</p>
               </div>
 
               <p className="text-sm text-muted-foreground text-center">© 2025 diara manicure. Všetky práva vyhradené.</p>
@@ -830,11 +897,18 @@ export default function Home() {
                 </a>
               </div>
             </div>
+
+            {/* SEO Keywords Line */}
+            <div className="mt-8 pt-6 border-t border-primary/10 text-center">
+              <p className="text-xs text-muted-foreground/60 leading-relaxed">
+                Populárne vyhľadávania: Nechty Trnava | Gélové nechty Trnava | Manikúra Trnava | Nails Trnava | Nechtové štúdio Trnava | Modelácia nechtov | Gél lak Trnava | Nechty Cenník | Voľné termíny na nechty
+              </p>
+            </div>
           </div>
         </footer >
       </main >
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=weekly`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=weekly&loading=async`}
         strategy="afterInteractive"
         onReady={() => {
           setIsGoogleApiLoaded(true);

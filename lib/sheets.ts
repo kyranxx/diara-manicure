@@ -36,9 +36,9 @@ async function fetchSheetsData(): Promise<Service[]> {
     // Fallback data if credentials are missing
     if (!credentialsEnv || !spreadsheetId) {
       return [
-        { title: 'Gélové nechty - nová modelácia', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €' },
-        { title: 'Dorábka gélových nechtov', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
-        { title: 'Gellak (spevnenie prírodných nechtov)', description: 'Úprava kožtičky, spevnenie kaučukovým bázovým gélom, farba.', price: '25 €' },
+        { title: 'Modelácia gélových nechtov (Nové nechty)', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €', discountedPrice: '29 €' },
+        { title: 'Doplnenie gélových nechtov (Dorábka)', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
+        { title: 'Gél lak (Spevnenie nechtov)', description: 'Úprava kožtičky, spevnenie kaučukovým bázovým gélom, farba.', price: '25 €' },
         { title: 'Japonská manikúra', description: 'Hĺbková výživa a leštenie prírodných nechtov včelím voskom.', price: '20 €' },
         { title: 'Klasická manikúra', description: 'Úprava tvaru nechtov, zatlačenie kožtičky, výživný olejček.', price: '15 €' },
         { title: 'Odstránenie gélových nechtov', description: 'Bez ďalšej úpravy.', price: '10 €' },
@@ -92,9 +92,9 @@ async function fetchSheetsData(): Promise<Service[]> {
     return services;
   } catch (error) {
     return [
-      { title: 'Gélové nechty - nová modelácia', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €' },
-      { title: 'Dorábka gélových nechtov', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
-      { title: 'Gellak (spevnenie prírodných nechtov)', description: 'Úprava kožtičky, spevnenie kaučukovým bázovým gélom, farba.', price: '25 €' },
+      { title: 'Modelácia gélových nechtov (Nové nechty)', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €', discountedPrice: '29 €' },
+      { title: 'Doplnenie gélových nechtov (Dorábka)', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
+      { title: 'Gél lak (Spevnenie nechtov)', description: 'Úprava kožtičky, spevnenie kaučukovým bázovým gélom, farba.', price: '25 €' },
       { title: 'Japonská manikúra', description: 'Hĺbková výživa a leštenie prírodných nechtov včelím voskom.', price: '20 €' },
     ];
   }

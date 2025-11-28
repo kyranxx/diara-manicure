@@ -18,6 +18,7 @@ export function Navbar() {
         { href: "#cennik", label: "Cenník" },
         { href: "#recenzie", label: "Recenzie" },
         { href: "#galeria", label: "Galéria" },
+        { href: "#faq", label: "FAQ" },
         { href: "#visit", label: "Kontakt" },
     ]
 

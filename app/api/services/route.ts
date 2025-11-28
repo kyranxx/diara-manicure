@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic'
 
 // Rate limiting helper
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
-const RATE_LIMIT = 10 // requests per minute
+const RATE_LIMIT = 100 // requests per minute
 const WINDOW_MS = 60 * 1000 // 1 minute
 
 function rateLimit(ip: string, userAgent: string): boolean {
