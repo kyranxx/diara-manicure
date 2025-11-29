@@ -582,7 +582,7 @@ export default function Home() {
               </Button>
 
               {/* Floating Bubble - Desktop: Upper Left, Mobile: Above Arrow */}
-              <div className="relative mt-0 xl:absolute xl:left-8 xl:top-0 xl:mt-0 w-80 max-w-full mx-auto p-6 rounded-[2rem] bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl z-10">
+              <div className="relative mt-0 xl:absolute xl:left-8 xl:top-[370px] xl:mt-0 w-80 max-w-full mx-auto p-6 rounded-[2rem] bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl z-10">
                 <p className="text-lg font-light leading-relaxed text-black dark:text-white">
                   Našou prioritou sú <span className="italic font-serif text-primary">kvalitné európske gély</span> a precízne odvedená práca.
                   <br className="my-6 block" />
