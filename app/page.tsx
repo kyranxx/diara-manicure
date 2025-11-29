@@ -942,7 +942,7 @@ export default function Home() {
                 <p className="text-sm font-medium text-black dark:text-white tracking-wide">Professional Nails & Manicure in Trnava</p>
               </div>
 
-              <p className="text-sm text-muted-foreground text-center">© 2025 diara manicure. Všetky práva vyhradené.</p>
+              <p className="text-sm text-foreground/80 text-center">© 2025 diara manicure. Všetky práva vyhradené.</p>
 
               <div className="flex gap-6">
                 <a
@@ -968,7 +968,7 @@ export default function Home() {
 
             {/* SEO Keywords Line */}
             <div className="mt-8 pt-6 border-t border-primary/10 text-center">
-              <p className="text-xs text-muted-foreground/60 leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Populárne vyhľadávania: Nechty Trnava | Gélové nechty Trnava | Manikúra Trnava | Nails Trnava | Nechtové štúdio Trnava | Modelácia nechtov | Gél lak Trnava | Nechty Cenník | Voľné termíny na nechty
               </p>
             </div>
