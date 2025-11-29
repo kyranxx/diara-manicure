@@ -83,28 +83,58 @@ export default function Home() {
     }
   ])
 
-
-
   // Check if Google Maps is already loaded (e.g. from cache)
   useEffect(() => {
-    if ((window as any).google?.maps) {
-      setIsGoogleApiLoaded(true);
-    }
+    const checkGoogleMaps = () => {
+      if ((window as any).google?.maps) {
+        console.log('Google Maps detected via polling');
+        setIsGoogleApiLoaded(true);
+        return true;
+      }
+      return false;
+    };
+
+    // Check immediately
+    if (checkGoogleMaps()) return;
+
+    // Poll every 500ms for 10 seconds
+    const intervalId = setInterval(() => {
+      if (checkGoogleMaps()) {
+        clearInterval(intervalId);
+      }
+    }, 500);
+
+    // Stop polling after 10 seconds
+    const timeoutId = setTimeout(() => {
+      clearInterval(intervalId);
+    }, 10000);
+
+    return () => {
+      clearInterval(intervalId);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   useEffect(() => {
     const fetchGoogleReviews = async () => {
-      console.log('Attempting to fetch reviews. API Loaded:', isGoogleApiLoaded);
+      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+      console.log('Fetch Reviews Effect Triggered. API Key Present:', !!apiKey, 'API Loaded State:', isGoogleApiLoaded);
 
-      if (typeof window === 'undefined' || !isGoogleApiLoaded) {
-        return;
-      }
+      // Check if API is loaded via state OR directly on window
+      const isLoaded = isGoogleApiLoaded || (typeof window !== 'undefined' && !!(window as any).google?.maps);
 
-      if (!(window as any).google?.maps) {
+      if (typeof window === 'undefined' || !isLoaded) {
+        console.log('Waiting for Google Maps API to load...');
         return;
       }
 
       try {
+        // Double check availability
+        if (!(window as any).google?.maps?.importLibrary) {
+          console.error('Google Maps API loaded but importLibrary not found');
+          return;
+        }
+
         const { Place } = await (window as any).google.maps.importLibrary('places');
 
         // Search for the place by text instead of using hardcoded ID
@@ -133,33 +163,47 @@ export default function Home() {
 
           const googleReviews: Testimonial[] = place.reviews
             .filter((review: any) => {
-              const text = review.text?.text || review.text || '';
-              const hasText = text && text.trim().length > 0;
+              // Handle both new API (object) and potential legacy/other formats
+              const textObj = review.text;
+              const textContent = typeof textObj === 'string' ? textObj : (textObj?.text || '');
+
+              const hasText = textContent && textContent.trim().length > 0;
               const isHighRating = review.rating && review.rating >= 4;
 
               if (!hasText) console.log('Filtered out review (no text):', review);
               if (!isHighRating) console.log('Filtered out review (low rating):', review);
 
+              // User requested to filter out those without text. 
+              // We also keep the high rating filter to ensure quality testimonials.
               return isHighRating && hasText;
             })
             .slice(0, 5)
-            .map((review: any) => ({
-              text: review.text?.text || review.text || '',
-              author: review.authorAttribution?.displayName || 'Anonymous',
-              photo: review.authorAttribution?.photoURI || null,
-              rating: review.rating
-            }));
+            .map((review: any) => {
+              const textObj = review.text;
+              const textContent = typeof textObj === 'string' ? textObj : (textObj?.text || '');
+
+              return {
+                text: textContent,
+                author: review.authorAttribution?.displayName || 'Anonymous',
+                photo: review.authorAttribution?.photoURI || null,
+                rating: review.rating
+              };
+            });
 
           console.log('Filtered Google Reviews:', googleReviews);
 
           if (googleReviews.length > 0) {
             setTestimonials(prev => {
+              // Remove hardcoded reviews that might duplicate the Google ones (by author name)
               const uniqueHardcoded = prev.filter(pr => !googleReviews.some(gr => gr.author === pr.author));
               const merged = [...googleReviews, ...uniqueHardcoded];
+              // Shuffle
               const shuffled = merged.sort(() => Math.random() - 0.5);
               return shuffled;
             });
           }
+        } else {
+          console.log('No reviews found for this place.');
         }
       } catch (error) {
         console.error('Failed to fetch Google Reviews:', error);
@@ -170,7 +214,7 @@ export default function Home() {
   }, [isGoogleApiLoaded]);
 
   const { resolvedTheme } = useTheme()
-  const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava-v2.png" : "/diara-manicure-logo-trnava.png"
+
 
   // Set booking URL with success redirect on client side only
   useEffect(() => {
@@ -379,15 +423,7 @@ export default function Home() {
       <Navbar />
 
       <main>
-        {/* Preload dark logo for instant switching */}
-        <Image
-          src="/diara-manicure-logo-black-trnava-v2.png"
-          alt=""
-          width={1536}
-          height={600}
-          className="hidden"
-          priority
-        />
+
 
         {/* Hero Section - Beige Background */}
         <section className="relative min-h-[auto] md:min-h-[90vh] flex flex-col justify-start pt-20 md:pt-20 pb-12 md:pb-0 items-center text-center px-6 overflow-hidden bg-beige dark:bg-black">
@@ -398,18 +434,31 @@ export default function Home() {
           </div>
 
           <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
+            {/* Light Mode Logo */}
             <Image
-              src={logoSrc}
+              src="/diara-manicure-logo-trnava.png"
               alt="Diara Manicure - Nechty Trnava"
               width={1536}
               height={600}
-              className="w-full h-auto"
+              className="w-full h-auto dark:hidden"
               priority
-              fetchPriority="high"
+            />
+            {/* Dark Mode Logo */}
+            <Image
+              src="/diara-manicure-logo-black-trnava-v2.png"
+              alt="Diara Manicure - Nechty Trnava"
+              width={1536}
+              height={600}
+              className="w-full h-auto hidden dark:block"
+              priority
             />
           </div>
 
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto relative">
+            <div className="absolute -top-6 -right-2 md:-right-8 rotate-12 bg-white dark:bg-zinc-900 text-primary border border-primary/20 px-5 py-3 rounded-full shadow-xl z-10 animate-in fade-in zoom-in duration-500 delay-300 flex items-baseline gap-1 hover:scale-110 transition-transform cursor-default">
+              <span className="font-serif italic text-base text-muted-foreground">od</span>
+              <span className="text-2xl font-bold">29€</span>
+            </div>
             <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
               Gélové nechty Trnava – nails & manikúra
             </h1>
@@ -877,11 +926,18 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex flex-col items-center gap-3">
                 <Image
-                  src={logoSrc}
+                  src="/diara-manicure-logo-trnava.png"
                   alt="DIARA"
                   width={1536}
                   height={600}
-                  className="h-20 w-auto object-contain"
+                  className="h-20 w-auto object-contain dark:hidden"
+                />
+                <Image
+                  src="/diara-manicure-logo-black-trnava-v2.png"
+                  alt="DIARA"
+                  width={1536}
+                  height={600}
+                  className="h-20 w-auto object-contain hidden dark:block"
                 />
                 <p className="text-sm font-medium text-black dark:text-white tracking-wide">Professional Nails & Manicure in Trnava</p>
               </div>
@@ -920,10 +976,14 @@ export default function Home() {
         </footer >
       </main >
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&v=weekly&loading=async`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=weekly&loading=async`}
         strategy="afterInteractive"
         onReady={() => {
+          console.log('Google Maps Script Loaded');
           setIsGoogleApiLoaded(true);
+        }}
+        onError={(e) => {
+          console.error('Google Maps Script failed to load:', e);
         }}
       />
     </div >

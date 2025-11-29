@@ -63,7 +63,6 @@ export function FacebookChat() {
               var js, fjs = d.getElementsByTagName(s)[0];
               if (d.getElementById(id)) return;
               js = d.createElement(s); js.id = id;
-              js.crossOrigin = "anonymous";
               js.src = 'https://connect.facebook.net/sk_SK/sdk/xfbml.customerchat.js';
               fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
