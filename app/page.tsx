@@ -832,7 +832,7 @@ export default function Home() {
                   Kde nájdem vaše nechtové štúdio v Trnave?
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Náš salón Diara Nails Trnava sa nachádza na Hospodárskej 53. Máme vlastné parkovanie zdarma priamo pred vchodom.
+                  Náš salón diara manicure. Trnava sa nachádza na Hospodárskej 53. Máme vlastné parkovanie zdarma priamo pred vchodom.
                 </p>
               </div>
 
@@ -842,7 +842,7 @@ export default function Home() {
                   Aká je cena za nové gélové nechty?
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Aktuálne máme akciu. Cenník začína na sume 29 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov.
+                  Aktuálne máme akciu. Cenník začína na sume 20 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov.
                 </p>
               </div>
 
@@ -862,7 +862,7 @@ export default function Home() {
                   Robíte aj iné služby ako gélové nechty?
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Áno, špecializujeme sa na gélové nechty, ale v ponuke je aj japonská manikúra, gél lak a klasická manikúra Trnava.
+                  Áno, špecializujeme sa na gélové nechty, ale v ponuke je aj gél lak a klasická manikúra Trnava.
                 </p>
               </div>
             </div>
