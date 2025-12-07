@@ -6,13 +6,7 @@ import { Instagram, Facebook, ChevronDown, Star, MapPin, Phone, Mail } from "luc
 import Map from "@/components/ui/custom-map"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog"
+
 import SchemaMarkup from "@/components/schema-markup"
 import { Navbar } from "@/components/navbar"
 import { PricingSkeleton } from "@/components/pricing-skeleton"
@@ -35,15 +29,8 @@ interface Testimonial {
 export default function Home() {
   const [services, setServices] = useState<Service[]>([])
   const [loadingServices, setLoadingServices] = useState(true)
-  const [bookingOpen, setBookingOpen] = useState(false)
-  const [iframeLoaded, setIframeLoaded] = useState(false)
-  const [iframeError, setIframeError] = useState(false)
   const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false)
-
-  const [bookingUrl, setBookingUrl] = useState('https://services.bookio.com/diaramanicure/widget?lang=sk')
-  const [bookingStartTime, setBookingStartTime] = useState<number | null>(null)
-  const [bookingCompleted, setBookingCompleted] = useState(false)
-  const [previousHeight, setPreviousHeight] = useState<number>(0)
+  const [bookingUrl] = useState('https://services.bookio.com/diaramanicure/widget?lang=sk')
   const [testimonials, setTestimonials] = useState<Testimonial[]>([
     {
       text: "Nechty vyzerajú super a hlavne vydržia bez jedinej chyby celé 3 týždne. Precízna práca, chválim detailnú úpravu.",
@@ -87,7 +74,6 @@ export default function Home() {
   useEffect(() => {
     const checkGoogleMaps = () => {
       if ((window as any).google?.maps) {
-        console.log('Google Maps detected via polling');
         setIsGoogleApiLoaded(true);
         return true;
       }
@@ -117,21 +103,16 @@ export default function Home() {
 
   useEffect(() => {
     const fetchGoogleReviews = async () => {
-      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
-      console.log('Fetch Reviews Effect Triggered. API Key Present:', !!apiKey, 'API Loaded State:', isGoogleApiLoaded);
-
       // Check if API is loaded via state OR directly on window
       const isLoaded = isGoogleApiLoaded || (typeof window !== 'undefined' && !!(window as any).google?.maps);
 
       if (typeof window === 'undefined' || !isLoaded) {
-        console.log('Waiting for Google Maps API to load...');
         return;
       }
 
       try {
         // Double check availability
         if (!(window as any).google?.maps?.importLibrary) {
-          console.error('Google Maps API loaded but importLibrary not found');
           return;
         }
 
@@ -147,7 +128,6 @@ export default function Home() {
         const { places } = await Place.searchByText(request);
 
         if (!places || places.length === 0) {
-          console.warn('Google Maps: No place found for reviews');
           return;
         }
 
@@ -159,8 +139,6 @@ export default function Home() {
         });
 
         if (place.reviews && place.reviews.length > 0) {
-          console.log('Raw Google Reviews:', place.reviews);
-
           const googleReviews: Testimonial[] = place.reviews
             .filter((review: any) => {
               // Handle both new API (object) and potential legacy/other formats
@@ -170,11 +148,7 @@ export default function Home() {
               const hasText = textContent && textContent.trim().length > 0;
               const isHighRating = review.rating && review.rating >= 4;
 
-              if (!hasText) console.log('Filtered out review (no text):', review);
-              if (!isHighRating) console.log('Filtered out review (low rating):', review);
-
-              // User requested to filter out those without text. 
-              // We also keep the high rating filter to ensure quality testimonials.
+              // Filter out those without text and keep only high ratings
               return isHighRating && hasText;
             })
             .slice(0, 5)
@@ -190,8 +164,6 @@ export default function Home() {
               };
             });
 
-          console.log('Filtered Google Reviews:', googleReviews);
-
           if (googleReviews.length > 0) {
             setTestimonials(prev => {
               // Remove hardcoded reviews that might duplicate the Google ones (by author name)
@@ -202,11 +174,9 @@ export default function Home() {
               return shuffled;
             });
           }
-        } else {
-          console.log('No reviews found for this place.');
         }
-      } catch (error) {
-        console.error('Failed to fetch Google Reviews:', error);
+      } catch {
+        // Silently handle errors - reviews are not critical
       }
     };
 
@@ -216,206 +186,51 @@ export default function Home() {
   const { resolvedTheme } = useTheme()
 
 
-  // Set booking URL with success redirect on client side only
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const successUrl = `${window.location.origin}/dakujeme`
-      setBookingUrl(`https://services.bookio.com/diaramanicure/widget?lang=sk&success_url=${encodeURIComponent(successUrl)}`)
-    }
-  }, [])
+
 
   useEffect(() => {
     const controller = new AbortController()
+    let isMounted = true
 
-    fetch('/api/services', { signal: controller.signal })
-      .then(async res => {
+    const fetchServices = async () => {
+      try {
+        const res = await fetch('/api/services', { signal: controller.signal })
         if (!res.ok) {
-          const error = await res.json()
-          throw new Error(error.error || 'Failed to fetch services')
+          throw new Error('Failed to fetch services')
         }
-        return res.json()
-      })
-      .then(setServices)
-      .catch(error => {
-        if (error.name === 'AbortError') return
-        setServices([])
-      })
-      .finally(() => {
-        if (!controller.signal.aborted) {
+        const data = await res.json()
+        if (isMounted) {
+          setServices(data)
           setLoadingServices(false)
         }
-      })
-
-    return () => controller.abort()
-  }, [])
-
-  // Handle theme changes for iframe
-  useEffect(() => {
-    if (bookingOpen && iframeLoaded && resolvedTheme === 'dark') {
-      try {
-        const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement
-        if (iframe && iframe.contentWindow) {
-          iframe.contentWindow.postMessage({
-            type: 'SET_THEME',
-            theme: 'dark'
-          }, '*')
+      } catch {
+        // Silently ignore all errors (including AbortError)
+        if (isMounted) {
+          setServices([])
+          setLoadingServices(false)
         }
-      } catch (error) {
-        // Silent error handling
       }
     }
-  }, [resolvedTheme, bookingOpen, iframeLoaded, setIframeLoaded, setIframeError])
+
+    fetchServices()
+
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
+  }, [])
+
+
 
   const scrollToVisit = () => {
     document.getElementById("visit")?.scrollIntoView({ behavior: "smooth" })
   }
 
-  const handleIframeLoad = () => {
-    setIframeLoaded(true)
-    setIframeError(false)
-
-    if (resolvedTheme === 'dark') {
-      try {
-        const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement
-        if (iframe && iframe.contentWindow) {
-          iframe.contentWindow.postMessage({
-            type: 'SET_THEME',
-            theme: 'dark'
-          }, '*')
-        }
-      } catch (error) {
-        // Silent error handling
-      }
-    }
-  }
 
 
 
-  // Track when booking dialog opens
-  useEffect(() => {
-    if (bookingOpen) {
-      setBookingStartTime(Date.now());
-      setBookingCompleted(false);
-    }
-  }, [bookingOpen]);
 
-  // Listen for Bookio booking completion and redirect to thank you page
-  useEffect(() => {
-    const handleBookioMessage = (event: MessageEvent) => {
-      if (!event.origin.includes('bookio.com')) {
-        return;
-      }
 
-      if (event.data?.type === 'WIDGET_HEIGHT' && typeof event.data?.widgetHeight === 'number') {
-        const currentHeight = event.data.widgetHeight;
-
-        if (currentHeight < 900 && previousHeight > 950 && !bookingCompleted) {
-          if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'conversion', {
-              'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
-            });
-          }
-          setBookingCompleted(true);
-        }
-
-        setPreviousHeight(currentHeight);
-      }
-
-      if (
-        event.data?.type === 'booking_completed' ||
-        event.data?.type === 'reservation_completed' ||
-        event.data?.type === 'booking_created' ||
-        event.data?.event === 'booking_completed' ||
-        event.data?.event === 'reservation_completed' ||
-        event.data?.event === 'booking_created' ||
-        event.data?.status === 'completed' ||
-        event.data?.success === true ||
-        event.data?.action === 'booking_success' ||
-        event.data?.step === 'finish' ||
-        (event.data?.type === 'navigation' && event.data?.path?.includes('success'))
-      ) {
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-          (window as any).gtag('event', 'conversion', {
-            'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
-          });
-        }
-
-        setBookingCompleted(true);
-      }
-    };
-
-    let iframeCheckInterval: NodeJS.Timeout | null = null;
-
-    if (bookingOpen) {
-      iframeCheckInterval = setInterval(() => {
-        try {
-          const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement;
-          if (iframe && iframe.contentWindow) {
-            try {
-              const iframeUrl = iframe.contentWindow.location.href;
-
-              if (
-                iframeUrl.includes('/success') ||
-                iframeUrl.includes('/confirmed') ||
-                iframeUrl.includes('/booking-confirmed') ||
-                iframeUrl.includes('/completed') ||
-                iframeUrl.includes('?status=success') ||
-                iframeUrl.includes('&status=success')
-              ) {
-                if (typeof window !== 'undefined' && (window as any).gtag) {
-                  (window as any).gtag('event', 'conversion', {
-                    'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
-                  });
-                }
-
-                setBookingCompleted(true);
-                if (iframeCheckInterval) clearInterval(iframeCheckInterval);
-              }
-            } catch (e) {
-              // CORS error - expected
-            }
-          }
-        } catch (error) {
-          // Silent error handling
-        }
-      }, 1000);
-    }
-
-    window.addEventListener('message', handleBookioMessage);
-
-    return () => {
-      window.removeEventListener('message', handleBookioMessage);
-      if (iframeCheckInterval) {
-        clearInterval(iframeCheckInterval);
-      }
-    };
-  }, [bookingOpen, previousHeight, bookingCompleted]);
-
-  // Timeout check for iframe loading (detects AdBlock)
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (bookingOpen && !iframeLoaded && !iframeError) {
-      timeout = setTimeout(() => {
-        if (!iframeLoaded) {
-          setIframeError(true);
-        }
-      }, 5000); // 5 seconds timeout
-    }
-    return () => clearTimeout(timeout);
-  }, [bookingOpen, iframeLoaded, iframeError]);
-
-  const handleIframeError = (error: any) => {
-    setIframeError(true)
-  }
-
-  const retryIframe = () => {
-    setIframeError(false)
-    setIframeLoaded(false)
-    const iframe = document.getElementById('bookio-iframe') as HTMLIFrameElement
-    if (iframe) {
-      iframe.src = iframe.src // Force reload
-    }
-  }
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
@@ -471,102 +286,25 @@ export default function Home() {
 
           <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
             <div className="flex flex-col justify-center gap-4 w-full">
-              <Dialog open={bookingOpen} onOpenChange={(open) => {
-                setBookingOpen(open);
-                // If closing and booking was completed, redirect to thank you page
-                if (!open && bookingCompleted) {
-                  window.location.href = '/dakujeme';
-                }
-              }}>
-                <DialogTrigger asChild>
-                  <Button className="h-auto py-2 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2">
-                    <span>Pozrieť voľné termíny</span>
-                    <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
-                      <div className="relative h-4 w-16">
-                        <Image
-                          src="/bookio_logo.png"
-                          alt="Bookio"
-                          fill
-                          className="object-contain"
-                          sizes="64px"
-                        />
-                      </div>
-                    </div>
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl w-full h-[85vh] p-0 overflow-hidden rounded-2xl border-none">
-                  <DialogTitle className="sr-only">Rezervácia termínu</DialogTitle>
-                  <DialogDescription className="sr-only">
-                    Rezervujte si termín na manikúru prostredníctvom našej online rezervačnej platformy.
-                  </DialogDescription>
-                  <div className="w-full h-full flex flex-col bg-background relative">
-                    {/* Success Banner - Shows when booking is completed */}
-                    {bookingCompleted && (
-                      <div className="absolute top-0 left-0 w-full bg-green-500 text-white p-4 z-50 flex items-center justify-center gap-2 animate-in slide-in-from-top duration-500 shadow-lg">
-                        <div className="bg-white rounded-full p-1">
-                          <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <span className="font-medium">Rezervácia bola úspešne zaznamenaná!</span>
-                      </div>
-                    )}
-
-                    <div className="flex-1 relative">
-                      {!iframeLoaded && !iframeError && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-background/50 backdrop-blur-sm">
-                          <div className="text-center">
-                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                            <p className="text-muted-foreground">Načítavam rezervačný systém...</p>
-                          </div>
-                        </div>
-                      )}
-
-                      {iframeError && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-background p-6">
-                          <div className="text-center max-w-md mx-auto">
-                            <div className="mb-4 text-destructive">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                              </svg>
-                              <h3 className="text-lg font-semibold">Rezervačný systém sa nepodarilo načítať</h3>
-                            </div>
-                            <p className="text-muted-foreground mb-6">
-                              Váš prehliadač alebo <strong>AdBlock</strong> pravdepodobne blokuje rezervačný systém.
-                              Prosím, vypnite blokovanie reklám pre túto stránku alebo otvorte rezerváciu v novom okne.
-                            </p>
-                            <div className="flex flex-col gap-3">
-                              <Button onClick={retryIframe} variant="outline">
-                                Skúsiť znovu
-                              </Button>
-                              <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
-                                <a
-                                  href="https://services.bookio.com/diaramanicure/widget?lang=sk"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  Otvoriť rezerváciu v novom okne
-                                </a>
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      <iframe
-                        id="bookio-iframe"
-                        src={bookingUrl}
-                        onLoad={handleIframeLoad}
-                        onError={handleIframeError}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 'none', display: 'block' }}
-                        referrerPolicy="strict-origin-when-cross-origin"
+              <Button
+                asChild
+                className="h-auto py-2 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2"
+              >
+                <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
+                  <span>Pozrieť voľné termíny</span>
+                  <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
+                    <div className="relative h-4 w-16">
+                      <Image
+                        src="/bookio_logo.png"
+                        alt="Bookio"
+                        fill
+                        className="object-contain"
+                        sizes="64px"
                       />
                     </div>
                   </div>
-                </DialogContent>
-              </Dialog>
+                </a>
+              </Button>
 
               {/* Micro-copy below booking button */}
               <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
@@ -616,7 +354,13 @@ export default function Home() {
                   {services.map((service, index) => {
                     const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
                     return (
-                      <div key={index} className="group relative flex justify-between items-start p-8 bg-beige dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full">
+                      <a
+                        key={index}
+                        href={bookingUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative flex justify-between items-start p-8 bg-beige dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full cursor-pointer hover:scale-[1.02]"
+                      >
                         {/* TIP Badge for discounted services */}
                         {hasDiscount && (
                           <div className="absolute top-2 right-4 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full shadow-sm">
@@ -637,7 +381,7 @@ export default function Home() {
                             <span className="text-xl font-medium text-black dark:text-white">{service.price}</span>
                           )}
                         </div>
-                      </div>
+                      </a>
                     )
                   })}
                 </div>
@@ -903,10 +647,12 @@ export default function Home() {
 
                   <div className="mt-12 flex flex-col items-center lg:items-start gap-4">
                     <Button
-                      onClick={() => setBookingOpen(true)}
+                      asChild
                       className="h-16 md:h-20 text-xl rounded-full px-16 md:px-20 bg-primary text-primary-foreground hover:bg-primary/90 min-w-[250px]"
                     >
-                      Pozrieť voľné termíny
+                      <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
+                        Pozrieť voľné termíny
+                      </a>
                     </Button>
                   </div>
                 </div>
@@ -980,11 +726,7 @@ export default function Home() {
         src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=weekly&loading=async`}
         strategy="afterInteractive"
         onReady={() => {
-          console.log('Google Maps Script Loaded');
           setIsGoogleApiLoaded(true);
-        }}
-        onError={(e) => {
-          console.error('Google Maps Script failed to load:', e);
         }}
       />
     </div >

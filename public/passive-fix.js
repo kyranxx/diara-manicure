@@ -25,7 +25,7 @@
     const originalAddEventListener = EventTarget.prototype.addEventListener;
     const originalRemoveEventListener = EventTarget.prototype.removeEventListener;
 
-    const passiveEvents = ['touchstart', 'touchmove', 'touchend', 'touchcancel', 'wheel', 'mousewheel'];
+    const passiveEvents = ['touchstart', 'touchmove', 'touchend', 'touchcancel', 'wheel', 'mousewheel', 'scroll'];
 
     EventTarget.prototype.addEventListener = function (type, listener, options) {
         if (passiveEvents.includes(type)) {

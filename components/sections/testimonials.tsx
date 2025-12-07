@@ -53,10 +53,10 @@ export function TestimonialsSection() {
 
     useEffect(() => {
         const fetchGoogleReviews = () => {
-            if (!window.google || !window.google.maps || !window.google.maps.places) return;
+            if (!(window as any).google || !(window as any).google.maps || !(window as any).google.maps.places) return;
 
             const mapDiv = document.createElement('div');
-            const service = new window.google.maps.places.PlacesService(mapDiv);
+            const service = new (window as any).google.maps.places.PlacesService(mapDiv);
 
             const request = {
                 query: 'Diara Manicure Trnava',
@@ -64,7 +64,7 @@ export function TestimonialsSection() {
             };
 
             service.findPlaceFromQuery(request, (results: any, status: any) => {
-                if (status === window.google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
+                if (status === (window as any).google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
                     const placeId = results[0].place_id;
                     if (!placeId) return;
 
@@ -72,7 +72,7 @@ export function TestimonialsSection() {
                         placeId: placeId,
                         fields: ['reviews']
                     }, (place: any, detailStatus: any) => {
-                        if (detailStatus === window.google.maps.places.PlacesServiceStatus.OK && place && place.reviews) {
+                        if (detailStatus === (window as any).google.maps.places.PlacesServiceStatus.OK && place && place.reviews) {
                             const googleReviews: Testimonial[] = place.reviews
                                 .filter((review: any) => review.rating && review.rating >= 4)
                                 .slice(0, 5)

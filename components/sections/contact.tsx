@@ -10,9 +10,9 @@ export function ContactSection() {
 
     useEffect(() => {
         const initMap = () => {
-            if (!mapRef.current || !window.google?.maps) return
+            if (!mapRef.current || !(window as any).google?.maps) return
 
-            const mapOptions: google.maps.MapOptions = {
+            const mapOptions = {
                 center: { lat: 48.3709, lng: 17.5833 }, // Trnava coordinates
                 zoom: 15,
                 mapId: '6f3b06914d771662', // Use a valid Map ID or remove if not using vector maps
@@ -23,9 +23,9 @@ export function ContactSection() {
                 fullscreenControl: false,
             }
 
-            const map = new window.google.maps.Map(mapRef.current, mapOptions)
+            const map = new (window as any).google.maps.Map(mapRef.current, mapOptions)
 
-            const marker = new window.google.maps.Marker({
+            new (window as any).google.maps.Marker({
                 position: { lat: 48.3709, lng: 17.5833 },
                 map: map,
                 title: "Diara Manicure",
@@ -33,11 +33,11 @@ export function ContactSection() {
         }
 
         // Check for Google Maps API availability
-        if (window.google?.maps) {
+        if ((window as any).google?.maps) {
             initMap()
         } else {
             const interval = setInterval(() => {
-                if (window.google?.maps) {
+                if ((window as any).google?.maps) {
                     initMap()
                     clearInterval(interval)
                 }

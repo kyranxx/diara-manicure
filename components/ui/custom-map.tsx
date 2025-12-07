@@ -29,7 +29,7 @@ const Map = () => {
         }}
         src={mapSrc}
         allowFullScreen
-        loading="eager"
+        loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
         sandbox="allow-scripts allow-same-origin allow-presentation"
         title="Mapa umiestnenia Diara Manicure, Hospodárska 53, Trnava"
