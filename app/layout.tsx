@@ -19,6 +19,11 @@ export const metadata: Metadata = {
   description: "Exkluzívne nechtové štúdio v Trnave. Ponúkame profesionálne gélové nechty, manikúru a starostlivosť o ruky. Objednajte sa online.",
   keywords: ["nechty trnava", "gelove nechty trnava", "manikura trnava", "nechtove studio trnava", "diara manicure"],
   authors: [{ name: "Andrea Hečková" }],
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Diara Manicure - Nechtové štúdio Trnava",
     description: "Exkluzívna starostlivosť o vaše ruky v srdci Trnavy. Profesionálne gélové nechty a manikúra.",
