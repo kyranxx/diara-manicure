@@ -2,10 +2,10 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Instagram, Facebook, ChevronDown, Star, MapPin, Phone, Mail } from "lucide-react"
+import { Instagram, Facebook, ChevronDown, Star, MapPin, Phone, Mail, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react"
 import Map from "@/components/ui/custom-map"
 import { useTheme } from "next-themes"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 
 import SchemaMarkup from "@/components/schema-markup"
 import { Navbar } from "@/components/navbar"
@@ -26,11 +26,29 @@ interface Testimonial {
   rating?: number
 }
 
+// Gallery images for lightbox
+const galleryImages = [
+  { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Gélové nechty ukážka 1" },
+  { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Gélové nechty ukážka 2" },
+  { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Gélové nechty ukážka 3" },
+  { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Gélové nechty ukážka 4" },
+  { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Gélové nechty ukážka 5" },
+  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Gélové nechty ukážka 6" },
+  { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Gélové nechty ukážka 7" },
+  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Gélové nechty ukážka 8" },
+]
+
 export default function Home() {
   const [services, setServices] = useState<Service[]>([])
   const [loadingServices, setLoadingServices] = useState(true)
   const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false)
   const [bookingUrl] = useState('https://services.bookio.com/diaramanicure/widget?lang=sk')
+
+  // Lightbox state
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [isZoomed, setIsZoomed] = useState(false)
+
   const [testimonials, setTestimonials] = useState<Testimonial[]>([
     {
       text: "Nechty vyzerajú super a hlavne vydržia bez jedinej chyby celé 3 týždne. Precízna práca, chválim detailnú úpravu.",
@@ -225,6 +243,60 @@ export default function Home() {
   const scrollToVisit = () => {
     document.getElementById("visit")?.scrollIntoView({ behavior: "smooth" })
   }
+
+  // Lightbox functions
+  const openLightbox = (index: number) => {
+    setCurrentImageIndex(index)
+    setLightboxOpen(true)
+    setIsZoomed(false)
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false)
+    setIsZoomed(false)
+    document.body.style.overflow = 'unset'
+  }, [])
+
+  const goToPrevious = useCallback(() => {
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? galleryImages.length - 1 : prev - 1
+    )
+    setIsZoomed(false)
+  }, [])
+
+  const goToNext = useCallback(() => {
+    setCurrentImageIndex((prev) =>
+      prev === galleryImages.length - 1 ? 0 : prev + 1
+    )
+    setIsZoomed(false)
+  }, [])
+
+  const toggleZoom = () => {
+    setIsZoomed((prev) => !prev)
+  }
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return
+
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox()
+          break
+        case 'ArrowLeft':
+          goToPrevious()
+          break
+        case 'ArrowRight':
+          goToNext()
+          break
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [lightboxOpen, closeLightbox, goToPrevious, goToNext])
 
 
 
@@ -525,17 +597,24 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
-                <div key={num} className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-300">
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors z-10" />
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image.src}
+                  onClick={() => openLightbox(index)}
+                  className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  aria-label={`Otvoriť obrázok: ${image.alt}`}
+                >
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors z-10 flex items-center justify-center">
+                    <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
                   <Image
-                    src={`/gelove-nechty-trnava-gallery-${num}.jpeg`}
-                    alt={`Ukážka práce ${num}`}
+                    src={image.src}
+                    alt={image.alt}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                     sizes="(max-width: 768px) 50vw, 25vw"
                   />
-                </div>
+                </button>
               ))}
             </div>
 
@@ -729,6 +808,93 @@ export default function Home() {
           setIsGoogleApiLoaded(true);
         }}
       />
+
+      {/* Lightbox Modal */}
+      {lightboxOpen && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Prehliadač galérie"
+        >
+          {/* Close button */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+            aria-label="Zavrieť"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Zoom toggle button */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleZoom()
+            }}
+            className="absolute top-4 right-20 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+            aria-label={isZoomed ? "Oddialiť" : "Priblížiť"}
+          >
+            {isZoomed ? <ZoomOut className="w-6 h-6" /> : <ZoomIn className="w-6 h-6" />}
+          </button>
+
+          {/* Navigation arrows */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              goToPrevious()
+            }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+            aria-label="Predchádzajúci obrázok"
+          >
+            <ChevronLeft className="w-8 h-8" />
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              goToNext()
+            }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+            aria-label="Nasledujúci obrázok"
+          >
+            <ChevronRight className="w-8 h-8" />
+          </button>
+
+          {/* Image container */}
+          <div
+            className={`relative transition-all duration-500 ease-out ${isZoomed
+                ? 'w-[95vw] h-[95vh] cursor-zoom-out overflow-auto'
+                : 'w-[90vw] h-[85vh] max-w-5xl cursor-zoom-in'
+              }`}
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleZoom()
+            }}
+          >
+            <Image
+              src={galleryImages[currentImageIndex].src}
+              alt={galleryImages[currentImageIndex].alt}
+              fill
+              className={`transition-all duration-500 ${isZoomed ? 'object-contain scale-150' : 'object-contain'
+                }`}
+              sizes="100vw"
+              priority
+            />
+          </div>
+
+          {/* Image counter */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm font-medium bg-black/40 px-4 py-2 rounded-full">
+            {currentImageIndex + 1} / {galleryImages.length}
+          </div>
+
+          {/* Image description */}
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white text-lg font-light">
+            {galleryImages[currentImageIndex].alt}
+          </div>
+        </div>
+      )}
     </div >
   )
 }
