@@ -402,7 +402,7 @@ export default function Home() {
 
               {/* Facebook Messenger - Contact via chat */}
               <a
-                href="https://www.facebook.com/messages/t/diaramanicure"
+                href="https://m.me/diaramanicure"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-[#0084FF]/10 hover:bg-[#0084FF]/20 backdrop-blur-sm border border-[#0084FF]/20 shadow-sm transition-all duration-300 hover:scale-[1.02]"
