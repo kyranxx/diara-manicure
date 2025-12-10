@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Instagram, Facebook, ChevronDown, Star, MapPin, Phone, Mail, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react"
+import { Instagram, Facebook, ChevronDown, Star, MapPin, Phone, Mail, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, MessageCircle } from "lucide-react"
 import Map from "@/components/ui/custom-map"
 import { useTheme } from "next-themes"
 import { useState, useEffect, useCallback } from "react"
@@ -400,6 +400,22 @@ export default function Home() {
                 </div>
               </div>
 
+              {/* Facebook Messenger - Contact via chat */}
+              <a
+                href="https://m.me/diaramanicure"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-[#0084FF]/10 hover:bg-[#0084FF]/20 backdrop-blur-sm border border-[#0084FF]/20 shadow-sm transition-all duration-300 hover:scale-[1.02]"
+              >
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0084FF]/20">
+                  <MessageCircle className="w-5 h-5 text-[#0084FF]" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Napíšte nám správu</p>
+                  <span className="text-lg font-semibold text-foreground">Facebook Messenger</span>
+                </div>
+              </a>
+
               <Button
                 variant="outline"
                 onClick={scrollToVisit}
@@ -408,7 +424,7 @@ export default function Home() {
                 Kde nás nájdete
               </Button>
 
-              {/* Floating Bubble - Desktop: Upper Left, Mobile: Above Arrow */}
+              {/* Quality Message Bubble - Desktop: Upper Left, Mobile: Below buttons */}
               <div className="relative mt-0 xl:absolute xl:left-8 xl:top-[370px] xl:mt-0 w-80 max-w-full mx-auto p-6 rounded-[2rem] bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl z-10">
                 <p className="text-lg font-light leading-relaxed text-black dark:text-white">
                   Našou prioritou sú <span className="italic font-serif text-primary">kvalitné európske gély</span> a precízne odvedená práca.
