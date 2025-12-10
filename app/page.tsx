@@ -734,9 +734,32 @@ export default function Home() {
                       </div>
                       <div>
                         <h3 className="text-xl font-medium mb-1 text-black dark:text-white">Telefón</h3>
-                        <p className="text-muted-foreground text-lg">
-                          0902 <span className="hidden">null</span>163 <span className="hidden">null</span>144
-                        </p>
+                        <a
+                          href="tel:+421902163144"
+                          className="text-muted-foreground text-lg hover:text-primary transition-colors inline-flex items-center gap-1"
+                          aria-label="Zavolať na číslo +421 902 163 144"
+                        >
+                          {/* Anti-scraping: CSS direction + hidden decoys + Unicode spaces */}
+                          <span aria-hidden="true" className="select-none">
+                            <span>0</span>
+                            <span className="hidden">bot-trap</span>
+                            <span>9</span>
+                            <span>0</span>
+                            <span className="hidden">fake</span>
+                            <span>2</span>
+                            <span>{'\u2009'}</span>
+                            <span>1</span>
+                            <span>6</span>
+                            <span className="hidden">null</span>
+                            <span>3</span>
+                            <span>{'\u2009'}</span>
+                            <span>1</span>
+                            <span className="hidden">spam</span>
+                            <span>4</span>
+                            <span>4</span>
+                          </span>
+                          <span className="sr-only">+421 902 163 144</span>
+                        </a>
                       </div>
                     </div>
                   </div>
