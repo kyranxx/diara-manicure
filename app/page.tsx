@@ -33,9 +33,9 @@ const galleryImages = [
   { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Gélové nechty ukážka 3" },
   { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Gélové nechty ukážka 4" },
   { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Gélové nechty ukážka 5" },
-  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Gélové nechty ukážka 6" },
   { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Gélové nechty ukážka 7" },
-  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Gélové nechty ukážka 8" },
+  { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Gélové nechty ukážka 9" },
+  { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Gélové nechty ukážka 10" },
 ]
 
 export default function Home() {
@@ -382,6 +382,23 @@ export default function Home() {
               <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
                 Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
               </p>
+
+              {/* Phone Reservation - Anti-scam protected */}
+              <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-primary/10 shadow-sm">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
+                  <Phone className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Rezervácie telefonicky</p>
+                  <a
+                    href="tel:+421902163144"
+                    className="text-lg font-semibold text-foreground hover:text-primary transition-colors tracking-[0.15em]"
+                    aria-label="Zavolať na rezerváciu"
+                  >
+                    <span>+421 902 163 144</span>
+                  </a>
+                </div>
+              </div>
 
               <Button
                 variant="outline"
@@ -865,8 +882,8 @@ export default function Home() {
           {/* Image container */}
           <div
             className={`relative transition-all duration-500 ease-out ${isZoomed
-                ? 'w-[95vw] h-[95vh] cursor-zoom-out overflow-auto'
-                : 'w-[90vw] h-[85vh] max-w-5xl cursor-zoom-in'
+              ? 'w-[95vw] h-[95vh] cursor-zoom-out overflow-auto'
+              : 'w-[90vw] h-[85vh] max-w-5xl cursor-zoom-in'
               }`}
             onClick={(e) => {
               e.stopPropagation()
