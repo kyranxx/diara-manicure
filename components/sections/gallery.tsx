@@ -6,11 +6,14 @@ import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react"
 
 // Gallery images with their alt text
 const galleryImages = [
-    { src: "/gallery/IMG_5744.jpeg", alt: "Detailná manikúra" },
-    { src: "/gallery/IMG_5745.jpeg", alt: "Interiér salónu" },
-    { src: "/gallery/IMG_5746.jpeg", alt: "Manikúra ukážka" },
-    { src: "/gallery/IMG_5747.jpeg", alt: "Detail nechtov" },
-    { src: "/gallery/IMG_5748.jpeg", alt: "Salón Diara" },
+    { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Gélové nechty Trnava" },
+    { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Manikúra ukážka" },
+    { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Detailná manikúra" },
+    { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Interiér salónu" },
+    { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Nail art Trnava" },
+    { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Profesionálna manikúra" },
+    { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Luxusné nechty" },
+    { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Diara Manicure práca" },
 ]
 
 export function GallerySection() {
@@ -182,8 +185,8 @@ export function GallerySection() {
                     {/* Image container */}
                     <div
                         className={`relative transition-all duration-500 ease-out ${isZoomed
-                                ? 'w-[95vw] h-[95vh] cursor-zoom-out overflow-auto'
-                                : 'w-[90vw] h-[85vh] max-w-5xl cursor-zoom-in'
+                            ? 'w-[95vw] h-[95vh] cursor-zoom-out overflow-auto'
+                            : 'w-[90vw] h-[85vh] max-w-5xl cursor-zoom-in'
                             }`}
                         onClick={(e) => {
                             e.stopPropagation()

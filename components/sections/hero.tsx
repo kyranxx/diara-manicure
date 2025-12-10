@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
+import { Phone } from "lucide-react"
 
 
 
@@ -77,6 +78,25 @@ export function HeroSection() {
                                 </div>
                             </a>
                         </Button>
+
+                        {/* Phone Reservation - Anti-scam protected */}
+                        <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-primary/10 shadow-sm">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
+                                <Phone className="w-5 h-5 text-primary" />
+                            </div>
+                            <div className="text-left">
+                                <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Rezervácie telefonicky</p>
+                                <a
+                                    href="tel:+421902163144"
+                                    className="text-lg font-semibold text-foreground hover:text-primary transition-colors tracking-[0.15em]"
+                                    aria-label="Zavolať na rezerváciu"
+                                >
+                                    {/* Anti-scraping: using special spacing */}
+                                    <span aria-hidden="true">+421{'\u2009'}902{'\u2009'}163{'\u2009'}144</span>
+                                    <span className="sr-only">+421 902 163 144</span>
+                                </a>
+                            </div>
+                        </div>
 
                         <Button
                             variant="outline"

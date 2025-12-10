@@ -73,8 +73,8 @@ export function ContactSection() {
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-medium mb-1">Telefón</h3>
-                                    <a href="tel:+421902123456" className="text-gray-400 hover:text-primary transition-colors">
-                                        +421 902 123 456
+                                    <a href="tel:+421902163144" className="text-gray-400 hover:text-primary transition-colors">
+                                        +421 902 163 144
                                     </a>
                                 </div>
                             </div>
