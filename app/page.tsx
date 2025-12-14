@@ -378,6 +378,16 @@ export default function Home() {
                 </a>
               </Button>
 
+              {/* Gift Card Button */}
+              <a
+                href="#darcekove-poukazky"
+                className="w-full py-3 px-6 text-center rounded-full border-2 border-primary/30 hover:border-primary/60 bg-gradient-to-r from-red-50 to-green-50 dark:from-red-950/30 dark:to-green-950/30 hover:from-red-100 hover:to-green-100 dark:hover:from-red-900/40 dark:hover:to-green-900/40 transition-all duration-300 group flex items-center justify-center gap-2"
+              >
+                <span className="text-lg">🎄</span>
+                <span className="font-medium text-foreground">Vianočné darčekové poukazy</span>
+                <span className="text-lg">🎁</span>
+              </a>
+
               {/* Micro-copy below booking button */}
               <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
                 Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
@@ -496,6 +506,86 @@ export default function Home() {
             </div>
           </div>
         </section >
+
+        {/* Gift Cards Section - Christmas Special */}
+        <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-red-50 via-white to-green-50 dark:from-red-950/20 dark:via-black dark:to-green-950/20 relative overflow-hidden">
+          {/* Christmas decorative elements */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce" style={{ animationDuration: '3s' }}>❄️</div>
+            <div className="absolute top-20 right-20 text-3xl opacity-20 animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>❄️</div>
+            <div className="absolute bottom-20 left-1/4 text-5xl opacity-15 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>❄️</div>
+            <div className="absolute top-1/3 right-10 text-2xl opacity-20 animate-bounce" style={{ animationDuration: '2s', animationDelay: '0.3s' }}>⭐</div>
+            <div className="absolute bottom-10 right-1/3 text-3xl opacity-15 animate-bounce" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}>🎄</div>
+          </div>
+
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                {/* Content Column */}
+                <div className="text-center md:text-left order-2 md:order-1">
+                  <div className="inline-flex items-center gap-2 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                    <span>🎄</span>
+                    <span>Vianočná ponuka</span>
+                    <span>🎁</span>
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-light mb-6 tracking-tight text-black dark:text-white">
+                    Darčekové poukazy
+                  </h2>
+                  <div className="w-24 h-1 bg-gradient-to-r from-red-400 to-green-400 mx-auto md:mx-0 mb-6 rounded-full" />
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
+                    Hľadáte <span className="text-primary font-medium">praktický vianočný darček</span> pre vašich blízkych? Potešte mamu, sestru, priateľku či kolegyňu darčekovým poukazom na profesionálnu manikúru!
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8 font-light">
+                    Naše poukazy sú ideálnym darčekom, ktorý poteší každú ženu.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <Button
+                      asChild
+                      className="h-14 md:h-16 text-lg md:text-xl rounded-full px-8 md:px-12 bg-gradient-to-r from-red-600 to-green-600 hover:from-red-500 hover:to-green-500 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <a href="https://services.bookio.com/diaramanicure/gift-cards#/" target="_blank" rel="noopener noreferrer">
+                        <span className="mr-2">🎁</span>
+                        Kúpiť poukaz online
+                      </a>
+                    </Button>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-500">✓</span>
+                      <span>Okamžité doručenie emailom</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Image Column */}
+                <div className="relative order-1 md:order-2">
+                  <div className="relative aspect-square max-w-md mx-auto">
+                    {/* Decorative frame */}
+                    <div className="absolute -inset-4 bg-gradient-to-br from-red-200 via-white to-green-200 dark:from-red-900/40 dark:via-black dark:to-green-900/40 rounded-[2.5rem] -z-10" />
+                    <div className="relative w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800">
+                      {/* Placeholder image - replace with actual gift card image */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/10 flex items-center justify-center">
+                        <Image
+                          src="/giftcard-placeholder.jpg"
+                          alt="Darčekový poukaz Diara Manicure"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      </div>
+                    </div>
+                    {/* Christmas badge */}
+                    <div className="absolute -top-2 -right-2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
+                      🎄 Vianoce 2025
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* About Section - Founder & Shop */}
         < section className="py-16 bg-beige/30 dark:bg-black overflow-hidden" >
