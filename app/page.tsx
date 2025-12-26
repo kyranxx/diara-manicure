@@ -577,7 +577,7 @@ export default function Home() {
                       </div>
                     </div>
                     {/* Christmas badge */}
-                    <div className="absolute -top-2 -right-2 bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
+                    <div className="absolute -top-2 -right-2 bg-red-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
                       🎄 Vianoce 2025
                     </div>
                   </div>
