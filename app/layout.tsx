@@ -14,7 +14,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://diaramanicure.sk'),
+  metadataBase: new URL('https://www.diaramanicure.sk'),
   title: "Diara Manicure - Nechtové štúdio Trnava | Gélové nechty",
   description: "Exkluzívne nechtové štúdio v Trnave. Ponúkame profesionálne gélové nechty, manikúru a starostlivosť o ruky. Objednajte sa online.",
   keywords: ["nechty trnava", "gelove nechty trnava", "manikura trnava", "nechtove studio trnava", "diara manicure"],
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     description: "Exkluzívna starostlivosť o vaše ruky v srdci Trnavy. Profesionálne gélové nechty a manikúra.",
     type: "website",
     locale: "sk_SK",
-    url: "https://diaramanicure.sk",
+    url: "https://www.diaramanicure.sk",
     siteName: "Diara Manicure",
     images: [
       {

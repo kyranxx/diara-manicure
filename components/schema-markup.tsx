@@ -4,21 +4,21 @@ const SchemaMarkup = () => {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
-    "@id": "https://diara-manicure.com/#beautysalon",
+    "@id": "https://www.diaramanicure.sk/#beautysalon",
     "name": "Diara Manicure",
     "alternateName": "diara manicure",
     "image": [
-      "https://diara-manicure.com/diara-manicure-logo-trnava.png",
-      "https://diara-manicure.com/gelove-nechty-trnava-gallery-1.jpeg",
-      "https://diara-manicure.com/gelove-nechty-trnava-gallery-2.jpeg"
+      "https://www.diaramanicure.sk/diara-manicure-logo-trnava.png",
+      "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-1.jpeg",
+      "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-2.jpeg"
     ],
     "description": "Luxusný nechtový salón v Trnave. Prémiové gélové manikúry, nail art a predĺženie nechtov v elegantnej atmosfére.",
-    "url": "https://diara-manicure.com",
+    "url": "https://www.diaramanicure.sk",
     "telephone": "+421902163144",
     "email": "andrea.heckova92@gmail.com",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Starohájska 11",
+      "streetAddress": "Hospodárska 53",
       "addressLocality": "Trnava",
       "postalCode": "91701",
       "addressCountry": "SK"
@@ -28,9 +28,19 @@ const SchemaMarkup = () => {
       "latitude": 48.3794,
       "longitude": 17.5854
     },
-    "openingHours": [
-      "Mo-Fr 09:00-18:00",
-      "Sa 09:00-14:00"
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "09:00",
+        "closes": "14:00"
+      }
     ],
     "priceRange": "€€",
     "paymentAccepted": "Cash, Credit Card",
@@ -105,22 +115,14 @@ const SchemaMarkup = () => {
       }
     ],
     "sameAs": [
-      "https://instagram.com/diaramanicure",
-      "https://facebook.com/diaramanicure",
-      "https://maps.google.com/?cid=123456789"
+      "https://www.instagram.com/diaramanicure",
+      "https://www.facebook.com/diaramanicure"
     ],
     "areaServed": {
       "@type": "City",
       "name": "Trnava",
       "addressCountry": "SK"
     },
-    "serviceType": [
-      "Gel manikúra",
-      "Nail art",
-      "Predĺženie nechtov",
-      "Klasická manikúra",
-      "Francúzska manikúra"
-    ],
     "founder": {
       "@type": "Person",
       "name": "Andrea Hecková"
