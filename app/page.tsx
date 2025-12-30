@@ -456,7 +456,7 @@ export default function Home() {
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 <span className="text-primary font-medium mt-2 block">
                   Otváracia akcia nového salónu! <br />
-                  <span className="underline underline-offset-4">Promo ceny platné do 31.12.2025</span>
+                  <span className="underline underline-offset-4">Promo ceny platné do 31.1.2026</span>
                 </span>
               </p>
             </div>
