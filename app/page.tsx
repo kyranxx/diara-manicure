@@ -172,7 +172,6 @@ export default function Home() {
               // Filter out those without text and keep only high ratings
               return isHighRating && hasText;
             })
-            .slice(0, 5)
             .map((review: any) => {
               const textObj = review.text;
               const textContent = typeof textObj === 'string' ? textObj : (textObj?.text || '');
