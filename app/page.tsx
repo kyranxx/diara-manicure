@@ -383,7 +383,7 @@ export default function Home() {
 
               {/* Micro-copy below booking button */}
               <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
-                <span className="not-italic font-medium text-primary">💳 Platba kartou možná</span> • Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
+                <span className="not-italic font-medium text-primary">💳 Platba možná aj kartou</span> • Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
               </p>
 
               {/* Gift Card Button */}
