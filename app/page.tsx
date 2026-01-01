@@ -381,6 +381,11 @@ export default function Home() {
                 </a>
               </Button>
 
+              {/* Micro-copy below booking button */}
+              <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
+                <span className="not-italic font-medium text-primary">💳 Platba kartou možná</span> • Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
+              </p>
+
               {/* Gift Card Button */}
               <a
                 href="#darcekove-poukazky"
@@ -390,11 +395,6 @@ export default function Home() {
                 <span className="font-medium text-foreground">Darčekové poukazy</span>
                 <span className="text-lg">✨</span>
               </a>
-
-              {/* Micro-copy below booking button */}
-              <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
-                Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma • <span className="not-italic font-medium text-primary">💳 Platba kartou</span>
-              </p>
 
               {/* Phone Reservation - Anti-scam protected */}
               <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-primary/10 shadow-sm">
