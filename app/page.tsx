@@ -392,7 +392,7 @@ export default function Home() {
 
               {/* Micro-copy below booking button */}
               <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
-                Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
+                Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma • <span className="not-italic font-medium text-primary">💳 Platba kartou</span>
               </p>
 
               {/* Phone Reservation - Anti-scam protected */}
