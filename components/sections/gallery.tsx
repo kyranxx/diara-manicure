@@ -11,7 +11,9 @@ const galleryImages = [
     { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Detailná manikúra" },
     { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Interiér salónu" },
     { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Nail art Trnava" },
+    { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Elegantné nechty" },
     { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Profesionálna manikúra" },
+    { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Krásne nechty" },
     { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Luxusné nechty" },
     { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Diara Manicure práca" },
 ]
