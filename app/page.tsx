@@ -123,17 +123,30 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    let retryCount = 0;
+    const maxRetries = 3;
+    let retryTimeout: NodeJS.Timeout;
+
     const fetchGoogleReviews = async () => {
       // Check if API is loaded via state OR directly on window
       const isLoaded = isGoogleApiLoaded || (typeof window !== 'undefined' && !!(window as any).google?.maps);
 
       if (typeof window === 'undefined' || !isLoaded) {
+        // Retry if API not loaded yet
+        if (retryCount < maxRetries) {
+          retryCount++;
+          retryTimeout = setTimeout(fetchGoogleReviews, 2000);
+        }
         return;
       }
 
       try {
         // Double check availability
         if (!(window as any).google?.maps?.importLibrary) {
+          if (retryCount < maxRetries) {
+            retryCount++;
+            retryTimeout = setTimeout(fetchGoogleReviews, 2000);
+          }
           return;
         }
 
@@ -149,6 +162,7 @@ export default function Home() {
         const { places } = await Place.searchByText(request);
 
         if (!places || places.length === 0) {
+          console.log('No place found for Diara Manicure');
           return;
         }
 
@@ -160,11 +174,19 @@ export default function Home() {
         });
 
         if (place.reviews && place.reviews.length > 0) {
-          // Sort by publish time (newest first) before processing
+          // Sort by publish time (newest first) - try multiple time field names
           const sortedReviews = [...place.reviews].sort((a: any, b: any) => {
-            const timeA = a.publishTime ? new Date(a.publishTime).getTime() : 0;
-            const timeB = b.publishTime ? new Date(b.publishTime).getTime() : 0;
-            return timeB - timeA; // Newest first
+            // Try different time field names used by Google API
+            const getTime = (review: any) => {
+              if (review.publishTime) return new Date(review.publishTime).getTime();
+              if (review.time) return review.time * 1000; // Unix timestamp
+              if (review.relativePublishTimeDescription) {
+                // Parse relative time like "2 weeks ago", "a month ago"
+                return 0; // Can't sort accurately, keep original order
+              }
+              return 0;
+            };
+            return getTime(b) - getTime(a); // Newest first
           });
 
           const googleReviews: Testimonial[] = sortedReviews
@@ -195,19 +217,29 @@ export default function Home() {
             setTestimonials(prev => {
               // Remove hardcoded reviews that might duplicate the Google ones (by author name)
               const uniqueHardcoded = prev.filter(pr => !googleReviews.some(gr => gr.author === pr.author));
+              // Put Google reviews first (they're already sorted newest first), then hardcoded
               const merged = [...googleReviews, ...uniqueHardcoded];
-              // Shuffle
-              const shuffled = merged.sort(() => Math.random() - 0.5);
-              return shuffled;
+              return merged;
             });
           }
         }
-      } catch {
-        // Silently handle errors - reviews are not critical
+      } catch (error) {
+        console.log('Error fetching Google reviews:', error);
+        // Retry on error
+        if (retryCount < maxRetries) {
+          retryCount++;
+          retryTimeout = setTimeout(fetchGoogleReviews, 2000);
+        }
       }
     };
 
-    fetchGoogleReviews();
+    // Initial delay to allow Google Maps to fully load
+    const initialTimeout = setTimeout(fetchGoogleReviews, 1000);
+
+    return () => {
+      clearTimeout(initialTimeout);
+      clearTimeout(retryTimeout);
+    };
   }, [isGoogleApiLoaded]);
 
   const { resolvedTheme } = useTheme()
