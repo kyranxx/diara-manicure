@@ -9,7 +9,7 @@ import { Phone } from "lucide-react"
 
 export function HeroSection() {
     const { resolvedTheme } = useTheme()
-    const logoSrc = resolvedTheme === "dark" ? "/diara-manicure-logo-black-trnava-v2.png" : "/diara-manicure-logo-trnava.png"
+    const logoSrc = resolvedTheme === "dark" ? "/logo_night.png" : "/logo_day.png"
 
     // Link to Bookio
     const bookingUrl = 'https://services.bookio.com/diaramanicure/widget?lang=sk'
@@ -22,7 +22,7 @@ export function HeroSection() {
         <>
             {/* Preload dark logo for instant switching */}
             <Image
-                src="/diara-manicure-logo-black-trnava-v2.png"
+                src="/logo_night.png"
                 alt=""
                 width={1536}
                 height={600}

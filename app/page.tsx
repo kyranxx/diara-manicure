@@ -325,7 +325,7 @@ export default function Home() {
           <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
             {/* Light Mode Logo */}
             <Image
-              src="/diara-manicure-logo-trnava.png"
+              src="/logo_day.png"
               alt="Diara Manicure - Nechty Trnava"
               width={1536}
               height={600}
@@ -334,7 +334,7 @@ export default function Home() {
             />
             {/* Dark Mode Logo */}
             <Image
-              src="/diara-manicure-logo-black-trnava-v2.png"
+              src="/logo_night.png"
               alt="Diara Manicure - Nechty Trnava"
               width={1536}
               height={600}
@@ -900,14 +900,14 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex flex-col items-center gap-3">
                 <Image
-                  src="/diara-manicure-logo-trnava.png"
+                  src="/logo_day.png"
                   alt="DIARA"
                   width={1536}
                   height={600}
                   className="h-20 w-auto object-contain dark:hidden"
                 />
                 <Image
-                  src="/diara-manicure-logo-black-trnava-v2.png"
+                  src="/logo_night.png"
                   alt="DIARA"
                   width={1536}
                   height={600}

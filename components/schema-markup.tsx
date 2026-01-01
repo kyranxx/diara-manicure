@@ -8,7 +8,7 @@ const SchemaMarkup = () => {
     "name": "Diara Manicure",
     "alternateName": "diara manicure",
     "image": [
-      "https://www.diaramanicure.sk/diara-manicure-logo-trnava.png",
+      "https://www.diaramanicure.sk/logo_day.png",
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-1.jpeg",
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-2.jpeg"
     ],

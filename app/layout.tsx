@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Diara Manicure",
     images: [
       {
-        url: "/diara-manicure-logo-trnava.png",
+        url: "/logo_day.png",
         width: 1200,
         height: 630,
         alt: "Diara Manicure Trnava",
