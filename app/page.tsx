@@ -26,18 +26,18 @@ interface Testimonial {
   rating?: number
 }
 
-// Gallery images for lightbox
+// Gallery images for lightbox (newest first)
 const galleryImages = [
-  { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Gélové nechty ukážka 1" },
-  { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Gélové nechty ukážka 2" },
-  { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Gélové nechty ukážka 3" },
-  { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Gélové nechty ukážka 4" },
-  { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Gélové nechty ukážka 5" },
-  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Gélové nechty ukážka 6" },
-  { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Gélové nechty ukážka 7" },
-  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Gélové nechty ukážka 8" },
-  { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Gélové nechty ukážka 9" },
   { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Gélové nechty ukážka 10" },
+  { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Gélové nechty ukážka 9" },
+  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Gélové nechty ukážka 8" },
+  { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Gélové nechty ukážka 7" },
+  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Gélové nechty ukážka 6" },
+  { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Gélové nechty ukážka 5" },
+  { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Gélové nechty ukážka 4" },
+  { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Gélové nechty ukážka 3" },
+  { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Gélové nechty ukážka 2" },
+  { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Gélové nechty ukážka 1" },
 ]
 
 export default function Home() {
