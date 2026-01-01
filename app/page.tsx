@@ -28,6 +28,7 @@ interface Testimonial {
 
 // Gallery images for lightbox (newest first)
 const galleryImages = [
+  { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Gélové nechty ukážka 11" },
   { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Gélové nechty ukážka 10" },
   { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Gélové nechty ukážka 9" },
   { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Gélové nechty ukážka 8" },
@@ -790,7 +791,7 @@ export default function Home() {
                   Aká je cena za nové gélové nechty?
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Aktuálne máme akciu. Cenník začína na sume 20 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov.
+                  Aktuálne máme akciu. Cenník začína na sume 25 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov.
                 </p>
               </div>
 

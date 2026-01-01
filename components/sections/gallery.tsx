@@ -6,6 +6,7 @@ import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from "lucide-react"
 
 // Gallery images with their alt text (newest first)
 const galleryImages = [
+    { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Najnovšie nechty" },
     { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Diara Manicure práca" },
     { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Luxusné nechty" },
     { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Krásne nechty" },
