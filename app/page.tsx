@@ -570,7 +570,7 @@ export default function Home() {
                       {/* Placeholder image - replace with actual gift card image */}
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/10 flex items-center justify-center">
                         <Image
-                          src="/giftcard-placeholder.jpg"
+                          src="/giftcard-winter.jpg"
                           alt="Darčekový poukaz Diara Manicure"
                           fill
                           className="object-cover"
