@@ -217,9 +217,10 @@ export default function Home() {
             setTestimonials(prev => {
               // Remove hardcoded reviews that might duplicate the Google ones (by author name)
               const uniqueHardcoded = prev.filter(pr => !googleReviews.some(gr => gr.author === pr.author));
-              // Put Google reviews first (they're already sorted newest first), then hardcoded
               const merged = [...googleReviews, ...uniqueHardcoded];
-              return merged;
+              // Shuffle randomly
+              const shuffled = merged.sort(() => Math.random() - 0.5);
+              return shuffled;
             });
           }
         }
