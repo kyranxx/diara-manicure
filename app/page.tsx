@@ -160,7 +160,14 @@ export default function Home() {
         });
 
         if (place.reviews && place.reviews.length > 0) {
-          const googleReviews: Testimonial[] = place.reviews
+          // Sort by publish time (newest first) before processing
+          const sortedReviews = [...place.reviews].sort((a: any, b: any) => {
+            const timeA = a.publishTime ? new Date(a.publishTime).getTime() : 0;
+            const timeB = b.publishTime ? new Date(b.publishTime).getTime() : 0;
+            return timeB - timeA; // Newest first
+          });
+
+          const googleReviews: Testimonial[] = sortedReviews
             .filter((review: any) => {
               // Handle both new API (object) and potential legacy/other formats
               const textObj = review.text;
