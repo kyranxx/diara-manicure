@@ -1,0 +1,15 @@
+{
+    "redirects": [
+        {
+            "source": "/:path*",
+            "has": [
+                {
+                    "type": "host",
+                    "value": "diaramanicure.sk"
+                }
+            ],
+            "destination": "https://www.diaramanicure.sk/:path*",
+            "permanent": true
+        }
+    ]
+}
