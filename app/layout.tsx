@@ -15,28 +15,52 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.diaramanicure.sk'),
-  title: "Diara Manicure - Nechtové štúdio Trnava | Gélové nechty",
-  description: "Exkluzívne nechtové štúdio v Trnave. Ponúkame profesionálne gélové nechty, manikúru a starostlivosť o ruky. Objednajte sa online.",
-  keywords: ["nechty trnava", "gelove nechty trnava", "manikura trnava", "nechtove studio trnava", "diara manicure"],
+  title: "diara manicure. | Gélové nechty Trnava | Nechtové štúdio",
+  description: "✨ Gélové nechty od 25€ • Parkovanie zdarma • Online rezervácia • Profesionálne nechtové štúdio v centre Trnavy. Kvalitné európske gély. Objednajte sa ešte dnes!",
+  keywords: [
+    "nechty trnava",
+    "gelove nechty trnava",
+    "manikura trnava",
+    "nechtove studio trnava",
+    "diara manicure",
+    "nechty trnava cennik",
+    "modelacia nechtov trnava",
+    "gel lak trnava",
+    "najlepsie nechty trnava",
+    "nechtove studio trnava recenzie",
+    "doplnenie nechtov trnava",
+    "akrylove nechty trnava"
+  ],
   authors: [{ name: "Andrea Hečková" }],
+  alternates: {
+    canonical: 'https://www.diaramanicure.sk',
+    languages: {
+      'sk': 'https://www.diaramanicure.sk',
+    },
+  },
   icons: {
-    icon: "/favicon.png",
+    icon: [
+      { url: '/favicon.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.png', sizes: '16x16', type: 'image/png' },
+    ],
     shortcut: "/favicon.png",
-    apple: "/favicon.png",
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
   openGraph: {
-    title: "Diara Manicure - Nechtové štúdio Trnava",
-    description: "Exkluzívna starostlivosť o vaše ruky v srdci Trnavy. Profesionálne gélové nechty a manikúra.",
+    title: "diara manicure. | Gélové nechty Trnava",
+    description: "✨ Gélové nechty od 25€ • Parkovanie zdarma • Kvalitné európske gély • Profesionálne nechtové štúdio v centre Trnavy.",
     type: "website",
     locale: "sk_SK",
     url: "https://www.diaramanicure.sk",
-    siteName: "Diara Manicure",
+    siteName: "diara manicure.",
     images: [
       {
-        url: "/logo_day.png",
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Diara Manicure Trnava",
+        alt: "diara manicure. - Gélové nechty Trnava",
       },
     ],
   },

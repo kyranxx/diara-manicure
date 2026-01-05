@@ -25,8 +25,31 @@ const nextConfig = {
     ],
   },
   serverExternalPackages: ['googleapis'],
-  // Security headers removed to fix permissions policy warnings
-  // async headers() { ... }
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-Frame-Options',
+            value: 'SAMEORIGIN',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+        ],
+      },
+    ];
+  },
   experimental: {
     optimizeCss: true,
   },

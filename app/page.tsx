@@ -26,19 +26,19 @@ interface Testimonial {
   rating?: number
 }
 
-// Gallery images for lightbox (newest first)
+// Gallery images for lightbox (newest first) - SEO optimized alt texts
 const galleryImages = [
-  { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Gélové nechty ukážka 11" },
-  { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Gélové nechty ukážka 10" },
-  { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Gélové nechty ukážka 9" },
-  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Gélové nechty ukážka 8" },
-  { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Gélové nechty ukážka 7" },
-  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Gélové nechty ukážka 6" },
-  { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Gélové nechty ukážka 5" },
-  { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Gélové nechty ukážka 4" },
-  { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Gélové nechty ukážka 3" },
-  { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Gélové nechty ukážka 2" },
-  { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Gélové nechty ukážka 1" },
+  { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Elegantné gélové nechty s jemným dizajnom - diara manicure Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Profesionálna modelácia nechtov v štúdiu diara manicure Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Francúzska manikúra s gélom - nechtové štúdio Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Ružové gélové nechty s trblietkami - diara manicure" },
+  { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Nude gélové nechty elegantný dizajn Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Krátke gélové nechty prirodzený vzhľad - nechty Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Farebné gélové nechty s nail artom - manikúra Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Mandľové gélové nechty pastelové farby diara manicure" },
+  { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Klasická gélová manikúra červená farba Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Baby boomer gélové nechty ombré efekt - nechty Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Gélové nechty s jemným zdobením - nechtové štúdio diara manicure Trnava" },
 ]
 
 export default function Home() {
@@ -389,12 +389,12 @@ export default function Home() {
               <span className="text-2xl font-bold">25€</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
-              Gélové nechty Trnava – nails & manikúra
+              Gélové nechty Trnava | <span className="text-primary">diara manicure.</span>
             </h1>
             <h2 className="text-xl md:text-2xl font-light text-muted-foreground mb-10">
-              Exkluzívna starostlivosť o vaše ruky.
+              Profesionálne nechtové štúdio • nails & manikúra
               <br className="my-2" />
-              <span className="italic font-serif text-primary/80">Best nails Trnava can offer.</span>
+              <span className="italic font-serif text-primary/80">Kvalitné európske gély. Parkovanie zdarma.</span>
             </h2>
           </div>
 
