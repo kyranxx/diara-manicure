@@ -8,7 +8,7 @@ export type Service = {
   discountedPrice?: string
 }
 
-let cache: {
+const cache: {
   data: Service[] | null
   timestamp: number
 } = {
@@ -58,7 +58,7 @@ async function fetchSheetsData(): Promise<Service[]> {
     });
 
     const client = await auth.getClient();
-    const googleSheets = google.sheets({ version: 'v4', auth: client as any });
+    const googleSheets = google.sheets({ version: 'v4', auth: client as Parameters<typeof google.sheets>[0]['auth'] });
 
     const metaResponse = await googleSheets.spreadsheets.get({
       spreadsheetId,
@@ -90,7 +90,7 @@ async function fetchSheetsData(): Promise<Service[]> {
     }
 
     return services;
-  } catch (error) {
+  } catch (_error) {
     return [
       { title: 'Modelácia gélových nechtov (Nové nechty)', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €', discountedPrice: '29 €' },
       { title: 'Doplnenie gélových nechtov (Dorábka)', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },

@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Instagram, Facebook, ChevronDown, Star, MapPin, Phone, Mail, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, MessageCircle } from "lucide-react"
+import { Instagram, Facebook, Star, MapPin, Phone, X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, MessageCircle } from "lucide-react"
 import Map from "@/components/ui/custom-map"
 import { useTheme } from "next-themes"
 import { useState, useEffect, useCallback } from "react"
@@ -24,6 +24,36 @@ interface Testimonial {
   author: string
   photo?: string | null
   rating?: number
+}
+
+// Google API type declarations
+interface GoogleReview {
+  text?: string | { text?: string }
+  rating?: number
+  authorAttribution?: {
+    displayName?: string
+    photoURI?: string
+  }
+  publishTime?: string
+  time?: number
+  relativePublishTimeDescription?: string
+}
+
+interface GooglePlace {
+  reviews?: GoogleReview[]
+  fetchFields: (options: { fields: string[] }) => Promise<void>
+}
+
+interface GooglePlaceClass {
+  searchByText: (request: { textQuery: string; fields: string[]; language: string }) => Promise<{ places: GooglePlace[] }>
+}
+
+interface WindowWithGoogle extends Window {
+  google?: {
+    maps?: {
+      importLibrary: (library: string) => Promise<{ Place: GooglePlaceClass }>
+    }
+  }
 }
 
 // Gallery images for lightbox (newest first) - SEO optimized alt texts
@@ -94,7 +124,7 @@ export default function Home() {
   // Check if Google Maps is already loaded (e.g. from cache)
   useEffect(() => {
     const checkGoogleMaps = () => {
-      if ((window as any).google?.maps) {
+      if ((window as WindowWithGoogle).google?.maps) {
         setIsGoogleApiLoaded(true);
         return true;
       }
@@ -129,7 +159,7 @@ export default function Home() {
 
     const fetchGoogleReviews = async () => {
       // Check if API is loaded via state OR directly on window
-      const isLoaded = isGoogleApiLoaded || (typeof window !== 'undefined' && !!(window as any).google?.maps);
+      const isLoaded = isGoogleApiLoaded || (typeof window !== 'undefined' && !!(window as WindowWithGoogle).google?.maps);
 
       if (typeof window === 'undefined' || !isLoaded) {
         // Retry if API not loaded yet
@@ -142,7 +172,7 @@ export default function Home() {
 
       try {
         // Double check availability
-        if (!(window as any).google?.maps?.importLibrary) {
+        if (!(window as WindowWithGoogle).google?.maps?.importLibrary) {
           if (retryCount < maxRetries) {
             retryCount++;
             retryTimeout = setTimeout(fetchGoogleReviews, 2000);
@@ -150,7 +180,7 @@ export default function Home() {
           return;
         }
 
-        const { Place } = await (window as any).google.maps.importLibrary('places');
+        const { Place } = await (window as WindowWithGoogle).google.maps.importLibrary('places') as { Place: GooglePlaceClass };
 
         // Search for the place by text instead of using hardcoded ID
         const request = {
@@ -175,9 +205,9 @@ export default function Home() {
 
         if (place.reviews && place.reviews.length > 0) {
           // Sort by publish time (newest first) - try multiple time field names
-          const sortedReviews = [...place.reviews].sort((a: any, b: any) => {
+          const sortedReviews = [...place.reviews].sort((a: GoogleReview, b: GoogleReview) => {
             // Try different time field names used by Google API
-            const getTime = (review: any) => {
+            const getTime = (review: GoogleReview) => {
               if (review.publishTime) return new Date(review.publishTime).getTime();
               if (review.time) return review.time * 1000; // Unix timestamp
               if (review.relativePublishTimeDescription) {
@@ -190,7 +220,7 @@ export default function Home() {
           });
 
           const googleReviews: Testimonial[] = sortedReviews
-            .filter((review: any) => {
+            .filter((review: GoogleReview) => {
               // Handle both new API (object) and potential legacy/other formats
               const textObj = review.text;
               const textContent = typeof textObj === 'string' ? textObj : (textObj?.text || '');
@@ -201,7 +231,7 @@ export default function Home() {
               // Filter out those without text and keep only high ratings
               return isHighRating && hasText;
             })
-            .map((review: any) => {
+            .map((review: GoogleReview) => {
               const textObj = review.text;
               const textContent = typeof textObj === 'string' ? textObj : (textObj?.text || '');
 
@@ -243,7 +273,7 @@ export default function Home() {
     };
   }, [isGoogleApiLoaded]);
 
-  const { resolvedTheme } = useTheme()
+  const { resolvedTheme: _resolvedTheme } = useTheme()
 
 
 
@@ -728,7 +758,7 @@ export default function Home() {
                       </div>
                     )}
                     <p className="text-black/80 dark:text-white/80 italic text-base leading-relaxed mb-4 font-light">
-                      "{testimonial.text}"
+                      &quot;{testimonial.text}&quot;
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
@@ -840,7 +870,7 @@ export default function Home() {
                   Musím sa objednať telefonicky?
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Nie, preferujeme online rezervácie. Kliknite na tlačidlo "Pozrieť voľné termíny" a vyberte si čas, ktorý vám vyhovuje. Objednanie na nechty trvá menej ako minútu.
+                  Nie, preferujeme online rezervácie. Kliknite na tlačidlo &quot;Pozrieť voľné termíny&quot; a vyberte si čas, ktorý vám vyhovuje. Objednanie na nechty trvá menej ako minútu.
                 </p>
               </div>
 

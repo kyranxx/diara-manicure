@@ -11,6 +11,49 @@ interface Testimonial {
     rating?: number
 }
 
+interface GooglePlacesReview {
+    text?: string
+    author_name?: string
+    authorAttribution?: { photoURI?: string }
+    profile_photo_url?: string
+    rating?: number
+}
+
+interface GooglePlacesResult {
+    place_id?: string
+    reviews?: GooglePlacesReview[]
+}
+
+interface GooglePlacesServiceStatus {
+    OK: string
+}
+
+interface GooglePlacesService {
+    findPlaceFromQuery: (
+        request: { query: string; fields: string[] },
+        callback: (results: GooglePlacesResult[] | null, status: string) => void
+    ) => void
+    getDetails: (
+        request: { placeId: string; fields: string[] },
+        callback: (place: GooglePlacesResult | null, status: string) => void
+    ) => void
+}
+
+interface GoogleMapsPlaces {
+    PlacesService: new (element: HTMLElement) => GooglePlacesService
+    PlacesServiceStatus: GooglePlacesServiceStatus
+}
+
+interface GoogleMaps {
+    places: GoogleMapsPlaces
+}
+
+interface GoogleWindow extends Window {
+    google?: {
+        maps?: GoogleMaps
+    }
+}
+
 export function TestimonialsSection() {
     const [testimonials, setTestimonials] = useState<Testimonial[]>([
         {
@@ -53,32 +96,33 @@ export function TestimonialsSection() {
 
     useEffect(() => {
         const fetchGoogleReviews = () => {
-            if (!(window as any).google || !(window as any).google.maps || !(window as any).google.maps.places) return;
+            const win = window as unknown as GoogleWindow
+            if (!win.google?.maps?.places) return;
 
             const mapDiv = document.createElement('div');
-            const service = new (window as any).google.maps.places.PlacesService(mapDiv);
+            const service = new win.google.maps.places.PlacesService(mapDiv);
 
             const request = {
                 query: 'Diara Manicure Trnava',
                 fields: ['name', 'place_id'],
             };
 
-            service.findPlaceFromQuery(request, (results: any, status: any) => {
-                if (status === (window as any).google.maps.places.PlacesServiceStatus.OK && results && results[0]) {
+            service.findPlaceFromQuery(request, (results, status) => {
+                if (status === win.google!.maps!.places.PlacesServiceStatus.OK && results && results[0]) {
                     const placeId = results[0].place_id;
                     if (!placeId) return;
 
                     service.getDetails({
                         placeId: placeId,
                         fields: ['reviews']
-                    }, (place: any, detailStatus: any) => {
-                        if (detailStatus === (window as any).google.maps.places.PlacesServiceStatus.OK && place && place.reviews) {
+                    }, (place, detailStatus) => {
+                        if (detailStatus === win.google!.maps!.places.PlacesServiceStatus.OK && place && place.reviews) {
                             const googleReviews: Testimonial[] = place.reviews
-                                .filter((review: any) => review.rating && review.rating >= 4)
+                                .filter((review) => review.rating && review.rating >= 4)
                                 .slice(0, 5)
-                                .map((review: any) => ({
+                                .map((review) => ({
                                     text: review.text || '',
-                                    author: review.author_name,
+                                    author: review.author_name || 'Anonymous',
                                     photo: review.authorAttribution?.photoURI || review.profile_photo_url || null,
                                     rating: review.rating
                                 }));
@@ -94,11 +138,13 @@ export function TestimonialsSection() {
             });
         };
 
-        if ((window as any).google && (window as any).google.maps) {
+        const win = window as unknown as GoogleWindow
+        if (win.google?.maps) {
             fetchGoogleReviews();
         } else {
             const interval = setInterval(() => {
-                if ((window as any).google && (window as any).google.maps) {
+                const w = window as unknown as GoogleWindow
+                if (w.google?.maps) {
                     fetchGoogleReviews();
                     clearInterval(interval);
                 }
@@ -152,7 +198,7 @@ export function TestimonialsSection() {
                                     </div>
                                 )}
                                 <p className="text-black/80 dark:text-white/80 italic text-base leading-relaxed mb-4 font-light">
-                                    "{testimonial.text}"
+                                    &quot;{testimonial.text}&quot;
                                 </p>
                             </div>
                             <div className="flex items-center gap-3">

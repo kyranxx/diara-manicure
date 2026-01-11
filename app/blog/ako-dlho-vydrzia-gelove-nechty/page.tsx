@@ -59,7 +59,7 @@ export default function BlogArticle1() {
                             <p className="text-xl text-muted-foreground leading-relaxed mb-8">
                                 Gélové nechty sú jednou z najpopulárnejších volieb pre ženy, ktoré chcú mať krásne a upravené ruky.
                                 Jedna z najčastejších otázok, ktorú dostávame v našom nechtovom štúdiu <strong>diara manicure.</strong> v Trnave,
-                                je práve táto: „Ako dlho mi vydržia gélové nechty?" V tomto článku vám prezradíme všetko, čo potrebujete vedieť.
+                                je práve táto: &quot;Ako dlho mi vydržia gélové nechty?&quot; V tomto článku vám prezradíme všetko, čo potrebujete vedieť.
                             </p>
 
                             <h2 className="text-2xl font-light mt-12 mb-6 text-foreground">

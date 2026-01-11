@@ -3,14 +3,23 @@
 import { useEffect, useRef } from "react"
 import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react"
 import Link from "next/link"
-import Image from "next/image"
+
+interface GoogleMapsWindow extends Window {
+    google?: {
+        maps?: {
+            Map: new (element: HTMLElement, options: Record<string, unknown>) => unknown
+            Marker: new (options: Record<string, unknown>) => void
+        }
+    }
+}
 
 export function ContactSection() {
     const mapRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
         const initMap = () => {
-            if (!mapRef.current || !(window as any).google?.maps) return
+            const win = window as unknown as GoogleMapsWindow
+            if (!mapRef.current || !win.google?.maps) return
 
             const mapOptions = {
                 center: { lat: 48.3709, lng: 17.5833 }, // Trnava coordinates
@@ -23,9 +32,9 @@ export function ContactSection() {
                 fullscreenControl: false,
             }
 
-            const map = new (window as any).google.maps.Map(mapRef.current, mapOptions)
+            const map = new win.google.maps.Map(mapRef.current, mapOptions)
 
-            new (window as any).google.maps.Marker({
+            new win.google.maps.Marker({
                 position: { lat: 48.3709, lng: 17.5833 },
                 map: map,
                 title: "Diara Manicure",
@@ -33,11 +42,13 @@ export function ContactSection() {
         }
 
         // Check for Google Maps API availability
-        if ((window as any).google?.maps) {
+        const win = window as unknown as GoogleMapsWindow
+        if (win.google?.maps) {
             initMap()
         } else {
             const interval = setInterval(() => {
-                if ((window as any).google?.maps) {
+                const w = window as unknown as GoogleMapsWindow
+                if (w.google?.maps) {
                     initMap()
                     clearInterval(interval)
                 }

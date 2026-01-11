@@ -7,6 +7,10 @@ import { CheckCircle2, Instagram, Facebook } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
+interface WindowWithGtag extends Window {
+    gtag?: (command: string, action: string, params: Record<string, string>) => void
+}
+
 export default function ThankYouPage() {
     const { resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
@@ -14,10 +18,13 @@ export default function ThankYouPage() {
     useEffect(() => {
         setMounted(true)
 
-        if (typeof window !== 'undefined' && (window as any).gtag) {
-            (window as any).gtag('event', 'conversion', {
-                'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
-            })
+        if (typeof window !== 'undefined') {
+            const win = window as WindowWithGtag
+            if (win.gtag) {
+                win.gtag('event', 'conversion', {
+                    'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
+                })
+            }
         }
     }, [])
 

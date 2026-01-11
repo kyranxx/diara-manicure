@@ -170,7 +170,7 @@ export default function BlogArticle2() {
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <Check className="w-5 h-5 text-green-500 mt-1 flex-shrink-0" />
-                                    <span><strong>Ideálne pre poškodené nechty</strong> – pomáha ich „dorásť"</span>
+                                    <span><strong>Ideálne pre poškodené nechty</strong> – pomáha ich &quot;dorásť&quot;</span>
                                 </li>
                             </ul>
 
@@ -278,7 +278,7 @@ export default function BlogArticle2() {
                             <p className="text-muted-foreground leading-relaxed mb-6">
                                 Pri prvej návšteve v našom štúdiu <strong>diara manicure.</strong> v Trnave vždy prekonzultujeme
                                 váš stav nechtov a životný štýl, aby sme vám mohli odporučiť najvhodnejšiu variantu.
-                                Neexistuje univerzálne „najlepšie" riešenie – záleží na vašich individuálnych potrebách.
+                                Neexistuje univerzálne &quot;najlepšie&quot; riešenie – záleží na vašich individuálnych potrebách.
                             </p>
 
                             <p className="text-muted-foreground leading-relaxed mb-6">

@@ -1,7 +1,5 @@
 'use client'
 
-import { MessageCircle } from 'lucide-react'
-
 export function FacebookChat() {
     return (
         <a
