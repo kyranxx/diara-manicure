@@ -76,6 +76,7 @@ export default function Home() {
   const [services, setServices] = useState<Service[]>([])
   const [loadingServices, setLoadingServices] = useState(true)
   const [isGoogleApiLoaded, setIsGoogleApiLoaded] = useState(false)
+  const [shouldLoadGoogleMaps, setShouldLoadGoogleMaps] = useState(false)
   const [bookingUrl] = useState('https://services.bookio.com/diaramanicure/widget?lang=sk')
 
   // Lightbox state
@@ -122,8 +123,33 @@ export default function Home() {
     }
   ])
 
+  // Lazy load Google Maps when user scrolls near reviews/contact section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShouldLoadGoogleMaps(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { rootMargin: '500px' } // Start loading 500px before element is visible
+    );
+
+    // Observe the reviews section which is before the contact/map section
+    const reviewsSection = document.getElementById('recenzie');
+    if (reviewsSection) {
+      observer.observe(reviewsSection);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   // Check if Google Maps is already loaded (e.g. from cache)
   useEffect(() => {
+    if (!shouldLoadGoogleMaps) return;
+
     const checkGoogleMaps = () => {
       if ((window as WindowWithGoogle).google?.maps) {
         setIsGoogleApiLoaded(true);
@@ -151,7 +177,7 @@ export default function Home() {
       clearInterval(intervalId);
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [shouldLoadGoogleMaps]);
 
   useEffect(() => {
     let retryCount = 0;
@@ -402,6 +428,7 @@ export default function Home() {
               height={600}
               className="w-full h-auto dark:hidden"
               priority
+              fetchPriority="high"
             />
             {/* Dark Mode Logo */}
             <Image
@@ -411,6 +438,7 @@ export default function Home() {
               height={600}
               className="w-full h-auto hidden dark:block"
               priority
+              fetchPriority="high"
             />
           </div>
 
@@ -1020,13 +1048,15 @@ export default function Home() {
           </div>
         </footer >
       </main >
-      <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=weekly&loading=async`}
-        strategy="afterInteractive"
-        onReady={() => {
-          setIsGoogleApiLoaded(true);
-        }}
-      />
+      {shouldLoadGoogleMaps && (
+        <Script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=weekly&loading=async`}
+          strategy="lazyOnload"
+          onReady={() => {
+            setIsGoogleApiLoaded(true);
+          }}
+        />
+      )}
 
       {/* Lightbox Modal */}
       {lightboxOpen && (
