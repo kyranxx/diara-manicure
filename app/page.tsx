@@ -58,13 +58,14 @@ interface WindowWithGoogle extends Window {
 
 // Gallery images for lightbox (newest first) - SEO optimized alt texts
 const galleryImages = [
+  { src: "/gelove-nechty-trnava-gallery-01.jpeg", alt: "Najnovšie trendy v gélových nechtoch - diara manicure Trnava" },
   { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Elegantné gélové nechty s jemným dizajnom - diara manicure Trnava" },
   { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Profesionálna modelácia nechtov v štúdiu diara manicure Trnava" },
   { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Francúzska manikúra s gélom - nechtové štúdio Trnava" },
   { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Ružové gélové nechty s trblietkami - diara manicure" },
   { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Nude gélové nechty elegantný dizajn Trnava" },
   { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Krátke gélové nechty prirodzený vzhľad - nechty Trnava" },
-  { src: "/gelove-nechty-trnava-gallery-5.jpeg", alt: "Farebné gélové nechty s nail artom - manikúra Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-5.jpg", alt: "Farebné gélové nechty s nail artom - manikúra Trnava" },
   { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Mandľové gélové nechty pastelové farby diara manicure" },
   { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Klasická gélová manikúra červená farba Trnava" },
   { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Baby boomer gélové nechty ombré efekt - nechty Trnava" },
@@ -667,7 +668,7 @@ export default function Home() {
               <div className="relative h-[400px] w-full max-w-md mx-auto md:mx-0">
                 <div className="absolute left-0 top-0 w-[55%] h-[90%] z-10 shadow-xl rounded-2xl overflow-hidden border-4 border-white/50">
                   <Image
-                    src="/Andrea_Heckova_diara_manicure_necht_nails_trnava.jpeg"
+                    src="/Andrea_Heckova_diara_manicure_necht_nails_trnava.jpg"
                     alt="Andrea Hecková - Zakladateľka Diara Manicure Trnava"
                     fill
                     className="object-cover object-top hover:scale-105 transition-transform duration-700 sepia-[.15]"
@@ -676,7 +677,7 @@ export default function Home() {
                 </div>
                 <div className="absolute right-0 bottom-0 w-[55%] h-[70%] z-20 shadow-xl rounded-2xl overflow-hidden border-4 border-white/50">
                   <Image
-                    src="/diara_nails_nechty_trnava_hospodarska.jpeg"
+                    src="/diara_nails_nechty_trnava_hospodarska.jpg"
                     alt="Interiér salónu Diara Manicure"
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-700 sepia-[.15]"

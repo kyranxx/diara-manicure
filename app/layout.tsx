@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     ],
     shortcut: "/favicon.png",
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      { url: '/apple-touch-icon.jpg', sizes: '180x180', type: 'image/jpeg' },
     ],
   },
   openGraph: {
