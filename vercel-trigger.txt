@@ -1,2 +1,2 @@
-Timestamp: 2026-01-19T06:27:00
-Final test: Verified Manual Webhook Trigger
+Timestamp: 2026-01-19T18:38:00
+Forcing a fresh Vercel deployment after configuration normalization.
