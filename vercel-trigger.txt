@@ -1,2 +1,2 @@
-Timestamp: 2026-01-19T06:29:00
-User requested retry.
+Timestamp: 2026-01-19T18:38:00
+Forcing a fresh Vercel deployment after configuration normalization.

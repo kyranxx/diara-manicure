@@ -8,6 +8,10 @@
     "lint": "next lint",
     "start": "next start"
   },
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=9.0.0"
+  },
   "dependencies": {
     "@radix-ui/react-dialog": "1.1.4",
     "@radix-ui/react-slot": "1.1.1",

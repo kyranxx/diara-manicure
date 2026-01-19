@@ -50,9 +50,25 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'diaramanicure.sk',
+          },
+        ],
+        destination: 'https://www.diaramanicure.sk/:path*',
+        permanent: true,
+      },
+    ];
+  },
   experimental: {
     optimizeCss: true,
   },
 }
+
 
 export default nextConfig
