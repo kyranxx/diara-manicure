@@ -44,5 +44,11 @@
     "safari >= 15.4",
     "ios >= 15.4",
     "not dead"
-  ]
+  ],
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "unrs-resolver"
+    ]
+  }
 }
