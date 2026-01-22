@@ -556,12 +556,7 @@ export default function Home() {
             <div className="text-center mb-16">
               <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník služieb</h2>
               <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                <span className="text-primary font-medium mt-2 block">
-                  Otváracia akcia nového salónu! <br />
-                  <span className="underline underline-offset-4">Promo ceny platné do 31.1.2026</span>
-                </span>
-              </p>
+
             </div>
 
             <div className="max-w-5xl mx-auto">
@@ -891,7 +886,7 @@ export default function Home() {
                   Aká je cena za nové gélové nechty?
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Aktuálne máme akciu. Cenník začína na sume 25 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov.
+                  Cenník začína na sume 25 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov. Používame kvalitné európske gély.
                 </p>
               </div>
 

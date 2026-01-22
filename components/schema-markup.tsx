@@ -252,7 +252,7 @@ const SchemaMarkup = () => {
         "name": "Aká je cena za nové gélové nechty v Trnave?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Aktuálne máme akciu - cenník začína na sume 25€ za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov. Používame kvalitné európske gély."
+          "text": "Cenník začína na sume 25€ za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov. Používame kvalitné európske gély."
         }
       },
       {
