@@ -247,14 +247,7 @@ const SchemaMarkup = () => {
           "text": "Náš salón diara manicure. sa nachádza na Hospodárskej 53 v Trnave. Máme vlastné parkovanie zdarma priamo pred vchodom."
         }
       },
-      {
-        "@type": "Question",
-        "name": "Aká je cena za nové gélové nechty v Trnave?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Cenník začína na sume 25€ za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov. Používame kvalitné európske gély."
-        }
-      },
+
       {
         "@type": "Question",
         "name": "Musím sa objednať telefonicky na nechty?",

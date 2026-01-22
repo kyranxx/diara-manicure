@@ -883,16 +883,6 @@ export default function Home() {
               {/* FAQ Item 2 */}
               <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
                 <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
-                  Aká je cena za nové gélové nechty?
-                </h3>
-                <p className="text-base text-muted-foreground leading-relaxed">
-                  Cenník začína na sume 25 € za kompletnú modeláciu nechtov. Táto cena platí aj pre doplnenie nechtov. Používame kvalitné európske gély.
-                </p>
-              </div>
-
-              {/* FAQ Item 3 */}
-              <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
-                <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
                   Musím sa objednať telefonicky?
                 </h3>
                 <p className="text-base text-muted-foreground leading-relaxed">
