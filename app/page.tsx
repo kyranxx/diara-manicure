@@ -445,10 +445,13 @@ export default function Home() {
           </div>
 
           <div className="max-w-2xl mx-auto relative">
+            {/* Price tag hidden for now */}
+            {/*
             <div className="absolute -top-10 -right-2 md:-right-8 rotate-12 bg-white dark:bg-zinc-900 text-primary border border-primary/20 px-5 py-3 rounded-full shadow-xl z-10 animate-in fade-in zoom-in duration-500 delay-300 flex items-baseline gap-1 hover:scale-110 transition-transform cursor-default">
               <span className="font-serif italic text-base text-muted-foreground">od</span>
               <span className="text-2xl font-bold">25€</span>
             </div>
+            */}
             <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
               Gélové nechty Trnava | <span className="text-primary">diara manicure.</span>
             </h1>
