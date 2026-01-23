@@ -665,85 +665,8 @@ export default function Home() {
           </div>
         </section >
 
-        {/* Gift Cards Section */}
-        <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-primary/10 dark:via-black dark:to-primary/5 relative overflow-hidden">
-          {/* Decorative elements */}
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce" style={{ animationDuration: '3s' }}>✨</div>
-            <div className="absolute top-20 right-20 text-3xl opacity-20 animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>💅</div>
-            <div className="absolute bottom-20 left-1/4 text-5xl opacity-15 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>✨</div>
-            <div className="absolute top-1/3 right-10 text-2xl opacity-20 animate-bounce" style={{ animationDuration: '2s', animationDelay: '0.3s' }}>⭐</div>
-            <div className="absolute bottom-10 right-1/3 text-3xl opacity-15 animate-bounce" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}>💖</div>
-          </div>
 
-          <div className="container mx-auto px-6 relative z-10">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                {/* Content Column */}
-                <div className="text-center md:text-left order-2 md:order-1">
-                  <div className="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-                    <span>💅</span>
-                    <span>Ideálny darček</span>
-                    <span>✨</span>
-                  </div>
-                  <h2 className="text-4xl md:text-6xl font-light mb-6 tracking-tight text-black dark:text-white">
-                    Darčekové poukazy
-                  </h2>
-                  <div className="w-24 h-1 bg-primary/30 mx-auto md:mx-0 mb-6 rounded-full" />
-                  <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
-                    Hľadáte <span className="text-primary font-medium">praktický darček</span> pre vašich blízkych? Potešte mamu, sestru, priateľku či kolegyňu darčekovým poukazom na profesionálnu manikúru!
-                  </p>
-                  <p className="text-lg text-muted-foreground leading-relaxed mb-8 font-light">
-                    Naše poukazy sú ideálnym darčekom, ktorý poteší každú ženu.
-                  </p>
 
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <Button
-                      asChild
-                      className="h-14 md:h-16 text-lg md:text-xl rounded-full px-8 md:px-12 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
-                      <a href="https://services.bookio.com/diaramanicure/gift-cards#/" target="_blank" rel="noopener noreferrer">
-                        <span className="mr-2">💅</span>
-                        Kúpiť poukaz online
-                      </a>
-                    </Button>
-                  </div>
-
-                  <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <span className="text-green-500">✓</span>
-                      <span>Okamžité doručenie emailom</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Image Column */}
-                <div className="relative order-1 md:order-2">
-                  <div className="relative aspect-square max-w-md mx-auto">
-                    {/* Decorative frame */}
-                    <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-white to-primary/10 dark:from-primary/30 dark:via-black dark:to-primary/20 rounded-[2.5rem] -z-10" />
-                    <div className="relative w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800">
-                      {/* Placeholder image - replace with actual gift card image */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/10 flex items-center justify-center">
-                        <Image
-                          src="/giftcard-winter.jpg"
-                          alt="Darčekový poukaz Diara Manicure"
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                      </div>
-                    </div>
-                    {/* Badge */}
-                    <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
-                      ✨ Darček
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* About Section - Founder & Shop */}
         < section className="py-16 bg-beige/30 dark:bg-black overflow-hidden" >
@@ -869,9 +792,6 @@ export default function Home() {
           </div >
         </section >
 
-        {/* Gallery Section - Beige Background */}
-
-
         {/* FAQ Section - White Background */}
         < section id="faq" className="py-24 bg-white dark:bg-black" >
           <div className="container mx-auto px-6">
@@ -915,6 +835,86 @@ export default function Home() {
             </div>
           </div>
         </section >
+
+        {/* Gift Cards Section */}
+        <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-primary/10 dark:via-black dark:to-primary/5 relative overflow-hidden">
+          {/* Decorative elements */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce" style={{ animationDuration: '3s' }}>✨</div>
+            <div className="absolute top-20 right-20 text-3xl opacity-20 animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>💅</div>
+            <div className="absolute bottom-20 left-1/4 text-5xl opacity-15 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>✨</div>
+            <div className="absolute top-1/3 right-10 text-2xl opacity-20 animate-bounce" style={{ animationDuration: '2s', animationDelay: '0.3s' }}>⭐</div>
+            <div className="absolute bottom-10 right-1/3 text-3xl opacity-15 animate-bounce" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}>💖</div>
+          </div>
+
+          <div className="container mx-auto px-6 relative z-10">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                {/* Content Column */}
+                <div className="text-center md:text-left order-2 md:order-1">
+                  <div className="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+                    <span>💅</span>
+                    <span>Ideálny darček</span>
+                    <span>✨</span>
+                  </div>
+                  <h2 className="text-4xl md:text-6xl font-light mb-6 tracking-tight text-black dark:text-white">
+                    Darčekové poukazy
+                  </h2>
+                  <div className="w-24 h-1 bg-primary/30 mx-auto md:mx-0 mb-6 rounded-full" />
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
+                    Hľadáte <span className="text-primary font-medium">praktický darček</span> pre vašich blízkych? Potešte mamu, sestru, priateľku či kolegyňu darčekovým poukazom na profesionálnu manikúru!
+                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-8 font-light">
+                    Naše poukazy sú ideálnym darčekom, ktorý poteší každú ženu.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <Button
+                      asChild
+                      className="h-14 md:h-16 text-lg md:text-xl rounded-full px-8 md:px-12 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-300"
+                    >
+                      <a href="https://services.bookio.com/diaramanicure/gift-cards#/" target="_blank" rel="noopener noreferrer">
+                        <span className="mr-2">💅</span>
+                        Kúpiť poukaz online
+                      </a>
+                    </Button>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-500">✓</span>
+                      <span>Okamžité doručenie emailom</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Image Column */}
+                <div className="relative order-1 md:order-2">
+                  <div className="relative aspect-square max-w-md mx-auto">
+                    {/* Decorative frame */}
+                    <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-white to-primary/10 dark:from-primary/30 dark:via-black dark:to-primary/20 rounded-[2.5rem] -z-10" />
+                    <div className="relative w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800">
+                      {/* Placeholder image - replace with actual gift card image */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/10 flex items-center justify-center">
+                        <Image
+                          src="/giftcard-winter.jpg"
+                          alt="Darčekový poukaz Diara Manicure"
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      </div>
+                    </div>
+                    {/* Badge */}
+                    <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
+                      ✨ Darček
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Contact Section - Beige Background (Merged with Footer) */}
         < section id="visit" className="pt-24 pb-12 bg-beige dark:bg-black" >
@@ -1048,102 +1048,106 @@ export default function Home() {
           </div>
         </footer >
       </main >
-      {shouldLoadGoogleMaps && (
-        <Script
-          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=weekly&loading=async`}
-          strategy="lazyOnload"
-          onReady={() => {
-            setIsGoogleApiLoaded(true);
-          }}
-        />
-      )}
+      {
+        shouldLoadGoogleMaps && (
+          <Script
+            src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&v=weekly&loading=async`}
+            strategy="lazyOnload"
+            onReady={() => {
+              setIsGoogleApiLoaded(true);
+            }}
+          />
+        )
+      }
 
       {/* Lightbox Modal */}
-      {lightboxOpen && (
-        <div
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center"
-          onClick={closeLightbox}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Prehliadač galérie"
-        >
-          {/* Close button */}
-          <button
-            onClick={closeLightbox}
-            className="absolute top-4 right-4 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-            aria-label="Zavrieť"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          {/* Zoom toggle button */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleZoom()
-            }}
-            className="absolute top-4 right-20 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-            aria-label={isZoomed ? "Oddialiť" : "Priblížiť"}
-          >
-            {isZoomed ? <ZoomOut className="w-6 h-6" /> : <ZoomIn className="w-6 h-6" />}
-          </button>
-
-          {/* Navigation arrows */}
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              goToPrevious()
-            }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-            aria-label="Predchádzajúci obrázok"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
-
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              goToNext()
-            }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-            aria-label="Nasledujúci obrázok"
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
-
-          {/* Image container */}
+      {
+        lightboxOpen && (
           <div
-            className={`relative transition-all duration-500 ease-out ${isZoomed
-              ? 'w-[95vw] h-[95vh] cursor-zoom-out overflow-auto'
-              : 'w-[90vw] h-[85vh] max-w-5xl cursor-zoom-in'
-              }`}
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleZoom()
-            }}
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center"
+            onClick={closeLightbox}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Prehliadač galérie"
           >
-            <Image
-              src={galleryImages[currentImageIndex].src}
-              alt={galleryImages[currentImageIndex].alt}
-              fill
-              className={`transition-all duration-500 ${isZoomed ? 'object-contain scale-150' : 'object-contain'
+            {/* Close button */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-4 right-4 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+              aria-label="Zavrieť"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Zoom toggle button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleZoom()
+              }}
+              className="absolute top-4 right-20 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+              aria-label={isZoomed ? "Oddialiť" : "Priblížiť"}
+            >
+              {isZoomed ? <ZoomOut className="w-6 h-6" /> : <ZoomIn className="w-6 h-6" />}
+            </button>
+
+            {/* Navigation arrows */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                goToPrevious()
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+              aria-label="Predchádzajúci obrázok"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                goToNext()
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
+              aria-label="Nasledujúci obrázok"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+
+            {/* Image container */}
+            <div
+              className={`relative transition-all duration-500 ease-out ${isZoomed
+                ? 'w-[95vw] h-[95vh] cursor-zoom-out overflow-auto'
+                : 'w-[90vw] h-[85vh] max-w-5xl cursor-zoom-in'
                 }`}
-              sizes="100vw"
-              priority
-            />
-          </div>
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleZoom()
+              }}
+            >
+              <Image
+                src={galleryImages[currentImageIndex].src}
+                alt={galleryImages[currentImageIndex].alt}
+                fill
+                className={`transition-all duration-500 ${isZoomed ? 'object-contain scale-150' : 'object-contain'
+                  }`}
+                sizes="100vw"
+                priority
+              />
+            </div>
 
-          {/* Image counter */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm font-medium bg-black/40 px-4 py-2 rounded-full">
-            {currentImageIndex + 1} / {galleryImages.length}
-          </div>
+            {/* Image counter */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm font-medium bg-black/40 px-4 py-2 rounded-full">
+              {currentImageIndex + 1} / {galleryImages.length}
+            </div>
 
-          {/* Image description */}
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white text-lg font-light">
-            {galleryImages[currentImageIndex].alt}
+            {/* Image description */}
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white text-lg font-light">
+              {galleryImages[currentImageIndex].alt}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
     </div >
   )
 }
