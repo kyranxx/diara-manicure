@@ -60,6 +60,9 @@ interface WindowWithGoogle extends Window {
 
 // Gallery images for lightbox (newest first) - SEO optimized alt texts
 const galleryImages = [
+  { src: "/gelove-nechty-trnava-gallery-17.jpeg", alt: "Luxusné gélové nechty - nechtový dizajn Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-16.jpeg", alt: "Jemná manikúra a gélové nechty - diara manicure" },
+  { src: "/gelove-nechty-trnava-gallery-15.jpeg", alt: "Moderné zdobenie nechtov - nechtové štúdio Trnava" },
   { src: "/gelove-nechty-trnava-gallery-14.jpeg", alt: "Nové trendy gélových nechtov - diara manicure Trnava" },
   { src: "/gelove-nechty-trnava-gallery-13.jpeg", alt: "Detailná modelácia nechtov - nechtové štúdio Trnava" },
   { src: "/gelove-nechty-trnava-gallery-12.jpeg", alt: "Kvalitný gél lak a modelácia - diara manicure" },
