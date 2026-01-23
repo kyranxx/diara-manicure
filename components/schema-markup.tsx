@@ -234,7 +234,7 @@ const SchemaMarkup = () => {
         "name": "Kde nájdem nechtové štúdio diara manicure. v Trnave?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Náš salón diara manicure. sa nachádza na Hospodárskej 53 v Trnave. Máme vlastné parkovanie zdarma priamo pred vchodom."
+          "text": "✨ Náš salón diara manicure. nájdete v srdci Trnavy na Hospodárskej 53. Potešíme vás nielen dokonalými nechtami, ale aj bezproblémovým parkovaním ZDARMA priamo pred vchodom."
         }
       },
 
@@ -243,7 +243,7 @@ const SchemaMarkup = () => {
         "name": "Musím sa objednať telefonicky na nechty?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Nie, preferujeme online rezervácie. Kliknite na tlačidlo 'Pozrieť voľné termíny' a vyberte si čas, ktorý vám vyhovuje. Objednanie na nechty trvá menej ako minútu."
+          "text": "Nie, doprajte si maximálne pohodlie s našou bleskovou online rezerváciou. Stačia dva kliky a váš termín na profesionálne gélové nechty je zarezervovaný za menej ako minútu."
         }
       },
       {
@@ -251,7 +251,7 @@ const SchemaMarkup = () => {
         "name": "Robíte aj iné služby ako gélové nechty?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Áno, špecializujeme sa na gélové nechty, ale v ponuke je aj gél lak a klasická manikúra v Trnave."
+          "text": "Áno, sme špecialisti na krásne ruky! Okrem špičkovej modelácie gélových nechtov ponúkame aj obľúbený gél lak a precíznu klasickú manikúru pre prirodzený vzhľad."
         }
       },
       {
@@ -259,7 +259,7 @@ const SchemaMarkup = () => {
         "name": "Je pri nechtovom štúdiu parkovanie?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Áno, máme vlastné bezplatné parkovanie priamo pred salónom na Hospodárskej ulici v Trnave."
+          "text": "Samozrejme! Pre vaše maximálne pohodlie máme vlastné bezplatné parkovacie miesta priamo pred salónom na Hospodárskej ulici v Trnave. Starosti s parkovaním hoďte za hlavu."
         }
       }
     ]

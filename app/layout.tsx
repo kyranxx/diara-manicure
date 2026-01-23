@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.diaramanicure.sk'),
   title: "diara manicure. | Gélové nechty Trnava | Nechtové štúdio",
-  description: "✨ Gélové nechty Trnava • Parkovanie zdarma • Online rezervácia • Profesionálne nechtové štúdio v centre Trnavy. Kvalitné európske gély. Objednajte sa ešte dnes!",
+  description: "✨ Gélové nechty Trnava & profesionálna manikúra. 💎 V diara manicure. spájame špičkovú kvalitu, TOP európske gély a relax. 💅 Parkovanie zdarma + káva. Rezervujte si svoj termín online!",
   keywords: [
     "nechty trnava",
     "gelove nechty trnava",
@@ -40,17 +40,24 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any', type: 'image/x-icon' },
+      { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon.png', sizes: '128x128', type: 'image/png' },
     ],
     shortcut: "/favicon.ico",
     apple: [
       { url: '/favicon.png', sizes: '180x180', type: 'image/png' },
     ],
+    other: [
+      {
+        rel: 'mask-icon',
+        url: '/favicon.png',
+        color: '#2563eb', // Blue color for Safari pinned tabs
+      },
+    ],
   },
   openGraph: {
     title: "diara manicure. | Gélové nechty Trnava",
-    description: "✨ Gélové nechty Trnava • Parkovanie zdarma • Kvalitné európske gély • Profesionálne nechtové štúdio v centre Trnavy.",
+    description: "💎 Profesionálne gélové nechty v Trnave. Kvalitné európske gély, parkovanie zdarma a online rezervácia termínu. ✨",
     type: "website",
     locale: "sk_SK",
     url: "https://www.diaramanicure.sk",
