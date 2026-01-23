@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.diaramanicure.sk'),
   title: "diara manicure. | Gélové nechty Trnava | Nechtové štúdio",
-  description: "✨ Gélové nechty od 25€ • Parkovanie zdarma • Online rezervácia • Profesionálne nechtové štúdio v centre Trnavy. Kvalitné európske gély. Objednajte sa ešte dnes!",
+  description: "✨ Gélové nechty Trnava • Parkovanie zdarma • Online rezervácia • Profesionálne nechtové štúdio v centre Trnavy. Kvalitné európske gély. Objednajte sa ešte dnes!",
   keywords: [
     "nechty trnava",
     "gelove nechty trnava",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "diara manicure. | Gélové nechty Trnava",
-    description: "✨ Gélové nechty od 25€ • Parkovanie zdarma • Kvalitné európske gély • Profesionálne nechtové štúdio v centre Trnavy.",
+    description: "✨ Gélové nechty Trnava • Parkovanie zdarma • Kvalitné európske gély • Profesionálne nechtové štúdio v centre Trnavy.",
     type: "website",
     locale: "sk_SK",
     url: "https://www.diaramanicure.sk",

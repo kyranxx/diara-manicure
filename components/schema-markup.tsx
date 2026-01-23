@@ -15,7 +15,7 @@ const SchemaMarkup = () => {
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-2.jpeg",
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-3.jpeg"
     ],
-    "description": "Profesionálne nechtové štúdio v Trnave. Gélové nechty od 25€, manikúra, gél lak. Kvalitné európske gély, parkovanie zdarma, online rezervácia.",
+    "description": "Profesionálne nechtové štúdio v Trnave. Gélové nechty, manikúra, gél lak. Kvalitné európske gély, parkovanie zdarma, online rezervácia.",
     "url": "https://www.diaramanicure.sk",
     "telephone": "+421902163144",
     "email": "andrea.heckova92@gmail.com",
@@ -79,12 +79,7 @@ const SchemaMarkup = () => {
             "name": "Gélové nechty - nová modelácia",
             "description": "Kompletná modelácia gélových nechtov s kvalitným európskym gélom"
           },
-          "priceSpecification": {
-            "@type": "PriceSpecification",
-            "price": "25.00",
-            "priceCurrency": "EUR",
-            "minPrice": "25.00"
-          }
+          "priceCurrency": "EUR"
         },
         {
           "@type": "Offer",
@@ -93,12 +88,7 @@ const SchemaMarkup = () => {
             "name": "Doplnenie gélových nechtov",
             "description": "Pravidelné doplnenie a údržba gélových nechtov"
           },
-          "priceSpecification": {
-            "@type": "PriceSpecification",
-            "price": "25.00",
-            "priceCurrency": "EUR",
-            "minPrice": "25.00"
-          }
+          "priceCurrency": "EUR"
         },
         {
           "@type": "Offer",

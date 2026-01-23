@@ -230,9 +230,9 @@ export default function BlogArticle2() {
                                                 <td className="py-3">Vysoká</td>
                                             </tr>
                                             <tr className="border-b border-primary/10">
-                                                <td className="py-3">Cena od</td>
-                                                <td className="py-3">20 €</td>
-                                                <td className="py-3">25 €</td>
+                                                <td className="py-3">Cena</td>
+                                                <td className="py-3">Pozrite cenník</td>
+                                                <td className="py-3">Pozrite cenník</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -285,11 +285,9 @@ export default function BlogArticle2() {
                                 Ponúkame obe služby za výhodné ceny:
                             </p>
 
-                            <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-8">
-                                <li><strong>Gél lak manikúra</strong> – od 20 €</li>
-                                <li><strong>Gélová modelácia (nová sada)</strong> – od 25 €</li>
-                                <li><strong>Doplnenie gélových nechtov</strong> – od 25 €</li>
-                            </ul>
+                            <p className="text-muted-foreground leading-relaxed mb-8">
+                                Aktuálny cenník nájdete na <Link href="/#cennik" className="text-primary hover:underline">našej hlavnej stránke</Link>.
+                            </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 mt-12">
                                 <Button asChild className="rounded-full h-14 px-8">

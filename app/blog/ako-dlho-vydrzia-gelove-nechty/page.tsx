@@ -182,7 +182,7 @@ export default function BlogArticle1() {
                             </p>
 
                             <p className="text-muted-foreground leading-relaxed mb-6">
-                                Naše ceny začínajú od <strong>25 €</strong> za kompletnú modeláciu alebo doplnenie.
+                                Aktuálny cenník nájdete na našej hlavnej stránke.
                                 Ponúkame aj bezplatné parkovanie priamo pred salónom a kávu zdarma počas procedúry.
                             </p>
 
