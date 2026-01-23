@@ -826,7 +826,7 @@ export default function Home() {
               <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
             </div>
 
-            <div className="grid grid-cols-3 md:grid-cols-5 gap-3 max-w-5xl mx-auto">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl mx-auto">
               {galleryImages.map((image, index) => (
                 <button
                   key={image.src}
@@ -842,7 +842,7 @@ export default function Home() {
                     alt={image.alt}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    sizes="(max-width: 768px) 33vw, 20vw"
+                    sizes="(max-width: 768px) 33vw, 16vw"
                   />
                 </button>
               ))}
