@@ -60,24 +60,24 @@ interface WindowWithGoogle extends Window {
 
 // Gallery images for lightbox (newest first) - SEO optimized alt texts
 const galleryImages = [
-  { src: "/gelove-nechty-trnava-gallery-17.jpeg", alt: "Profesionálne gélové nechty Trnava - najnovší dizajn" },
-  { src: "/gelove-nechty-trnava-gallery-16.jpeg", alt: "Jemná a elegantná manikúra Trnava - prirodzený vzhľad" },
-  { src: "/gelove-nechty-trnava-gallery-15.jpeg", alt: "Moderný nail art a zdobenie nechtov v Trnave" },
-  { src: "/gelove-nechty-trnava-gallery-14.jpeg", alt: "Trendy gélové nechty - nechtové štúdio diara manicure" },
-  { src: "/gelove-nechty-trnava-gallery-13.jpeg", alt: "Precízna modelácia nechtov Trnava - detailná práca" },
-  { src: "/gelove-nechty-trnava-gallery-12.jpeg", alt: "Kvalitné európske gély a manikúra Trnava" },
-  { src: "/gelove-nechty-trnava-gallery-01.jpeg", alt: "Luxusné gélové nechty Trnava - inšpirácia" },
-  { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Gél lak manikúra s dlhou výdržou - Trnava" },
-  { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Profesionálne nechtové štúdio Trnava - ukážka práce" },
-  { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Francúzska manikúra a jemné zdobenie - Trnava" },
-  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Ružové gélové nechty s trblietkami - diara manicure" },
-  { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Nude gélové nechty a čistý dizajn - salón Trnava" },
-  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Krátke a praktické gélové nechty - manikúra Trnava" },
-  { src: "/gelove-nechty-trnava-gallery-5.jpg", alt: "Farebné gélové nechty a kreatívny nail art" },
-  { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Mandľový tvar nechtov - obľúbená modelácia v Trnave" },
-  { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Červená klasika - gélové nechty, ktoré nikdy neomrzí" },
-  { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Baby boomer nechty a ombré efekt - nechtové štúdio" },
-  { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Detailné zdobenie a ručná maľba na nechty Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-17.jpeg", alt: "Gélové nechty Trnava - ukážka práce 17" },
+  { src: "/gelove-nechty-trnava-gallery-16.jpeg", alt: "Gélové nechty Trnava - ukážka práce 16" },
+  { src: "/gelove-nechty-trnava-gallery-15.jpeg", alt: "Gélové nechty Trnava - ukážka práce 15" },
+  { src: "/gelove-nechty-trnava-gallery-14.jpeg", alt: "Gélové nechty Trnava - ukážka práce 14" },
+  { src: "/gelove-nechty-trnava-gallery-13.jpeg", alt: "Gélové nechty Trnava - ukážka práce 13" },
+  { src: "/gelove-nechty-trnava-gallery-12.jpeg", alt: "Gélové nechty Trnava - ukážka práce 12" },
+  { src: "/gelove-nechty-trnava-gallery-01.jpeg", alt: "Gélové nechty Trnava - ukážka práce 11" },
+  { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Gélové nechty Trnava - ukážka práce 10" },
+  { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Gélové nechty Trnava - ukážka práce 09" },
+  { src: "/gelove-nechty-trnava-gallery-9.jpeg", alt: "Gélové nechty Trnava - ukážka práce 08" },
+  { src: "/gelove-nechty-trnava-gallery-8.jpeg", alt: "Gélové nechty Trnava - ukážka práce 07" },
+  { src: "/gelove-nechty-trnava-gallery-7.jpeg", alt: "Gélové nechty Trnava - ukážka práce 06" },
+  { src: "/gelove-nechty-trnava-gallery-6.jpeg", alt: "Gélové nechty Trnava - ukážka práce 05" },
+  { src: "/gelove-nechty-trnava-gallery-5.jpg", alt: "Gélové nechty Trnava - ukážka práce 04" },
+  { src: "/gelove-nechty-trnava-gallery-4.jpeg", alt: "Gélové nechty Trnava - ukážka práce 03" },
+  { src: "/gelove-nechty-trnava-gallery-3.jpeg", alt: "Gélové nechty Trnava - ukážka práce 02" },
+  { src: "/gelove-nechty-trnava-gallery-2.jpeg", alt: "Gélové nechty Trnava - ukážka práce 01" },
+  { src: "/gelove-nechty-trnava-gallery-1.jpeg", alt: "Gélové nechty Trnava - detailné zdobenie" },
 ]
 
 export default function Home() {
@@ -614,6 +614,57 @@ export default function Home() {
           </div>
         </section >
 
+
+        {/* Gallery Section - Beige Background */}
+        < section id="galeria" className="pt-12 pb-24 bg-white dark:bg-black overflow-hidden" >
+          <div className="container mx-auto px-6">
+            <div className="text-center mb-12">
+              <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nechty našich klientiek</h2>
+              <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
+            </div>
+
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl mx-auto">
+              {galleryImages.map((image, index) => (
+                <button
+                  key={image.src}
+                  onClick={() => openLightbox(index)}
+                  className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                  aria-label={`Otvoriť obrázok: ${image.alt}`}
+                >
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors z-10 flex items-center justify-center">
+                    <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </div>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 768px) 33vw, 16vw"
+                  />
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <Button
+                variant="outline"
+                className="rounded-full h-16 md:h-20 px-10 md:px-12 text-xl font-normal"
+                asChild
+              >
+                <a
+                  href="https://instagram.com/diaramanicure"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2"
+                >
+                  <Instagram className="w-6 h-6" />
+                  Sledujte nás na Instagrame
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section >
+
         {/* Gift Cards Section */}
         <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-primary/10 dark:via-black dark:to-primary/5 relative overflow-hidden">
           {/* Decorative elements */}
@@ -819,54 +870,7 @@ export default function Home() {
         </section >
 
         {/* Gallery Section - Beige Background */}
-        < section id="galeria" className="pt-12 pb-24 bg-white dark:bg-black overflow-hidden" >
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-12">
-              <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Nechty našich klientiek</h2>
-              <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
-            </div>
 
-            <div className="grid grid-cols-3 md:grid-cols-6 gap-3 max-w-5xl mx-auto">
-              {galleryImages.map((image, index) => (
-                <button
-                  key={image.src}
-                  onClick={() => openLightbox(index)}
-                  className="relative aspect-square rounded-2xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
-                  aria-label={`Otvoriť obrázok: ${image.alt}`}
-                >
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors z-10 flex items-center justify-center">
-                    <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    sizes="(max-width: 768px) 33vw, 16vw"
-                  />
-                </button>
-              ))}
-            </div>
-
-            <div className="mt-12 text-center">
-              <Button
-                variant="outline"
-                className="rounded-full h-16 md:h-20 px-10 md:px-12 text-xl font-normal"
-                asChild
-              >
-                <a
-                  href="https://instagram.com/diaramanicure"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  <Instagram className="w-6 h-6" />
-                  Sledujte nás na Instagrame
-                </a>
-              </Button>
-            </div>
-          </div>
-        </section >
 
         {/* FAQ Section - White Background */}
         < section id="faq" className="py-24 bg-white dark:bg-black" >
