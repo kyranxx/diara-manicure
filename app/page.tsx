@@ -60,6 +60,9 @@ interface WindowWithGoogle extends Window {
 
 // Gallery images for lightbox (newest first) - SEO optimized alt texts
 const galleryImages = [
+  { src: "/gelove-nechty-trnava-gallery-14.jpeg", alt: "Nové trendy gélových nechtov - diara manicure Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-13.jpeg", alt: "Detailná modelácia nechtov - nechtové štúdio Trnava" },
+  { src: "/gelove-nechty-trnava-gallery-12.jpeg", alt: "Kvalitný gél lak a modelácia - diara manicure" },
   { src: "/gelove-nechty-trnava-gallery-01.jpeg", alt: "Najnovšie trendy v gélových nechtoch - diara manicure Trnava" },
   { src: "/gelove-nechty-trnava-gallery-11.jpeg", alt: "Elegantné gélové nechty s jemným dizajnom - diara manicure Trnava" },
   { src: "/gelove-nechty-trnava-gallery-10.jpeg", alt: "Profesionálna modelácia nechtov v štúdiu diara manicure Trnava" },
@@ -820,7 +823,7 @@ export default function Home() {
               <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <div className="grid grid-cols-3 md:grid-cols-5 gap-3 max-w-5xl mx-auto">
               {galleryImages.map((image, index) => (
                 <button
                   key={image.src}
@@ -836,7 +839,7 @@ export default function Home() {
                     alt={image.alt}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    sizes="(max-width: 768px) 50vw, 25vw"
+                    sizes="(max-width: 768px) 33vw, 20vw"
                   />
                 </button>
               ))}
