@@ -564,7 +564,8 @@ export default function Home() {
           <div className="container mx-auto px-6">
             <div className="text-center mb-16">
               <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník služieb</h2>
-              <div className="w-24 h-1 bg-primary/20 mx-auto mb-6 rounded-full" />
+              <div className="w-24 h-1 bg-primary/20 mx-auto mb-4 rounded-full" />
+              <p className="text-sm text-muted-foreground uppercase tracking-widest mb-6">Cenník platný od 24.1.2026</p>
 
             </div>
 
