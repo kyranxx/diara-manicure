@@ -60,6 +60,8 @@ interface WindowWithGoogle extends Window {
 
 // Gallery images for lightbox (newest first) - SEO optimized alt texts
 const galleryImages = [
+  { src: "/gelove-nechty-trnava-gallery-19.jpeg", alt: "Gélové nechty Trnava - ukážka práce 19" },
+  { src: "/gelove-nechty-trnava-gallery-18.jpeg", alt: "Gélové nechty Trnava - ukážka práce 18" },
   { src: "/gelove-nechty-trnava-gallery-17.jpeg", alt: "Gélové nechty Trnava - ukážka práce 17" },
   { src: "/gelove-nechty-trnava-gallery-16.jpeg", alt: "Gélové nechty Trnava - ukážka práce 16" },
   { src: "/gelove-nechty-trnava-gallery-15.jpeg", alt: "Gélové nechty Trnava - ukážka práce 15" },
