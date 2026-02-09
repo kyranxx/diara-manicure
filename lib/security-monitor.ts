@@ -9,7 +9,7 @@ export interface SecurityEvent {
   type: 'rate_limit_exceeded' | 'suspicious_request' | 'error' | 'auth_failure'
   severity: 'low' | 'medium' | 'high' | 'critical'
   message: string
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
   timestamp: number
   ip?: string
   userAgent?: string
@@ -65,7 +65,7 @@ export class SecurityMonitor {
   /**
    * Log suspicious request
    */
-  public logSuspiciousRequest(ip: string, reason: string, metadata?: Record<string, any>, userAgent?: string): void {
+  public logSuspiciousRequest(ip: string, reason: string, metadata?: Record<string, unknown>, userAgent?: string): void {
     this.log({
       type: 'suspicious_request',
       severity: 'medium',
@@ -115,7 +115,7 @@ export class SecurityMonitor {
     }
   }
 
-  private sendToExternalMonitoring(event: SecurityEvent): void {
+  private sendToExternalMonitoring(_event: SecurityEvent): void {
     if (process.env.SENTRY_DSN) {
       // Integration point for Sentry or other monitoring service
     }

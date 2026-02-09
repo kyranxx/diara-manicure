@@ -25,7 +25,10 @@ export function Navbar() {
         <nav className="w-full bg-beige dark:bg-black z-50 relative">
             <div className="container mx-auto px-6 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                    <Link href="/" className="flex-shrink-0" aria-label="Domov">
+                    <Link href="/" className="flex-shrink-0 group" aria-label="Domov">
+                        <span className="text-xl font-light tracking-tighter group-hover:text-primary transition-colors">
+                            diara <span className="text-primary font-medium">manicure.</span>
+                        </span>
                     </Link>
                 </div>
 

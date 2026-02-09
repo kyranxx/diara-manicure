@@ -1,0 +1,73 @@
+"use client"
+
+import { PricingSkeleton } from "@/components/pricing-skeleton"
+
+interface Service {
+    title: string
+    description: string
+    price: string
+    discountedPrice?: string
+}
+
+interface ServicesProps {
+    services: Service[]
+    loadingServices: boolean
+    bookingUrl: string
+}
+
+export function Services({ services, loadingServices, bookingUrl }: ServicesProps) {
+    return (
+        <section id="cennik" className="py-24 bg-white dark:bg-black">
+            <div className="container mx-auto px-6">
+                <div className="text-center mb-16">
+                    <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník služieb</h2>
+                    <div className="w-24 h-1 bg-primary/20 mx-auto mb-4 rounded-full" />
+                    <p className="text-sm text-muted-foreground uppercase tracking-widest mb-6">Cenník platný od 24.1.2026</p>
+                </div>
+
+                <div className="max-w-5xl mx-auto">
+                    {loadingServices ? (
+                        <PricingSkeleton />
+                    ) : services.length > 0 ? (
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {services.map((service, index) => {
+                                const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
+                                return (
+                                    <a
+                                        key={index}
+                                        href={bookingUrl}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group relative flex justify-between items-start p-8 bg-beige dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full cursor-pointer hover:scale-[1.02]"
+                                    >
+                                        {hasDiscount && (
+                                            <div className="absolute top-2 right-4 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full shadow-sm">
+                                                Najžiadanejšie
+                                            </div>
+                                        )}
+                                        <div className="flex-grow pr-4">
+                                            <h3 className="text-xl font-normal mb-2 group-hover:text-primary transition-colors text-black dark:text-white">{service.title}</h3>
+                                            <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
+                                        </div>
+                                        <div className="text-right whitespace-nowrap">
+                                            {hasDiscount ? (
+                                                <div className="flex flex-col items-end">
+                                                    <span className="text-sm text-black line-through decoration-1">{service.price}</span>
+                                                    <span className="text-xl font-medium text-primary">{service.discountedPrice}</span>
+                                                </div>
+                                            ) : (
+                                                <span className="text-xl font-medium text-black dark:text-white">{service.price}</span>
+                                            )}
+                                        </div>
+                                    </a>
+                                )
+                            })}
+                        </div>
+                    ) : (
+                        <div className="text-center text-muted-foreground">Žiadne služby nie sú momentálne dostupné.</div>
+                    )}
+                </div>
+            </div>
+        </section>
+    )
+}

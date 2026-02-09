@@ -22,6 +22,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.gravatar.com",
       },
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
     ],
   },
   serverExternalPackages: ['googleapis'],
