@@ -441,6 +441,7 @@ export default function Home() {
               className="w-full h-auto dark:hidden"
               priority
               fetchPriority="high"
+              unoptimized
             />
             {/* Dark Mode Logo - Valentine Edition */}
             <Image
@@ -451,6 +452,7 @@ export default function Home() {
               className="w-full h-auto hidden dark:block"
               priority
               fetchPriority="high"
+              unoptimized
             />
           </div>
 
@@ -1009,6 +1011,7 @@ export default function Home() {
                   width={1536}
                   height={600}
                   className="h-20 w-auto object-contain dark:hidden"
+                  unoptimized
                 />
                 <Image
                   src="/logo_val_night.png"
@@ -1016,6 +1019,7 @@ export default function Home() {
                   width={1536}
                   height={600}
                   className="h-20 w-auto object-contain hidden dark:block"
+                  unoptimized
                 />
                 <p className="text-sm font-medium text-black dark:text-white tracking-wide">Professional Nails & Manicure in Trnava</p>
               </div>

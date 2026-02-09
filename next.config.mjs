@@ -5,6 +5,7 @@ const nextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
+    quality: 90,
     remotePatterns: [
       {
         protocol: "https",
