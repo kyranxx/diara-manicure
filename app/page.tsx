@@ -845,9 +845,9 @@ export default function Home() {
         <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-primary/10 dark:via-black dark:to-primary/5 relative overflow-hidden">
           {/* Decorative elements */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce" style={{ animationDuration: '3s' }}>✨</div>
+            <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce" style={{ animationDuration: '3s' }}>❤️</div>
             <div className="absolute top-20 right-20 text-3xl opacity-20 animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>💅</div>
-            <div className="absolute bottom-20 left-1/4 text-5xl opacity-15 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>✨</div>
+            <div className="absolute bottom-20 left-1/4 text-5xl opacity-15 animate-bounce" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>💝</div>
             <div className="absolute top-1/3 right-10 text-2xl opacity-20 animate-bounce" style={{ animationDuration: '2s', animationDelay: '0.3s' }}>⭐</div>
             <div className="absolute bottom-10 right-1/3 text-3xl opacity-15 animate-bounce" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}>💖</div>
           </div>
@@ -857,10 +857,10 @@ export default function Home() {
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 {/* Content Column */}
                 <div className="text-center md:text-left order-2 md:order-1">
-                  <div className="inline-flex items-center gap-2 bg-primary/10 dark:bg-primary/20 text-primary dark:text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
-                    <span>💅</span>
-                    <span>Ideálny darček</span>
-                    <span>✨</span>
+                  <div className="inline-flex items-center gap-2 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                    <span>�</span>
+                    <span>Valentín 2026 • Ideálny darček</span>
+                    <span>❤️</span>
                   </div>
                   <h2 className="text-4xl md:text-6xl font-light mb-6 tracking-tight text-black dark:text-white">
                     Darčekové poukazy
@@ -869,8 +869,8 @@ export default function Home() {
                   <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
                     Hľadáte <span className="text-primary font-medium">praktický darček</span> pre vašich blízkych? Potešte mamu, sestru, priateľku či kolegyňu darčekovým poukazom na profesionálnu manikúru!
                   </p>
-                  <p className="text-lg text-muted-foreground leading-relaxed mb-8 font-light">
-                    Naše poukazy sú ideálnym darčekom, ktorý poteší každú ženu.
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
+                    Naše poukazy sú ideálnym <span className="text-pink-500 font-medium">valentínskym darčekom 2026</span>, ktorý poteší každú ženu.
                   </p>
 
                   <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
@@ -911,8 +911,8 @@ export default function Home() {
                       </div>
                     </div>
                     {/* Badge */}
-                    <div className="absolute -top-2 -right-2 bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
-                      ✨ Darček
+                    <div className="absolute -top-2 -right-2 bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
+                      💝 Valentín
                     </div>
                   </div>
                 </div>
@@ -1047,7 +1047,7 @@ export default function Home() {
             {/* SEO Keywords Line */}
             <div className="mt-8 pt-6 border-t border-primary/10 text-center">
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Populárne vyhľadávania: Nechty Trnava | Gélové nechty Trnava | Manikúra Trnava | Nails Trnava | Nechtové štúdio Trnava | Modelácia nechtov | Gél lak Trnava | Nechty Cenník | Voľné termíny na nechty
+                Populárne vyhľadávania: Nechty Trnava | Gélové nechty Trnava | Manikúra Trnava | Nails Trnava | Nechtové štúdio Trnava | Modelácia nechtov | Gél lak Trnava | Nechty Cenník | Voľné termíny na nechty | Darčekové poukazy nechty Trnava | Valentínsky darček 2026 | Voucher manikúra
               </p>
             </div>
           </div>

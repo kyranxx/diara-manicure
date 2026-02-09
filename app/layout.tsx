@@ -15,8 +15,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.diaramanicure.sk'),
-  title: "diara manicure. | Gélové nechty Trnava | Nechtové štúdio",
-  description: "✨ Gélové nechty Trnava & profesionálna manikúra. 💎 V diara manicure. spájame špičkovú kvalitu, TOP európske gély a relax. 💅 Parkovanie zdarma + káva. Rezervujte si svoj termín online!",
+  title: "diara manicure. | Gélové nechty Trnava | Valentínske darčekové poukazy 2026",
+  description: "💝 Valentín 2026: Darčekové poukazy na gélové nechty v Trnave! ✨ Profesionálna manikúra, TOP európske gély, parkovanie zdarma. Ideálny valentínsky darček pre ňu – objednajte online!",
   keywords: [
     "nechty trnava",
     "gelove nechty trnava",
@@ -29,7 +29,14 @@ export const metadata: Metadata = {
     "najlepsie nechty trnava",
     "nechtove studio trnava recenzie",
     "doplnenie nechtov trnava",
-    "akrylove nechty trnava"
+    "akrylove nechty trnava",
+    "darcekovy poukaz nechty",
+    "darcekovy poukaz manikura trnava",
+    "valentin darcek pre nu",
+    "valentinsky darcek trnava",
+    "valentinske poukazky 2026",
+    "darcek na valentin nechty",
+    "voucher manikura trnava"
   ],
   authors: [{ name: "Andrea Hečková" }],
   alternates: {
@@ -56,8 +63,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "diara manicure. | Gélové nechty Trnava",
-    description: "💎 Profesionálne gélové nechty v Trnave. Kvalitné európske gély, parkovanie zdarma a online rezervácia termínu. ✨",
+    title: "diara manicure. | Valentínske darčekové poukazy 2026 | Gélové nechty Trnava",
+    description: "💝 Valentín 2026: Darujte krásne nechty! Darčekové poukazy na profesionálnu manikúru v Trnave. Kvalitné európske gély, parkovanie zdarma. Ideálny darček pre ňu!",
     type: "website",
     locale: "sk_SK",
     url: "https://www.diaramanicure.sk",
@@ -67,7 +74,7 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "diara manicure. - Gélové nechty Trnava",
+        alt: "diara manicure. - Valentínske darčekové poukazy Trnava 2026",
       },
     ],
   },

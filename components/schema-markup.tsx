@@ -15,7 +15,7 @@ const SchemaMarkup = () => {
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-2.jpeg",
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-3.jpeg"
     ],
-    "description": "Profesionálne nechtové štúdio v Trnave. Gélové nechty, manikúra, gél lak. Kvalitné európske gély, parkovanie zdarma, online rezervácia.",
+    "description": "Profesionálne nechtové štúdio v Trnave. Gélové nechty, manikúra, gél lak. Valentín 2026: Darčekové poukazy na nechty - ideálny darček pre ňu! Kvalitné európske gély, parkovanie zdarma, online rezervácia.",
     "url": "https://www.diaramanicure.sk",
     "telephone": "+421902163144",
     "email": "andrea.heckova92@gmail.com",
@@ -110,6 +110,19 @@ const SchemaMarkup = () => {
             "name": "Nail art a zdobenie",
             "description": "Kreatívny nail art a dizajn podľa požiadaviek"
           }
+        },
+        {
+          "@type": "Offer",
+          "name": "Valentínsky darčekový poukaz 2026",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Darčekový poukaz na manikúru",
+            "description": "Valentínsky darček pre ňu - darčekový poukaz na profesionálnu manikúru a gélové nechty v Trnave. Okamžité doručenie emailom."
+          },
+          "priceCurrency": "EUR",
+          "availability": "https://schema.org/InStock",
+          "validFrom": "2026-01-01",
+          "validThrough": "2026-02-14"
         }
       ]
     },
@@ -183,7 +196,7 @@ const SchemaMarkup = () => {
       "name": "Andrea Hečková"
     },
     "foundingDate": "2020",
-    "slogan": "Kvalitné európske gély a precízna práca."
+    "slogan": "Kvalitné európske gély a precízna práca. Valentín 2026 - darčekové poukazy na nechty Trnava."
   };
 
   // BreadcrumbList Schema
