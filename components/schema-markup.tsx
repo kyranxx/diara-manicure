@@ -274,6 +274,14 @@ const SchemaMarkup = () => {
           "@type": "Answer",
           "text": "Samozrejme! Pre vaše maximálne pohodlie máme vlastné bezplatné parkovacie miesta priamo pred salónom na Hospodárskej ulici v Trnave. Starosti s parkovaním hoďte za hlavu."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "Aký je ideálny valentínsky darček pre ňu v Trnave?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "💝 Darčekový poukaz na gélové nechty je perfektný valentínsky darček! V diara manicure. ponúkame elegantné darčekové poukazy na profesionálnu manikúru v Trnave. Darujte krásne nechty s kvalitným európskym gélom - darček, ktorý poteší každú ženu. Poukaz môžete objednať online s okamžitým doručením emailom."
+        }
       }
     ]
   };

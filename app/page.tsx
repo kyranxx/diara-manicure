@@ -498,17 +498,17 @@ export default function Home() {
 
               {/* Micro-copy below booking button */}
               <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
-                <span className="not-italic font-medium text-primary">💳 Platba možná aj kartou</span> • Nezáväzná rezervácia • Parkovanie zdarma • Káva zdarma
+                <span className="not-italic font-medium text-primary">💳 Platba možná aj kartou</span> • Nezáväzná rezervácia • Parkovanie a káva zdarma
               </p>
 
-              {/* Gift Card Button */}
+              {/* Gift Card Button - Valentine's Day Theme 💕 */}
               <a
                 href="#darcekove-poukazky"
-                className="w-full py-3 px-6 text-center rounded-full border-2 border-primary/30 hover:border-primary/60 bg-primary/5 hover:bg-primary/10 dark:bg-primary/10 dark:hover:bg-primary/20 transition-all duration-300 group flex items-center justify-center gap-2"
+                className="w-full py-3 px-6 text-center rounded-full border-2 border-pink-400/50 hover:border-pink-500/80 bg-gradient-to-r from-pink-50 to-red-50 hover:from-pink-100 hover:to-red-100 dark:from-pink-950/30 dark:to-red-950/30 dark:hover:from-pink-900/40 dark:hover:to-red-900/40 transition-all duration-300 group flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover:shadow-pink-200/50 dark:hover:shadow-pink-900/30"
               >
-                <span className="text-lg">💅</span>
-                <span className="font-medium text-foreground">Darčekové poukazy</span>
-                <span className="text-lg">✨</span>
+                <span className="text-lg animate-pulse">💝</span>
+                <span className="font-medium text-foreground bg-gradient-to-r from-pink-600 to-red-500 bg-clip-text text-transparent dark:from-pink-400 dark:to-red-400">Darčekové poukazy</span>
+                <span className="text-lg animate-pulse">💕</span>
               </a>
 
               {/* Phone Reservation - Anti-scam protected */}
