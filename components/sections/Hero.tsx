@@ -91,40 +91,38 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                         <span className="text-lg animate-pulse">💕</span>
                     </a>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {/* Phone Reservation - Anti-scam protected */}
-                        <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-primary/10 shadow-sm">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
-                                <Phone className="w-5 h-5 text-primary" />
-                            </div>
-                            <div className="text-left">
-                                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Rezervácie</p>
-                                <a
-                                    href="tel:+421902163144"
-                                    className="text-base font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap"
-                                    aria-label="Zavolať na rezerváciu"
-                                >
-                                    <span>+421 902 163 144</span>
-                                </a>
-                            </div>
+                    {/* Phone Reservation - Anti-scam protected */}
+                    <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-primary/10 shadow-sm">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
+                            <Phone className="w-5 h-5 text-primary" />
                         </div>
-
-                        {/* Facebook Messenger - Contact via chat */}
-                        <a
-                            href="https://m.me/diaramanicure"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-[#0084FF]/10 hover:bg-[#0084FF]/20 backdrop-blur-sm border border-[#0084FF]/20 shadow-sm transition-all duration-300"
-                        >
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0084FF]/20">
-                                <MessageCircle className="w-5 h-5 text-[#0084FF]" />
-                            </div>
-                            <div className="text-left">
-                                <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">Chat</p>
-                                <span className="text-base font-semibold text-foreground whitespace-nowrap">Messenger</span>
-                            </div>
-                        </a>
+                        <div className="text-left">
+                            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Rezervácie telefonicky</p>
+                            <a
+                                href="tel:+421902163144"
+                                className="text-lg font-semibold text-foreground hover:text-primary transition-colors tracking-[0.15em]"
+                                aria-label="Zavolať na rezerváciu"
+                            >
+                                <span>+421 902 163 144</span>
+                            </a>
+                        </div>
                     </div>
+
+                    {/* Facebook Messenger - Contact via chat */}
+                    <a
+                        href="https://m.me/diaramanicure"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-[#0084FF]/10 hover:bg-[#0084FF]/20 backdrop-blur-sm border border-[#0084FF]/20 shadow-sm transition-all duration-300 hover:scale-[1.02]"
+                    >
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0084FF]/20">
+                            <MessageCircle className="w-5 h-5 text-[#0084FF]" />
+                        </div>
+                        <div className="text-left">
+                            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Napíšte nám správu</p>
+                            <span className="text-lg font-semibold text-foreground">Facebook Messenger</span>
+                        </div>
+                    </a>
 
                     <Button
                         variant="outline"

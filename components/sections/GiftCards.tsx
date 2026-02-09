@@ -55,27 +55,38 @@ export function GiftCards() {
                             </div>
                         </div>
 
-                        {/* Premium Visual Area */}
+                        {/* Premium CSS Gift Card Component Area */}
                         <div className="relative order-1 md:order-2 flex justify-center">
                             <motion.div
-                                whileHover={{ scale: 1.02, translateY: -5 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                                className="relative w-full max-w-lg aspect-[1.4/1] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.12)] group bg-white dark:bg-zinc-900 p-3"
+                                whileHover={{ scale: 1.05, rotate: -2 }}
+                                transition={{ type: "spring", stiffness: 300 }}
+                                className="relative w-full max-w-[400px] aspect-[1.6/1] rounded-2xl overflow-hidden shadow-2xl group cursor-pointer"
                             >
-                                <div className="relative w-full h-full rounded-[1.8rem] overflow-hidden">
-                                    <Image
-                                        src="/valentin_card.jpg"
-                                        alt="Valentínsky darčekový poukaz Diara Manicure"
-                                        fill
-                                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                                        unoptimized
-                                    />
-                                    {/* Subtle Depth Overlay */}
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-black/10 via-transparent to-white/5 opacity-40 pointer-events-none" />
-                                </div>
+                                {/* Card Background */}
+                                <div className="absolute inset-0 bg-white dark:bg-zinc-900 border-[8px] border-beige dark:border-zinc-800" />
 
-                                {/* Refined Shimmer Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none" />
+                                {/* Decorative Pattern Layer */}
+                                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
+                                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+
+                                {/* Content Container */}
+                                <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                                    <div className="relative w-full h-full">
+                                        <Image
+                                            src="/valentin_card.jpg"
+                                            alt="Valentínsky darčekový poukaz Diara Manicure"
+                                            fill
+                                            className="object-contain"
+                                            unoptimized
+                                        />
+                                    </div>
+                                </div>
+                                {/* Shimmer Effect */}
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
+
+                                {/* Golden corner accents */}
+                                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-pink-200/20 to-transparent pointer-events-none" />
+                                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-pink-200/20 to-transparent pointer-events-none" />
                             </motion.div>
                         </div>
                     </div>
