@@ -86,7 +86,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="sk">
+    <html lang="sk" suppressHydrationWarning>
       <head>
         <Script
           src="/passive-fix.js"
@@ -116,7 +116,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${dmSans.className} ${dmSans.variable}`}>
+      <body className={`${dmSans.className} ${dmSans.variable}`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
