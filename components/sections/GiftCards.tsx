@@ -2,16 +2,17 @@
 
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
 
 export function GiftCards() {
     return (
-        <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-pink-50 via-white to-red-50 dark:from-pink-950/20 dark:via-black dark:to-red-950/20 relative overflow-hidden">
+        <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-primary/10 dark:via-black dark:to-primary/5 relative overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce text-pink-400" style={{ animationDuration: '3s' }}>♥</div>
                 <div className="absolute top-20 right-20 text-3xl opacity-20 animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>✨</div>
                 <div className="absolute bottom-20 left-1/4 text-5xl opacity-15 animate-bounce text-pink-400" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>♥</div>
+                <div className="absolute top-1/3 right-10 text-2xl opacity-20 animate-bounce" style={{ animationDuration: '2s', animationDelay: '0.3s' }}>★</div>
+                <div className="absolute bottom-10 right-1/3 text-3xl opacity-15 animate-bounce text-pink-400" style={{ animationDuration: '2.8s', animationDelay: '0.7s' }}>♥</div>
             </div>
 
             <div className="container mx-auto px-6 relative z-10">
@@ -55,39 +56,27 @@ export function GiftCards() {
                             </div>
                         </div>
 
-                        {/* Premium CSS Gift Card Component Area */}
-                        <div className="relative order-1 md:order-2 flex justify-center">
-                            <motion.div
-                                whileHover={{ scale: 1.05, rotate: -2 }}
-                                transition={{ type: "spring", stiffness: 300 }}
-                                className="relative w-full max-w-[400px] aspect-[1.6/1] rounded-2xl overflow-hidden shadow-2xl group cursor-pointer"
-                            >
-                                {/* Card Background */}
-                                <div className="absolute inset-0 bg-white dark:bg-zinc-900 border-[8px] border-beige dark:border-zinc-800" />
-
-                                {/* Decorative Pattern Layer */}
-                                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
-                                    style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, black 1px, transparent 0)', backgroundSize: '24px 24px' }} />
-
-                                {/* Content Container */}
-                                <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                                    <div className="relative w-full h-full">
+                        {/* Image Column */}
+                        <div className="relative order-1 md:order-2">
+                            <div className="relative aspect-square max-w-md mx-auto">
+                                {/* Decorative frame */}
+                                <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-white to-primary/10 dark:from-primary/30 dark:via-black dark:to-primary/20 rounded-[2.5rem] -z-10" />
+                                <div className="relative w-full h-full rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white dark:border-zinc-800">
+                                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/10 flex items-center justify-center">
                                         <Image
                                             src="/valentin_card.jpg"
-                                            alt="Valentínsky darčekový poukaz Diara Manicure"
+                                            alt="Darčekový poukaz Diara Manicure"
                                             fill
-                                            className="object-contain"
-                                            unoptimized
+                                            className="object-cover"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
                                         />
                                     </div>
                                 </div>
-                                {/* Shimmer Effect */}
-                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] pointer-events-none" />
-
-                                {/* Golden corner accents */}
-                                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-pink-200/20 to-transparent pointer-events-none" />
-                                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-pink-200/20 to-transparent pointer-events-none" />
-                            </motion.div>
+                                {/* Badge */}
+                                <div className="absolute -top-2 -right-2 bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
+                                    <span className="mr-1">♥</span> Valentín
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

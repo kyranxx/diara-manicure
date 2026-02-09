@@ -5,9 +5,9 @@ import { Instagram, Facebook } from "lucide-react"
 
 export function Footer() {
     return (
-        <footer className="bg-beige dark:bg-card py-16 border-t border-primary/5">
+        <footer className="py-12 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
-                <div className="flex flex-col items-center gap-8">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
                         <Image
                             src="/logo_val_day.png"
