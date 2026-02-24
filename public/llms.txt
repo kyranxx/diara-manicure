@@ -1,0 +1,48 @@
+# diara manicure.
+
+> Profesionálne nechtové štúdio v Trnave. Gélové nechty, manikúra, darčekové poukazy. Zakladateľka Andrea Hečková. Adresa: Hospodárska 53, 917 01 Trnava, Slovensko.
+
+Vítame vás v našom salóne, kde sa staráme o krásu a zdravie vašich nechtov s láskou a profesionalitou. Používame len kvalitné európske gély a precízne odvedenú prácu. Ak hľadáte expresnú službu do 30 minút, náš koncept je iný – my si na kvalite dávame záležať. Parkovanie zdarma priamo pred vchodom. Platba možná aj kartou.
+
+- Jazyk webu: Slovenčina (sk)
+- Rezervačný systém: Bookio (https://services.bookio.com/diaramanicure/widget?lang=sk)
+- Telefón: +421 902 163 144
+- Facebook Messenger: https://m.me/diaramanicure
+- Instagram: https://instagram.com/diaramanicure
+- Facebook: https://facebook.com/diaramanicure
+
+## Služby a cenník
+
+- [Cenník služieb](https://www.diaramanicure.sk/#cennik): Kompletný cenník služieb nechtového štúdia – gélové nechty, gél lak, klasická manikúra. Cenník platný od 24.1.2026. Ceny sa načítavajú dynamicky z Google Sheets.
+- [Pozrieť voľné termíny](https://services.bookio.com/diaramanicure/widget?lang=sk): Online rezervácia termínu cez systém Bookio. Nezáväzná rezervácia.
+
+## Galéria prác
+
+- [Galéria gélových nechtov](https://www.diaramanicure.sk/#galeria): Ukážky našej práce – viac ako 24 fotografií gélových nechtov a nail artu z nášho štúdia v Trnave.
+
+## O nás
+
+- [O nás](https://www.diaramanicure.sk/#o-nas): Andrea Hečková, zakladateľka diara manicure. Staráme sa o krásu a zdravie vašich nechtov s láskou a profesionalitou. Používame len najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch.
+
+## Recenzie
+
+- [Recenzie zákazníkov](https://www.diaramanicure.sk/#recenzie): Hodnotenia od overených zákazníkov vrátane recenzií z Google. Zákazníci oceňujú precíznu prácu, kvalitné materiály a výdrž nechtov až 3 týždne.
+
+## Darčekové poukazy
+
+- [Darčekové poukazy](https://www.diaramanicure.sk/#darcekove-poukazky): Darčekové poukazy na profesionálnu manikúru. Ideálny darček pre mamu, sestru, priateľku či kolegyňu. Okamžité doručenie emailom.
+- [Kúpiť poukaz online](https://services.bookio.com/diaramanicure/gift-cards#/): Priamy odkaz na nákup darčekového poukazu cez Bookio.
+
+## Kontakt a navigácia
+
+- [Kde nás nájdete](https://www.diaramanicure.sk/#visit): Adresa – Hospodárska 53, 917 01 Trnava. Mapa s navigáciou. Vlastné parkovanie zdarma priamo pred vchodom.
+
+## Časté otázky (FAQ)
+
+- [Kde nájdem vaše nechtové štúdio v Trnave?](https://www.diaramanicure.sk/#faq): Náš salón diara manicure. Trnava sa nachádza na Hospodárskej 53. Máme vlastné parkovanie zdarma priamo pred vchodom.
+- [Musím sa objednať telefonicky?](https://www.diaramanicure.sk/#faq): Nie, preferujeme online rezervácie. Kliknite na tlačidlo "Pozrieť voľné termíny" a vyberte si čas, ktorý vám vyhovuje. Objednanie na nechty trvá menej ako minútu.
+- [Robíte aj iné služby ako gélové nechty?](https://www.diaramanicure.sk/#faq): Áno, špecializujeme sa na gélové nechty, ale v ponuke je aj gél lak a klasická manikúra Trnava.
+
+## Optional
+
+- [Blog](https://www.diaramanicure.sk/blog): Tipy, trendy a novinky zo sveta nechtov. Pripravované články: Ako dlho vydržia gélové nechty, Rozdiel medzi gél lakom a gélovou modeláciou, Starostlivosť o gélové nechty doma, Trendy v nail arte pre rok 2026.
