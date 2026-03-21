@@ -19,10 +19,10 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
             </div>
 
             <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
-                {/* Light Mode Logo - Valentine Edition */}
+                {/* Light Mode Logo - Easter Edition */}
                 <Image
-                    src="/logo_val_day.png"
-                    alt="Diara Manicure - Nechty Trnava - Valentín 2026"
+                    src="/logo_easter_day.png"
+                    alt="Diara Manicure - Nechty Trnava - Veľká noc 2026"
                     width={1536}
                     height={600}
                     className="w-full h-auto dark:hidden"
@@ -30,10 +30,10 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                     fetchPriority="high"
                     unoptimized
                 />
-                {/* Dark Mode Logo - Valentine Edition */}
+                {/* Dark Mode Logo - Easter Edition */}
                 <Image
-                    src="/logo_val_night.png"
-                    alt="Diara Manicure - Nechty Trnava - Valentín 2026"
+                    src="/logo_easter_night.png"
+                    alt="Diara Manicure - Nechty Trnava - Veľká noc 2026"
                     width={1536}
                     height={600}
                     className="w-full h-auto hidden dark:block"
