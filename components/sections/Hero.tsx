@@ -20,8 +20,8 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
 
             <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
                 <Image
-                    src="/logo_day.png"
-                    alt="Diara Manicure - Nechty Trnava"
+                    src="/logo_easter_day.png"
+                    alt="Diara Manicure - Nechty Trnava - Veľká noc 2026"
                     width={1536}
                     height={600}
                     className="w-full h-auto dark:hidden"
@@ -30,8 +30,8 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                     unoptimized
                 />
                 <Image
-                    src="/logo_night.png"
-                    alt="Diara Manicure - Nechty Trnava"
+                    src="/logo_easter_night.png"
+                    alt="Diara Manicure - Nechty Trnava - Veľká noc 2026"
                     width={1536}
                     height={600}
                     className="w-full h-auto hidden dark:block"

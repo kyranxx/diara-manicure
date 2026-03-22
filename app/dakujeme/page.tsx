@@ -32,7 +32,7 @@ export default function ThankYouPage() {
         return null
     }
 
-    const logoSrc = resolvedTheme === "dark" ? "/logo_night.png" : "/logo_day.png"
+    const logoSrc = resolvedTheme === "dark" ? "/logo_easter_night.png" : "/logo_easter_day.png"
 
     return (
         <div className="min-h-screen bg-beige dark:bg-black flex flex-col">
