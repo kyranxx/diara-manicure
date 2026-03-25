@@ -82,9 +82,11 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                     </Button>
 
                     {/* Micro-copy below booking button */}
-                    <p className="text-sm text-muted-foreground italic text-center -mt-2 mb-4">
-                        <span className="not-italic font-medium text-primary">💳 Platba možná aj kartou</span> • Nezáväzná rezervácia • Parkovanie a káva zdarma
-                    </p>
+                    <div className="text-base md:text-lg text-muted-foreground italic text-center -mt-2 mb-4 flex flex-col items-center gap-1">
+                        <span className="not-italic font-medium text-primary">💳 Platba možná aj kartou</span>
+                        <span>Nezáväzná rezervácia</span>
+                        <span>Parkovanie a káva zdarma</span>
+                    </div>
 
                     <a
                         href="#darcekove-poukazky"
