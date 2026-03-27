@@ -21,7 +21,7 @@ export function Gallery({ galleryImages, openLightbox }: GalleryProps) {
   return (
     <section
       id="galeria"
-      className="relative overflow-hidden bg-gradient-to-b from-white via-[#f5f2ee] to-white pt-14 pb-24 dark:from-black dark:via-zinc-950 dark:to-black"
+      className="content-auto-section relative overflow-hidden bg-gradient-to-b from-white via-[#f5f2ee] to-white pt-14 pb-24 dark:from-black dark:via-zinc-950 dark:to-black"
     >
       <div className="pointer-events-none absolute left-[-10rem] top-10 h-80 w-80 rounded-full bg-black/5 blur-3xl dark:bg-white/10" />
       <div className="pointer-events-none absolute right-[-8rem] bottom-8 h-72 w-72 rounded-full bg-[#bca48a]/25 blur-3xl dark:bg-[#8e6e4e]/20" />
@@ -41,27 +41,28 @@ export function Gallery({ galleryImages, openLightbox }: GalleryProps) {
               const lift = subtleLift[index % subtleLift.length]
 
               return (
-                <button
-                  key={image.src}
-                  onClick={() => openLightbox(index)}
-                  className="group relative aspect-[4/5] overflow-hidden rounded-xl border border-black/10 bg-white/40 shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 hover:z-20 hover:shadow-xl dark:border-white/15 dark:bg-white/5"
-                  style={{
-                    transform: `translateY(${lift}px) rotate(${tilt}deg)`,
-                  }}
-                  aria-label={`Otvoriť obrázok: ${image.alt}`}
-                >
-                  <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/25 via-transparent to-black/10 transition-colors group-hover:from-black/40" />
-                  <div className="absolute inset-0 z-20 flex items-center justify-center">
-                    <ZoomIn className="h-5 w-5 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:h-6 md:w-6" />
-                  </div>
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 31vw, (max-width: 1024px) 16vw, 12vw"
-                  />
-                </button>
+                <div key={image.src} className="content-auto-card">
+                  <button
+                    onClick={() => openLightbox(index)}
+                    className="group relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-black/10 bg-white/40 shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 hover:z-20 hover:shadow-xl dark:border-white/15 dark:bg-white/5"
+                    style={{
+                      transform: `translateY(${lift}px) rotate(${tilt}deg)`,
+                    }}
+                    aria-label={`Otvoriť obrázok: ${image.alt}`}
+                  >
+                    <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/25 via-transparent to-black/10 transition-colors group-hover:from-black/40" />
+                    <div className="absolute inset-0 z-20 flex items-center justify-center">
+                      <ZoomIn className="h-5 w-5 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:h-6 md:w-6" />
+                    </div>
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 31vw, (max-width: 1024px) 16vw, 12vw"
+                    />
+                  </button>
+                </div>
               )
             })}
           </div>

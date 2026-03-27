@@ -16,7 +16,7 @@ interface TestimonialsProps {
 
 export function Testimonials({ testimonials }: TestimonialsProps) {
     return (
-        <section id="recenzie" className="pt-12 pb-24 overflow-hidden bg-white dark:bg-black">
+        <section id="recenzie" className="content-auto-section pt-12 pb-24 overflow-hidden bg-white dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Čo hovoria naše klientky</h2>
@@ -76,7 +76,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
                                         className="w-8 h-8 rounded-full object-cover"
                                     />
                                 ) : (
-                                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-serif italic text-sm">
+                                    <div className="w-8 h-8 rounded-full bg-stone-200 dark:bg-zinc-700 flex items-center justify-center text-black dark:text-white font-serif italic text-sm">
                                         {testimonial.author.charAt(0)}
                                     </div>
                                 )}

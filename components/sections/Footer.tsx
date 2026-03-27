@@ -1,7 +1,7 @@
 "use client"
 
-import Image from "next/image"
 import { Instagram, Facebook } from "lucide-react"
+import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 
 export function Footer() {
     return (
@@ -9,21 +9,12 @@ export function Footer() {
             <div className="container mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
-                        <Image
-                            src="/logo_easter_day.png"
+                        <ThemeAwareLogo
                             alt="DIARA - Veľká noc 2026"
                             width={1536}
                             height={600}
-                            className="h-20 w-auto object-contain dark:hidden"
-                            unoptimized
-                        />
-                        <Image
-                            src="/logo_easter_night.png"
-                            alt="DIARA - Veľká noc 2026"
-                            width={1536}
-                            height={600}
-                            className="h-20 w-auto object-contain hidden dark:block"
-                            unoptimized
+                            className="h-20 w-auto object-contain"
+                            sizes="320px"
                         />
                         <p className="text-sm font-medium text-black dark:text-white tracking-wide">Professional Nails & Manicure in Trnava</p>
                     </div>

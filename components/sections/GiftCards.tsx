@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 
 export function GiftCards() {
     return (
-        <section id="darcekove-poukazky" className="py-24 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-primary/10 dark:via-black dark:to-primary/5 relative overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
+        <section id="darcekove-poukazky" className="content-auto-section py-24 bg-gradient-to-br from-primary/5 via-white to-primary/10 dark:from-primary/10 dark:via-black dark:to-primary/5 relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 <div className="absolute top-10 left-10 text-4xl opacity-20 animate-bounce text-pink-300" style={{ animationDuration: '3s' }}>✦</div>
                 <div className="absolute top-20 right-20 text-3xl opacity-20 animate-bounce" style={{ animationDuration: '2.5s', animationDelay: '0.5s' }}>✨</div>
                 <div className="absolute bottom-20 left-1/4 text-5xl opacity-15 animate-bounce text-pink-300" style={{ animationDuration: '3.5s', animationDelay: '1s' }}>✦</div>
@@ -19,10 +19,10 @@ export function GiftCards() {
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         {/* Content Column */}
                         <div className="text-center md:text-left order-2 md:order-1">
-                            <div className="inline-flex items-center gap-2 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 px-4 py-2 rounded-full text-sm font-medium mb-6">
-                                <span className="text-pink-500">✦</span>
+                            <div className="inline-flex items-center gap-2 bg-pink-100 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 px-4 py-2 rounded-full text-sm font-medium mb-6">
+                                <span className="text-pink-700 dark:text-pink-300" aria-hidden="true">✦</span>
                                 <span>Darčekový poukaz • Ideálny darček</span>
-                                <span className="text-pink-500">✦</span>
+                                <span className="text-pink-700 dark:text-pink-300" aria-hidden="true">✦</span>
                             </div>
                             <h2 className="text-4xl md:text-6xl font-light mb-6 tracking-tight text-black dark:text-white">
                                 Darčekové poukazy
@@ -49,7 +49,7 @@ export function GiftCards() {
 
                             <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start text-sm text-muted-foreground">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-green-500">✓</span>
+                                    <span className="text-green-700 dark:text-green-400" aria-hidden="true">✓</span>
                                     <span>Okamžité doručenie emailom</span>
                                 </div>
                             </div>
@@ -70,7 +70,7 @@ export function GiftCards() {
                                         />
                                     </div>
                                 </div>
-                                <div className="absolute -top-2 -right-2 bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
+                                <div className="absolute -top-2 -right-2 bg-pink-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg transform rotate-12">
                                     Online poukaz
                                 </div>
                             </div>

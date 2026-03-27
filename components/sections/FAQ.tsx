@@ -2,7 +2,7 @@
 
 export function FAQ() {
     return (
-        <section id="faq" className="py-24 bg-white dark:bg-black">
+        <section id="faq" className="content-auto-section py-24 bg-white dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">

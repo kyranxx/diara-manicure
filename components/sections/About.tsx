@@ -4,7 +4,7 @@ import Image from "next/image"
 
 export function About() {
     return (
-        <section className="py-16 bg-beige/30 dark:bg-black overflow-hidden">
+        <section className="content-auto-section py-16 bg-beige/30 dark:bg-black overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
                     {/* Images Column */}

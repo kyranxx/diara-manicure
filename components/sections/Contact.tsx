@@ -10,7 +10,7 @@ interface ContactProps {
 
 export function Contact({ bookingUrl }: ContactProps) {
     return (
-        <section id="visit" className="pt-24 pb-12 bg-beige dark:bg-black">
+        <section id="visit" className="content-auto-section pt-24 pb-12 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
                     <div>
@@ -37,27 +37,8 @@ export function Contact({ bookingUrl }: ContactProps) {
                                         <a
                                             href="tel:+421902163144"
                                             className="text-muted-foreground text-lg hover:text-primary transition-colors inline-flex items-center gap-1"
-                                            aria-label="Zavolať na číslo +421 902 163 144"
                                         >
-                                            <span aria-hidden="true" className="select-none">
-                                                <span>0</span>
-                                                <span className="hidden">bot-trap</span>
-                                                <span>9</span>
-                                                <span>0</span>
-                                                <span className="hidden">fake</span>
-                                                <span>2</span>
-                                                <span>{'\u2009'}</span>
-                                                <span>1</span>
-                                                <span>6</span>
-                                                <span className="hidden">null</span>
-                                                <span>3</span>
-                                                <span>{'\u2009'}</span>
-                                                <span>1</span>
-                                                <span className="hidden">spam</span>
-                                                <span>4</span>
-                                                <span>4</span>
-                                            </span>
-                                            <span className="sr-only">+421 902 163 144</span>
+                                            <span>+421 902 163 144</span>
                                         </a>
                                     </div>
                                 </div>

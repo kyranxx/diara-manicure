@@ -102,6 +102,16 @@
     text-wrap: balance;
   }
 
+  .content-auto-section {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 900px;
+  }
+
+  .content-auto-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 180px 240px;
+  }
+
   /* Optimize iframe touch handling to prevent scroll-blocking warnings */
   .map-container iframe {
     touch-action: pan-x pan-y;

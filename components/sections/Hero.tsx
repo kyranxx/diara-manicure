@@ -1,7 +1,8 @@
 "use client"
 
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
+import { ThemeAwareLogo } from "@/components/theme-aware-logo"
+import Image from "next/image"
 import { Phone, MessageCircle } from "lucide-react"
 
 interface HeroProps {
@@ -19,25 +20,13 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
             </div>
 
             <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
-                <Image
-                    src="/logo_easter_day.png"
+                <ThemeAwareLogo
                     alt="Diara Manicure - Nechty Trnava - Veľká noc 2026"
                     width={1536}
                     height={600}
-                    className="w-full h-auto dark:hidden"
+                    className="w-full h-auto"
                     priority
-                    fetchPriority="high"
-                    unoptimized
-                />
-                <Image
-                    src="/logo_easter_night.png"
-                    alt="Diara Manicure - Nechty Trnava - Veľká noc 2026"
-                    width={1536}
-                    height={600}
-                    className="w-full h-auto hidden dark:block"
-                    priority
-                    fetchPriority="high"
-                    unoptimized
+                    sizes="(max-width: 768px) 100vw, 660px"
                 />
             </div>
 
@@ -82,7 +71,7 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                     </Button>
 
                     {/* Micro-copy below booking button */}
-                    <div className="text-base md:text-lg text-muted-foreground italic text-center -mt-2 mb-4 flex flex-col items-center gap-1">
+                    <div className="text-base md:text-lg text-foreground/75 italic text-center -mt-2 mb-4 flex flex-col items-center gap-1 dark:text-white/80">
                         <span className="not-italic font-medium text-primary">💳 Platba možná aj kartou</span>
                         <span>Nezáväzná rezervácia</span>
                         <span>Parkovanie a káva zdarma</span>
@@ -103,11 +92,10 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                             <Phone className="w-5 h-5 text-primary" />
                         </div>
                         <div className="text-left">
-                            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Rezervácie telefonicky</p>
+                            <p className="text-xs text-foreground/70 font-medium uppercase tracking-wider dark:text-white/75">Rezervácie telefonicky</p>
                             <a
                                 href="tel:+421902163144"
                                 className="text-lg font-semibold text-foreground hover:text-primary transition-colors tracking-[0.15em]"
-                                aria-label="Zavolať na rezerváciu"
                             >
                                 <span>+421 902 163 144</span>
                             </a>
@@ -125,7 +113,7 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                             <MessageCircle className="w-5 h-5 text-[#0084FF]" />
                         </div>
                         <div className="text-left">
-                            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Napíšte nám správu</p>
+                            <p className="text-xs text-black font-semibold uppercase tracking-wider dark:text-white">Napíšte nám správu</p>
                             <span className="text-lg font-semibold text-foreground">Facebook Messenger</span>
                         </div>
                     </a>
