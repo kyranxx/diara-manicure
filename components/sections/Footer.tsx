@@ -10,7 +10,7 @@ export function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
                         <ThemeAwareLogo
-                            alt="DIARA - Veľká noc 2026"
+                            alt="DIARA - Jarné logo"
                             width={1536}
                             height={600}
                             className="h-20 w-auto object-contain"

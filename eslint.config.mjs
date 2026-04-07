@@ -1,32 +1,10 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-const eslintConfig = [
-  // Global ignores - must be first
-  {
-    ignores: [
-      ".next/**",
-      "node_modules/**",
-      "out/**",
-      "build/**",
-      "dist/**",
-      "*.config.js",
-      "*.config.mjs",
-      "*.config.ts",
-      "seo-test.js",
-      "security-monitor.ts",
-      "public/**",
-    ],
-  },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
   {
     rules: {
       // Allow unused variables prefixed with underscore
@@ -40,6 +18,20 @@ const eslintConfig = [
       ],
     },
   },
-];
+  globalIgnores([
+    ".next/**",
+    "node_modules/**",
+    "out/**",
+    "build/**",
+    "dist/**",
+    "next-env.d.ts",
+    "*.config.js",
+    "*.config.mjs",
+    "*.config.ts",
+    "seo-test.js",
+    "lib/security-monitor.ts",
+    "public/**",
+  ]),
+]);
 
 export default eslintConfig;

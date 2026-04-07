@@ -30,8 +30,8 @@ export function ThemeAwareLogo({
 
   const src =
     mounted && resolvedTheme === "dark"
-      ? "/logo_easter_night.png"
-      : "/logo_easter_day.png"
+      ? "/logo_spring_night.jpg"
+      : "/logo_spring_day.jpg"
 
   return (
     <Image

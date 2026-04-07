@@ -1,23 +1,17 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Instagram, Facebook } from "lucide-react"
-import { useTheme } from "next-themes"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 
 interface WindowWithGtag extends Window {
     gtag?: (command: string, action: string, params: Record<string, string>) => void
 }
 
 export default function ThankYouPage() {
-    const { resolvedTheme } = useTheme()
-    const [mounted, setMounted] = useState(false)
-
     useEffect(() => {
-        setMounted(true)
-
         if (typeof window !== 'undefined') {
             const win = window as WindowWithGtag
             if (win.gtag) {
@@ -28,19 +22,12 @@ export default function ThankYouPage() {
         }
     }, [])
 
-    if (!mounted) {
-        return null
-    }
-
-    const logoSrc = resolvedTheme === "dark" ? "/logo_easter_night.png" : "/logo_easter_day.png"
-
     return (
         <div className="min-h-screen bg-beige dark:bg-black flex flex-col">
             <header className="py-8">
                 <div className="container mx-auto px-6 flex justify-center">
                     <Link href="/">
-                        <Image
-                            src={logoSrc}
+                        <ThemeAwareLogo
                             alt="diara manicure"
                             width={1536}
                             height={600}

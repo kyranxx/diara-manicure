@@ -5,6 +5,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "generate:og": "node scripts/generate-og-image.mjs",
     "lint": "eslint .",
     "start": "next start",
     "vercel-install": "pnpm install",

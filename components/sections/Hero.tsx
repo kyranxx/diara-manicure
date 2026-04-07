@@ -21,7 +21,7 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
 
             <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
                 <ThemeAwareLogo
-                    alt="Diara Manicure - Nechty Trnava - Veľká noc 2026"
+                    alt="Diara Manicure - Nechty Trnava - Jarné logo"
                     width={1536}
                     height={600}
                     className="w-full h-auto"
