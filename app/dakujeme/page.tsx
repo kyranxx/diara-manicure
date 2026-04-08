@@ -31,7 +31,7 @@ export default function ThankYouPage() {
                             alt="diara manicure"
                             width={1536}
                             height={600}
-                            className="w-60 h-auto"
+                            className="w-72 md:w-80 h-auto"
                             priority
                         />
                     </Link>

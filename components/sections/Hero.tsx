@@ -19,14 +19,14 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
                 <div className="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-gradient-to-bl from-primary/5 to-transparent blur-3xl" />
             </div>
 
-            <div className="mb-8 relative w-full md:max-w-[660px] mx-auto">
+            <div className="mb-8 relative w-full md:max-w-[780px] mx-auto">
                 <ThemeAwareLogo
                     alt="Diara Manicure - Nechty Trnava - Jarné logo"
                     width={1536}
                     height={600}
                     className="w-full h-auto"
                     priority
-                    sizes="(max-width: 768px) 100vw, 660px"
+                    sizes="(max-width: 768px) 100vw, 780px"
                 />
             </div>
 

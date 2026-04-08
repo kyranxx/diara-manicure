@@ -13,8 +13,8 @@ export function Footer() {
                             alt="DIARA - Jarné logo"
                             width={1536}
                             height={600}
-                            className="h-20 w-auto object-contain"
-                            sizes="320px"
+                            className="h-24 md:h-28 w-auto object-contain"
+                            sizes="(max-width: 768px) 192px, 224px"
                         />
                         <p className="text-sm font-medium text-black dark:text-white tracking-wide">Professional Nails & Manicure in Trnava</p>
                     </div>
