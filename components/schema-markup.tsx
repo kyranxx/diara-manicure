@@ -1,4 +1,5 @@
 import React from 'react';
+import Script from "next/script";
 
 const SchemaMarkup = () => {
   // LocalBusiness Schema with enhanced data
@@ -286,17 +287,20 @@ const SchemaMarkup = () => {
 
   return (
     <>
-      <script
+      <Script
+        id="schema-local-business"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c') }}
       />
-      <script
+      <Script
+        id="schema-breadcrumb"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
-      <script
+      <Script
+        id="schema-faq"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
       />
     </>
   );
