@@ -5,6 +5,7 @@ import { DM_Sans } from "next/font/google"
 import Script from "next/script"
 import { IdleAnalytics } from "@/components/idle-analytics"
 import { ThemeProvider } from "./providers"
+import { WebMcpProvider } from "@/components/webmcp-provider"
 
 
 const dmSans = DM_Sans({
@@ -107,6 +108,7 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
+          <WebMcpProvider />
           <IdleAnalytics />
           {children}
 

@@ -4,6 +4,8 @@ import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { ArrowLeft } from "lucide-react"
 
+export const dynamic = "force-dynamic"
+
 // Placeholder blog posts - to be replaced with actual content
 const blogPosts = [
     {

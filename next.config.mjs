@@ -32,6 +32,33 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/',
+        headers: [
+          {
+            key: 'Vary',
+            value: 'Accept',
+          },
+        ],
+      },
+      {
+        source: '/blog/:path*',
+        headers: [
+          {
+            key: 'Vary',
+            value: 'Accept',
+          },
+        ],
+      },
+      {
+        source: '/docs/api',
+        headers: [
+          {
+            key: 'Vary',
+            value: 'Accept',
+          },
+        ],
+      },
+      {
         source: '/(.*)',
         headers: [
           {

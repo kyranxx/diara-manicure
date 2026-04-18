@@ -6,6 +6,8 @@ import { Navbar } from "@/components/navbar"
 import { ArrowLeft, Clock, Calendar, User, Check, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
+export const dynamic = "force-dynamic"
+
 export default function BlogArticle2() {
     return (
         <div className="min-h-screen bg-background text-foreground">
