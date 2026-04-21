@@ -60,6 +60,8 @@ interface WindowWithGoogle extends Window {
 }
 
 const galleryImages = [
+  { src: "/gelove-nechty-trnava-gallery-45.jpeg", alt: "Gélové nechty Trnava - ukážka práce 45" },
+  { src: "/gelove-nechty-trnava-gallery-44.jpeg", alt: "Gélové nechty Trnava - ukážka práce 44" },
   { src: "/gelove-nechty-trnava-gallery-43.jpeg", alt: "Gélové nechty Trnava - ukážka práce 43" },
   { src: "/gelove-nechty-trnava-gallery-42.jpeg", alt: "Gélové nechty Trnava - ukážka práce 42" },
   { src: "/gelove-nechty-trnava-gallery-41.jpeg", alt: "Gélové nechty Trnava - ukážka práce 41" },

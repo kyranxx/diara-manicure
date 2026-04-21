@@ -1,5 +1,4 @@
 import { createHash } from "node:crypto"
-import { getDiscoveryLinkHeader } from "@/lib/discovery-links"
 import { fullAddress, siteConfig } from "@/lib/site-config"
 
 export type AgentSkill = {
