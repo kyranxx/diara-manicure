@@ -1,7 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import { DM_Sans } from "next/font/google"
+import { DM_Sans, Great_Vibes } from "next/font/google"
 import Script from "next/script"
 import { IdleAnalytics } from "@/components/idle-analytics"
 import { ThemeProvider } from "./providers"
@@ -13,6 +13,13 @@ const dmSans = DM_Sans({
   weight: ["300", "400", "500", "600", "700"],
   display: 'swap',
   variable: '--font-dm-sans',
+})
+
+const signatureFont = Great_Vibes({
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
+  display: 'swap',
+  variable: '--font-signature',
 })
 
 const socialImageUrl = "/og-image.jpg?v=20260407"
@@ -97,12 +104,22 @@ export default function RootLayout({
   return (
     <html lang="sk" suppressHydrationWarning>
       <head>
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`
+            try {
+              document.documentElement.classList.toggle(
+                "dark",
+                window.localStorage.getItem("theme") === "dark"
+              );
+            } catch (_) {}
+          `}
+        </Script>
         <Script
           src="/passive-fix.js"
           strategy="beforeInteractive"
         />
       </head>
-      <body className={`${dmSans.className} ${dmSans.variable}`} suppressHydrationWarning>
+      <body className={`${dmSans.className} ${dmSans.variable} ${signatureFont.variable}`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

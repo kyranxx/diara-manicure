@@ -46,6 +46,7 @@ export function WebMcpProvider() {
         execute: () => ({
           businessName: siteConfig.name,
           bookingUrl: siteConfig.bookingUrl,
+          giftCardPageUrl: siteConfig.giftCardPageUrl,
           giftCardUrl: siteConfig.giftCardUrl,
           phone: siteConfig.phone,
           address: fullAddress,

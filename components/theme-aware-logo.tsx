@@ -1,8 +1,4 @@
-"use client"
-
-import * as React from "react"
 import Image from "next/image"
-import { useTheme } from "next-themes"
 
 interface ThemeAwareLogoProps {
   alt: string
@@ -21,27 +17,26 @@ export function ThemeAwareLogo({
   sizes,
   width,
 }: ThemeAwareLogoProps) {
-  const { resolvedTheme } = useTheme()
-  const [mounted, setMounted] = React.useState(false)
-
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const src =
-    mounted && resolvedTheme === "dark"
-      ? "/logo_spring_night.jpg"
-      : "/logo_spring_day.jpg"
-
   return (
-    <Image
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      className={className}
-      priority={priority}
-      sizes={sizes}
-    />
+    <>
+      <Image
+        src="/logo_spring_day.jpg"
+        alt={alt}
+        width={width}
+        height={height}
+        className={`${className ?? ""} dark:hidden`}
+        loading={priority ? "eager" : undefined}
+        priority={priority}
+        sizes={sizes}
+      />
+      <Image
+        src="/logo_spring_night.jpg"
+        alt={alt}
+        width={width}
+        height={height}
+        className={`${className ?? ""} hidden dark:block`}
+        sizes={sizes}
+      />
+    </>
   )
 }

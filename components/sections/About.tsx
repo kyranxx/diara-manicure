@@ -1,32 +1,19 @@
-"use client"
-
 import Image from "next/image"
 
 export function About() {
     return (
-        <section className="content-auto-section py-16 bg-beige/30 dark:bg-black overflow-hidden">
+        <section className="py-12 bg-beige dark:bg-black overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
                     {/* Images Column */}
-                    <div className="relative h-[400px] w-full max-w-md mx-auto md:mx-0">
-                        <div className="absolute left-0 top-0 w-[55%] h-[90%] z-10 shadow-xl rounded-2xl overflow-hidden border-4 border-white/50">
-                            <Image
-                                src="/Andrea_Heckova_diara_manicure_necht_nails_trnava.jpg"
-                                alt="Andrea Hecková - Zakladateľka Diara Manicure Trnava"
-                                fill
-                                className="object-cover object-top hover:scale-105 transition-transform duration-700 sepia-[.15]"
-                                sizes="(max-width: 768px) 50vw, 25vw"
-                            />
-                        </div>
-                        <div className="absolute right-0 bottom-0 w-[55%] h-[70%] z-20 shadow-xl rounded-2xl overflow-hidden border-4 border-white/50">
-                            <Image
-                                src="/diara_nails_nechty_trnava_hospodarska.jpg"
-                                alt="Interiér salónu Diara Manicure"
-                                fill
-                                className="object-cover hover:scale-105 transition-transform duration-700 sepia-[.15]"
-                                sizes="(max-width: 768px) 50vw, 25vw"
-                            />
-                        </div>
+                    <div className="relative h-[420px] w-full max-w-xl mx-auto md:h-[520px] md:mx-0">
+                        <Image
+                            src="/diara_nails_nechty_trnava_hospodarska.jpg"
+                            alt="Interiér salónu Diara Manicure"
+                            fill
+                            className="rounded-[2rem] border-4 border-white/60 object-cover shadow-2xl sepia-[.15]"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                        />
                     </div>
 
                     {/* Content Column */}

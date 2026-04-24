@@ -3,6 +3,7 @@ export const siteConfig = {
   legalName: "diara manicure.",
   baseUrl: "https://www.diaramanicure.sk",
   bookingUrl: "https://services.bookio.com/diaramanicure/widget?lang=sk",
+  giftCardPageUrl: "https://www.diaramanicure.sk/darcekove-poukazy",
   giftCardUrl: "https://services.bookio.com/diaramanicure/gift-cards#/",
   phone: "+421 902 163 144",
   phoneHref: "tel:+421902163144",

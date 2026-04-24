@@ -1,5 +1,3 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 import Image from "next/image"
@@ -7,12 +5,11 @@ import { Phone, MessageCircle } from "lucide-react"
 
 interface HeroProps {
     bookingUrl: string
-    scrollToVisit: () => void
 }
 
-export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
+export function Hero({ bookingUrl }: HeroProps) {
     return (
-        <section className="relative min-h-[auto] md:min-h-[90vh] flex flex-col justify-start pt-20 md:pt-20 pb-12 md:pb-0 items-center text-center px-6 overflow-hidden bg-beige dark:bg-black">
+        <section className="relative min-h-[auto] md:min-h-[90vh] xl:min-h-[860px] flex flex-col justify-start pt-20 md:pt-20 pb-10 items-center text-center px-6 overflow-hidden bg-beige dark:bg-black">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-40 pointer-events-none">
                 <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-3xl" />
@@ -120,19 +117,33 @@ export function Hero({ bookingUrl, scrollToVisit }: HeroProps) {
 
                     <Button
                         variant="outline"
-                        onClick={scrollToVisit}
+                        asChild
                         className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full mb-8"
                     >
-                        Kde nás nájdete
+                        <a href="#visit">Kde nás nájdete</a>
                     </Button>
 
                     {/* Quality Message Bubble - Desktop: Upper Left, Mobile: Below buttons */}
-                    <div className="relative mt-0 xl:absolute xl:left-8 xl:top-[370px] xl:mt-0 w-80 max-w-full mx-auto p-6 rounded-[2rem] bg-white/40 dark:bg-black/40 backdrop-blur-md border border-white/20 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl z-10">
-                        <p className="text-lg font-light leading-relaxed text-black dark:text-white">
-                            Našou prioritou sú <span className="italic font-serif text-primary">kvalitné európske gély</span> a precízne odvedená práca.
-                            <br className="my-6 block" />
-                            Ak hľadáte expresnú službu do 30 minút, <span className="italic font-serif text-primary">náš koncept je iný – my si na kvalite dávame záležať</span>.
-                        </p>
+                    <div className="relative mt-0 flex w-full max-w-[420px] flex-col items-center gap-4 mx-auto xl:absolute xl:left-20 xl:top-[620px] xl:mt-0 xl:block xl:h-[430px]">
+                        <div className="relative z-10 h-80 w-60 overflow-hidden rounded-[2rem] border-4 border-white/60 shadow-xl xl:absolute xl:left-0 xl:top-0">
+                            <Image
+                                src="/Andrea_Heckova_diara_manicure_necht_nails_trnava.jpg"
+                                alt="Andrea Hecková - Zakladateľka Diara Manicure Trnava"
+                                fill
+                                className="object-cover object-top sepia-[.15]"
+                                sizes="256px"
+                            />
+                        </div>
+                        <div className="relative z-20 w-full p-5 rounded-[2rem] bg-white/55 dark:bg-black/55 backdrop-blur-md border border-white/30 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl md:w-[min(20rem,80%)] md:p-6 xl:absolute xl:left-[7.5rem] xl:top-[18.25rem] xl:-translate-x-1/2">
+                            <p className="text-base md:text-lg font-light leading-relaxed text-black dark:text-white">
+                                Našou prioritou sú <span className="italic font-serif text-primary">kvalitné európske gély</span> a precízne odvedená práca.
+                                <br className="my-5 block" />
+                                Ak hľadáte expresnú službu do 30 minút, <span className="italic font-serif text-primary">náš koncept je iný – my si na kvalite dávame záležať</span>.
+                            </p>
+                            <p className="signature-font mt-3 text-right text-3xl leading-none text-black/75 dark:text-white/80">
+                                Andrea Hečková
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

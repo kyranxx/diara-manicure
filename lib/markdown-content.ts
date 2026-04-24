@@ -9,7 +9,8 @@ diara manicure. ponúka gélové nechty, manikúru a darčekové poukazy v Trnav
 ## Rýchle odkazy
 
 - Rezervácia: ${siteConfig.bookingUrl}
-- Darčekové poukazy: ${siteConfig.giftCardUrl}
+- Darčekové poukazy: ${siteConfig.giftCardPageUrl}
+- Kúpiť poukaz online: ${siteConfig.giftCardUrl}
 - Telefón: ${siteConfig.phone}
 - Messenger: ${siteConfig.messengerUrl}
 
@@ -115,6 +116,41 @@ Gélová modelácia je vhodná pre pevnejší výsledok, predĺženie nechtov a 
 - Cenník: ${siteConfig.baseUrl}/#cennik
 `
 
+const giftCardsMarkdown = `# Darček pre ženu v Trnave
+
+diara manicure. ponúka darčekové poukazy na manikúru, gél lak a gélové nechty v Trnave.
+Poukaz je vhodný ako darček pre manželku, priateľku, mamu, sestru alebo kolegyňu z Trnavy a okolia.
+
+## Dostupné hodnoty
+
+- 30 €
+- 40 €
+- 50 €
+- 100 €
+
+## Ako to funguje
+
+- Poukaz sa kupuje online cez Bookio.
+- Platba prebieha kartou.
+- Poukaz príde emailom.
+- Pri objednávke je možné pridať osobné venovanie.
+
+## Vhodné vyhľadávania
+
+- darček pre ženu Trnava
+- darček pre manželku Trnava
+- darček pre priateľku Trnava
+- darček pre mamu Trnava
+- poukaz na manikúru Trnava
+- poukaz na nechty Trnava
+
+## Odkazy
+
+- Informácie o poukazoch: ${siteConfig.giftCardPageUrl}
+- Kúpiť poukaz online: ${siteConfig.giftCardUrl}
+- Cenník služieb: ${siteConfig.baseUrl}/#cennik
+`
+
 const apiDocsMarkdown = `# Public API and Agent Discovery
 
 ## Base URL
@@ -147,6 +183,7 @@ const markdownByPath = new Map<string, string>([
   ["/blog", blogIndexMarkdown],
   ["/blog/ako-dlho-vydrzia-gelove-nechty", articleOneMarkdown],
   ["/blog/rozdiel-gel-lak-gelova-modelacia", articleTwoMarkdown],
+  ["/darcekove-poukazy", giftCardsMarkdown],
   ["/docs/api", apiDocsMarkdown],
 ])
 

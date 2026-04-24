@@ -1,5 +1,3 @@
-"use client"
-
 import { MapPin, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Map from "@/components/ui/custom-map"
@@ -10,7 +8,7 @@ interface ContactProps {
 
 export function Contact({ bookingUrl }: ContactProps) {
     return (
-        <section id="visit" className="content-auto-section pt-24 pb-12 bg-beige dark:bg-black">
+        <section id="visit" className="pt-16 pb-10 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
                     <div>

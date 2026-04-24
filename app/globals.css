@@ -102,14 +102,68 @@
     text-wrap: balance;
   }
 
-  .content-auto-section {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 900px;
+  .review-marquee-track {
+    animation: review-marquee 42s linear infinite;
   }
 
-  .content-auto-card {
-    content-visibility: auto;
-    contain-intrinsic-size: 180px 240px;
+  .review-marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .review-marquee-track-reverse {
+    animation-duration: 48s;
+    animation-direction: reverse;
+  }
+
+  .review-card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .gallery-centered-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .gallery-centered-item {
+    flex: 0 1 calc((100% - 1rem) / 3);
+    max-width: calc((100% - 1rem) / 3);
+  }
+
+  .signature-font {
+    font-family: var(--font-signature), "Segoe Script", cursive;
+    font-weight: 400;
+    letter-spacing: 0;
+    transform: rotate(-4deg);
+  }
+
+  @media (min-width: 640px) {
+    .gallery-centered-item {
+      flex-basis: calc((100% - 1.5rem) / 4);
+      max-width: calc((100% - 1.5rem) / 4);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .gallery-centered-grid {
+      gap: 0.75rem;
+    }
+
+    .gallery-centered-item {
+      flex-basis: calc((100% - 3.75rem) / 6);
+      max-width: calc((100% - 3.75rem) / 6);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-centered-item {
+      flex-basis: calc((100% - 5.25rem) / 8);
+      max-width: calc((100% - 5.25rem) / 8);
+    }
   }
 
   /* Optimize iframe touch handling to prevent scroll-blocking warnings */
@@ -133,5 +187,15 @@
   a,
   [role="button"] {
     touch-action: manipulation;
+  }
+}
+
+@keyframes review-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
   }
 }

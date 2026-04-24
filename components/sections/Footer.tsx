@@ -1,11 +1,10 @@
-"use client"
-
 import { Instagram, Facebook } from "lucide-react"
+import Link from "next/link"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 
 export function Footer() {
     return (
-        <footer className="py-12 bg-beige dark:bg-black">
+        <footer className="py-10 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
@@ -19,7 +18,15 @@ export function Footer() {
                         <p className="text-sm font-medium text-black dark:text-white tracking-wide">Professional Nails & Manicure in Trnava</p>
                     </div>
 
-                    <p className="text-sm text-foreground/80 text-center">© 2025 diara manicure. Všetky práva vyhradené.</p>
+                    <div className="text-center">
+                        <p className="text-sm text-foreground/80">© 2025 diara manicure. Všetky práva vyhradené.</p>
+                        <Link
+                            href="/darcekove-poukazy"
+                            className="mt-2 inline-block text-sm text-muted-foreground transition-colors hover:text-primary"
+                        >
+                            Darčekové poukazy
+                        </Link>
+                    </div>
 
                     <div className="flex gap-6">
                         <a

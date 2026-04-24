@@ -1,8 +1,6 @@
-"use client"
-
 export function FAQ() {
     return (
-        <section id="faq" className="content-auto-section py-24 bg-white dark:bg-black">
+        <section id="faq" className="py-16 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">
@@ -13,7 +11,7 @@ export function FAQ() {
 
                 <div className="max-w-4xl mx-auto space-y-6">
                     {/* FAQ Item 1 */}
-                    <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
+                    <div className="bg-white/45 dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
                         <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
                             Kde nájdem vaše nechtové štúdio v Trnave?
                         </h3>
@@ -23,7 +21,7 @@ export function FAQ() {
                     </div>
 
                     {/* FAQ Item 2 */}
-                    <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
+                    <div className="bg-white/45 dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
                         <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
                             Musím sa objednať telefonicky?
                         </h3>
@@ -33,7 +31,7 @@ export function FAQ() {
                     </div>
 
                     {/* FAQ Item 3 */}
-                    <div className="bg-beige dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
+                    <div className="bg-white/45 dark:bg-card p-8 rounded-[2rem] hover:shadow-lg transition-all duration-300">
                         <h3 className="text-xl font-medium mb-3 text-black dark:text-white">
                             Robíte aj iné služby ako gélové nechty?
                         </h3>

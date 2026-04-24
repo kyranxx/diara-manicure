@@ -92,7 +92,7 @@ export function getAgentSkills(): AgentSkill[] {
     {
       name: "book-appointment",
       type: "task",
-      description: "Direct a customer to the official booking or gift-card flow without inventing alternate reservation paths.",
+      description: "Direct a customer to the official booking or gift-card information flow without inventing alternate reservation paths.",
       url: `${siteConfig.baseUrl}/.well-known/agent-skills/book-appointment/SKILL.md`,
       content: `# book-appointment
 
@@ -109,7 +109,8 @@ Help a customer reach the official diara manicure booking flow quickly and safel
 ## Guidance
 
 - Prefer the official online booking page: ${siteConfig.bookingUrl}
-- If the user asks for a gift card, use: ${siteConfig.giftCardUrl}
+- If the user wants gift-card information, use: ${siteConfig.giftCardPageUrl}
+- If the user wants to buy a gift card now, use: ${siteConfig.giftCardUrl}
 - If the user needs direct contact, offer phone ${siteConfig.phone} and Messenger ${siteConfig.messengerUrl}
 - Do not invent unsupported booking flows or claim access to private calendars.
 `,
@@ -228,6 +229,7 @@ const mcpTools: AgentTool[] = [
       address: fullAddress,
       phone: siteConfig.phone,
       bookingUrl: siteConfig.bookingUrl,
+      giftCardPageUrl: siteConfig.giftCardPageUrl,
       giftCardUrl: siteConfig.giftCardUrl,
       messengerUrl: siteConfig.messengerUrl,
       instagramUrl: siteConfig.instagramUrl,

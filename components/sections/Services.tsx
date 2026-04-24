@@ -1,23 +1,13 @@
-"use client"
-
-import { PricingSkeleton } from "@/components/pricing-skeleton"
-
-interface Service {
-    title: string
-    description: string
-    price: string
-    discountedPrice?: string
-}
+import type { Service } from "@/lib/sheets"
 
 interface ServicesProps {
     services: Service[]
-    loadingServices: boolean
     bookingUrl: string
 }
 
-export function Services({ services, loadingServices, bookingUrl }: ServicesProps) {
+export function Services({ services, bookingUrl }: ServicesProps) {
     return (
-        <section id="cennik" className="py-24 bg-white dark:bg-black">
+        <section id="cennik" className="py-16 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník služieb</h2>
@@ -26,9 +16,7 @@ export function Services({ services, loadingServices, bookingUrl }: ServicesProp
                 </div>
 
                 <div className="max-w-5xl mx-auto">
-                    {loadingServices ? (
-                        <PricingSkeleton />
-                    ) : services.length > 0 ? (
+                    {services.length > 0 ? (
                         <div className="grid md:grid-cols-2 gap-6">
                             {services.map((service, index) => {
                                 const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
@@ -38,7 +26,7 @@ export function Services({ services, loadingServices, bookingUrl }: ServicesProp
                                         href={bookingUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="group relative flex justify-between items-start p-8 bg-beige dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full cursor-pointer hover:scale-[1.02]"
+                                        className="group relative flex justify-between items-start p-8 bg-white/45 dark:bg-card rounded-[2rem] hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 border border-transparent hover:border-primary/10 h-full cursor-pointer hover:scale-[1.02]"
                                     >
                                         {hasDiscount && (
                                             <div className="absolute top-2 right-4 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full shadow-sm">

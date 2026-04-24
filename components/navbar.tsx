@@ -5,7 +5,6 @@ import Link from "next/link"
 import { Menu, X, Instagram, Facebook } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { motion, AnimatePresence } from "framer-motion"
 
 export function Navbar() {
     const [isOpen, setIsOpen] = React.useState(false)
@@ -13,12 +12,12 @@ export function Navbar() {
     const toggleMenu = () => setIsOpen(!isOpen)
 
     const menuItems = [
-        { href: "#cennik", label: "Cenník" },
-        { href: "#darcekove-poukazky", label: "Poukazy" },
-        { href: "#recenzie", label: "Recenzie" },
-        { href: "#galeria", label: "Galéria" },
-        { href: "#faq", label: "FAQ" },
-        { href: "#visit", label: "Kontakt" },
+        { href: "/#cennik", label: "Cenník" },
+        { href: "/#darcekove-poukazky", label: "Poukazy" },
+        { href: "/#recenzie", label: "Recenzie" },
+        { href: "/#galeria", label: "Galéria" },
+        { href: "/#faq", label: "FAQ" },
+        { href: "/#visit", label: "Kontakt" },
     ]
 
     return (
@@ -75,29 +74,22 @@ export function Navbar() {
                 </div>
             </div>
 
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="md:hidden bg-beige dark:bg-black border-t border-primary/5 overflow-hidden"
-                    >
-                        <div className="flex flex-col p-6 gap-4">
-                            {menuItems.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className="text-lg font-medium py-2 border-b border-primary/5"
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {isOpen && (
+                <div className="md:hidden bg-beige dark:bg-black border-t border-primary/5">
+                    <div className="flex flex-col p-6 gap-4">
+                        {menuItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={() => setIsOpen(false)}
+                                className="text-lg font-medium py-2 border-b border-primary/5"
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
         </nav>
     )
 }
