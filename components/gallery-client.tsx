@@ -12,12 +12,11 @@ const makeImage = (id: string) => ({
 const gallerySections = [
   {
     title: "Francúzska manikúra",
-    images: ["9", "12", "17", "21", "24", "25", "34", "40", "41", "44"].map(makeImage),
+    images: ["9", "12", "17", "21", "24", "25", "34", "40", "41", "44", "47", "49"].map(makeImage),
   },
   {
     title: "Jednofarebné",
     images: [
-      "01",
       "1",
       "2",
       "3",
@@ -43,11 +42,13 @@ const gallerySections = [
       "37",
       "39",
       "42",
+      "46",
+      "50",
     ].map(makeImage),
   },
   {
     title: "Jemné zdobenie",
-    images: ["7", "8", "18", "22", "31", "35", "36", "38", "43", "45"].map(makeImage),
+    images: ["7", "8", "18", "22", "31", "35", "36", "38", "43", "45", "48"].map(makeImage),
   },
 ]
 
