@@ -39,7 +39,7 @@ export function Hero({ bookingUrl }: HeroProps) {
                     Gélové nechty Trnava | <span className="text-primary">diara manicure.</span>
                 </h1>
                 <h2 className="text-xl md:text-2xl font-light text-muted-foreground mb-10">
-                    Profesionálne nechtové štúdio • nails & manikúra
+                    Profesionálne nechtové štúdio • Nails Trnava & manikúra
                     <br className="my-2" />
                     <span className="italic font-serif text-primary/80">Kvalitné európske gély. Parkovanie zdarma.</span>
                 </h2>

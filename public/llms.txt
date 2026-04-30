@@ -24,10 +24,6 @@ Vítame vás v našom salóne, kde sa staráme o krásu a zdravie vašich nechto
 
 - [O nás](https://www.diaramanicure.sk/#o-nas): Andrea Hečková, zakladateľka diara manicure. Staráme sa o krásu a zdravie vašich nechtov s láskou a profesionalitou. Používame len najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch.
 
-## Recenzie
-
-- [Recenzie zákazníkov](https://www.diaramanicure.sk/#recenzie): Hodnotenia od overených zákazníkov vrátane recenzií z Google. Zákazníci oceňujú precíznu prácu, kvalitné materiály a výdrž nechtov až 3 týždne.
-
 ## Darčekové poukazy
 
 - [Darčekové poukazy](https://www.diaramanicure.sk/darcekove-poukazy): Darčekové poukazy na profesionálnu manikúru a gélové nechty v Trnave. Vhodné ako darček pre manželku, priateľku, mamu, sestru alebo kolegyňu z Trnavy a okolia. Hodnoty 30 €, 40 €, 50 € a 100 €. Doručenie emailom.
@@ -43,6 +39,8 @@ Vítame vás v našom salóne, kde sa staráme o krásu a zdravie vašich nechto
 - [Musím sa objednať telefonicky?](https://www.diaramanicure.sk/#faq): Nie, preferujeme online rezervácie. Kliknite na tlačidlo "Pozrieť voľné termíny" a vyberte si čas, ktorý vám vyhovuje. Objednanie na nechty trvá menej ako minútu.
 - [Robíte aj iné služby ako gélové nechty?](https://www.diaramanicure.sk/#faq): Áno, špecializujeme sa na gélové nechty, ale v ponuke je aj gél lak a klasická manikúra Trnava.
 
-## Optional
+## Blog
 
-- [Blog](https://www.diaramanicure.sk/blog): Tipy, trendy a novinky zo sveta nechtov. Pripravované články: Ako dlho vydržia gélové nechty, Rozdiel medzi gél lakom a gélovou modeláciou, Starostlivosť o gélové nechty doma, Trendy v nail arte pre rok 2026.
+- [Blog](https://www.diaramanicure.sk/blog): Publikované tipy a články o gélových nechtoch, starostlivosti a výbere služby.
+- [Ako dlho vydržia gélové nechty?](https://www.diaramanicure.sk/blog/ako-dlho-vydrzia-gelove-nechty): Sprievodca výdržou gélových nechtov a starostlivosťou medzi návštevami.
+- [Rozdiel medzi gél lakom a gélovou modeláciou](https://www.diaramanicure.sk/blog/rozdiel-gel-lak-gelova-modelacia): Porovnanie služieb a pomoc pri výbere vhodnej úpravy.

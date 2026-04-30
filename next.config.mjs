@@ -92,7 +92,7 @@ const nextConfig = {
           },
         ],
         destination: 'https://www.diaramanicure.sk/:path*',
-        permanent: true,
+        statusCode: 308,
       },
     ];
   },

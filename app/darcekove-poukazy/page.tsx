@@ -11,7 +11,6 @@ import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
 import { siteConfig } from "@/lib/site-config"
 
 const pageUrl = `${siteConfig.baseUrl}/darcekove-poukazy`
-const giftCardValues = ["30 €", "40 €", "50 €", "100 €"]
 
 export const metadata: Metadata = {
   title: "Darček pre ženu v Trnave | Poukaz na manikúru | diara manicure.",
@@ -39,25 +38,19 @@ export const metadata: Metadata = {
 }
 
 export default function GiftCardPage() {
-  const productSchema = {
+  const pageSchema = {
     "@context": "https://schema.org",
-    "@type": "Product",
-    name: "Darčekový poukaz na manikúru v Trnave",
-    image: `${siteConfig.baseUrl}/gift-card.jpg`,
+    "@type": "WebPage",
+    "@id": `${pageUrl}#webpage`,
+    url: pageUrl,
+    name: "Darčekové poukazy na manikúru v Trnave",
     description:
-      "Darčekový poukaz na profesionálnu manikúru a gélové nechty v štúdiu diara manicure. v Trnave. Vhodný ako darček pre manželku, priateľku, mamu alebo kolegyňu.",
-    brand: {
-      "@type": "Brand",
-      name: "diara manicure.",
+      "Informácie o darčekových poukazoch na manikúru v Trnave. Online kúpa cez Bookio a doručenie emailom.",
+    inLanguage: "sk-SK",
+    about: {
+      "@type": "Thing",
+      name: "Darčekové poukazy na manikúru v Trnave",
     },
-    offers: giftCardValues.map((value) => ({
-      "@type": "Offer",
-      name: `Darčeková poukážka ${value}`,
-      price: value.replace(" €", ""),
-      priceCurrency: "EUR",
-      availability: "https://schema.org/InStock",
-      url: siteConfig.giftCardUrl,
-    })),
   }
 
   const faqSchema = {
@@ -102,9 +95,9 @@ export default function GiftCardPage() {
   return (
     <>
       <Script
-        id="schema-gift-card-product"
+        id="schema-gift-card-page"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, "\\u003c") }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema).replace(/</g, "\\u003c") }}
       />
       <Script
         id="schema-gift-card-faq"

@@ -26,19 +26,19 @@ const socialImageUrl = "/og-image.jpg?v=20260407"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.diaramanicure.sk'),
-  title: "diara manicure. | Gélové nechty Trnava | Manikúra a darčekové poukazy",
-  description: "Profesionálna manikúra a gélové nechty v Trnave. Kvalitné európske gély, parkovanie zdarma, online rezervácia a darčekové poukazy.",
+  title: "diara manicure. | Gélové nechty Trnava, manikúra Trnava a cenník",
+  description: "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, Nails Trnava služby a darčekové poukazy.",
   keywords: [
     "nechty trnava",
     "gelove nechty trnava",
     "manikura trnava",
     "nechtove studio trnava",
+    "nails trnava",
     "diara manicure",
     "nechty trnava cennik",
     "modelacia nechtov trnava",
     "gel lak trnava",
     "najlepsie nechty trnava",
-    "nechtove studio trnava recenzie",
     "doplnenie nechtov trnava",
     "akrylove nechty trnava",
     "darcekovy poukaz nechty",
@@ -73,8 +73,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "diara manicure. | Gélové nechty Trnava | Darčekové poukazy",
-    description: "Profesionálna manikúra a gélové nechty v Trnave. Darčekové poukazy, kvalitné európske gély, parkovanie zdarma a online rezervácia.",
+    title: "diara manicure. | Gélové nechty Trnava a manikúra Trnava",
+    description: "Profesionálna manikúra a gélové nechty v Trnave. Cenník, darčekové poukazy, parkovanie zdarma a online rezervácia.",
     type: "website",
     locale: "sk_SK",
     url: "https://www.diaramanicure.sk",
@@ -90,8 +90,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "diara manicure. | Gélové nechty Trnava | Darčekové poukazy",
-    description: "Profesionálna manikúra a gélové nechty v Trnave. Darčekové poukazy, kvalitné európske gély, parkovanie zdarma a online rezervácia.",
+    title: "diara manicure. | Gélové nechty Trnava a manikúra Trnava",
+    description: "Profesionálna manikúra a gélové nechty v Trnave. Cenník, darčekové poukazy, parkovanie zdarma a online rezervácia.",
     images: [socialImageUrl],
   },
 }

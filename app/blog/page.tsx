@@ -1,40 +1,26 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { Navbar } from "@/components/navbar"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, Calendar } from "lucide-react"
 
 export const dynamic = "force-dynamic"
 
-// Placeholder blog posts - to be replaced with actual content
 const blogPosts = [
     {
         slug: "ako-dlho-vydrzia-gelove-nechty",
-        title: "Ako dlho vydržia gélové nechty?",
+        title: "Ako dlho vydržia gélové nechty? Kompletný sprievodca",
         excerpt: "Zistite, ako maximalizovať výdrž vašich gélových nechtov a na čo si dávať pozor pri starostlivosti o ne.",
-        date: "Pripravujeme",
+        date: "5. január 2026",
         image: "/gelove-nechty-trnava-gallery-1.jpeg"
     },
     {
         slug: "rozdiel-gel-lak-gelova-modelacia",
         title: "Rozdiel medzi gél lakom a gélovou modeláciou",
         excerpt: "Neviete sa rozhodnúť medzi gél lakom a gélovou modeláciou? Vysvetlíme vám rozdiely a pomôžeme vybrať.",
-        date: "Pripravujeme",
+        date: "5. január 2026",
         image: "/gelove-nechty-trnava-gallery-2.jpeg"
-    },
-    {
-        slug: "starostlivost-o-gelove-nechty-doma",
-        title: "Starostlivosť o gélové nechty doma",
-        excerpt: "Praktické tipy ako sa starať o gélové nechty medzi návštevami salóna pre maximálnu výdrž a krásu.",
-        date: "Pripravujeme",
-        image: "/gelove-nechty-trnava-gallery-3.jpeg"
-    },
-    {
-        slug: "trendy-nail-art-2026",
-        title: "Trendy v nail arte pre rok 2026",
-        excerpt: "Objavte najnovšie trendy v nail arte - od minimalistických dizajnov po výrazné umelecké diela na nechtoch.",
-        date: "Pripravujeme",
-        image: "/gelove-nechty-trnava-gallery-4.jpeg"
     }
 ]
 
@@ -64,31 +50,33 @@ export default function BlogPage() {
                             </p>
                         </div>
 
-                        {/* Coming Soon Notice */}
-                        <div className="bg-beige dark:bg-card p-8 rounded-[2rem] text-center mb-12">
-                            <span className="text-4xl mb-4 block">📝</span>
-                            <h2 className="text-2xl font-light mb-4">Blog sa pripravuje</h2>
-                            <p className="text-muted-foreground">
-                                Čoskoro tu nájdete užitočné články o starostlivosti o nechty, trendoch a tipoch od našich odborníkov.
-                            </p>
-                        </div>
-
-                        {/* Preview of Upcoming Posts */}
-                        <h2 className="text-2xl font-light mb-8 text-center">Pripravované články</h2>
                         <div className="grid md:grid-cols-2 gap-6">
                             {blogPosts.map((post) => (
-                                <div
+                                <Link
                                     key={post.slug}
-                                    className="bg-beige dark:bg-card p-6 rounded-[1.5rem] opacity-70 cursor-not-allowed"
+                                    href={`/blog/${post.slug}`}
+                                    className="group overflow-hidden rounded-[1.5rem] bg-beige transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:bg-card"
                                 >
-                                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                                        <span className="bg-primary/10 text-primary px-3 py-1 rounded-full">
-                                            {post.date}
-                                        </span>
+                                    <div className="relative aspect-[4/3] overflow-hidden">
+                                        <Image
+                                            src={post.image}
+                                            alt={post.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
                                     </div>
-                                    <h3 className="text-lg font-medium mb-2">{post.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{post.excerpt}</p>
-                                </div>
+                                    <div className="p-6">
+                                        <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
+                                            <Calendar className="h-4 w-4" />
+                                            <span>{post.date}</span>
+                                        </div>
+                                        <h2 className="mb-3 text-xl font-medium transition-colors group-hover:text-primary">
+                                            {post.title}
+                                        </h2>
+                                        <p className="text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
+                                    </div>
+                                </Link>
                             ))}
                         </div>
                     </div>

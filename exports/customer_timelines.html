@@ -1,0 +1,3740 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Customer Timelines</title>
+  <style>
+    :root {
+      --ink: #171717;
+      --muted: #666;
+      --line: #d7d7d7;
+      --paper: #fff;
+      --wash: #f4f4f2;
+      --accent: #5f4bb6;
+      --past: #3f6f6a;
+      --future: #13795b;
+      --cancelled: #a23b35;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--wash);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.25;
+    }
+    header {
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      padding: 10px max(12px, calc((100vw - 1500px) / 2));
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    h1, h2, p { margin: 0; }
+    h1 { font-size: 22px; font-weight: 700; }
+    h2 {
+      font-size: 15px;
+      line-height: 1.15;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    main {
+      width: min(1500px, calc(100vw - 20px));
+      margin: 10px auto 32px;
+    }
+    .header-top {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(360px, 620px);
+      gap: 16px;
+      align-items: start;
+    }
+    .legend {
+      justify-self: end;
+      max-width: 620px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 6px 8px;
+      background: #fbfbfb;
+      font-size: 11px;
+    }
+    .legend-title {
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .legend-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 10px;
+    }
+    .legend-row span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .legend i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid rgba(0,0,0,.2);
+    }
+    .legend .services {
+      margin-top: 4px;
+    }
+    .today-swatch {
+      width: 2px !important;
+      border-radius: 0 !important;
+      background: #111;
+    }
+    .future-swatch {
+      background: white;
+      box-shadow: 0 0 0 2px var(--future);
+    }
+    .cancelled-swatch {
+      background: white;
+      box-shadow: 0 0 0 2px var(--cancelled);
+      opacity: .65;
+    }
+    .summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .summary div {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 6px 8px;
+      border-radius: 4px;
+      min-width: 118px;
+    }
+    .summary strong {
+      font-size: 17px;
+      margin-right: 4px;
+    }
+    .summary span, .subtitle, .contact, .facts {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .customer {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      margin-bottom: 6px;
+      padding: 8px 10px;
+      display: grid;
+      grid-template-columns: 250px minmax(520px, 1fr) 190px;
+      gap: 12px;
+      min-height: 86px;
+    }
+    .person {
+      min-width: 0;
+      align-self: start;
+    }
+    .contact, .counts, .facts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px 8px;
+      margin-top: 4px;
+    }
+    .counts {
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .facts {
+      align-self: start;
+      justify-content: flex-end;
+      text-align: right;
+    }
+    .reservation-only {
+      color: var(--cancelled);
+      font-weight: 700;
+    }
+    .timeline-wrap {
+      min-width: 0;
+    }
+    .rail {
+      position: relative;
+      height: 28px;
+      margin-top: 4px;
+      border-top: 2px solid #bdbdbd;
+    }
+    .month-tick {
+      position: absolute;
+      top: -8px;
+      transform: translateX(-50%);
+      color: var(--muted);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .month-tick:first-child {
+      transform: translateX(0);
+    }
+    .month-tick i {
+      display: block;
+      width: 1px;
+      height: 11px;
+      background: var(--line);
+      margin: 0 auto 3px;
+    }
+    .month-tick.minor {
+      top: -5px;
+      font-size: 9px;
+    }
+    .month-tick.minor i {
+      height: 7px;
+      background: #ececec;
+    }
+    .month-tick b {
+      font-weight: 400;
+    }
+    .today {
+      position: absolute;
+      top: -7px;
+      width: 2px;
+      height: 18px;
+      background: #111;
+      z-index: 2;
+    }
+    .event-dot {
+      position: absolute;
+      top: -6px;
+      transform: translateX(-50%);
+      width: 11px;
+      height: 11px;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--service-color);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.18);
+      z-index: 3;
+    }
+    .event-dot.future { box-shadow: 0 0 0 2px var(--future), 0 0 0 4px white; }
+    .event-dot.cancelled { box-shadow: 0 0 0 2px var(--cancelled), 0 0 0 4px white; opacity: .55; }
+    .events {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-height: 38px;
+      overflow: auto;
+      padding-top: 4px;
+      scrollbar-width: thin;
+    }
+    .event-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      max-width: 165px;
+      padding: 2px 6px;
+      border: 1px solid #cfd6d4;
+      border-left: 4px solid var(--service-color);
+      border-radius: 4px;
+      color: #222;
+      background: #fbfbfb;
+      font-size: 11px;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .event-chip.future { box-shadow: inset 0 0 0 1px rgba(19,121,91,.5); }
+    .event-chip.cancelled { box-shadow: inset 0 0 0 1px rgba(162,59,53,.55); opacity: .68; }
+    .event-chip b {
+      flex: 0 0 auto;
+      font-size: 10px;
+    }
+    .empty {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .section-title {
+      margin: 18px 0 8px;
+      font-size: 18px;
+    }
+    @media (max-width: 980px) {
+      .header-top {
+        grid-template-columns: 1fr;
+      }
+      .legend {
+        justify-self: start;
+      }
+      .customer {
+        grid-template-columns: 1fr;
+      }
+      .facts {
+        justify-content: flex-start;
+        text-align: left;
+      }
+      .rail { min-width: 720px; }
+      .timeline-wrap { overflow-x: auto; }
+    }
+    @media print {
+      body { background: white; }
+      header { position: static; }
+      .customer { break-inside: avoid; }
+      .customer { border-color: #bbb; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-top">
+      <h1>Customer Timelines</h1>
+      
+      <div class="legend" aria-label="Color explanation">
+        <div class="legend-title">Colors</div>
+        <div class="legend-row"><span><i class="today-swatch"></i>Current date</span><span><i class="future-swatch"></i>Future ring</span><span><i class="cancelled-swatch"></i>Cancelled ring</span></div>
+        <div class="legend-row services"><span><i style="background:#2f766f"></i>Detailná manikúra</span>
+<span><i style="background:#7a4db2"></i>Doplnenie</span>
+<span><i style="background:#c05a2b"></i>Gél lak</span>
+<span><i style="background:#2f5ea8"></i>Nové gély</span>
+<span><i style="background:#a13f72"></i>Odstránenie gélových nechtov</span>
+<span><i style="background:#67851f"></i>Spevnenie prirodzených necht</span>
+<span><i style="background:#b13e45"></i>Testovacia služba</span>
+<span><i style="background:#4d6b86"></i>Výmena / oprava nechtu</span></div>
+      </div>
+    </div>
+    <div class="summary">
+      <div><strong>71</strong><span>customers in customer export</span></div>
+      <div><strong>54</strong><span>customers in mailing export</span></div>
+      <div><strong>150</strong><span>reservation rows</span></div>
+      <div><strong>69</strong><span>export customers with reservations</span></div>
+      <div><strong>8</strong><span>future reservations</span></div>
+      <div><strong>38</strong><span>cancelled rows</span></div>
+      <div><strong>2</strong><span>reservation-only groups</span></div>
+    </div>
+  </header>
+  <main>
+    
+    <section class="customer">
+      <div class="person">
+        <h2>Adriana Reptová</h2>
+        <div class="contact">
+          <span>+421949861082</span>
+          
+          
+        </div>
+        <div class="counts">
+          <span>4 total</span>
+          <span>3 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:13.441%;--service-color:#7a4db2" title="20.01.2026 10:00 - 13:40 - Cancelled: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:22.563%;--service-color:#7a4db2" title="02.02.2026 14:15 - 17:55 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:43.914%;--service-color:#7a4db2" title="05.03.2026 10:30 - 13:50 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot past" style="left:68.186%;--service-color:#7a4db2" title="09.04.2026 12:00 - 15:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#7a4db2" title="Cancelled | 20.01.2026 10:00 - 13:40 | Doplnenie | 25.00€">
+        <b>20.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 02.02.2026 14:15 - 17:55 | Doplnenie | 25.00€">
+        <b>02.02.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 05.03.2026 10:30 - 13:50 | Doplnenie | 32.00€">
+        <b>05.03.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 09.04.2026 12:00 - 15:20 | Doplnenie | 32.00€">
+        <b>09.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 9.4.2026 12:00</span>
+        <span>Loyalty 3.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Adriana Vojtíšková</h2>
+        <div class="contact">
+          <span>+421948287089</span>
+          <span>adrikavojtiskova164@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>0 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          
+        </div>
+        <div class="events"><span class="empty">No visits/reservations in this export</span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 28.12.2025 11:45</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Alena Výrašteková</h2>
+        <div class="contact">
+          <span>+421910103431</span>
+          <span>alena.vyrastekova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:73.781%;--service-color:#c05a2b" title="17.04.2026 14:00 - 16:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 17.04.2026 14:00 - 16:20 | Gél lak | 29.00€">
+        <b>17.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 17.4.2026 14:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Alexandra Šefčíkova</h2>
+        <div class="contact">
+          <span>+421908465407</span>
+          <span>akex.lisicka@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:79.283%;--service-color:#c05a2b" title="25.04.2026 12:45 - 15:05 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 25.04.2026 12:45 - 15:05 | Gél lak | 29.00€">
+        <b>25.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 25.4.2026 12:45</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Andrea Balažovičová</h2>
+        <div class="contact">
+          <span>0908119605</span>
+          <span>andreabalazovicova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>0 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          
+        </div>
+        <div class="events"><span class="empty">No visits/reservations in this export</span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Andrea Hockicková</h2>
+        <div class="contact">
+          <span>+421917802382</span>
+          <span>13sedacka_istenia@icloud.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>3 total</span>
+          <span>1 past</span>
+          <span>1 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:74.329%;--service-color:#2f5ea8" title="18.04.2026 09:00 - 12:30 - Past: Modelácia gélových nechtov | 38.00€"></span>
+<span class="event-dot cancelled" style="left:88.866%;--service-color:#7a4db2" title="09.05.2026 09:00 - 12:20 - Cancelled: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot future" style="left:89.559%;--service-color:#7a4db2" title="10.05.2026 09:00 - 12:20 - Future: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#2f5ea8" title="Past | 18.04.2026 09:00 - 12:30 | Nové gély | 38.00€">
+        <b>18.04.</b>
+        Nové gély
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#7a4db2" title="Cancelled | 09.05.2026 09:00 - 12:20 | Doplnenie | 32.00€">
+        <b>09.05.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip future" style="--service-color:#7a4db2" title="Future | 10.05.2026 09:00 - 12:20 | Doplnenie | 32.00€">
+        <b>10.05.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 18.4.2026 9:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Andrea Puková</h2>
+        <div class="contact">
+          <span>+421907118763</span>
+          <span>pukova.andrea@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>3 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>2 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:10.780%;--service-color:#2f5ea8" title="16.01.2026 13:45 - 17:35 - Cancelled: Modelácia gélových nechtov | 25.00€"></span>
+<span class="event-dot cancelled" style="left:11.364%;--service-color:#2f5ea8" title="17.01.2026 10:00 - 13:50 - Cancelled: Modelácia gélových nechtov | 25.00€"></span>
+<span class="event-dot past" style="left:63.960%;--service-color:#c05a2b" title="03.04.2026 09:30 - 11:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 16.01.2026 13:45 - 17:35 | Nové gély | 25.00€">
+        <b>16.01.</b>
+        Nové gély
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 17.01.2026 10:00 - 13:50 | Nové gély | 25.00€">
+        <b>17.01.</b>
+        Nové gély
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 03.04.2026 09:30 - 11:50 | Gél lak | 29.00€">
+        <b>03.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 3.4.2026 9:30</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Anna Minarovičová</h2>
+        <div class="contact">
+          <span>+421948248044</span>
+          <span>aminarov@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>1 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot future" style="left:86.321%;--service-color:#c05a2b" title="05.05.2026 16:45 - 19:05 - Future: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip future" style="--service-color:#c05a2b" title="Future | 05.05.2026 16:45 - 19:05 | Gél lak | 29.00€">
+        <b>05.05.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Barbora Polakovičová</h2>
+        <div class="contact">
+          <span>+421902624161</span>
+          <span>barborapolakovicova69@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:46.654%;--service-color:#c05a2b" title="09.03.2026 09:30 - 11:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 09.03.2026 09:30 - 11:50 | Gél lak | 29.00€">
+        <b>09.03.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 9.3.2026 9:30</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Barbora Senkova</h2>
+        <div class="contact">
+          <span>+31629329543</span>
+          <span>senkovabarbora@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>1 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot future" style="left:100.000%;--service-color:#7a4db2" title="25.05.2026 11:00 - 14:20 - Future: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip future" style="--service-color:#7a4db2" title="Future | 25.05.2026 11:00 - 14:20 | Doplnenie | 32.00€">
+        <b>25.05.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Daniela Blašková</h2>
+        <div class="contact">
+          <span>+421918561906</span>
+          <span>blaskovadaniela@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:68.099%;--service-color:#c05a2b" title="09.04.2026 09:00 - 11:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 09.04.2026 09:00 - 11:20 | Gél lak | 29.00€">
+        <b>09.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 9.4.2026 9:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Daryna Sirková</h2>
+        <div class="contact">
+          <span>+421952503879</span>
+          <span>darynasirkova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:81.966%;--service-color:#c05a2b" title="29.04.2026 09:45 - 12:05 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 29.04.2026 09:45 - 12:05 | Gél lak | 29.00€">
+        <b>29.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Dominika Demeterová</h2>
+        <div class="contact">
+          <span>+421915785094</span>
+          <span>demeterova.dominikadd@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:82.117%;--service-color:#2f5ea8" title="29.04.2026 15:00 - 18:30 - Past: Modelácia gélových nechtov | 38.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#2f5ea8" title="Past | 29.04.2026 15:00 - 18:30 | Nové gély | 38.00€">
+        <b>29.04.</b>
+        Nové gély
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Dominika Haradzinová</h2>
+        <div class="contact">
+          <span>+421911994829</span>
+          <span>domiharadzinova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:71.099%;--service-color:#c05a2b" title="13.04.2026 17:00 - 19:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 13.04.2026 17:00 - 19:20 | Gél lak | 29.00€">
+        <b>13.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 13.4.2026 17:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Dovicicova</h2>
+        <div class="contact">
+          <span>+421910334663</span>
+          
+          
+        </div>
+        <div class="counts">
+          <span>4 total</span>
+          <span>4 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:30.199%;--service-color:#c05a2b" title="13.02.2026 15:00 - 17:40 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:46.784%;--service-color:#c05a2b" title="09.03.2026 14:00 - 16:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:61.314%;--service-color:#c05a2b" title="30.03.2026 13:45 - 16:05 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:81.396%;--service-color:#c05a2b" title="28.04.2026 14:00 - 16:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 13.02.2026 15:00 - 17:40 | Gél lak | 29.00€">
+        <b>13.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 09.03.2026 14:00 - 16:20 | Gél lak | 29.00€">
+        <b>09.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 30.03.2026 13:45 - 16:05 | Gél lak | 29.00€">
+        <b>30.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 28.04.2026 14:00 - 16:20 | Gél lak | 29.00€">
+        <b>28.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 28.4.2026 14:00</span>
+        <span>Loyalty 4.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Dáša Bobeková</h2>
+        <div class="contact">
+          <span>+421903403299</span>
+          <span>bobekova.dasa@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>0 past</span>
+          <span>1 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:80.711%;--service-color:#7a4db2" title="27.04.2026 14:15 - 17:35 - Cancelled: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot future" style="left:82.838%;--service-color:#7a4db2" title="30.04.2026 16:00 - 19:20 - Future: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#7a4db2" title="Cancelled | 27.04.2026 14:15 - 17:35 | Doplnenie | 32.00€">
+        <b>27.04.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip future" style="--service-color:#7a4db2" title="Future | 30.04.2026 16:00 - 19:20 | Doplnenie | 32.00€">
+        <b>30.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Elena Balážová</h2>
+        <div class="contact">
+          <span>+421907646005</span>
+          <span>elenabalazova9@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:5.257%;--service-color:#7a4db2" title="08.01.2026 14:15 - 17:55 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 08.01.2026 14:15 - 17:55 | Doplnenie | 25.00€">
+        <b>08.01.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 8.1.2026 14:15</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Elena Novakova</h2>
+        <div class="contact">
+          <span>+421905943611</span>
+          <span>santos.novakova@centrum.sk</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:77.863%;--service-color:#2f766f" title="23.04.2026 11:30 - 12:50 - Past: Detailná manikúra | 20.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#2f766f" title="Past | 23.04.2026 11:30 - 12:50 | Detailná manikúra | 20.00€">
+        <b>23.04.</b>
+        Detailná manikúra
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 23.4.2026 11:30</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Ema Godálová</h2>
+        <div class="contact">
+          <span>+421918456294</span>
+          <span>emagodalova1@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>4 total</span>
+          <span>3 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:2.581%;--service-color:#2f5ea8" title="04.01.2026 17:30 - 21:20 - Past: Modelácia gélových nechtov | 25.00€"></span>
+<span class="event-dot cancelled" style="left:12.057%;--service-color:#7a4db2" title="18.01.2026 10:00 - 13:40 - Cancelled: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:15.770%;--service-color:#7a4db2" title="23.01.2026 18:45 - 22:25 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:31.439%;--service-color:#a13f72" title="15.02.2026 10:00 - 11:10 - Past: Odstránenie gélových nechtov | 10.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#2f5ea8" title="Past | 04.01.2026 17:30 - 21:20 | Nové gély | 25.00€">
+        <b>04.01.</b>
+        Nové gély
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#7a4db2" title="Cancelled | 18.01.2026 10:00 - 13:40 | Doplnenie | 25.00€">
+        <b>18.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 23.01.2026 18:45 - 22:25 | Doplnenie | 25.00€">
+        <b>23.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#a13f72" title="Past | 15.02.2026 10:00 - 11:10 | Odstránenie gélových nechtov | 10.00€">
+        <b>15.02.</b>
+        Odstránenie gélových nechtov
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 15.2.2026 10:00</span>
+        <span>Loyalty 3.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Eva Ešmírová</h2>
+        <div class="contact">
+          <span>+421908619737</span>
+          <span>evuska7@icloud.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>3 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:12.893%;--service-color:#7a4db2" title="19.01.2026 15:00 - 18:40 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:17.731%;--service-color:#4d6b86" title="26.01.2026 14:45 - 16:00 - Past: Výmena / oprava nechtu | 3.00€"></span>
+<span class="event-dot cancelled" style="left:24.654%;--service-color:#7a4db2" title="05.02.2026 14:45 - 18:25 - Cancelled: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 19.01.2026 15:00 - 18:40 | Doplnenie | 25.00€">
+        <b>19.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#4d6b86" title="Past | 26.01.2026 14:45 - 16:00 | Výmena / oprava nechtu | 3.00€">
+        <b>26.01.</b>
+        Výmena / oprava nechtu
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#7a4db2" title="Cancelled | 05.02.2026 14:45 - 18:25 | Doplnenie | 32.00€">
+        <b>05.02.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 26.1.2026 14:45</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Gabriela Petrovicova</h2>
+        <div class="contact">
+          <span>+421904802363</span>
+          <span>bobca137@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:75.937%;--service-color:#c05a2b" title="20.04.2026 16:45 - 19:05 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 20.04.2026 16:45 - 19:05 | Gél lak | 29.00€">
+        <b>20.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 20.4.2026 16:45</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Helena Danišová</h2>
+        <div class="contact">
+          <span>+421908840600</span>
+          <span>danisovahelenka@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:66.715%;--service-color:#2f766f" title="07.04.2026 09:00 - 10:20 - Past: Detailná manikúra | 20.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#2f766f" title="Past | 07.04.2026 09:00 - 10:20 | Detailná manikúra | 20.00€">
+        <b>07.04.</b>
+        Detailná manikúra
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 7.4.2026 9:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Helena Gajarska</h2>
+        <div class="contact">
+          <span>+421902162421</span>
+          <span>helena.gajarska@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>5 total</span>
+          <span>5 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:9.994%;--service-color:#c05a2b" title="15.01.2026 10:30 - 13:10 - Past: Gélová báza + gél lak | 25.00€"></span>
+<span class="event-dot past" style="left:27.300%;--service-color:#c05a2b" title="09.02.2026 10:30 - 13:10 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:42.530%;--service-color:#c05a2b" title="03.03.2026 10:30 - 12:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:59.864%;--service-color:#c05a2b" title="28.03.2026 11:30 - 13:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:73.695%;--service-color:#c05a2b" title="17.04.2026 11:00 - 13:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 15.01.2026 10:30 - 13:10 | Gél lak | 25.00€">
+        <b>15.01.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 09.02.2026 10:30 - 13:10 | Gél lak | 29.00€">
+        <b>09.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 03.03.2026 10:30 - 12:50 | Gél lak | 29.00€">
+        <b>03.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 28.03.2026 11:30 - 13:50 | Gél lak | 29.00€">
+        <b>28.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 17.04.2026 11:00 - 13:20 | Gél lak | 29.00€">
+        <b>17.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 17.4.2026 11:00</span>
+        <span>Loyalty 5.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Iveta Hupková</h2>
+        <div class="contact">
+          <span>+421907982746</span>
+          <span>iveta.hupkova1@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>3 total</span>
+          <span>3 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:34.836%;--service-color:#67851f" title="20.02.2026 07:45 - 10:40 - Past: Spevnenie prirodzených nechtov gélom | 32.00€"></span>
+<span class="event-dot past" style="left:57.759%;--service-color:#7a4db2" title="25.03.2026 10:30 - 13:50 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot past" style="left:77.235%;--service-color:#7a4db2" title="22.04.2026 13:45 - 17:05 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#67851f" title="Past | 20.02.2026 07:45 - 10:40 | Spevnenie prirodzených necht | 32.00€">
+        <b>20.02.</b>
+        Spevnenie prirodzených necht
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 25.03.2026 10:30 - 13:50 | Doplnenie | 32.00€">
+        <b>25.03.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 22.04.2026 13:45 - 17:05 | Doplnenie | 32.00€">
+        <b>22.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 22.4.2026 13:45</span>
+        <span>Loyalty 3.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Jana Fuljerova</h2>
+        <div class="contact">
+          <span>+421917732926</span>
+          <span>janfu2204@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:57.132%;--service-color:#c05a2b" title="24.03.2026 12:45 - 15:05 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 24.03.2026 12:45 - 15:05 | Gél lak | 29.00€">
+        <b>24.03.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Jana Pauliny</h2>
+        <div class="contact">
+          <span>+421905753396</span>
+          <span>jana.krajcova222@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>1 past</span>
+          <span>1 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:81.252%;--service-color:#67851f" title="28.04.2026 09:00 - 11:55 - Past: Spevnenie prirodzených nechtov gélom | 32.00€"></span>
+<span class="event-dot future" style="left:95.789%;--service-color:#7a4db2" title="19.05.2026 09:00 - 12:20 - Future: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#67851f" title="Past | 28.04.2026 09:00 - 11:55 | Spevnenie prirodzených necht | 32.00€">
+        <b>28.04.</b>
+        Spevnenie prirodzených necht
+      </span>
+
+      <span class="event-chip future" style="--service-color:#7a4db2" title="Future | 19.05.2026 09:00 - 12:20 | Doplnenie | 32.00€">
+        <b>19.05.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 28.4.2026 9:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Jana Tarkošová</h2>
+        <div class="contact">
+          <span>+421944127985</span>
+          <span>jana.tarkosova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:67.667%;--service-color:#67851f" title="08.04.2026 18:00 - 20:55 - Past: Spevnenie prirodzených nechtov gélom | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#67851f" title="Past | 08.04.2026 18:00 - 20:55 | Spevnenie prirodzených necht | 32.00€">
+        <b>08.04.</b>
+        Spevnenie prirodzených necht
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 8.4.2026 18:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Janka Jančičková</h2>
+        <div class="contact">
+          <span>+421911984345</span>
+          <span>jankajancickova@icloud.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>1 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot future" style="left:90.395%;--service-color:#2f5ea8" title="11.05.2026 14:00 - 17:30 - Future: Modelácia gélových nechtov | 38.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip future" style="--service-color:#2f5ea8" title="Future | 11.05.2026 14:00 - 17:30 | Nové gély | 38.00€">
+        <b>11.05.</b>
+        Nové gély
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Janka Strapcová</h2>
+        <div class="contact">
+          <span>+421905618770</span>
+          <span>jana.strapec@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:60.059%;--service-color:#67851f" title="28.03.2026 18:15 - 21:10 - Past: Spevnenie prirodzených nechtov gélom | 32.00€"></span>
+<span class="event-dot past" style="left:69.484%;--service-color:#7a4db2" title="11.04.2026 09:00 - 12:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#67851f" title="Past | 28.03.2026 18:15 - 21:10 | Spevnenie prirodzených necht | 32.00€">
+        <b>28.03.</b>
+        Spevnenie prirodzených necht
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 11.04.2026 09:00 - 12:20 | Doplnenie | 32.00€">
+        <b>11.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 11.4.2026 9:00</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Jaroslava Žáková</h2>
+        <div class="contact">
+          <span>+421948150072</span>
+          <span>popluharova.ja@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>3 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>2 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:59.958%;--service-color:#2f5ea8" title="28.03.2026 14:45 - 18:15 - Cancelled: Modelácia gélových nechtov | 38.00€"></span>
+<span class="event-dot past" style="left:62.561%;--service-color:#2f5ea8" title="01.04.2026 09:00 - 12:30 - Past: Modelácia gélových nechtov | 38.00€"></span>
+<span class="event-dot cancelled" style="left:84.850%;--service-color:#7a4db2" title="03.05.2026 13:45 - 17:05 - Cancelled: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 28.03.2026 14:45 - 18:15 | Nové gély | 38.00€">
+        <b>28.03.</b>
+        Nové gély
+      </span>
+
+      <span class="event-chip past" style="--service-color:#2f5ea8" title="Past | 01.04.2026 09:00 - 12:30 | Nové gély | 38.00€">
+        <b>01.04.</b>
+        Nové gély
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#7a4db2" title="Cancelled | 03.05.2026 13:45 - 17:05 | Doplnenie | 32.00€">
+        <b>03.05.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 1.4.2026 9:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Jelena Zivanovic</h2>
+        <div class="contact">
+          <span>+421952247349</span>
+          <span>jeja01975@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>5 total</span>
+          <span>4 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:6.663%;--service-color:#c05a2b" title="10.01.2026 15:00 - 17:40 - Past: Gélová báza + gél lak | 25.00€"></span>
+<span class="event-dot cancelled" style="left:21.142%;--service-color:#c05a2b" title="31.01.2026 13:00 - 15:40 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:28.137%;--service-color:#c05a2b" title="10.02.2026 15:30 - 18:10 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:50.144%;--service-color:#c05a2b" title="14.03.2026 10:30 - 12:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:75.050%;--service-color:#c05a2b" title="19.04.2026 10:00 - 12:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 10.01.2026 15:00 - 17:40 | Gél lak | 25.00€">
+        <b>10.01.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 31.01.2026 13:00 - 15:40 | Gél lak | 29.00€">
+        <b>31.01.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 10.02.2026 15:30 - 18:10 | Gél lak | 29.00€">
+        <b>10.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 14.03.2026 10:30 - 12:50 | Gél lak | 29.00€">
+        <b>14.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 19.04.2026 10:00 - 12:20 | Gél lak | 29.00€">
+        <b>19.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 19.4.2026 10:00</span>
+        <span>Loyalty 4.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Jitka Závodná</h2>
+        <div class="contact">
+          <span>+421918718620</span>
+          <span>jitkazavodnast@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:52.899%;--service-color:#67851f" title="18.03.2026 10:00 - 12:55 - Past: Spevnenie prirodzených nechtov gélom | 32.00€"></span>
+<span class="event-dot past" style="left:66.772%;--service-color:#7a4db2" title="07.04.2026 11:00 - 14:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#67851f" title="Past | 18.03.2026 10:00 - 12:55 | Spevnenie prirodzených necht | 32.00€">
+        <b>18.03.</b>
+        Spevnenie prirodzených necht
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 07.04.2026 11:00 - 14:20 | Doplnenie | 32.00€">
+        <b>07.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 7.4.2026 11:00</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Jiřina Jankajová</h2>
+        <div class="contact">
+          <span>+421918522867</span>
+          
+          
+        </div>
+        <div class="counts">
+          <span>5 total</span>
+          <span>5 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:1.673%;--service-color:#7a4db2" title="03.01.2026 10:00 - 13:40 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:13.556%;--service-color:#7a4db2" title="20.01.2026 14:00 - 17:40 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:38.520%;--service-color:#7a4db2" title="25.02.2026 15:30 - 19:10 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot past" style="left:57.889%;--service-color:#7a4db2" title="25.03.2026 15:00 - 18:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot past" style="left:77.964%;--service-color:#7a4db2" title="23.04.2026 15:00 - 18:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 03.01.2026 10:00 - 13:40 | Doplnenie | 25.00€">
+        <b>03.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 20.01.2026 14:00 - 17:40 | Doplnenie | 25.00€">
+        <b>20.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 25.02.2026 15:30 - 19:10 | Doplnenie | 32.00€">
+        <b>25.02.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 25.03.2026 15:00 - 18:20 | Doplnenie | 32.00€">
+        <b>25.03.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 23.04.2026 15:00 - 18:20 | Doplnenie | 32.00€">
+        <b>23.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 23.4.2026 15:00</span>
+        <span>Loyalty 5.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Katarina Ilavská</h2>
+        <div class="contact">
+          <span>+421905779818</span>
+          <span>ilavskakatarina16@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>14 total</span>
+          <span>11 past</span>
+          <span>0 future</span>
+          <span>3 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:5.249%;--service-color:#2f5ea8" title="08.01.2026 14:00 - 17:50 - Cancelled: Modelácia gélových nechtov | 20.00€"></span>
+<span class="event-dot past" style="left:5.870%;--service-color:#7a4db2" title="09.01.2026 11:30 - 15:10 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:18.287%;--service-color:#67851f" title="27.01.2026 10:00 - 13:15 - Past: Spevnenie prirodzených nechtov gélom | 25.00€"></span>
+<span class="event-dot past" style="left:27.380%;--service-color:#c05a2b" title="09.02.2026 13:15 - 15:55 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot cancelled" style="left:29.514%;--service-color:#c05a2b" title="12.02.2026 15:15 - 17:55 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:39.934%;--service-color:#c05a2b" title="27.02.2026 16:30 - 18:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:40.006%;--service-color:#c05a2b" title="27.02.2026 19:00 - 21:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot cancelled" style="left:45.255%;--service-color:#c05a2b" title="07.03.2026 09:00 - 11:20 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:50.072%;--service-color:#c05a2b" title="14.03.2026 08:00 - 10:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:53.000%;--service-color:#c05a2b" title="18.03.2026 13:30 - 15:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:62.078%;--service-color:#c05a2b" title="31.03.2026 16:15 - 18:35 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:63.542%;--service-color:#c05a2b" title="02.04.2026 19:00 - 21:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:73.060%;--service-color:#c05a2b" title="16.04.2026 13:00 - 15:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:73.111%;--service-color:#c05a2b" title="16.04.2026 14:45 - 17:05 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 08.01.2026 14:00 - 17:50 | Nové gély | 20.00€">
+        <b>08.01.</b>
+        Nové gély
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 09.01.2026 11:30 - 15:10 | Doplnenie | 25.00€">
+        <b>09.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#67851f" title="Past | 27.01.2026 10:00 - 13:15 | Spevnenie prirodzených necht | 25.00€">
+        <b>27.01.</b>
+        Spevnenie prirodzených necht
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 09.02.2026 13:15 - 15:55 | Gél lak | 29.00€">
+        <b>09.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 12.02.2026 15:15 - 17:55 | Gél lak | 29.00€">
+        <b>12.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 27.02.2026 16:30 - 18:50 | Gél lak | 29.00€">
+        <b>27.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 27.02.2026 19:00 - 21:20 | Gél lak | 29.00€">
+        <b>27.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 07.03.2026 09:00 - 11:20 | Gél lak | 29.00€">
+        <b>07.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 14.03.2026 08:00 - 10:20 | Gél lak | 29.00€">
+        <b>14.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 18.03.2026 13:30 - 15:50 | Gél lak | 29.00€">
+        <b>18.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 31.03.2026 16:15 - 18:35 | Gél lak | 29.00€">
+        <b>31.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 02.04.2026 19:00 - 21:20 | Gél lak | 29.00€">
+        <b>02.04.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 16.04.2026 13:00 - 15:20 | Gél lak | 29.00€">
+        <b>16.04.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 16.04.2026 14:45 - 17:05 | Gél lak | 29.00€">
+        <b>16.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 16.4.2026 14:45</span>
+        <span>Loyalty 12.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Kristína Bombová</h2>
+        <div class="contact">
+          <span>+421908287927</span>
+          <span>kristinabombova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:72.959%;--service-color:#7a4db2" title="16.04.2026 09:30 - 12:50 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 16.04.2026 09:30 - 12:50 | Doplnenie | 32.00€">
+        <b>16.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 16.4.2026 9:30</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Kristína Kvasnicová</h2>
+        <div class="contact">
+          <span>+421917263854</span>
+          <span>k.kvasnicova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:51.716%;--service-color:#7a4db2" title="16.03.2026 17:00 - 20:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot past" style="left:62.792%;--service-color:#7a4db2" title="01.04.2026 17:00 - 20:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 16.03.2026 17:00 - 20:20 | Doplnenie | 32.00€">
+        <b>16.03.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 01.04.2026 17:00 - 20:20 | Doplnenie | 32.00€">
+        <b>01.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 1.4.2026 17:00</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Lenka Ilavska</h2>
+        <div class="contact">
+          <span>+421902183674</span>
+          <span>lenka.matusova34@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:9.316%;--service-color:#7a4db2" title="14.01.2026 11:00 - 14:40 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:10.138%;--service-color:#7a4db2" title="15.01.2026 15:30 - 19:10 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 14.01.2026 11:00 - 14:40 | Doplnenie | 25.00€">
+        <b>14.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 15.01.2026 15:30 - 19:10 | Doplnenie | 25.00€">
+        <b>15.01.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 15.1.2026 15:30</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Lenka Talapková</h2>
+        <div class="contact">
+          <span>+421917958793</span>
+          <span>kozarova.lenka1@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:77.336%;--service-color:#7a4db2" title="22.04.2026 17:15 - 20:35 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 22.04.2026 17:15 - 20:35 | Doplnenie | 32.00€">
+        <b>22.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 22.4.2026 17:15</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Lubica Idunkova</h2>
+        <div class="contact">
+          <span>+421904960013</span>
+          <span>idunkova@azet.sk</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:77.791%;--service-color:#c05a2b" title="23.04.2026 09:00 - 11:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 23.04.2026 09:00 - 11:20 | Gél lak | 29.00€">
+        <b>23.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 23.4.2026 9:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Lucia Stracova</h2>
+        <div class="contact">
+          <span>+421917608250</span>
+          <span>lucia.stracova16@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:25.310%;--service-color:#c05a2b" title="06.02.2026 13:30 - 16:10 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:38.347%;--service-color:#c05a2b" title="25.02.2026 09:30 - 11:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 06.02.2026 13:30 - 16:10 | Gél lak | 29.00€">
+        <b>06.02.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 25.02.2026 09:30 - 11:50 | Gél lak | 29.00€">
+        <b>25.02.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 25.2.2026 9:30</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Líšková</h2>
+        <div class="contact">
+          <span>+421905361220</span>
+          
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:7.918%;--service-color:#c05a2b" title="12.01.2026 10:30 - 13:10 - Past: Gélová báza + gél lak | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 12.01.2026 10:30 - 13:10 | Gél lak | 25.00€">
+        <b>12.01.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 12.1.2026 10:30</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Marta Slivková</h2>
+        <div class="contact">
+          <span>+421911478965</span>
+          <span>martaslivkova95@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:29.572%;--service-color:#c05a2b" title="12.02.2026 17:15 - 19:55 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 12.02.2026 17:15 - 19:55 | Gél lak | 29.00€">
+        <b>12.02.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 12.2.2026 17:15</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Martina Mezovská</h2>
+        <div class="contact">
+          <span>+421915366491</span>
+          <span>mezovskamartina@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:53.750%;--service-color:#c05a2b" title="19.03.2026 15:30 - 17:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:68.287%;--service-color:#c05a2b" title="09.04.2026 15:30 - 17:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 19.03.2026 15:30 - 17:50 | Gél lak | 29.00€">
+        <b>19.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 09.04.2026 15:30 - 17:50 | Gél lak | 29.00€">
+        <b>09.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 9.4.2026 15:30</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Melisa Dusíková</h2>
+        <div class="contact">
+          <span>+421915522196</span>
+          <span>nunakrony@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:58.675%;--service-color:#c05a2b" title="26.03.2026 18:15 - 20:35 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 26.03.2026 18:15 - 20:35 | Gél lak | 29.00€">
+        <b>26.03.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 26.3.2026 18:15</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Michaela Copkova</h2>
+        <div class="contact">
+          <span>+421911369210</span>
+          <span>kavulova.michaela@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:33.516%;--service-color:#c05a2b" title="18.02.2026 10:00 - 12:20 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 18.02.2026 10:00 - 12:20 | Gél lak | 29.00€">
+        <b>18.02.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Michaela Grigelova</h2>
+        <div class="contact">
+          <span>+421944165056</span>
+          <span>michaelagrigelova53@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:59.792%;--service-color:#2f5ea8" title="28.03.2026 09:00 - 12:30 - Cancelled: Modelácia gélových nechtov | 38.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 28.03.2026 09:00 - 12:30 | Nové gély | 38.00€">
+        <b>28.03.</b>
+        Nové gély
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Michaela Jeleneková</h2>
+        <div class="contact">
+          <span>+421917743007</span>
+          <span>michaela.dzubarova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:8.595%;--service-color:#2f5ea8" title="13.01.2026 10:00 - 13:50 - Cancelled: Modelácia gélových nechtov | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 13.01.2026 10:00 - 13:50 | Nové gély | 25.00€">
+        <b>13.01.</b>
+        Nové gély
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Michal Blaško</h2>
+        <div class="contact">
+          <span>+421918355887</span>
+          <span>blackowicz@azet.sk</span>
+          
+        </div>
+        <div class="counts">
+          <span>0 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          
+        </div>
+        <div class="events"><span class="empty">No visits/reservations in this export</span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Miroslava Siváčková</h2>
+        <div class="contact">
+          <span>+421907727168</span>
+          <span>miroslava.sivackova299@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:5.365%;--service-color:#7a4db2" title="08.01.2026 18:00 - 21:40 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 08.01.2026 18:00 - 21:40 | Doplnenie | 25.00€">
+        <b>08.01.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 8.1.2026 18:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Monika Rapantová</h2>
+        <div class="contact">
+          <span>+421918324090</span>
+          <span>rapantova.monika@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>4 total</span>
+          <span>4 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:20.472%;--service-color:#c05a2b" title="30.01.2026 13:45 - 16:25 - Past: Gélová báza + gél lak | 25.00€"></span>
+<span class="event-dot past" style="left:32.240%;--service-color:#7a4db2" title="16.02.2026 13:45 - 17:05 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot past" style="left:54.485%;--service-color:#7a4db2" title="20.03.2026 17:00 - 20:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot past" style="left:71.690%;--service-color:#7a4db2" title="14.04.2026 13:30 - 16:50 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 30.01.2026 13:45 - 16:25 | Gél lak | 25.00€">
+        <b>30.01.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 16.02.2026 13:45 - 17:05 | Doplnenie | 32.00€">
+        <b>16.02.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 20.03.2026 17:00 - 20:20 | Doplnenie | 32.00€">
+        <b>20.03.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 14.04.2026 13:30 - 16:50 | Doplnenie | 32.00€">
+        <b>14.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 14.4.2026 13:30</span>
+        <span>Loyalty 4.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Mária Slivová</h2>
+        <div class="contact">
+          <span>+421905646301</span>
+          <span>mariaslivova@centrum.sk</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>1 past</span>
+          <span>1 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:77.163%;--service-color:#7a4db2" title="22.04.2026 11:15 - 14:35 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+<span class="event-dot future" style="left:91.816%;--service-color:#7a4db2" title="13.05.2026 15:15 - 18:35 - Future: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 22.04.2026 11:15 - 14:35 | Doplnenie | 32.00€">
+        <b>22.04.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip future" style="--service-color:#7a4db2" title="Future | 13.05.2026 15:15 - 18:35 | Doplnenie | 32.00€">
+        <b>13.05.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 22.4.2026 11:15</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Natalia Zancova</h2>
+        <div class="contact">
+          <span>+393484651596</span>
+          <span>natalia.zancova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:92.357%;--service-color:#2f5ea8" title="14.05.2026 10:00 - 13:30 - Cancelled: Modelácia gélových nechtov | 38.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 14.05.2026 10:00 - 13:30 | Nové gély | 38.00€">
+        <b>14.05.</b>
+        Nové gély
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Nataša Kubínyiová</h2>
+        <div class="contact">
+          <span>+421948413757</span>
+          <span>natasakubiny@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:26.103%;--service-color:#7a4db2" title="07.02.2026 17:00 - 20:40 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 07.02.2026 17:00 - 20:40 | Doplnenie | 32.00€">
+        <b>07.02.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 7.2.2026 17:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Natália Strasiftákova</h2>
+        <div class="contact">
+          <span>+421910885313</span>
+          <span>nataliastrasiftakova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:10.896%;--service-color:#7a4db2" title="16.01.2026 17:45 - 21:25 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 16.01.2026 17:45 - 21:25 | Doplnenie | 25.00€">
+        <b>16.01.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 16.1.2026 17:45</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Nina Škodová</h2>
+        <div class="contact">
+          <span>+421907634878</span>
+          <span>skodovanina25@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:28.670%;--service-color:#2f5ea8" title="11.02.2026 10:00 - 13:50 - Past: Modelácia gélových nechtov | 38.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#2f5ea8" title="Past | 11.02.2026 10:00 - 13:50 | Nové gély | 38.00€">
+        <b>11.02.</b>
+        Nové gély
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 11.2.2026 10:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Petr Stangl</h2>
+        <div class="contact">
+          <span>+421915774310</span>
+          <span>stangl@centrum.cz</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:21.085%;--service-color:#2f5ea8" title="31.01.2026 11:00 - 14:50 - Cancelled: Modelácia gélových nechtov | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#2f5ea8" title="Cancelled | 31.01.2026 11:00 - 14:50 | Nové gély | 25.00€">
+        <b>31.01.</b>
+        Nové gély
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>petra Horvathova</h2>
+        <div class="contact">
+          <span>+421901706770</span>
+          <span>petra.hor1991@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:73.875%;--service-color:#c05a2b" title="17.04.2026 17:15 - 19:35 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 17.04.2026 17:15 - 19:35 | Gél lak | 29.00€">
+        <b>17.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 17.4.2026 17:15</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Ružena Bzdúchová</h2>
+        <div class="contact">
+          <span>+421940773839</span>
+          <span>ruzazavaros@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:14.782%;--service-color:#7a4db2" title="22.01.2026 08:30 - 12:10 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 22.01.2026 08:30 - 12:10 | Doplnenie | 25.00€">
+        <b>22.01.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 22.1.2026 8:30</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Silvia Molnar</h2>
+        <div class="contact">
+          <span>+421948242224</span>
+          <span>silvia.ziakova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:78.065%;--service-color:#7a4db2" title="23.04.2026 18:30 - 21:50 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 23.04.2026 18:30 - 21:50 | Doplnenie | 32.00€">
+        <b>23.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 23.4.2026 18:30</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Sofia Ondriová</h2>
+        <div class="contact">
+          <span>+421944426234</span>
+          <span>sofia.ondriova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:10.247%;--service-color:#7a4db2" title="15.01.2026 19:15 - 22:55 - Cancelled: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+<span class="event-dot past" style="left:10.672%;--service-color:#7a4db2" title="16.01.2026 10:00 - 13:40 - Past: Modelácia gélových nechtov (doplnenie) | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#7a4db2" title="Cancelled | 15.01.2026 19:15 - 22:55 | Doplnenie | 25.00€">
+        <b>15.01.</b>
+        Doplnenie
+      </span>
+
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 16.01.2026 10:00 - 13:40 | Doplnenie | 25.00€">
+        <b>16.01.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 16.1.2026 10:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Tamara Magulová</h2>
+        <div class="contact">
+          <span>+421902646749</span>
+          <span>tamaraknotkova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:61.393%;--service-color:#7a4db2" title="30.03.2026 16:30 - 19:50 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 30.03.2026 16:30 - 19:50 | Doplnenie | 32.00€">
+        <b>30.03.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 30.3.2026 16:30</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Tamara Varsova</h2>
+        <div class="contact">
+          <span>+421910420070</span>
+          <span>tamara.varsova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:38.419%;--service-color:#67851f" title="25.02.2026 12:00 - 15:15 - Past: Spevnenie prirodzených nechtov gélom | 25.00€"></span>
+<span class="event-dot cancelled" style="left:61.984%;--service-color:#67851f" title="31.03.2026 13:00 - 15:55 - Cancelled: Spevnenie prirodzených nechtov gélom | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#67851f" title="Past | 25.02.2026 12:00 - 15:15 | Spevnenie prirodzených necht | 25.00€">
+        <b>25.02.</b>
+        Spevnenie prirodzených necht
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#67851f" title="Cancelled | 31.03.2026 13:00 - 15:55 | Spevnenie prirodzených necht | 32.00€">
+        <b>31.03.</b>
+        Spevnenie prirodzených necht
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 25.2.2026 12:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Tatiana Nemethova</h2>
+        <div class="contact">
+          <span>+421944246456</span>
+          <span>tatiana.nemeth@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>0 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          
+        </div>
+        <div class="events"><span class="empty">No visits/reservations in this export</span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 28.12.2025 17:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Tereza Machajdíková</h2>
+        <div class="contact">
+          <span>+421917764155</span>
+          <span>terezamachajdikova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>0 past</span>
+          <span>1 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot future" style="left:87.612%;--service-color:#c05a2b" title="07.05.2026 13:30 - 15:50 - Future: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot cancelled" style="left:87.799%;--service-color:#c05a2b" title="07.05.2026 20:00 - 22:20 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip future" style="--service-color:#c05a2b" title="Future | 07.05.2026 13:30 - 15:50 | Gél lak | 29.00€">
+        <b>07.05.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 07.05.2026 20:00 - 22:20 | Gél lak | 29.00€">
+        <b>07.05.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Tetiana Sekret</h2>
+        <div class="contact">
+          <span>+421917088053</span>
+          <span>sekrettv1994@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:59.864%;--service-color:#c05a2b" title="28.03.2026 11:30 - 13:50 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 28.03.2026 11:30 - 13:50 | Gél lak | 29.00€">
+        <b>28.03.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: Neznáme</span>
+        <span>Loyalty 0.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Valéria Šatková</h2>
+        <div class="contact">
+          <span>+421908529585</span>
+          <span>vali.satkova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:66.888%;--service-color:#7a4db2" title="07.04.2026 15:00 - 18:20 - Past: Modelácia gélových nechtov (doplnenie) | 32.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#7a4db2" title="Past | 07.04.2026 15:00 - 18:20 | Doplnenie | 32.00€">
+        <b>07.04.</b>
+        Doplnenie
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 7.4.2026 15:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Veronika Oleárniková</h2>
+        <div class="contact">
+          <span>+421902626399</span>
+          <span>v.zozulakova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>3 total</span>
+          <span>3 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:48.868%;--service-color:#c05a2b" title="12.03.2026 14:15 - 16:35 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:57.124%;--service-color:#c05a2b" title="24.03.2026 12:30 - 14:50 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:71.171%;--service-color:#2f766f" title="13.04.2026 19:30 - 20:50 - Past: Detailná manikúra | 20.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 12.03.2026 14:15 - 16:35 | Gél lak | 29.00€">
+        <b>12.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 24.03.2026 12:30 - 14:50 | Gél lak | 29.00€">
+        <b>24.03.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#2f766f" title="Past | 13.04.2026 19:30 - 20:50 | Detailná manikúra | 20.00€">
+        <b>13.04.</b>
+        Detailná manikúra
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 13.4.2026 19:30</span>
+        <span>Loyalty 3.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Viktória Václavová</h2>
+        <div class="contact">
+          <span>+421903718110</span>
+          <span>viktoria.vaclavova@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:20.565%;--service-color:#c05a2b" title="30.01.2026 17:00 - 19:40 - Past: Gélová báza + gél lak | 25.00€"></span>
+<span class="event-dot past" style="left:28.887%;--service-color:#4d6b86" title="11.02.2026 17:30 - 18:45 - Past: Výmena / oprava nechtu | 3.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 30.01.2026 17:00 - 19:40 | Gél lak | 25.00€">
+        <b>30.01.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#4d6b86" title="Past | 11.02.2026 17:30 - 18:45 | Výmena / oprava nechtu | 3.00€">
+        <b>11.02.</b>
+        Výmena / oprava nechtu
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 11.2.2026 17:30</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Voderadská</h2>
+        <div class="contact">
+          <span>+421903500698</span>
+          
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:4.528%;--service-color:#c05a2b" title="07.01.2026 13:00 - 15:40 - Past: Gélová báza + gél lak | 25.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 07.01.2026 13:00 - 15:40 | Gél lak | 25.00€">
+        <b>07.01.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 7.1.2026 13:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Yana Holubnycha</h2>
+        <div class="contact">
+          <span>+421952203307</span>
+          <span>yana.golubnicha@icloud.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>2 total</span>
+          <span>2 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:64.119%;--service-color:#c05a2b" title="03.04.2026 15:00 - 17:20 - Past: Gélová báza + gél lak | 29.00€"></span>
+<span class="event-dot past" style="left:79.197%;--service-color:#c05a2b" title="25.04.2026 09:45 - 12:05 - Past: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 03.04.2026 15:00 - 17:20 | Gél lak | 29.00€">
+        <b>03.04.</b>
+        Gél lak
+      </span>
+
+      <span class="event-chip past" style="--service-color:#c05a2b" title="Past | 25.04.2026 09:45 - 12:05 | Gél lak | 29.00€">
+        <b>25.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 25.4.2026 9:45</span>
+        <span>Loyalty 2.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>Zuzana Lančaričová</h2>
+        <div class="contact">
+          <span>+421911555121</span>
+          <span>lancaricova.z@gmail.com</span>
+          
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>1 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot past" style="left:73.637%;--service-color:#2f766f" title="17.04.2026 09:00 - 10:20 - Past: Detailná manikúra | 20.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip past" style="--service-color:#2f766f" title="Past | 17.04.2026 09:00 - 10:20 | Detailná manikúra | 20.00€">
+        <b>17.04.</b>
+        Detailná manikúra
+      </span></div>
+      </div>
+      <div class="facts">
+        <span>Last: 17.4.2026 9:00</span>
+        <span>Loyalty 1.0</span>
+        <span>No-show 0.0</span>
+      </div>
+    </section>
+    <h2 class="section-title">Reservation-only entries</h2>
+    <section class="customer">
+      <div class="person">
+        <h2>Alexandra Šefčíková</h2>
+        <div class="contact">
+          <span>+421908465407</span>
+          <span>alex.lisicka@gmail.com</span>
+          <span class="reservation-only">Reservation-only</span>
+        </div>
+        <div class="counts">
+          <span>1 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>1 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          <span class="event-dot cancelled" style="left:79.355%;--service-color:#c05a2b" title="25.04.2026 15:15 - 17:35 - Cancelled: Gélová báza + gél lak | 29.00€"></span>
+        </div>
+        <div class="events">
+      <span class="event-chip cancelled" style="--service-color:#c05a2b" title="Cancelled | 25.04.2026 15:15 - 17:35 | Gél lak | 29.00€">
+        <b>25.04.</b>
+        Gél lak
+      </span></div>
+      </div>
+      <div class="facts">
+        
+        
+        
+      </div>
+    </section>
+    <section class="customer">
+      <div class="person">
+        <h2>noname</h2>
+        <div class="contact">
+          
+          
+          <span class="reservation-only">Reservation-only</span>
+        </div>
+        <div class="counts">
+          <span>0 total</span>
+          <span>0 past</span>
+          <span>0 future</span>
+          <span>0 cancelled</span>
+        </div>
+      </div>
+      <div class="timeline-wrap">
+        <div class="rail">
+          <span class="month-tick major" style="left:0.000%"><i></i><b>01/26</b></span>
+<span class="month-tick minor" style="left:9.691%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:21.459%"><i></i><b>02/26</b></span>
+<span class="month-tick minor" style="left:31.151%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:40.842%"><i></i><b>03/26</b></span>
+<span class="month-tick minor" style="left:50.534%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:62.302%"><i></i><b>04/26</b></span>
+<span class="month-tick minor" style="left:71.993%"><i></i><b>15</b></span>
+<span class="month-tick major" style="left:83.069%"><i></i><b>05/26</b></span>
+<span class="month-tick minor" style="left:92.760%"><i></i><b>15</b></span>
+          <span class="today" style="left:82.716%" title="30.04.2026"></span>
+          
+        </div>
+        <div class="events"><span class="empty">No visits/reservations in this export</span></div>
+      </div>
+      <div class="facts">
+        
+        
+        
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -11,52 +11,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1.0,
         },
         {
-            url: `${baseUrl}/#cennik`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.9,
-        },
-        {
-            url: `${baseUrl}/#galeria`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
-        {
-            url: `${baseUrl}/#recenzie`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-        },
-        {
             url: `${baseUrl}/darcekove-poukazy`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.65,
         },
         {
-            url: `${baseUrl}/#faq`,
+            url: `${baseUrl}/blog`,
             lastModified: new Date(),
-            changeFrequency: 'monthly',
+            changeFrequency: 'weekly',
             priority: 0.7,
         },
         {
-            url: `${baseUrl}/#visit`,
+            url: `${baseUrl}/blog/ako-dlho-vydrzia-gelove-nechty`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.6,
         },
         {
-            url: `${baseUrl}/dakujeme`,
+            url: `${baseUrl}/blog/rozdiel-gel-lak-gelova-modelacia`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
-            priority: 0.3,
-        },
-        {
-            url: `${baseUrl}/blog`,
-            lastModified: new Date(),
-            changeFrequency: 'weekly',
-            priority: 0.7,
+            priority: 0.6,
         },
     ]
 }

@@ -14,7 +14,6 @@ export function Navbar() {
     const menuItems = [
         { href: "/#cennik", label: "Cenník" },
         { href: "/#darcekove-poukazky", label: "Poukazy" },
-        { href: "/#recenzie", label: "Recenzie" },
         { href: "/#galeria", label: "Galéria" },
         { href: "/#faq", label: "FAQ" },
         { href: "/#visit", label: "Kontakt" },

@@ -11,7 +11,6 @@ const SchemaMarkup = () => {
     "alternateName": ["Diara Manicure", "Diara Manicure Trnava", "Nechty Trnava"],
     "image": [
       "https://www.diaramanicure.sk/logo_spring_day.jpg",
-      "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-01.jpeg",
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-1.jpeg",
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-2.jpeg",
       "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-3.jpeg"
@@ -125,45 +124,6 @@ const SchemaMarkup = () => {
         }
       ]
     },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "5.0",
-      "reviewCount": "11",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
-    "review": [
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Paulína Ilčík"
-        },
-        "datePublished": "2024-12-15",
-        "reviewBody": "Najlepšie nechty v Trnave a širokom okolí. Katka je úžasná vo všetkých smeroch.",
-        "name": "Výborná kvalita",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
-        }
-      },
-      {
-        "@type": "Review",
-        "author": {
-          "@type": "Person",
-          "name": "Mária K."
-        },
-        "datePublished": "2024-12-01",
-        "reviewBody": "Úžasná gel manikúra! Dlho vydrží a vyzerá perfektne. Určite sa vrátim.",
-        "name": "Perfektná služba",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5"
-        }
-      }
-    ],
     "sameAs": [
       "https://www.instagram.com/diaramanicure",
       "https://www.facebook.com/diaramanicure"
@@ -196,44 +156,6 @@ const SchemaMarkup = () => {
     },
     "foundingDate": "2020",
     "slogan": "Kvalitné európske gély a precízna práca."
-  };
-
-  // BreadcrumbList Schema
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Domov",
-        "item": "https://www.diaramanicure.sk"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Cenník",
-        "item": "https://www.diaramanicure.sk/#cennik"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "Galéria",
-        "item": "https://www.diaramanicure.sk/#galeria"
-      },
-      {
-        "@type": "ListItem",
-        "position": 4,
-        "name": "Recenzie",
-        "item": "https://www.diaramanicure.sk/#recenzie"
-      },
-      {
-        "@type": "ListItem",
-        "position": 5,
-        "name": "Kontakt",
-        "item": "https://www.diaramanicure.sk/#visit"
-      }
-    ]
   };
 
   // FAQPage Schema
@@ -291,11 +213,6 @@ const SchemaMarkup = () => {
         id="schema-local-business"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c') }}
-      />
-      <Script
-        id="schema-breadcrumb"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
       <Script
         id="schema-faq"
