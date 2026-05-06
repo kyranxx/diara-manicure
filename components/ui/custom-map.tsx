@@ -1,5 +1,3 @@
-"use client"
-
 const Map = () => {
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const address = "Hospodárska 53, 91701 Trnava"

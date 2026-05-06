@@ -135,7 +135,7 @@
   }
 
   .signature-font {
-    font-family: var(--font-signature), "Segoe Script", cursive;
+    font-family: "Segoe Script", "Brush Script MT", cursive;
     font-weight: 400;
     letter-spacing: 0;
     transform: rotate(-4deg);

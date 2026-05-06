@@ -1,30 +1,11 @@
 import type React from "react"
 import type { Metadata } from "next"
 import "./globals.css"
-import { DM_Sans, Great_Vibes } from "next/font/google"
-import Script from "next/script"
-import { IdleAnalytics } from "@/components/idle-analytics"
-import { CookieConsent } from "@/components/cookie-consent"
-import { AnalyticsClickTracker } from "@/components/analytics-click-tracker"
-import { ScrollTracker } from "@/components/scroll-tracker"
-import { ThemeProvider } from "./providers"
-import { WebMcpProvider } from "@/components/webmcp-provider"
-import { LanguageProvider } from "@/components/language-provider"
+import { AnalyticsRuntime } from "@/components/analytics-runtime"
+import { CookieConsentMarkup } from "@/components/cookie-consent-markup"
+import { WebMcpScript } from "@/components/webmcp-script"
+import { defaultLanguage, translations } from "@/lib/i18n"
 
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: 'swap',
-  variable: '--font-dm-sans',
-})
-
-const signatureFont = Great_Vibes({
-  subsets: ["latin", "latin-ext"],
-  weight: "400",
-  display: 'swap',
-  variable: '--font-signature',
-})
 
 const socialImageUrl = "/og-image.jpg?v=20260407"
 
@@ -105,40 +86,30 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const t = translations[defaultLanguage]
+
   return (
     <html lang="sk" suppressHydrationWarning>
       <head>
-        <Script id="theme-init" strategy="beforeInteractive">
-          {`
+        <script
+          id="theme-init"
+          dangerouslySetInnerHTML={{
+            __html: `
             try {
               document.documentElement.classList.toggle(
                 "dark",
                 window.localStorage.getItem("theme") === "dark"
               );
             } catch (_) {}
-          `}
-        </Script>
-        <Script
-          src="/passive-fix.js"
-          strategy="beforeInteractive"
+          `,
+          }}
         />
       </head>
-      <body className={`${dmSans.className} ${dmSans.variable} ${signatureFont.variable}`} suppressHydrationWarning>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          disableTransitionOnChange
-        >
-          <LanguageProvider>
-            <WebMcpProvider />
-            <IdleAnalytics />
-            <AnalyticsClickTracker />
-            <ScrollTracker />
-            <CookieConsent />
-            {children}
-          </LanguageProvider>
-
-        </ThemeProvider>
+      <body suppressHydrationWarning>
+        <WebMcpScript />
+        <AnalyticsRuntime />
+        {children}
+        <CookieConsentMarkup t={t.cookie} />
       </body>
     </html>
   )

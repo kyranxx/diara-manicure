@@ -3,7 +3,11 @@
 import * as React from "react"
 import Script from "next/script"
 import { usePathname } from "next/navigation"
-import { getStoredConsent } from "@/lib/analytics"
+import {
+  CONSENT_CHANGED_EVENT,
+  getStoredConsent,
+  type ConsentPreferences,
+} from "@/lib/analytics"
 
 declare global {
   interface Window {
@@ -22,89 +26,53 @@ export function IdleAnalytics() {
 
   React.useEffect(() => {
     const isConversionPage = pathname === "/dakujeme"
+    const interactionEvents: Array<keyof WindowEventMap> = ["scroll", "pointerdown", "keydown", "touchstart"]
     let timeoutId: ReturnType<typeof setTimeout> | undefined
-    let clarityTimeoutId: ReturnType<typeof setTimeout> | undefined
-    let idleId: number | undefined
 
-    const loadAnalytics = () => setShouldLoadAnalytics(true)
-    const loadClarity = () => {
+    const loadGrantedScripts = () => {
       const consent = getStoredConsent()
+      if (consent?.analyticsStorage === "granted" || consent?.adStorage === "granted") {
+        setShouldLoadAnalytics(true)
+      }
       if (consent?.analyticsStorage === "granted") {
         setShouldLoadClarity(true)
       }
     }
 
-    if (isConversionPage) {
-      loadAnalytics()
+    const removeInteractionListeners = (handler: EventListener) => {
+      interactionEvents.forEach((eventName) =>
+        window.removeEventListener(eventName, handler, { capture: true } as EventListenerOptions)
+      )
     }
 
-    const scheduleDeferredScripts = () => {
-      if (typeof window.requestIdleCallback === "function") {
-        idleId = window.requestIdleCallback(loadAnalytics, { timeout: 10000 })
-        timeoutId = setTimeout(loadAnalytics, 12000)
-      } else {
-        timeoutId = setTimeout(loadAnalytics, 8000)
-      }
+    const handleInteraction: EventListener = () => {
+      loadGrantedScripts()
+      removeInteractionListeners(handleInteraction)
+    }
 
-      const interactionEvents: Array<keyof WindowEventMap> = ["scroll", "pointerdown", "keydown", "touchstart"]
-      const handleInteraction = () => {
-        loadClarity()
-        interactionEvents.forEach((eventName) =>
-          window.removeEventListener(eventName, handleInteraction, { capture: true } as EventListenerOptions)
-        )
+    const handleConsentChanged = (event: Event) => {
+      const prefs = (event as CustomEvent<ConsentPreferences>).detail
+      if (prefs.analyticsStorage === "granted" || prefs.adStorage === "granted") {
+        loadGrantedScripts()
       }
+    }
 
+    window.addEventListener(CONSENT_CHANGED_EVENT, handleConsentChanged)
+
+    if (isConversionPage) {
+      timeoutId = setTimeout(loadGrantedScripts, 1000)
+    } else {
       interactionEvents.forEach((eventName) =>
         window.addEventListener(eventName, handleInteraction, { once: true, passive: true, capture: true })
       )
-
-      clarityTimeoutId = setTimeout(() => {
-        loadClarity()
-        interactionEvents.forEach((eventName) =>
-          window.removeEventListener(eventName, handleInteraction, { capture: true } as EventListenerOptions)
-        )
-      }, 15000)
-
-      return () => {
-        interactionEvents.forEach((eventName) =>
-          window.removeEventListener(eventName, handleInteraction, { capture: true } as EventListenerOptions)
-        )
-      }
-    }
-
-    let cleanupDeferredListeners: (() => void) | undefined
-
-    if (isConversionPage) {
-      cleanupDeferredListeners = scheduleDeferredScripts()
-    } else {
-      const startDeferredLoading = () => {
-        cleanupDeferredListeners = scheduleDeferredScripts()
-      }
-
-      if (document.readyState === "complete") {
-        startDeferredLoading()
-      } else {
-        window.addEventListener("load", startDeferredLoading, { once: true })
-        cleanupDeferredListeners = () => window.removeEventListener("load", startDeferredLoading)
-      }
+      timeoutId = setTimeout(loadGrantedScripts, 45000)
     }
 
     return () => {
-      cleanupDeferredListeners?.()
-
+      window.removeEventListener(CONSENT_CHANGED_EVENT, handleConsentChanged)
+      removeInteractionListeners(handleInteraction)
       if (timeoutId) {
         clearTimeout(timeoutId)
-      }
-
-      if (clarityTimeoutId) {
-        clearTimeout(clarityTimeoutId)
-      }
-
-      if (
-        idleId !== undefined &&
-        typeof window.cancelIdleCallback === "function"
-      ) {
-        window.cancelIdleCallback(idleId)
       }
     }
   }, [pathname])

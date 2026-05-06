@@ -1,5 +1,4 @@
-import Image from "next/image"
-
+/* eslint-disable @next/next/no-img-element */
 interface ThemeAwareLogoProps {
   alt: string
   className?: string
@@ -19,22 +18,27 @@ export function ThemeAwareLogo({
 }: ThemeAwareLogoProps) {
   return (
     <>
-      <Image
-        src="/logo_spring_day.jpg"
+      <img
+        src="/logo_spring_day-780.webp"
+        srcSet="/logo_spring_day-390.webp 390w, /logo_spring_day-780.webp 780w"
         alt={alt}
         width={width}
         height={height}
         className={`${className ?? ""} dark:hidden`}
-        loading={priority ? "eager" : undefined}
-        priority={priority}
+        fetchPriority={priority ? "high" : undefined}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
         sizes={sizes}
       />
-      <Image
-        src="/logo_spring_night.jpg"
+      <img
+        src="/logo_spring_night-780.webp"
+        srcSet="/logo_spring_night-390.webp 390w, /logo_spring_night-780.webp 780w"
         alt={alt}
         width={width}
         height={height}
         className={`${className ?? ""} hidden dark:block`}
+        loading="lazy"
+        decoding="async"
         sizes={sizes}
       />
     </>

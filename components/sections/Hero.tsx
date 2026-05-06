@@ -1,18 +1,15 @@
-"use client"
-
+/* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
-import Image from "next/image"
 import { Phone, MessageCircle } from "lucide-react"
-import { useI18n } from "@/components/language-provider"
+import type { TranslationMessages } from "@/lib/i18n"
 
 interface HeroProps {
     bookingUrl: string
+    t: TranslationMessages
 }
 
-export function Hero({ bookingUrl }: HeroProps) {
-    const { t } = useI18n()
-
+export function Hero({ bookingUrl, t }: HeroProps) {
     return (
         <section className="relative min-h-[auto] md:min-h-[90vh] xl:min-h-[860px] flex flex-col justify-start pt-20 md:pt-20 pb-10 items-center text-center px-6 overflow-hidden bg-beige dark:bg-black">
             {/* Background Elements */}
@@ -21,14 +18,14 @@ export function Hero({ bookingUrl }: HeroProps) {
                 <div className="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-gradient-to-bl from-primary/5 to-transparent blur-3xl" />
             </div>
 
-            <div className="mb-8 relative w-full md:max-w-[780px] mx-auto">
+            <div className="mb-8 relative w-full max-w-[260px] md:max-w-[780px] mx-auto">
                 <ThemeAwareLogo
                     alt={t.hero.logoAlt}
                     width={1536}
                     height={600}
                     className="w-full h-auto"
                     priority
-                    sizes="(max-width: 768px) 100vw, 780px"
+                    sizes="(max-width: 768px) 260px, 780px"
                 />
             </div>
 
@@ -43,11 +40,10 @@ export function Hero({ bookingUrl }: HeroProps) {
                 <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
                     {t.hero.titlePrefix} <span className="text-primary">{t.hero.titleBrand}</span>
                 </h1>
-                <h2 className="text-xl md:text-2xl font-light text-muted-foreground mb-10">
-                    {t.hero.subtitleMain}
-                    <br className="my-2" />
-                    <span className="italic font-serif text-primary/80">{t.hero.subtitleHighlight}</span>
-                </h2>
+                <div className="mb-10 space-y-2 text-xl font-light text-muted-foreground md:text-2xl">
+                    <p>{t.hero.subtitleMain}</p>
+                    <p className="font-serif italic text-primary/80">{t.hero.subtitleHighlight}</p>
+                </div>
             </div>
 
             <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
@@ -58,18 +54,20 @@ export function Hero({ bookingUrl }: HeroProps) {
                     >
                         <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
                             <span>{t.hero.bookingCta}</span>
-                            <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
-                                <div className="relative h-4 w-16">
-                                    <Image
-                                        src="/bookio_logo.png"
-                                        alt="Bookio"
-                                        fill
-                                        className="object-contain"
-                                        sizes="64px"
-                                    />
+                                <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
+                                    <div className="relative h-4 w-16">
+                                        <img
+                                            src="/bookio_logo-128.webp"
+                                            alt="Bookio"
+                                            width={128}
+                                            height={28}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className="h-full w-full object-contain"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
                     </Button>
 
                     {/* Micro-copy below booking button */}
@@ -131,12 +129,16 @@ export function Hero({ bookingUrl }: HeroProps) {
                     {/* Quality Message Bubble - Desktop: Upper Left, Mobile: Below buttons */}
                     <div className="relative mt-0 flex w-full max-w-[420px] flex-col items-center gap-4 mx-auto xl:absolute xl:left-20 xl:top-[620px] xl:mt-0 xl:block xl:h-[430px]">
                         <div className="relative z-10 h-80 w-60 overflow-hidden rounded-[2rem] border-4 border-white/60 shadow-xl xl:absolute xl:left-0 xl:top-0">
-                            <Image
-                                src="/Andrea_Heckova_diara_manicure_necht_nails_trnava.jpg"
+                            <img
+                                src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                                data-lazy-src="/andrea-480.webp"
+                                data-lazy-srcset="/andrea-240.webp 240w, /andrea-480.webp 480w"
                                 alt={t.hero.founderImageAlt}
-                                fill
-                                className="object-cover object-top sepia-[.15]"
-                                sizes="256px"
+                                width={480}
+                                height={855}
+                                decoding="async"
+                                className="h-full w-full object-cover object-top sepia-[.15]"
+                                sizes="(max-width: 1279px) 232px, 240px"
                             />
                         </div>
                         <div className="relative z-20 w-full p-5 rounded-[2rem] bg-white/55 dark:bg-black/55 backdrop-blur-md border border-white/30 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl md:w-[min(20rem,80%)] md:p-6 xl:absolute xl:left-[7.5rem] xl:top-[18.25rem] xl:-translate-x-1/2">

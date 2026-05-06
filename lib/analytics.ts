@@ -1,4 +1,5 @@
 const CONSENT_COOKIE_KEY = "cookie-consent-prefs"
+export const CONSENT_CHANGED_EVENT = "diara:consent-changed"
 
 export type ConsentPreferences = {
   adStorage: "granted" | "denied"
@@ -38,6 +39,7 @@ export function saveConsent(prefs: ConsentPreferences): void {
   if (gtag) {
     gtag("consent", "update", { ...prefs })
   }
+  window.dispatchEvent(new CustomEvent(CONSENT_CHANGED_EVENT, { detail: prefs }))
   try {
     window.localStorage.setItem("clarity-consent", granted ? "1" : "0")
   } catch { /* ignore */ }

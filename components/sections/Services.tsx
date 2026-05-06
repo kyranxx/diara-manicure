@@ -1,16 +1,13 @@
-"use client"
-
 import type { Service } from "@/lib/sheets"
-import { useI18n } from "@/components/language-provider"
+import type { TranslationMessages } from "@/lib/i18n"
 
 interface ServicesProps {
     services: Service[]
     bookingUrl: string
+    t: TranslationMessages
 }
 
-export function Services({ services, bookingUrl }: ServicesProps) {
-    const { t } = useI18n()
-
+export function Services({ services, bookingUrl, t }: ServicesProps) {
     return (
         <section id="cennik" className="py-16 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">

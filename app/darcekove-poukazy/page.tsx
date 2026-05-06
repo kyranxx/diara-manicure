@@ -8,6 +8,7 @@ import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/button"
 import { GiftCardPageAnalytics } from "@/components/gift-card-page-analytics"
 import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
+import { defaultLanguage, translations } from "@/lib/i18n"
 import { siteConfig } from "@/lib/site-config"
 
 const pageUrl = `${siteConfig.baseUrl}/darcekove-poukazy`
@@ -38,6 +39,8 @@ export const metadata: Metadata = {
 }
 
 export default function GiftCardPage() {
+  const t = translations[defaultLanguage]
+
   const pageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -267,7 +270,7 @@ export default function GiftCardPage() {
           </section>
         </main>
 
-        <Footer />
+        <Footer t={t} />
       </div>
     </>
   )

@@ -1,13 +1,8 @@
-"use client"
-
 import { Instagram, Facebook } from "lucide-react"
-import Link from "next/link"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
-import { useI18n } from "@/components/language-provider"
+import type { TranslationMessages } from "@/lib/i18n"
 
-export function Footer() {
-    const { t } = useI18n()
-
+export function Footer({ t }: { t: TranslationMessages }) {
     return (
         <footer className="py-10 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
@@ -25,12 +20,12 @@ export function Footer() {
 
                     <div className="text-center">
                         <p className="text-sm text-foreground/80">{t.footer.rights}</p>
-                        <Link
+                        <a
                             href="/darcekove-poukazy"
                             className="mt-2 inline-block text-sm text-muted-foreground transition-colors hover:text-primary"
                         >
                             {t.footer.giftCards}
-                        </Link>
+                        </a>
                     </div>
 
                     <div className="flex gap-6">

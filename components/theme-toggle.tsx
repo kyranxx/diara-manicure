@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useI18n } from "@/components/language-provider"
 
 export function ThemeToggle() {
@@ -29,14 +28,14 @@ export function ThemeToggle() {
   }
 
   return (
-    <Button
-      variant="outline"
-      size="icon"
+    <button
+      type="button"
       onClick={toggleTheme}
+      className="relative inline-flex h-10 w-10 items-center justify-center rounded-md border border-input bg-background transition-colors hover:bg-accent hover:text-accent-foreground"
     >
       <Sun className={`h-[1.2rem] w-[1.2rem] transition-all ${isDark ? "-rotate-90 scale-0" : "rotate-0 scale-100"}`} />
       <Moon className={`absolute h-[1.2rem] w-[1.2rem] transition-all ${isDark ? "rotate-0 scale-100" : "rotate-90 scale-0"}`} />
       <span className="sr-only">{t.theme.toggle}</span>
-    </Button>
+    </button>
   )
 }

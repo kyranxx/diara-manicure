@@ -137,6 +137,7 @@ const sk = {
   },
   cookie: {
     title: "Cookie nastavenia",
+    summary: "Cookies používame iba na meranie a zlepšenie webu.",
     descriptionStart:
       "Používame súbory cookie na analýzu návštevnosti, zobrazenie personalizovaných reklám a zlepšenie vášho zážitku. Viac v",
     privacyLink: "Zásadách ochrany súkromia",
@@ -295,6 +296,7 @@ const en: TranslationMessages = {
   },
   cookie: {
     title: "Cookie settings",
+    summary: "We use cookies to measure and improve the website.",
     descriptionStart:
       "We use cookies to analyze traffic, show personalized ads and improve your experience. More in the",
     privacyLink: "Privacy Policy",
@@ -451,6 +453,7 @@ const uk: TranslationMessages = {
   },
   cookie: {
     title: "Налаштування cookie",
+    summary: "Ми використовуємо cookie для вимірювання та покращення сайту.",
     descriptionStart:
       "Ми використовуємо cookie для аналізу відвідуваності, показу персоналізованої реклами та покращення вашого досвіду. Більше в",
     privacyLink: "Політиці конфіденційності",
@@ -607,6 +610,7 @@ const sr: TranslationMessages = {
   },
   cookie: {
     title: "Podešavanja kolačića",
+    summary: "Koristimo kolačiće za merenje i poboljšanje sajta.",
     descriptionStart:
       "Koristimo kolačiće za analizu poseta, prikaz personalizovanih oglasa i poboljšanje vašeg iskustva. Više u",
     privacyLink: "Politici privatnosti",

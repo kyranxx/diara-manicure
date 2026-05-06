@@ -1,22 +1,22 @@
-"use client"
+/* eslint-disable @next/next/no-img-element */
+import type { TranslationMessages } from "@/lib/i18n"
 
-import Image from "next/image"
-import { useI18n } from "@/components/language-provider"
-
-export function About() {
-    const { t } = useI18n()
-
+export function About({ t }: { t: TranslationMessages }) {
     return (
         <section className="py-12 bg-beige dark:bg-black overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
                     {/* Images Column */}
                     <div className="relative h-[420px] w-full max-w-xl mx-auto md:h-[520px] md:mx-0">
-                        <Image
-                            src="/diara_nails_nechty_trnava_hospodarska.jpg"
+                        <img
+                            src="/studio-960.webp"
+                            srcSet="/studio-640.webp 640w, /studio-960.webp 960w"
                             alt={t.about.imageAlt}
-                            fill
-                            className="rounded-[2rem] border-4 border-white/60 object-cover shadow-2xl sepia-[.15]"
+                            width={960}
+                            height={1130}
+                            loading="lazy"
+                            decoding="async"
+                            className="h-full w-full rounded-[2rem] border-4 border-white/60 object-cover shadow-2xl sepia-[.15]"
                             sizes="(max-width: 768px) 100vw, 50vw"
                         />
                     </div>

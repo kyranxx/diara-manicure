@@ -93,7 +93,7 @@ export function LanguageSwitcher({ className, variant = "inline" }: LanguageSwit
           type="button"
           onClick={() => setOpen((current) => !current)}
           className="inline-flex h-9 items-center gap-1.5 rounded-full border border-primary/10 bg-white/65 px-2 text-xs font-semibold text-foreground shadow-sm transition-colors hover:bg-white dark:bg-white/10 dark:hover:bg-white/15"
-          aria-label={t.languageSwitcher.label}
+          aria-label={`${t.languageSwitcher.label}: ${activeLanguage.shortLabel}`}
           aria-expanded={open}
         >
           <FlagIcon flag={activeLanguage.flag} />
@@ -157,7 +157,7 @@ export function LanguageSwitcher({ className, variant = "inline" }: LanguageSwit
                 : "text-foreground/75 hover:bg-white/70 hover:text-foreground dark:hover:bg-white/15"
             )}
             aria-pressed={selected}
-            aria-label={`${t.languageSwitcher.changeTo} ${item.label}`}
+            aria-label={`${item.shortLabel}: ${t.languageSwitcher.changeTo} ${item.label}`}
             title={`${t.languageSwitcher.changeTo} ${item.label}`}
           >
             <FlagIcon flag={item.flag} />

@@ -1,10 +1,6 @@
-"use client"
+import type { TranslationMessages } from "@/lib/i18n"
 
-import { useI18n } from "@/components/language-provider"
-
-export function FAQ() {
-    const { t } = useI18n()
-
+export function FAQ({ t }: { t: TranslationMessages }) {
     return (
         <section id="faq" className="py-16 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">

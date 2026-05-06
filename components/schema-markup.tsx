@@ -1,6 +1,3 @@
-import React from 'react';
-import Script from "next/script";
-
 const SchemaMarkup = () => {
   // LocalBusiness Schema with enhanced data
   const localBusinessSchema = {
@@ -209,12 +206,12 @@ const SchemaMarkup = () => {
 
   return (
     <>
-      <Script
+      <script
         id="schema-local-business"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c') }}
       />
-      <Script
+      <script
         id="schema-faq"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}

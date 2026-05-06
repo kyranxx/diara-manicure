@@ -1,15 +1,10 @@
-"use client"
-
-import Image from "next/image"
-import Link from "next/link"
+/* eslint-disable @next/next/no-img-element */
 import { Check, ShoppingBasket } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
-import { useI18n } from "@/components/language-provider"
+import { siteConfig } from "@/lib/site-config"
+import type { TranslationMessages } from "@/lib/i18n"
 
-export function GiftCards() {
-    const { t } = useI18n()
-
+export function GiftCards({ t }: { t: TranslationMessages }) {
     return (
         <section id="darcekove-poukazky" className="py-16 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
@@ -32,13 +27,13 @@ export function GiftCards() {
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                                 <Button asChild className="h-12 rounded-full px-7">
-                                    <GiftCardTrackedLink source="homepage_gift_card_section">
+                                    <a href={siteConfig.giftCardUrl} target="_blank" rel="noopener noreferrer">
                                         <ShoppingBasket className="h-4 w-4" />
                                         {t.giftCards.buyCta}
-                                    </GiftCardTrackedLink>
+                                    </a>
                                 </Button>
                                 <Button asChild variant="outline" className="h-12 rounded-full px-7">
-                                    <Link href="/darcekove-poukazy">{t.giftCards.moreInfoCta}</Link>
+                                    <a href="/darcekove-poukazy">{t.giftCards.moreInfoCta}</a>
                                 </Button>
                             </div>
 
@@ -53,12 +48,14 @@ export function GiftCards() {
                         <div className="relative order-1 md:order-2">
                             <div className="relative aspect-square max-w-md mx-auto">
                                 <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg border border-primary/10 bg-white dark:bg-card">
-                                    <Image
-                                        src="/gift-card.jpg"
+                                    <img
+                                        src="/gift-card-520.webp"
                                         alt={t.giftCards.imageAlt}
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                        width={520}
+                                        height={521}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="h-full w-full object-cover"
                                     />
                                 </div>
                             </div>

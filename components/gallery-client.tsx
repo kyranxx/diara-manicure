@@ -1,12 +1,45 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useState } from "react"
-import { Gallery } from "@/components/sections/Gallery"
-import { Lightbox } from "@/components/sections/Lightbox"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import dynamic from "next/dynamic"
 import { useI18n } from "@/components/language-provider"
+
+const Gallery = dynamic(() => import("@/components/sections/Gallery").then((mod) => mod.Gallery), {
+  ssr: false,
+})
+
+const Lightbox = dynamic(() => import("@/components/sections/Lightbox").then((mod) => mod.Lightbox), {
+  ssr: false,
+})
 
 export function GalleryClient() {
   const { t } = useI18n()
+  const [shouldRenderGallery, setShouldRenderGallery] = useState(false)
+  const galleryShellRef = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (shouldRenderGallery) return
+    const node = galleryShellRef.current
+    if (!node) return
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldRenderGallery(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldRenderGallery(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "1200px 0px" }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [shouldRenderGallery])
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [isZoomed, setIsZoomed] = useState(false)
@@ -104,6 +137,25 @@ export function GalleryClient() {
     window.addEventListener("keydown", handleKeyDown)
     return () => window.removeEventListener("keydown", handleKeyDown)
   }, [lightboxOpen, closeLightbox, goToPrevious, goToNext])
+
+  if (!shouldRenderGallery) {
+    return (
+      <section
+        id="galeria"
+        ref={galleryShellRef}
+        className="relative overflow-hidden bg-beige pt-10 pb-16 dark:bg-black"
+      >
+        <div className="container mx-auto px-6">
+          <div className="mb-0 text-center">
+            <h2 className="mb-4 text-5xl font-light tracking-tight text-black md:text-7xl dark:text-white">
+              {t.gallery.heading}
+            </h2>
+            <div className="mx-auto h-1 w-24 rounded-full bg-primary/20" />
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <>

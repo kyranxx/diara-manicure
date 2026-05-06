@@ -1,17 +1,14 @@
-"use client"
-
 import { MapPin, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Map from "@/components/ui/custom-map"
-import { useI18n } from "@/components/language-provider"
+import type { TranslationMessages } from "@/lib/i18n"
 
 interface ContactProps {
     bookingUrl: string
+    t: TranslationMessages
 }
 
-export function Contact({ bookingUrl }: ContactProps) {
-    const { t } = useI18n()
-
+export function Contact({ bookingUrl, t }: ContactProps) {
     return (
         <section id="visit" className="pt-16 pb-10 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
