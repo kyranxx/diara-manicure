@@ -5,13 +5,13 @@ export async function GET() {
 Allow: /
 Disallow: /api/
 Disallow: /dakujeme
-Content-Signal: ${siteConfig.contentSignal}
 Sitemap: ${siteConfig.baseUrl}/sitemap.xml
 `
 
   return new Response(robots, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
+      "Content-Signal": siteConfig.contentSignal,
       "Cache-Control": "public, max-age=300",
     },
   })
