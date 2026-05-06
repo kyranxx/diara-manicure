@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Instagram, ZoomIn } from "lucide-react"
+import { useI18n } from "@/components/language-provider"
 
 interface GalleryImage {
   src: string
@@ -20,6 +21,7 @@ interface GalleryProps {
 }
 
 export function Gallery({ gallerySections, openLightbox }: GalleryProps) {
+  const { t } = useI18n()
   const subtleTilt = [-2.2, -1.2, -0.4, 0.4, 1.2, 2.2]
   const subtleLift = [-2, 1, -1, 2, 0, -1]
 
@@ -34,7 +36,7 @@ export function Gallery({ gallerySections, openLightbox }: GalleryProps) {
       <div className="container mx-auto px-6">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-5xl font-light tracking-tight text-black md:text-7xl dark:text-white">
-            Nechty našich klientiek
+            {t.gallery.heading}
           </h2>
           <div className="mx-auto mb-5 h-1 w-24 rounded-full bg-primary/20" />
         </div>
@@ -58,7 +60,7 @@ export function Gallery({ gallerySections, openLightbox }: GalleryProps) {
                         style={{
                           transform: `translateY(${lift}px) rotate(${tilt}deg)`,
                         }}
-                        aria-label={`Otvoriť obrázok: ${image.alt}`}
+                        aria-label={`${t.gallery.openImageAria} ${image.alt}`}
                       >
                         <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/25 via-transparent to-black/10 transition-colors group-hover:from-black/40" />
                         <div className="absolute inset-0 z-20 flex items-center justify-center">
@@ -95,7 +97,7 @@ export function Gallery({ gallerySections, openLightbox }: GalleryProps) {
               <span className="inline-flex h-7 w-8 items-center justify-center rounded-md bg-[radial-gradient(circle_at_30%_110%,#fdf497_0%,#fdf497_18%,#fd5949_45%,#d6249f_68%,#285AEB_100%)] shadow-sm">
                 <Instagram className="h-4 w-4 text-white" />
               </span>
-              Sledujte nás na Instagrame
+              {t.gallery.instagramCta}
             </a>
           </Button>
         </div>

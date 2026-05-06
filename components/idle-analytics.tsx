@@ -3,6 +3,7 @@
 import * as React from "react"
 import Script from "next/script"
 import { usePathname } from "next/navigation"
+import { getStoredConsent } from "@/lib/analytics"
 
 declare global {
   interface Window {
@@ -26,7 +27,12 @@ export function IdleAnalytics() {
     let idleId: number | undefined
 
     const loadAnalytics = () => setShouldLoadAnalytics(true)
-    const loadClarity = () => setShouldLoadClarity(true)
+    const loadClarity = () => {
+      const consent = getStoredConsent()
+      if (consent?.analyticsStorage === "granted") {
+        setShouldLoadClarity(true)
+      }
+    }
 
     if (isConversionPage) {
       loadAnalytics()
@@ -120,9 +126,33 @@ export function IdleAnalytics() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               window.gtag = window.gtag || gtag;
+
+              var consent = {ad_storage:'denied', analytics_storage:'denied', ad_user_data:'denied', ad_personalization:'denied'};
+              try {
+                var stored = localStorage.getItem('cookie-consent-prefs');
+                if (stored) { var parsed = JSON.parse(stored); if (parsed) { consent = parsed; } }
+              } catch(_) {}
+
+              gtag('consent', 'default', consent);
               gtag('js', new Date());
-              gtag('config', 'G-QCMMZCQZTP');
-              gtag('config', 'AW-17746151386');
+
+              var userId = '';
+              try {
+                userId = localStorage.getItem('ga-anon-user-id');
+                if (!userId) {
+                  userId = (crypto.randomUUID && crypto.randomUUID()) || (Date.now() + '-' + Math.random().toString(36).slice(2,11));
+                  localStorage.setItem('ga-anon-user-id', userId);
+                }
+              } catch(_) {}
+
+              gtag('config', 'G-QCMMZCQZTP', {
+                user_id: userId || undefined,
+              });
+
+              gtag('config', 'AW-17746151386', {
+                user_id: userId || undefined,
+                allow_enhanced_conversions: true,
+              });
             `}
           </Script>
         </>

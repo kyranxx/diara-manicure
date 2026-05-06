@@ -1,10 +1,15 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Check, ShoppingBasket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
+import { useI18n } from "@/components/language-provider"
 
 export function GiftCards() {
+    const { t } = useI18n()
+
     return (
         <section id="darcekove-poukazky" className="py-16 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
@@ -13,35 +18,34 @@ export function GiftCards() {
                         <div className="text-center md:text-left order-2 md:order-1">
                             <div className="inline-flex items-center gap-2 rounded-full border border-primary/10 bg-white/45 px-4 py-2 text-sm font-medium text-muted-foreground dark:bg-card">
                                 <ShoppingBasket className="h-4 w-4" aria-hidden="true" />
-                                <span>Darčekové poukazy</span>
+                                <span>{t.giftCards.label}</span>
                             </div>
 
                             <h2 className="text-3xl md:text-5xl font-light mb-5 mt-5 tracking-tight text-black dark:text-white">
-                                Poukaz na manikúru v Trnave
+                                {t.giftCards.heading}
                             </h2>
                             <div className="w-20 h-1 bg-primary/20 mx-auto md:mx-0 mb-6 rounded-full" />
 
                             <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-light">
-                                Hľadáte praktický darček pre mamu, sestru, priateľku či kolegyňu?
-                                Poukaz sa dá kúpiť online a doručiť emailom.
+                                {t.giftCards.description}
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                                 <Button asChild className="h-12 rounded-full px-7">
                                     <GiftCardTrackedLink source="homepage_gift_card_section">
                                         <ShoppingBasket className="h-4 w-4" />
-                                        Kúpiť poukaz
+                                        {t.giftCards.buyCta}
                                     </GiftCardTrackedLink>
                                 </Button>
                                 <Button asChild variant="outline" className="h-12 rounded-full px-7">
-                                    <Link href="/darcekove-poukazy">Viac informácií</Link>
+                                    <Link href="/darcekove-poukazy">{t.giftCards.moreInfoCta}</Link>
                                 </Button>
                             </div>
 
                             <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start text-sm text-muted-foreground">
                                 <div className="flex items-center gap-2">
                                     <Check className="h-4 w-4 text-green-700 dark:text-green-400" aria-hidden="true" />
-                                    <span>Doručenie emailom</span>
+                                    <span>{t.giftCards.delivery}</span>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +55,7 @@ export function GiftCards() {
                                 <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg border border-primary/10 bg-white dark:bg-card">
                                     <Image
                                         src="/gift-card.jpg"
-                                        alt="Darčekový poukaz Diara Manicure"
+                                        alt={t.giftCards.imageAlt}
                                         fill
                                         className="object-cover"
                                         sizes="(max-width: 768px) 100vw, 50vw"

@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from "lucide-react"
+import { useI18n } from "@/components/language-provider"
 
 interface GalleryImage {
     src: string
@@ -29,6 +30,8 @@ export function Lightbox({
     isZoomed,
     onToggleZoom
 }: LightboxProps) {
+    const { t } = useI18n()
+
     if (!isOpen) return null
 
     return (
@@ -37,13 +40,13 @@ export function Lightbox({
             onClick={onClose}
             role="dialog"
             aria-modal="true"
-            aria-label="Prehliadač galérie"
+            aria-label={t.lightbox.dialogLabel}
         >
             {/* Close button */}
             <button
                 onClick={onClose}
                 className="absolute top-4 right-4 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-                aria-label="Zavrieť"
+                aria-label={t.lightbox.close}
             >
                 <X className="w-6 h-6" />
             </button>
@@ -55,7 +58,7 @@ export function Lightbox({
                     onToggleZoom()
                 }}
                 className="absolute top-4 right-20 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-                aria-label={isZoomed ? "Oddialiť" : "Priblížiť"}
+                aria-label={isZoomed ? t.lightbox.zoomOut : t.lightbox.zoomIn}
             >
                 {isZoomed ? <ZoomOut className="w-6 h-6" /> : <ZoomIn className="w-6 h-6" />}
             </button>
@@ -67,7 +70,7 @@ export function Lightbox({
                     onPrevious()
                 }}
                 className="absolute left-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-                aria-label="Predchádzajúci obrázok"
+                aria-label={t.lightbox.previous}
             >
                 <ChevronLeft className="w-8 h-8" />
             </button>
@@ -78,7 +81,7 @@ export function Lightbox({
                     onNext()
                 }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 z-[101] p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-300 hover:scale-110"
-                aria-label="Nasledujúci obrázok"
+                aria-label={t.lightbox.next}
             >
                 <ChevronRight className="w-8 h-8" />
             </button>

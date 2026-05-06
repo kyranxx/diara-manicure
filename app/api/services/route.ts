@@ -1,6 +1,7 @@
 import { getSheetsData } from '@/lib/sheets'
 import { NextResponse } from 'next/server'
 import { securityMonitor } from '@/lib/security-monitor'
+import { trackApiCall } from '@/lib/measurement-protocol'
 
 export const dynamic = 'force-dynamic'
 
@@ -65,6 +66,8 @@ export async function GET(request: Request) {
       discountedPrice: service.discountedPrice ? String(service.discountedPrice).slice(0, 50) : undefined // Include discounted price
     }))
 
+    trackApiCall("/api/services", 200, clientIP, userAgent)
+
     return NextResponse.json(sanitizedData, {
       headers: {
         'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=30', // 30 seconds cache
@@ -88,6 +91,8 @@ export async function GET(request: Request) {
       ip: clientIP,
       userAgent
     })
+
+    trackApiCall("/api/services", 500, clientIP, userAgent)
 
     // Secure error handling without sensitive data
     const errorMessage = process.env.NODE_ENV === 'development'

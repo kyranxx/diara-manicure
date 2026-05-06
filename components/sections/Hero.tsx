@@ -1,13 +1,18 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 import Image from "next/image"
 import { Phone, MessageCircle } from "lucide-react"
+import { useI18n } from "@/components/language-provider"
 
 interface HeroProps {
     bookingUrl: string
 }
 
 export function Hero({ bookingUrl }: HeroProps) {
+    const { t } = useI18n()
+
     return (
         <section className="relative min-h-[auto] md:min-h-[90vh] xl:min-h-[860px] flex flex-col justify-start pt-20 md:pt-20 pb-10 items-center text-center px-6 overflow-hidden bg-beige dark:bg-black">
             {/* Background Elements */}
@@ -18,7 +23,7 @@ export function Hero({ bookingUrl }: HeroProps) {
 
             <div className="mb-8 relative w-full md:max-w-[780px] mx-auto">
                 <ThemeAwareLogo
-                    alt="Diara Manicure - Nechty Trnava - Jarné logo"
+                    alt={t.hero.logoAlt}
                     width={1536}
                     height={600}
                     className="w-full h-auto"
@@ -36,12 +41,12 @@ export function Hero({ bookingUrl }: HeroProps) {
             </div>
             */}
                 <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
-                    Gélové nechty Trnava | <span className="text-primary">diara manicure.</span>
+                    {t.hero.titlePrefix} <span className="text-primary">{t.hero.titleBrand}</span>
                 </h1>
                 <h2 className="text-xl md:text-2xl font-light text-muted-foreground mb-10">
-                    Profesionálne nechtové štúdio • Nails Trnava & manikúra
+                    {t.hero.subtitleMain}
                     <br className="my-2" />
-                    <span className="italic font-serif text-primary/80">Kvalitné európske gély. Parkovanie zdarma.</span>
+                    <span className="italic font-serif text-primary/80">{t.hero.subtitleHighlight}</span>
                 </h2>
             </div>
 
@@ -52,7 +57,7 @@ export function Hero({ bookingUrl }: HeroProps) {
                         className="h-auto py-2 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2"
                     >
                         <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                            <span>Pozrieť voľné termíny</span>
+                            <span>{t.hero.bookingCta}</span>
                             <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
                                 <div className="relative h-4 w-16">
                                     <Image
@@ -69,9 +74,9 @@ export function Hero({ bookingUrl }: HeroProps) {
 
                     {/* Micro-copy below booking button */}
                     <div className="text-base md:text-lg text-foreground/75 italic text-center -mt-2 mb-4 flex flex-col items-center gap-1 dark:text-white/80">
-                        <span className="not-italic font-medium text-primary">💳 Platba možná aj kartou</span>
-                        <span>Nezáväzná rezervácia</span>
-                        <span>Parkovanie a káva zdarma</span>
+                        <span className="not-italic font-medium text-primary">{t.hero.cardPayment}</span>
+                        <span>{t.hero.softReservation}</span>
+                        <span>{t.hero.parkingCoffee}</span>
                     </div>
 
                     <a
@@ -79,7 +84,7 @@ export function Hero({ bookingUrl }: HeroProps) {
                         className="w-full py-3 px-6 text-center rounded-full border-2 border-pink-400/50 hover:border-pink-500/80 bg-gradient-to-r from-pink-50 to-red-50 hover:from-pink-100 hover:to-red-100 dark:from-pink-950/30 dark:to-red-950/30 dark:hover:from-pink-900/40 dark:hover:to-red-900/40 transition-all duration-300 group flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover:shadow-pink-200/50 dark:hover:shadow-pink-900/30"
                     >
                         <span className="text-lg animate-pulse">💝</span>
-                        <span className="font-medium text-foreground bg-gradient-to-r from-pink-600 to-red-500 bg-clip-text text-transparent dark:from-pink-400 dark:to-red-400">Darčekové poukazy</span>
+                        <span className="font-medium text-foreground bg-gradient-to-r from-pink-600 to-red-500 bg-clip-text text-transparent dark:from-pink-400 dark:to-red-400">{t.hero.giftCardsCta}</span>
                         <span className="text-lg animate-pulse">✨</span>
                     </a>
 
@@ -89,7 +94,7 @@ export function Hero({ bookingUrl }: HeroProps) {
                             <Phone className="w-5 h-5 text-primary" />
                         </div>
                         <div className="text-left">
-                            <p className="text-xs text-foreground/70 font-medium uppercase tracking-wider dark:text-white/75">Rezervácie telefonicky</p>
+                            <p className="text-xs text-foreground/70 font-medium uppercase tracking-wider dark:text-white/75">{t.hero.phoneLabel}</p>
                             <a
                                 href="tel:+421902163144"
                                 className="text-lg font-semibold text-foreground hover:text-primary transition-colors tracking-[0.15em]"
@@ -110,7 +115,7 @@ export function Hero({ bookingUrl }: HeroProps) {
                             <MessageCircle className="w-5 h-5 text-[#0084FF]" />
                         </div>
                         <div className="text-left">
-                            <p className="text-xs text-black font-semibold uppercase tracking-wider dark:text-white">Napíšte nám správu</p>
+                            <p className="text-xs text-black font-semibold uppercase tracking-wider dark:text-white">{t.hero.messengerLabel}</p>
                             <span className="text-lg font-semibold text-foreground">Facebook Messenger</span>
                         </div>
                     </a>
@@ -120,7 +125,7 @@ export function Hero({ bookingUrl }: HeroProps) {
                         asChild
                         className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full mb-8"
                     >
-                        <a href="#visit">Kde nás nájdete</a>
+                        <a href="#visit">{t.hero.visitCta}</a>
                     </Button>
 
                     {/* Quality Message Bubble - Desktop: Upper Left, Mobile: Below buttons */}
@@ -128,7 +133,7 @@ export function Hero({ bookingUrl }: HeroProps) {
                         <div className="relative z-10 h-80 w-60 overflow-hidden rounded-[2rem] border-4 border-white/60 shadow-xl xl:absolute xl:left-0 xl:top-0">
                             <Image
                                 src="/Andrea_Heckova_diara_manicure_necht_nails_trnava.jpg"
-                                alt="Andrea Hecková - Zakladateľka Diara Manicure Trnava"
+                                alt={t.hero.founderImageAlt}
                                 fill
                                 className="object-cover object-top sepia-[.15]"
                                 sizes="256px"
@@ -136,12 +141,12 @@ export function Hero({ bookingUrl }: HeroProps) {
                         </div>
                         <div className="relative z-20 w-full p-5 rounded-[2rem] bg-white/55 dark:bg-black/55 backdrop-blur-md border border-white/30 shadow-lg text-center hover:scale-105 transition-transform duration-300 hover:shadow-xl md:w-[min(20rem,80%)] md:p-6 xl:absolute xl:left-[7.5rem] xl:top-[18.25rem] xl:-translate-x-1/2">
                             <p className="text-base md:text-lg font-light leading-relaxed text-black dark:text-white">
-                                Našou prioritou sú <span className="italic font-serif text-primary">kvalitné európske gély</span> a precízne odvedená práca.
+                                {t.hero.qualityStart} <span className="italic font-serif text-primary">{t.hero.qualityHighlight}</span> {t.hero.qualityEnd}
                                 <br className="my-5 block" />
-                                Ak hľadáte expresnú službu do 30 minút, <span className="italic font-serif text-primary">náš koncept je iný – my si na kvalite dávame záležať</span>.
+                                {t.hero.conceptStart} <span className="italic font-serif text-primary">{t.hero.conceptHighlight}</span>.
                             </p>
                             <p className="signature-font mt-3 text-right text-3xl leading-none text-black/75 dark:text-white/80">
-                                Andrea Hečková
+                                {t.hero.founderName}
                             </p>
                         </div>
                     </div>

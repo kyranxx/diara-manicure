@@ -25,13 +25,14 @@ function canUseCache(): boolean {
 }
 
 const FALLBACK_SERVICES: Service[] = [
-  { title: 'Modelácia gélových nechtov (Nové nechty)', description: 'Predĺženie nechtov na šablóny, úprava kožtičky, farebný gél/gellak, záverečná starostlivosť.', price: '35 €', discountedPrice: '29 €' },
-  { title: 'Doplnenie gélových nechtov (Dorábka)', description: 'Odstránenie starého materiálu, úprava kožtičky, nová modelácia, farebný gél/gellak.', price: '30 €' },
-  { title: 'Gél lak (Spevnenie nechtov)', description: 'Úprava kožtičky, spevnenie kaučukovým bázovým gélom, farba.', price: 'Pozri cenník' },
-  { title: 'Japonská manikúra', description: 'Hĺbková výživa a leštenie prírodných nechtov včelím voskom.', price: '20 €' },
-  { title: 'Klasická manikúra', description: 'Úprava tvaru nechtov, zatlačenie kožtičky, výživný olejček.', price: '15 €' },
-  { title: 'Odstránenie gélových nechtov', description: 'Bez ďalšej úpravy.', price: '10 €' },
-  { title: 'Nail Art (zdobenie)', description: 'Podľa náročnosti (kamienky, kreslenie, fólie...).', price: 'od 1 €' },
+  { title: 'Detailná suchá manikúra', description: 'Suchá manikúra. Čistenie nechtov, odstránenie kožičky, úprava, olejček - bez lakovania.', price: '20€' },
+  { title: 'Gélová báza + géllak', description: 'Vhodné na krátke nechty. Spevnenie prirodzených nechtov gélovou bázou s výberom farby gél laku, francúzskej manikúry, zdobenie. Zahŕňa detailnú manikúru.', price: '29€' },
+  { title: 'Spevnenie prirodzených nechtov gélom', description: 'Spevnenie prirodzených nechtov gélom s výberom farby, francúzskej manikúry, zdobenia. Zahŕňa detailnú manikúru.', price: '32€' },
+  { title: 'Modelácia gélových nechtov - nové', description: 'Predlžovanie, nové gélové nechty s výberom farby, francúzskej manikúry, zdobenie. Zahŕňa detailnú manikúru.', price: '38€' },
+  { title: 'Modelácia gélových nechtov - doplnenie', description: 'Doplnenie gélových nechtov s výberom farby, francúzskej manikúry, zdobenie. Zahŕňa detailnú manikúru.', price: '32€' },
+  { title: 'Odstránenie gélových nechtov', description: 'iba ak je gél, polygél. S akrylom nepracujeme.', price: '15€' },
+  { title: 'Výmena / oprava / predĺženie nechtu mimo doplnenia - iba po telefonickej dohode, sms', description: '', price: '5€' },
+  { title: 'Termín mimo kalendár', description: '1 ks', price: '10€' },
 ];
 
 async function fetchSheetsData(): Promise<Service[]> {

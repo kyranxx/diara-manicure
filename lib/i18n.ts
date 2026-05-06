@@ -1,0 +1,648 @@
+export const languages = [
+  { code: "sk", label: "Slovenčina", shortLabel: "SK", flag: "sk", htmlLang: "sk" },
+  { code: "en", label: "English", shortLabel: "EN", flag: "gb", htmlLang: "en" },
+  { code: "uk", label: "Українська", shortLabel: "UA", flag: "ua", htmlLang: "uk" },
+  { code: "sr", label: "Srpski", shortLabel: "SR", flag: "rs", htmlLang: "sr-Latn" },
+] as const
+
+export type Language = (typeof languages)[number]["code"]
+
+export const defaultLanguage = "sk" satisfies Language
+export const languageStorageKey = "diara-language"
+
+const sk = {
+  languageSwitcher: {
+    label: "Jazyk stránky",
+    changeTo: "Prepnúť jazyk na",
+  },
+  theme: {
+    toggle: "Prepnúť tému",
+  },
+  nav: {
+    openMenu: "Otvoriť menu",
+    closeMenu: "Zavrieť menu",
+    items: {
+      services: "Cenník",
+      giftCards: "Poukazy",
+      gallery: "Galéria",
+      faq: "FAQ",
+      contact: "Kontakt",
+    },
+  },
+  hero: {
+    logoAlt: "Diara Manicure - Nechty Trnava - Jarné logo",
+    titlePrefix: "Gélové nechty Trnava |",
+    titleBrand: "diara manicure.",
+    subtitleMain: "Profesionálne nechtové štúdio • Nails Trnava & manikúra",
+    subtitleHighlight: "Kvalitné európske gély. Parkovanie zdarma.",
+    bookingCta: "Pozrieť voľné termíny",
+    cardPayment: "💳 Platba možná aj kartou",
+    softReservation: "Nezáväzná rezervácia",
+    parkingCoffee: "Parkovanie a káva zdarma",
+    giftCardsCta: "Darčekové poukazy",
+    phoneLabel: "Rezervácie telefonicky",
+    messengerLabel: "Napíšte nám správu",
+    visitCta: "Kde nás nájdete",
+    founderImageAlt: "Andrea Hecková - Zakladateľka Diara Manicure Trnava",
+    qualityStart: "Našou prioritou sú",
+    qualityHighlight: "kvalitné európske gély",
+    qualityEnd: "a precízne odvedená práca.",
+    conceptStart: "Ak hľadáte expresnú službu do 30 minút,",
+    conceptHighlight: "náš koncept je iný – my si na kvalite dávame záležať",
+    founderName: "Andrea Hečková",
+  },
+  services: {
+    heading: "Cenník služieb",
+    validFrom: "Cenník platný od 24.1.2026",
+    intro:
+      "Aktuálny cenník pre manikúru v Trnave, gélové nechty, gél lak a doplnenie nechtov. Po kliknutí na službu si môžete rovno pozrieť voľné termíny.",
+    mostRequested: "Najžiadanejšie",
+    unavailable: "Žiadne služby nie sú momentálne dostupné.",
+  },
+  gallery: {
+    heading: "Nechty našich klientiek",
+    categories: {
+      french: "Francúzska manikúra",
+      singleColor: "Jednofarebné",
+      delicateArt: "Jemné zdobenie",
+    },
+    imageAltPrefix: "Gélové nechty Trnava - ukážka práce",
+    openImageAria: "Otvoriť obrázok:",
+    instagramCta: "Sledujte nás na Instagrame",
+  },
+  lightbox: {
+    dialogLabel: "Prehliadač galérie",
+    close: "Zavrieť",
+    zoomIn: "Priblížiť",
+    zoomOut: "Oddialiť",
+    previous: "Predchádzajúci obrázok",
+    next: "Nasledujúci obrázok",
+  },
+  about: {
+    imageAlt: "Interiér salónu Diara Manicure",
+    heading: "O nás",
+    subheading: "Andrea Hečková & diara manicure.",
+    paragraph1Start:
+      "Vítame vás v našom salóne, kde sa staráme o krásu a zdravie vašich nechtov s láskou a profesionalitou. Ako zakladateľka",
+    paragraph1End:
+      "som si splnila sen o vytvorení miesta, kde sa každá klientka bude cítiť výnimočne.",
+    paragraph2:
+      "Používame len tie najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch, aby sme vám priniesli tú najlepšiu starostlivosť a najkrajšie nails v Trnave.",
+    founderLabel: "Zakladateľka",
+  },
+  faq: {
+    titleLine1: "Časté otázky",
+    titleLine2: "o našom nechtovom štúdiu",
+    items: [
+      {
+        question: "Kde nájdem vaše nechtové štúdio v Trnave?",
+        answer:
+          "Náš salón diara manicure. Trnava sa nachádza na Hospodárskej 53. Máme vlastné parkovanie zdarma priamo pred vchodom.",
+      },
+      {
+        question: "Musím sa objednať telefonicky?",
+        answer:
+          "Nie, preferujeme online rezervácie. Kliknite na tlačidlo \"Pozrieť voľné termíny\" a vyberte si čas, ktorý vám vyhovuje. Objednanie na nechty trvá menej ako minútu.",
+      },
+      {
+        question: "Robíte aj iné služby ako gélové nechty?",
+        answer:
+          "Áno, špecializujeme sa na gélové nechty, ale v ponuke je aj gél lak a klasická manikúra Trnava.",
+      },
+    ],
+  },
+  giftCards: {
+    label: "Darčekové poukazy",
+    heading: "Poukaz na manikúru v Trnave",
+    description:
+      "Hľadáte praktický darček pre mamu, sestru, priateľku či kolegyňu? Poukaz sa dá kúpiť online a doručiť emailom.",
+    buyCta: "Kúpiť poukaz",
+    moreInfoCta: "Viac informácií",
+    delivery: "Doručenie emailom",
+    imageAlt: "Darčekový poukaz Diara Manicure",
+  },
+  contact: {
+    heading: "Kde nás nájdete",
+    addressLabel: "Adresa",
+    phoneLabel: "Telefón",
+    bookingCta: "Pozrieť voľné termíny",
+  },
+  footer: {
+    logoAlt: "DIARA - Jarné logo",
+    tagline: "Professional Nails & Manicure in Trnava",
+    rights: "© 2025 diara manicure. Všetky práva vyhradené.",
+    giftCards: "Darčekové poukazy",
+    keywords:
+      "Populárne vyhľadávania: Nechty Trnava | Gélové nechty Trnava | Manikúra Trnava | Nails Trnava | Nechtové štúdio Trnava | Modelácia nechtov | Gél lak Trnava | Nechty Cenník | Voľné termíny na nechty | Darčekové poukazy nechty Trnava | Voucher manikúra",
+  },
+  cookie: {
+    title: "Cookie nastavenia",
+    descriptionStart:
+      "Používame súbory cookie na analýzu návštevnosti, zobrazenie personalizovaných reklám a zlepšenie vášho zážitku. Viac v",
+    privacyLink: "Zásadách ochrany súkromia",
+    reject: "Odmietnuť",
+    essentialOnly: "Len nevyhnutné",
+    acceptAll: "Prijať všetky",
+    showDetails: "Zobraziť podrobnosti",
+    hideDetails: "Skryť podrobnosti",
+    details: [
+      {
+        title: "Nevyhnutné",
+        description: "Prevádzkové cookies potrebné pre fungovanie stránky. Vždy aktívne.",
+      },
+      {
+        title: "Analytické",
+        description: "Google Analytics — anonymné štatistiky návštevnosti a správania.",
+      },
+      {
+        title: "Marketingové",
+        description: "Google Ads — sledovanie konverzií a personalizácia reklám.",
+      },
+      {
+        title: "Funkčné",
+        description: "Microsoft Clarity — nahrávky správania a heatmapy.",
+      },
+    ],
+  },
+}
+
+export type TranslationMessages = typeof sk
+
+const en: TranslationMessages = {
+  languageSwitcher: {
+    label: "Page language",
+    changeTo: "Switch language to",
+  },
+  theme: {
+    toggle: "Toggle theme",
+  },
+  nav: {
+    openMenu: "Open menu",
+    closeMenu: "Close menu",
+    items: {
+      services: "Prices",
+      giftCards: "Vouchers",
+      gallery: "Gallery",
+      faq: "FAQ",
+      contact: "Contact",
+    },
+  },
+  hero: {
+    logoAlt: "Diara Manicure - Nails Trnava - Spring logo",
+    titlePrefix: "Gel nails Trnava |",
+    titleBrand: "diara manicure.",
+    subtitleMain: "Professional nail studio • Nails Trnava & manicure",
+    subtitleHighlight: "Quality European gels. Free parking.",
+    bookingCta: "See available appointments",
+    cardPayment: "💳 Card payment available",
+    softReservation: "Non-binding reservation",
+    parkingCoffee: "Free parking and coffee",
+    giftCardsCta: "Gift vouchers",
+    phoneLabel: "Phone reservations",
+    messengerLabel: "Send us a message",
+    visitCta: "Where to find us",
+    founderImageAlt: "Andrea Heckova - Founder of Diara Manicure Trnava",
+    qualityStart: "Our priority is",
+    qualityHighlight: "quality European gels",
+    qualityEnd: "and precise work.",
+    conceptStart: "If you are looking for an express 30-minute service,",
+    conceptHighlight: "our concept is different - we focus on quality",
+    founderName: "Andrea Hečkova",
+  },
+  services: {
+    heading: "Service prices",
+    validFrom: "Price list valid from 24 Jan 2026",
+    intro:
+      "Current prices for manicure in Trnava, gel nails, gel polish and nail refills. Click a service to view available appointments right away.",
+    mostRequested: "Most requested",
+    unavailable: "No services are currently available.",
+  },
+  gallery: {
+    heading: "Nails of our clients",
+    categories: {
+      french: "French manicure",
+      singleColor: "Single color",
+      delicateArt: "Delicate nail art",
+    },
+    imageAltPrefix: "Gel nails Trnava - work example",
+    openImageAria: "Open image:",
+    instagramCta: "Follow us on Instagram",
+  },
+  lightbox: {
+    dialogLabel: "Gallery viewer",
+    close: "Close",
+    zoomIn: "Zoom in",
+    zoomOut: "Zoom out",
+    previous: "Previous image",
+    next: "Next image",
+  },
+  about: {
+    imageAlt: "Interior of Diara Manicure salon",
+    heading: "About us",
+    subheading: "Andrea Hečkova & diara manicure.",
+    paragraph1Start:
+      "Welcome to our salon, where we care for the beauty and health of your nails with love and professionalism. As the founder of",
+    paragraph1End:
+      "I fulfilled my dream of creating a place where every client feels special.",
+    paragraph2:
+      "We use only high-quality materials and keep learning new trends so we can bring you the best care and the most beautiful nails in Trnava.",
+    founderLabel: "Founder",
+  },
+  faq: {
+    titleLine1: "Frequently asked questions",
+    titleLine2: "about our nail studio",
+    items: [
+      {
+        question: "Where can I find your nail studio in Trnava?",
+        answer:
+          "Our diara manicure. Trnava salon is located at Hospodárska 53. We have free private parking directly in front of the entrance.",
+      },
+      {
+        question: "Do I have to book by phone?",
+        answer:
+          "No, we prefer online reservations. Click \"See available appointments\" and choose a time that suits you. Booking your nail appointment takes less than a minute.",
+      },
+      {
+        question: "Do you offer services other than gel nails?",
+        answer:
+          "Yes, we specialize in gel nails, and we also offer gel polish and classic manicure in Trnava.",
+      },
+    ],
+  },
+  giftCards: {
+    label: "Gift vouchers",
+    heading: "Manicure voucher in Trnava",
+    description:
+      "Looking for a practical gift for your mum, sister, girlfriend or colleague? A voucher can be purchased online and delivered by email.",
+    buyCta: "Buy voucher",
+    moreInfoCta: "More information",
+    delivery: "Email delivery",
+    imageAlt: "Diara Manicure gift voucher",
+  },
+  contact: {
+    heading: "Where to find us",
+    addressLabel: "Address",
+    phoneLabel: "Phone",
+    bookingCta: "See available appointments",
+  },
+  footer: {
+    logoAlt: "DIARA - Spring logo",
+    tagline: "Professional Nails & Manicure in Trnava",
+    rights: "© 2025 diara manicure. All rights reserved.",
+    giftCards: "Gift vouchers",
+    keywords:
+      "Popular searches: Nails Trnava | Gel nails Trnava | Manicure Trnava | Nail studio Trnava | Nail modelling | Gel polish Trnava | Nail prices | Available nail appointments | Gift vouchers nails Trnava | Manicure voucher",
+  },
+  cookie: {
+    title: "Cookie settings",
+    descriptionStart:
+      "We use cookies to analyze traffic, show personalized ads and improve your experience. More in the",
+    privacyLink: "Privacy Policy",
+    reject: "Reject",
+    essentialOnly: "Essential only",
+    acceptAll: "Accept all",
+    showDetails: "Show details",
+    hideDetails: "Hide details",
+    details: [
+      {
+        title: "Essential",
+        description: "Operational cookies needed for the website to work. Always active.",
+      },
+      {
+        title: "Analytics",
+        description: "Google Analytics - anonymous traffic and behavior statistics.",
+      },
+      {
+        title: "Marketing",
+        description: "Google Ads - conversion tracking and ad personalization.",
+      },
+      {
+        title: "Functional",
+        description: "Microsoft Clarity - behavior recordings and heatmaps.",
+      },
+    ],
+  },
+}
+
+const uk: TranslationMessages = {
+  languageSwitcher: {
+    label: "Мова сторінки",
+    changeTo: "Перемкнути мову на",
+  },
+  theme: {
+    toggle: "Перемкнути тему",
+  },
+  nav: {
+    openMenu: "Відкрити меню",
+    closeMenu: "Закрити меню",
+    items: {
+      services: "Ціни",
+      giftCards: "Сертифікати",
+      gallery: "Галерея",
+      faq: "FAQ",
+      contact: "Контакт",
+    },
+  },
+  hero: {
+    logoAlt: "Diara Manicure - Нігті Трнава - весняний логотип",
+    titlePrefix: "Гелеві нігті Трнава |",
+    titleBrand: "diara manicure.",
+    subtitleMain: "Професійна нігтьова студія • Nails Trnava & манікюр",
+    subtitleHighlight: "Якісні європейські гелі. Безкоштовне паркування.",
+    bookingCta: "Переглянути вільні терміни",
+    cardPayment: "💳 Можлива оплата карткою",
+    softReservation: "Бронювання без зобов'язань",
+    parkingCoffee: "Безкоштовне паркування та кава",
+    giftCardsCta: "Подарункові сертифікати",
+    phoneLabel: "Бронювання телефоном",
+    messengerLabel: "Напишіть нам повідомлення",
+    visitCta: "Де нас знайти",
+    founderImageAlt: "Andrea Heckova - засновниця Diara Manicure Trnava",
+    qualityStart: "Наш пріоритет - це",
+    qualityHighlight: "якісні європейські гелі",
+    qualityEnd: "і точна робота.",
+    conceptStart: "Якщо ви шукаєте експрес-послугу за 30 хвилин,",
+    conceptHighlight: "наш підхід інший - ми дбаємо про якість",
+    founderName: "Andrea Hečkova",
+  },
+  services: {
+    heading: "Ціни на послуги",
+    validFrom: "Прайс діє з 24.1.2026",
+    intro:
+      "Актуальні ціни на манікюр у Трнаві, гелеві нігті, гель-лак та корекцію нігтів. Натисніть на послугу, щоб одразу переглянути вільні терміни.",
+    mostRequested: "Найпопулярніше",
+    unavailable: "Наразі послуги недоступні.",
+  },
+  gallery: {
+    heading: "Нігті наших клієнток",
+    categories: {
+      french: "Французький манікюр",
+      singleColor: "Однотонні",
+      delicateArt: "Ніжний дизайн",
+    },
+    imageAltPrefix: "Гелеві нігті Трнава - приклад роботи",
+    openImageAria: "Відкрити зображення:",
+    instagramCta: "Стежте за нами в Instagram",
+  },
+  lightbox: {
+    dialogLabel: "Перегляд галереї",
+    close: "Закрити",
+    zoomIn: "Збільшити",
+    zoomOut: "Зменшити",
+    previous: "Попереднє зображення",
+    next: "Наступне зображення",
+  },
+  about: {
+    imageAlt: "Інтер'єр салону Diara Manicure",
+    heading: "Про нас",
+    subheading: "Andrea Hečkova & diara manicure.",
+    paragraph1Start:
+      "Ласкаво просимо до нашого салону, де ми з любов'ю та професійністю дбаємо про красу і здоров'я ваших нігтів. Як засновниця",
+    paragraph1End:
+      "я здійснила мрію створити місце, де кожна клієнтка почуватиметься особливою.",
+    paragraph2:
+      "Ми використовуємо лише якісні матеріали та постійно вивчаємо нові тренди, щоб дати вам найкращий догляд і найкрасивіші nails у Трнаві.",
+    founderLabel: "Засновниця",
+  },
+  faq: {
+    titleLine1: "Часті запитання",
+    titleLine2: "про нашу нігтьову студію",
+    items: [
+      {
+        question: "Де знаходиться ваша нігтьова студія в Трнаві?",
+        answer:
+          "Наш салон diara manicure. Trnava знаходиться на Hospodárska 53. У нас є безкоштовне власне паркування прямо перед входом.",
+      },
+      {
+        question: "Чи потрібно записуватися телефоном?",
+        answer:
+          "Ні, ми надаємо перевагу онлайн-бронюванню. Натисніть \"Переглянути вільні терміни\" і виберіть зручний час. Запис на нігті займає менше хвилини.",
+      },
+      {
+        question: "Ви робите тільки гелеві нігті?",
+        answer:
+          "Так, ми спеціалізуємося на гелевих нігтях, але також пропонуємо гель-лак і класичний манікюр у Трнаві.",
+      },
+    ],
+  },
+  giftCards: {
+    label: "Подарункові сертифікати",
+    heading: "Сертифікат на манікюр у Трнаві",
+    description:
+      "Шукаєте практичний подарунок для мами, сестри, подруги чи колеги? Сертифікат можна купити онлайн і отримати на email.",
+    buyCta: "Купити сертифікат",
+    moreInfoCta: "Більше інформації",
+    delivery: "Доставка email",
+    imageAlt: "Подарунковий сертифікат Diara Manicure",
+  },
+  contact: {
+    heading: "Де нас знайти",
+    addressLabel: "Адреса",
+    phoneLabel: "Телефон",
+    bookingCta: "Переглянути вільні терміни",
+  },
+  footer: {
+    logoAlt: "DIARA - весняний логотип",
+    tagline: "Professional Nails & Manicure in Trnava",
+    rights: "© 2025 diara manicure. Усі права захищено.",
+    giftCards: "Подарункові сертифікати",
+    keywords:
+      "Популярні пошуки: Нігті Трнава | Гелеві нігті Трнава | Манікюр Трнава | Нігтьова студія Трнава | Моделювання нігтів | Гель-лак Трнава | Ціни на нігті | Вільні терміни на нігті | Подарункові сертифікати нігті Трнава | Сертифікат на манікюр",
+  },
+  cookie: {
+    title: "Налаштування cookie",
+    descriptionStart:
+      "Ми використовуємо cookie для аналізу відвідуваності, показу персоналізованої реклами та покращення вашого досвіду. Більше в",
+    privacyLink: "Політиці конфіденційності",
+    reject: "Відхилити",
+    essentialOnly: "Лише необхідні",
+    acceptAll: "Прийняти всі",
+    showDetails: "Показати деталі",
+    hideDetails: "Сховати деталі",
+    details: [
+      {
+        title: "Необхідні",
+        description: "Операційні cookie, потрібні для роботи сайту. Завжди активні.",
+      },
+      {
+        title: "Аналітичні",
+        description: "Google Analytics - анонімна статистика відвідуваності та поведінки.",
+      },
+      {
+        title: "Маркетингові",
+        description: "Google Ads - відстеження конверсій і персоналізація реклами.",
+      },
+      {
+        title: "Функціональні",
+        description: "Microsoft Clarity - записи поведінки та теплові карти.",
+      },
+    ],
+  },
+}
+
+const sr: TranslationMessages = {
+  languageSwitcher: {
+    label: "Jezik stranice",
+    changeTo: "Promeni jezik na",
+  },
+  theme: {
+    toggle: "Promeni temu",
+  },
+  nav: {
+    openMenu: "Otvori meni",
+    closeMenu: "Zatvori meni",
+    items: {
+      services: "Cenovnik",
+      giftCards: "Vaučeri",
+      gallery: "Galerija",
+      faq: "FAQ",
+      contact: "Kontakt",
+    },
+  },
+  hero: {
+    logoAlt: "Diara Manicure - Nokti Trnava - prolećni logo",
+    titlePrefix: "Gel nokti Trnava |",
+    titleBrand: "diara manicure.",
+    subtitleMain: "Profesionalni studio za nokte • Nails Trnava & manikir",
+    subtitleHighlight: "Kvalitetni evropski gelovi. Besplatan parking.",
+    bookingCta: "Pogledajte slobodne termine",
+    cardPayment: "💳 Moguće plaćanje karticom",
+    softReservation: "Neobavezujuća rezervacija",
+    parkingCoffee: "Besplatan parking i kafa",
+    giftCardsCta: "Poklon vaučeri",
+    phoneLabel: "Rezervacije telefonom",
+    messengerLabel: "Pošaljite nam poruku",
+    visitCta: "Gde nas možete naći",
+    founderImageAlt: "Andrea Heckova - osnivačica Diara Manicure Trnava",
+    qualityStart: "Naš prioritet su",
+    qualityHighlight: "kvalitetni evropski gelovi",
+    qualityEnd: "i precizan rad.",
+    conceptStart: "Ako tražite ekspresnu uslugu za 30 minuta,",
+    conceptHighlight: "naš koncept je drugačiji - nama je kvalitet važan",
+    founderName: "Andrea Hečkova",
+  },
+  services: {
+    heading: "Cenovnik usluga",
+    validFrom: "Cenovnik važi od 24.1.2026",
+    intro:
+      "Aktuelni cenovnik za manikir u Trnavi, gel nokte, gel lak i dopunu noktiju. Kliknite na uslugu i odmah pogledajte slobodne termine.",
+    mostRequested: "Najtraženije",
+    unavailable: "Trenutno nema dostupnih usluga.",
+  },
+  gallery: {
+    heading: "Nokti naših klijentkinja",
+    categories: {
+      french: "Francuski manikir",
+      singleColor: "Jednobojni",
+      delicateArt: "Nežna dekoracija",
+    },
+    imageAltPrefix: "Gel nokti Trnava - primer rada",
+    openImageAria: "Otvori sliku:",
+    instagramCta: "Pratite nas na Instagramu",
+  },
+  lightbox: {
+    dialogLabel: "Pregled galerije",
+    close: "Zatvori",
+    zoomIn: "Uvećaj",
+    zoomOut: "Umanji",
+    previous: "Prethodna slika",
+    next: "Sledeća slika",
+  },
+  about: {
+    imageAlt: "Enterijer salona Diara Manicure",
+    heading: "O nama",
+    subheading: "Andrea Hečkova & diara manicure.",
+    paragraph1Start:
+      "Dobro došli u naš salon, gde se s ljubavlju i profesionalnošću brinemo o lepoti i zdravlju vaših noktiju. Kao osnivačica",
+    paragraph1End:
+      "ispunila sam san da napravim mesto u kojem se svaka klijentkinja oseća posebno.",
+    paragraph2:
+      "Koristimo samo najkvalitetnije materijale i stalno učimo nove trendove kako bismo vam pružili najbolju negu i najlepše nails u Trnavi.",
+    founderLabel: "Osnivačica",
+  },
+  faq: {
+    titleLine1: "Česta pitanja",
+    titleLine2: "o našem studiju za nokte",
+    items: [
+      {
+        question: "Gde se nalazi vaš studio za nokte u Trnavi?",
+        answer:
+          "Naš salon diara manicure. Trnava nalazi se na adresi Hospodárska 53. Imamo besplatan privatni parking direktno ispred ulaza.",
+      },
+      {
+        question: "Da li moram da zakažem telefonom?",
+        answer:
+          "Ne, preferiramo online rezervacije. Kliknite na \"Pogledajte slobodne termine\" i izaberite vreme koje vam odgovara. Zakazivanje traje manje od jednog minuta.",
+      },
+      {
+        question: "Radite li i druge usluge osim gel noktiju?",
+        answer:
+          "Da, specijalizovani smo za gel nokte, a u ponudi su i gel lak i klasičan manikir u Trnavi.",
+      },
+    ],
+  },
+  giftCards: {
+    label: "Poklon vaučeri",
+    heading: "Vaučer za manikir u Trnavi",
+    description:
+      "Tražite praktičan poklon za mamu, sestru, devojku ili koleginicu? Vaučer možete kupiti online i dobiti emailom.",
+    buyCta: "Kupi vaučer",
+    moreInfoCta: "Više informacija",
+    delivery: "Dostava emailom",
+    imageAlt: "Poklon vaučer Diara Manicure",
+  },
+  contact: {
+    heading: "Gde nas možete naći",
+    addressLabel: "Adresa",
+    phoneLabel: "Telefon",
+    bookingCta: "Pogledajte slobodne termine",
+  },
+  footer: {
+    logoAlt: "DIARA - prolećni logo",
+    tagline: "Professional Nails & Manicure in Trnava",
+    rights: "© 2025 diara manicure. Sva prava zadržana.",
+    giftCards: "Poklon vaučeri",
+    keywords:
+      "Popularne pretrage: Nokti Trnava | Gel nokti Trnava | Manikir Trnava | Studio za nokte Trnava | Modeliranje noktiju | Gel lak Trnava | Cenovnik noktiju | Slobodni termini za nokte | Poklon vaučeri nokti Trnava | Vaučer za manikir",
+  },
+  cookie: {
+    title: "Podešavanja kolačića",
+    descriptionStart:
+      "Koristimo kolačiće za analizu poseta, prikaz personalizovanih oglasa i poboljšanje vašeg iskustva. Više u",
+    privacyLink: "Politici privatnosti",
+    reject: "Odbij",
+    essentialOnly: "Samo neophodni",
+    acceptAll: "Prihvati sve",
+    showDetails: "Prikaži detalje",
+    hideDetails: "Sakrij detalje",
+    details: [
+      {
+        title: "Neophodni",
+        description: "Operativni kolačići potrebni za rad stranice. Uvek aktivni.",
+      },
+      {
+        title: "Analitički",
+        description: "Google Analytics - anonimna statistika poseta i ponašanja.",
+      },
+      {
+        title: "Marketing",
+        description: "Google Ads - praćenje konverzija i personalizacija oglasa.",
+      },
+      {
+        title: "Funkcionalni",
+        description: "Microsoft Clarity - snimci ponašanja i heatmap analize.",
+      },
+    ],
+  },
+}
+
+export const translations: Record<Language, TranslationMessages> = {
+  sk: sk,
+  en: en,
+  uk: uk,
+  sr: sr,
+}
+
+export function getLanguageMeta(language: Language) {
+  return languages.find((item) => item.code === language) ?? languages[0]
+}

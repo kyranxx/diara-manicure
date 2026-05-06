@@ -4,8 +4,12 @@ import "./globals.css"
 import { DM_Sans, Great_Vibes } from "next/font/google"
 import Script from "next/script"
 import { IdleAnalytics } from "@/components/idle-analytics"
+import { CookieConsent } from "@/components/cookie-consent"
+import { AnalyticsClickTracker } from "@/components/analytics-click-tracker"
+import { ScrollTracker } from "@/components/scroll-tracker"
 import { ThemeProvider } from "./providers"
 import { WebMcpProvider } from "@/components/webmcp-provider"
+import { LanguageProvider } from "@/components/language-provider"
 
 
 const dmSans = DM_Sans({
@@ -125,9 +129,14 @@ export default function RootLayout({
           defaultTheme="light"
           disableTransitionOnChange
         >
-          <WebMcpProvider />
-          <IdleAnalytics />
-          {children}
+          <LanguageProvider>
+            <WebMcpProvider />
+            <IdleAnalytics />
+            <AnalyticsClickTracker />
+            <ScrollTracker />
+            <CookieConsent />
+            {children}
+          </LanguageProvider>
 
         </ThemeProvider>
       </body>

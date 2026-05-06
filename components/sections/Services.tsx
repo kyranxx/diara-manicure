@@ -1,4 +1,7 @@
+"use client"
+
 import type { Service } from "@/lib/sheets"
+import { useI18n } from "@/components/language-provider"
 
 interface ServicesProps {
     services: Service[]
@@ -6,15 +9,17 @@ interface ServicesProps {
 }
 
 export function Services({ services, bookingUrl }: ServicesProps) {
+    const { t } = useI18n()
+
     return (
         <section id="cennik" className="py-16 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
-                    <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">Cenník služieb</h2>
+                    <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">{t.services.heading}</h2>
                     <div className="w-24 h-1 bg-primary/20 mx-auto mb-4 rounded-full" />
-                    <p className="text-sm text-muted-foreground uppercase tracking-widest mb-6">Cenník platný od 24.1.2026</p>
+                    <p className="text-sm text-muted-foreground uppercase tracking-widest mb-6">{t.services.validFrom}</p>
                     <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
-                        Aktuálny cenník pre manikúru v Trnave, gélové nechty, gél lak a doplnenie nechtov. Po kliknutí na službu si môžete rovno pozrieť voľné termíny.
+                        {t.services.intro}
                     </p>
                 </div>
 
@@ -33,7 +38,7 @@ export function Services({ services, bookingUrl }: ServicesProps) {
                                     >
                                         {hasDiscount && (
                                             <div className="absolute top-2 right-4 bg-primary text-primary-foreground text-xs font-medium px-3 py-1 rounded-full shadow-sm">
-                                                Najžiadanejšie
+                                                {t.services.mostRequested}
                                             </div>
                                         )}
                                         <div className="flex-grow pr-4">
@@ -55,7 +60,7 @@ export function Services({ services, bookingUrl }: ServicesProps) {
                             })}
                         </div>
                     ) : (
-                        <div className="text-center text-muted-foreground">Žiadne služby nie sú momentálne dostupné.</div>
+                        <div className="text-center text-muted-foreground">{t.services.unavailable}</div>
                     )}
                 </div>
             </div>

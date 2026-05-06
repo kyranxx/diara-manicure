@@ -15,9 +15,18 @@ export default function ThankYouPage() {
         if (typeof window !== 'undefined') {
             const win = window as WindowWithGtag
             if (win.gtag) {
-                win.gtag('event', 'conversion', {
+                let userId = ""
+                try {
+                    userId = window.localStorage.getItem("ga-anon-user-id") ?? ""
+                } catch { /* ignore */ }
+
+                const params: Record<string, string> = {
                     'send_to': 'AW-17746151386/EYF2CN27xMMbENqPg45C'
-                })
+                }
+                if (userId) {
+                    params.user_id = userId
+                }
+                win.gtag('event', 'conversion', params)
             }
         }
     }, [])

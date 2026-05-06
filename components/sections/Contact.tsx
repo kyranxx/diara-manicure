@@ -1,19 +1,24 @@
+"use client"
+
 import { MapPin, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Map from "@/components/ui/custom-map"
+import { useI18n } from "@/components/language-provider"
 
 interface ContactProps {
     bookingUrl: string
 }
 
 export function Contact({ bookingUrl }: ContactProps) {
+    const { t } = useI18n()
+
     return (
         <section id="visit" className="pt-16 pb-10 bg-beige dark:bg-black">
             <div className="container mx-auto px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
                     <div>
                         <div>
-                            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white text-center lg:text-left">Kde nás nájdete</h2>
+                            <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white text-center lg:text-left">{t.contact.heading}</h2>
                             <div className="w-24 h-1 bg-primary/20 mx-auto lg:mx-0 mb-8 rounded-full" />
                             <div className="space-y-8">
                                 <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 text-center lg:text-left">
@@ -21,7 +26,7 @@ export function Contact({ bookingUrl }: ContactProps) {
                                         <MapPin className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-medium mb-1 text-black dark:text-white">Adresa</h3>
+                                        <h3 className="text-xl font-medium mb-1 text-black dark:text-white">{t.contact.addressLabel}</h3>
                                         <p className="text-muted-foreground text-lg">Hospodárska 53<br />91701 Trnava</p>
                                     </div>
                                 </div>
@@ -31,7 +36,7 @@ export function Contact({ bookingUrl }: ContactProps) {
                                         <Phone className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-medium mb-1 text-black dark:text-white">Telefón</h3>
+                                        <h3 className="text-xl font-medium mb-1 text-black dark:text-white">{t.contact.phoneLabel}</h3>
                                         <a
                                             href="tel:+421902163144"
                                             className="text-muted-foreground text-lg hover:text-primary transition-colors inline-flex items-center gap-1"
@@ -48,7 +53,7 @@ export function Contact({ bookingUrl }: ContactProps) {
                                     className="h-16 md:h-20 text-xl rounded-full px-16 md:px-20 bg-primary text-primary-foreground hover:bg-primary/90 min-w-[250px]"
                                 >
                                     <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                                        Pozrieť voľné termíny
+                                        {t.contact.bookingCta}
                                     </a>
                                 </Button>
                             </div>
