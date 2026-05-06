@@ -79,12 +79,16 @@ async function fetchSheetsData(): Promise<Service[]> {
 
     let services: Service[] = [];
     if (rows && rows.length > 0) {
-      services = rows.map((row: string[]) => ({
-        title: row[0] || '',
-        description: row[1] || '',
-        price: row[2] || '',
-        discountedPrice: row[3] || undefined,
-      })).filter(s => s.title);
+      services = rows.map((row: string[]) => {
+        const discountedPrice = row[3]?.trim();
+
+        return {
+          title: row[0] || '',
+          description: row[1] || '',
+          price: row[2] || '',
+          ...(discountedPrice ? { discountedPrice } : {}),
+        };
+      }).filter(s => s.title);
     }
 
     if (process.env.NODE_ENV === 'development') {
