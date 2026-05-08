@@ -53,11 +53,13 @@ export function GalleryClient() {
     return [
       {
         title: t.gallery.categories.french,
-        images: ["49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"].map(makeImage),
+        images: ["54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"].map(makeImage),
       },
       {
         title: t.gallery.categories.singleColor,
         images: [
+          "53",
+          "52",
           "50",
           "46",
           "42",
@@ -89,7 +91,7 @@ export function GalleryClient() {
       },
       {
         title: t.gallery.categories.delicateArt,
-        images: ["48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"].map(makeImage),
+        images: ["51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"].map(makeImage),
       },
     ]
   }, [t])
