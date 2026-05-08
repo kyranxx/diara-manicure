@@ -1,4 +1,17 @@
+import { galleryImages } from "@/lib/gallery";
+import { siteConfig } from "@/lib/site-config";
+
 const SchemaMarkup = () => {
+  const galleryImageObjects = galleryImages.map((image) => ({
+    "@type": "ImageObject",
+    "@id": `${siteConfig.baseUrl}${image.src}#image`,
+    "contentUrl": `${siteConfig.baseUrl}${image.src}`,
+    "url": `${siteConfig.baseUrl}/#galeria`,
+    "name": image.alt,
+    "caption": image.alt,
+    "representativeOfPage": false
+  }));
+
   // LocalBusiness Schema with enhanced data
   const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -8,9 +21,7 @@ const SchemaMarkup = () => {
     "alternateName": ["Diara Manicure", "Diara Manicure Trnava", "Nechty Trnava"],
     "image": [
       "https://www.diaramanicure.sk/logo_spring_day.jpg",
-      "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-1.jpeg",
-      "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-2.jpeg",
-      "https://www.diaramanicure.sk/gelove-nechty-trnava-gallery-3.jpeg"
+      ...galleryImageObjects.slice(0, 12).map((image) => image.contentUrl)
     ],
     "description": "Profesionálne nechtové štúdio v Trnave. Gélové nechty, manikúra, gél lak a darčekové poukazy. Kvalitné európske gély, parkovanie zdarma a online rezervácia.",
     "url": "https://www.diaramanicure.sk",
@@ -155,6 +166,16 @@ const SchemaMarkup = () => {
     "slogan": "Kvalitné európske gély a precízna práca."
   };
 
+  const imageGallerySchema = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    "@id": "https://www.diaramanicure.sk/#galeria",
+    "name": "Galéria gélových nechtov v Trnave",
+    "description": "Fotogaléria práce nechtového štúdia diara manicure. v Trnave: francúzska manikúra, ružové ombre, červené, jarné a jemne zdobené gélové nechty.",
+    "url": "https://www.diaramanicure.sk/#galeria",
+    "image": galleryImageObjects
+  };
+
   // FAQPage Schema
   const faqSchema = {
     "@context": "https://schema.org",
@@ -210,6 +231,11 @@ const SchemaMarkup = () => {
         id="schema-local-business"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c') }}
+      />
+      <script
+        id="schema-image-gallery"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(imageGallerySchema).replace(/</g, '\\u003c') }}
       />
       <script
         id="schema-faq"

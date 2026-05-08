@@ -210,10 +210,19 @@
     if (!root) return;
     const content = root.querySelector("[data-gallery-content]");
     if (!content) return;
+    const fallbackIds = {
+      french: ["54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
+      singleColor: ["53", "52", "50", "46", "42", "39", "37", "33", "32", "30", "29", "28", "27", "26", "23", "20", "19", "16", "15", "14", "13", "11", "10", "6", "5", "4", "3", "2", "1"],
+      delicateArt: ["51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
+    };
+    function parseIds(value, fallback) {
+      const ids = (value || "").split(",").map((id) => id.trim()).filter(Boolean);
+      return ids.length ? ids : fallback;
+    }
     const sections = [
-      { title: root.dataset.french || "", ids: ["49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"] },
-      { title: root.dataset.singleColor || "", ids: ["50", "46", "42", "39", "37", "33", "32", "30", "29", "28", "27", "26", "23", "20", "19", "16", "15", "14", "13", "11", "10", "6", "5", "4", "3", "2", "1"] },
-      { title: root.dataset.delicateArt || "", ids: ["48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"] },
+      { title: root.dataset.french || "", ids: parseIds(root.dataset.frenchIds, fallbackIds.french) },
+      { title: root.dataset.singleColor || "", ids: parseIds(root.dataset.singleColorIds, fallbackIds.singleColor) },
+      { title: root.dataset.delicateArt || "", ids: parseIds(root.dataset.delicateArtIds, fallbackIds.delicateArt) },
     ];
     const altPrefix = root.dataset.altPrefix || "Gélové nechty Trnava";
     const openLabel = root.dataset.openLabel || "Otvoriť obrázok";
@@ -223,14 +232,35 @@
       return "/gelove-nechty-trnava-gallery-" + id + "." + (id === "5" ? "jpg" : "jpeg");
     }
 
+    function enhanceExistingGallery() {
+      const triggers = Array.from(content.querySelectorAll("[data-gallery-trigger]"));
+      if (!triggers.length) return false;
+      const allImages = triggers.map((trigger) => {
+        const image = trigger.querySelector("img");
+        return {
+          src: trigger.getAttribute("data-gallery-src") || trigger.getAttribute("href") || (image && image.currentSrc) || "",
+          alt: trigger.getAttribute("data-gallery-alt") || (image && image.getAttribute("alt")) || altPrefix,
+        };
+      }).filter((image) => image.src);
+      triggers.forEach((trigger, index) => {
+        if (trigger.dataset.galleryBound === "true") return;
+        trigger.dataset.galleryBound = "true";
+        trigger.addEventListener("click", (event) => {
+          event.preventDefault();
+          openLightbox(allImages, index);
+        });
+      });
+      return true;
+    }
+
     function openLightbox(images, index) {
       const overlay = document.createElement("div");
-      overlay.className = "fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4";
+      overlay.className = "runtime-lightbox-overlay";
       overlay.setAttribute("role", "dialog");
       overlay.setAttribute("aria-modal", "true");
-      overlay.innerHTML = '<button type="button" class="absolute right-4 top-4 z-[101] rounded-full bg-white/10 p-3 text-white" aria-label="Zavrieť">×</button><button type="button" data-prev class="absolute left-4 top-1/2 z-[101] -translate-y-1/2 rounded-full bg-white/10 px-4 py-3 text-3xl text-white" aria-label="Predchádzajúci">‹</button><button type="button" data-next class="absolute right-4 top-1/2 z-[101] -translate-y-1/2 rounded-full bg-white/10 px-4 py-3 text-3xl text-white" aria-label="Ďalší">›</button><img class="max-h-[86vh] max-w-[92vw] object-contain" alt=""><div class="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-black/40 px-4 py-2 text-sm font-medium text-white/80"></div>';
+      overlay.innerHTML = '<button type="button" data-lightbox-close class="runtime-lightbox-button runtime-lightbox-close" aria-label="Zavrieť">×</button><button type="button" data-prev class="runtime-lightbox-button runtime-lightbox-prev" aria-label="Predchádzajúci">‹</button><button type="button" data-next class="runtime-lightbox-button runtime-lightbox-next" aria-label="Ďalší">›</button><img class="runtime-lightbox-image" alt=""><div class="runtime-lightbox-counter"></div>';
       const img = overlay.querySelector("img");
-      const counter = overlay.querySelector("div");
+      const counter = overlay.querySelector(".runtime-lightbox-counter");
       let current = index;
       function render() {
         img.src = images[current].src;
@@ -254,7 +284,7 @@
         }
       }
       overlay.addEventListener("click", (event) => {
-        if (event.target === overlay || event.target.closest("[aria-label='Zavrieť']")) close();
+        if (event.target === overlay || event.target.closest("[data-lightbox-close]")) close();
         if (event.target.closest("[data-prev]")) {
           current = current === 0 ? images.length - 1 : current - 1;
           render();
@@ -301,6 +331,8 @@
       wrapper.appendChild(cta);
       content.appendChild(wrapper);
     }
+
+    if (enhanceExistingGallery()) return;
 
     if (!("IntersectionObserver" in window)) {
       renderGallery();

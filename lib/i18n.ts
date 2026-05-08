@@ -61,6 +61,8 @@ const sk = {
   },
   gallery: {
     heading: "Nechty našich klientiek",
+    description:
+      "Fotogaléria gélových nechtov z nášho salónu v Trnave: francúzska manikúra, ružové ombre, červené, jarné a jemne zdobené nechty.",
     categories: {
       french: "Francúzska manikúra",
       singleColor: "Jednofarebné",
@@ -220,6 +222,8 @@ const en: TranslationMessages = {
   },
   gallery: {
     heading: "Nails of our clients",
+    description:
+      "Gallery of gel nails from our nail studio in Trnava: French manicure, pink ombre, red, spring and delicate nail art designs.",
     categories: {
       french: "French manicure",
       singleColor: "Single color",
@@ -377,6 +381,8 @@ const uk: TranslationMessages = {
   },
   gallery: {
     heading: "Нігті наших клієнток",
+    description:
+      "Галерея гелевих нігтів з нашого салону в Трнаві: французький манікюр, рожеве омбре, червоні, весняні та ніжні дизайни.",
     categories: {
       french: "Французький манікюр",
       singleColor: "Однотонні",
@@ -534,6 +540,8 @@ const sr: TranslationMessages = {
   },
   gallery: {
     heading: "Nokti naših klijentkinja",
+    description:
+      "Galerija gel noktiju iz našeg salona u Trnavi: francuski manikir, roze ombre, crveni, prolecni i nežno dekorisani nokti.",
     categories: {
       french: "Francuski manikir",
       singleColor: "Jednobojni",

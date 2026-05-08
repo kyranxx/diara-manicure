@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 import { useI18n } from "@/components/language-provider"
+import { galleryImageAlt, galleryImageSrc, gallerySectionImageIds, type GalleryCategory } from "@/lib/gallery"
 
 const Gallery = dynamic(() => import("@/components/sections/Gallery").then((mod) => mod.Gallery), {
   ssr: false,
@@ -46,54 +47,20 @@ export function GalleryClient() {
 
   const gallerySections = useMemo(() => {
     const makeImage = (id: string) => ({
-      src: `/gelove-nechty-trnava-gallery-${id}.${id === "5" ? "jpg" : "jpeg"}`,
-      alt: `${t.gallery.imageAltPrefix} ${id}`,
+      src: galleryImageSrc(id),
+      alt: galleryImageAlt(id),
     })
 
-    return [
-      {
-        title: t.gallery.categories.french,
-        images: ["54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"].map(makeImage),
-      },
-      {
-        title: t.gallery.categories.singleColor,
-        images: [
-          "53",
-          "52",
-          "50",
-          "46",
-          "42",
-          "39",
-          "37",
-          "33",
-          "32",
-          "30",
-          "29",
-          "28",
-          "27",
-          "26",
-          "23",
-          "20",
-          "19",
-          "16",
-          "15",
-          "14",
-          "13",
-          "11",
-          "10",
-          "6",
-          "5",
-          "4",
-          "3",
-          "2",
-          "1",
-        ].map(makeImage),
-      },
-      {
-        title: t.gallery.categories.delicateArt,
-        images: ["51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"].map(makeImage),
-      },
+    const sections: Array<{ category: GalleryCategory; title: string }> = [
+      { category: "french", title: t.gallery.categories.french },
+      { category: "singleColor", title: t.gallery.categories.singleColor },
+      { category: "delicateArt", title: t.gallery.categories.delicateArt },
     ]
+
+    return sections.map((section) => ({
+      title: section.title,
+      images: gallerySectionImageIds[section.category].map(makeImage),
+    }))
   }, [t])
 
   const galleryImages = useMemo(

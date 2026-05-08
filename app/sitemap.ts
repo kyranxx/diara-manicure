@@ -1,7 +1,10 @@
 import { MetadataRoute } from 'next'
+import { galleryImages } from '@/lib/gallery'
+import { siteConfig } from '@/lib/site-config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://www.diaramanicure.sk'
+    const baseUrl = siteConfig.baseUrl
+    const galleryImageUrls = galleryImages.map((image) => `${baseUrl}${image.src}`)
 
     return [
         {
@@ -9,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: new Date(),
             changeFrequency: 'weekly',
             priority: 1.0,
+            images: galleryImageUrls,
         },
         {
             url: `${baseUrl}/darcekove-poukazy`,

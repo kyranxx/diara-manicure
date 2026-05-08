@@ -190,6 +190,115 @@
   }
 }
 
+.runtime-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 5rem 5.5rem;
+  background: rgb(0 0 0 / 95%);
+}
+
+.runtime-lightbox-button {
+  position: absolute;
+  z-index: 101;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 10%);
+  color: white;
+  cursor: pointer;
+  transition: background-color 200ms ease, transform 200ms ease;
+}
+
+.runtime-lightbox-button:hover {
+  background: rgb(255 255 255 / 20%);
+  transform: scale(1.06);
+}
+
+.runtime-lightbox-close {
+  top: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.runtime-lightbox-prev,
+.runtime-lightbox-next {
+  top: 50%;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 2.5rem;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.runtime-lightbox-prev {
+  left: 1rem;
+}
+
+.runtime-lightbox-next {
+  right: 1rem;
+}
+
+.runtime-lightbox-prev:hover,
+.runtime-lightbox-next:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+
+.runtime-lightbox-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: min(82vw, 1120px);
+  max-height: 76vh;
+  object-fit: contain;
+  box-shadow: 0 24px 90px rgb(0 0 0 / 35%);
+}
+
+.runtime-lightbox-counter {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  border-radius: 9999px;
+  background: rgb(0 0 0 / 45%);
+  padding: 0.5rem 1rem;
+  color: rgb(255 255 255 / 82%);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+  .runtime-lightbox-overlay {
+    padding: 4.25rem 1rem 4.75rem;
+  }
+
+  .runtime-lightbox-image {
+    max-width: 92vw;
+    max-height: 68vh;
+  }
+
+  .runtime-lightbox-close {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .runtime-lightbox-prev,
+  .runtime-lightbox-next {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 2rem;
+  }
+}
+
 @keyframes review-marquee {
   from {
     transform: translateX(0);
