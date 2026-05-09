@@ -8,7 +8,6 @@ export const languages = [
 export type Language = (typeof languages)[number]["code"]
 
 export const defaultLanguage = "sk" satisfies Language
-export const languageStorageKey = "diara-language"
 
 const sk = {
   languageSwitcher: {
@@ -71,6 +70,17 @@ const sk = {
     imageAltPrefix: "Gélové nechty Trnava - ukážka práce",
     openImageAria: "Otvoriť obrázok:",
     instagramCta: "Sledujte nás na Instagrame",
+    bookingCta: "Rezervovať podobný štýl",
+    servicesLabel: "Pozrieť služby podľa typu:",
+  },
+  reviews: {
+    eyebrow: "Google Maps recenzie",
+    heading: "Čo hovoria klientky",
+    description:
+      "Recenzie načítavame priamo z Google Maps, aby boli na stránke aktuálne a overiteľné.",
+    loading: "Načítavame recenzie z Google Maps...",
+    error: "Recenzie sa nepodarilo načítať. Môžete si ich pozrieť priamo na Google Maps.",
+    googleCta: "Pozrieť recenzie na Google Maps",
   },
   lightbox: {
     dialogLabel: "Prehliadač galérie",
@@ -232,6 +242,17 @@ const en: TranslationMessages = {
     imageAltPrefix: "Gel nails Trnava - work example",
     openImageAria: "Open image:",
     instagramCta: "Follow us on Instagram",
+    bookingCta: "Book a similar style",
+    servicesLabel: "View services by type:",
+  },
+  reviews: {
+    eyebrow: "Google Maps reviews",
+    heading: "What clients say",
+    description:
+      "Reviews are loaded directly from Google Maps so they stay current and verifiable.",
+    loading: "Loading reviews from Google Maps...",
+    error: "Reviews could not be loaded. You can view them directly on Google Maps.",
+    googleCta: "View reviews on Google Maps",
   },
   lightbox: {
     dialogLabel: "Gallery viewer",
@@ -391,6 +412,17 @@ const uk: TranslationMessages = {
     imageAltPrefix: "Гелеві нігті Трнава - приклад роботи",
     openImageAria: "Відкрити зображення:",
     instagramCta: "Стежте за нами в Instagram",
+    bookingCta: "Забронювати схожий стиль",
+    servicesLabel: "Переглянути послуги за типом:",
+  },
+  reviews: {
+    eyebrow: "Відгуки Google Maps",
+    heading: "Що кажуть клієнтки",
+    description:
+      "Відгуки завантажуються напряму з Google Maps, щоб вони були актуальні та перевірені.",
+    loading: "Завантажуємо відгуки з Google Maps...",
+    error: "Не вдалося завантажити відгуки. Ви можете переглянути їх напряму на Google Maps.",
+    googleCta: "Переглянути відгуки на Google Maps",
   },
   lightbox: {
     dialogLabel: "Перегляд галереї",
@@ -550,6 +582,17 @@ const sr: TranslationMessages = {
     imageAltPrefix: "Gel nokti Trnava - primer rada",
     openImageAria: "Otvori sliku:",
     instagramCta: "Pratite nas na Instagramu",
+    bookingCta: "Rezervišite sličan stil",
+    servicesLabel: "Pogledajte usluge po tipu:",
+  },
+  reviews: {
+    eyebrow: "Google Maps recenzije",
+    heading: "Šta kažu klijentkinje",
+    description:
+      "Recenzije učitavamo direktno sa Google Maps da bi bile aktuelne i proverljive.",
+    loading: "Učitavamo recenzije sa Google Maps...",
+    error: "Recenzije nije moguće učitati. Možete ih pogledati direktno na Google Maps.",
+    googleCta: "Pogledajte recenzije na Google Maps",
   },
   lightbox: {
     dialogLabel: "Pregled galerije",

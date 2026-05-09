@@ -36,7 +36,7 @@ export default function BlogPage() {
                             href="/"
                             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
                         >
-                            <ArrowLeft className="w-4 h-4" />
+                            <ArrowLeft className="size-4" />
                             Späť na hlavnú stránku
                         </Link>
 
@@ -68,7 +68,7 @@ export default function BlogPage() {
                                     </div>
                                     <div className="p-6">
                                         <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
-                                            <Calendar className="h-4 w-4" />
+                                            <Calendar className="size-4" />
                                             <span>{post.date}</span>
                                         </div>
                                         <h2 className="mb-3 text-xl font-medium transition-colors group-hover:text-primary">

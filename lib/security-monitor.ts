@@ -5,7 +5,7 @@
  * without exposing sensitive data to logs
  */
 
-export interface SecurityEvent {
+interface SecurityEvent {
   type: 'rate_limit_exceeded' | 'suspicious_request' | 'error' | 'auth_failure'
   severity: 'low' | 'medium' | 'high' | 'critical'
   message: string
@@ -18,7 +18,7 @@ export interface SecurityEvent {
 const securityEvents: SecurityEvent[] = []
 const MAX_EVENTS = 1000
 
-export class SecurityMonitor {
+class SecurityMonitor {
   private static instance: SecurityMonitor
 
   public static getInstance(): SecurityMonitor {

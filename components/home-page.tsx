@@ -4,6 +4,7 @@ import { AnalyticsRuntime } from "@/components/analytics-runtime"
 import { CookieConsentMarkup } from "@/components/cookie-consent-markup"
 import { Navbar } from "@/components/navbar"
 import { WebMcpScript } from "@/components/webmcp-script"
+import { MobileBookingBar } from "@/components/mobile-booking-bar"
 import { About } from "@/components/sections/About"
 import { Contact } from "@/components/sections/Contact"
 import { FAQ } from "@/components/sections/FAQ"
@@ -12,6 +13,7 @@ import { GalleryShell } from "@/components/sections/GalleryShell"
 import { GiftCards } from "@/components/sections/GiftCards"
 import { Hero } from "@/components/sections/Hero"
 import { Services } from "@/components/sections/Services"
+import { GoogleReviewsSection } from "@/components/sections/Testimonials"
 import { defaultLanguage, getLanguageMeta, languages, translations, type Language } from "@/lib/i18n"
 import type { ServiceData } from "@/lib/sheets"
 import { siteConfig } from "@/lib/site-config"
@@ -25,7 +27,7 @@ const seoByLanguage: Record<Language, { title: string; description: string; keyw
   sk: {
     title: "diara manicure. | Gélové nechty Trnava, manikúra Trnava a cenník",
     description:
-      "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, Nails Trnava služby a darčekové poukazy.",
+      "Gélové nechty a manikúra v Trnave. Cenník, online rezervácia, Google recenzie, parkovanie zdarma a kvalitné európske gély.",
     keywords:
       "nechty trnava, gelove nechty trnava, manikura trnava, nechtove studio trnava, nails trnava, diara manicure, nechty trnava cennik, darcekovy poukaz nechty",
     ogLocale: "sk_SK",
@@ -102,19 +104,13 @@ export function HomePage({ language, services }: HomePageProps) {
         <meta name="twitter:title" content={seo.title} />
         <meta name="twitter:description" content={seo.description} />
         <meta name="twitter:image" content={socialImageUrl} />
-        <script
-          id="theme-init"
-          dangerouslySetInnerHTML={{
-            __html:
-              'try{document.documentElement.classList.toggle("dark",window.localStorage.getItem("theme")==="dark")}catch(_){}',
-          }}
-        />
       </Head>
-      <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
+      <div className="min-h-screen bg-background pb-20 text-foreground selection:bg-primary/20 md:pb-0">
         <Navbar language={language} t={t} />
 
         <main>
           <Hero bookingUrl={siteConfig.bookingUrl} t={t} />
+          <GoogleReviewsSection t={t} />
           <Services services={services} bookingUrl={siteConfig.bookingUrl} t={t} />
           <GalleryShell t={t} />
           <About t={t} />
@@ -124,6 +120,7 @@ export function HomePage({ language, services }: HomePageProps) {
         </main>
 
         <Footer t={t} />
+        <MobileBookingBar href={siteConfig.bookingUrl} label={t.hero.bookingCta} />
       </div>
       <SchemaMarkup />
       <WebMcpScript />

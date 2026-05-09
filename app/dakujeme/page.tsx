@@ -32,7 +32,7 @@ export default function ThankYouPage() {
     }, [])
 
     return (
-        <div className="min-h-screen bg-beige dark:bg-black flex flex-col">
+        <div className="min-h-screen bg-beige dark:bg-[#050403] flex flex-col">
             <header className="py-8">
                 <div className="container mx-auto px-6 flex justify-center">
                     <Link href="/">
@@ -51,7 +51,7 @@ export default function ThankYouPage() {
                 <div className="container mx-auto px-6 text-center max-w-3xl">
                     <div className="mb-12 flex justify-center">
                         <div className="rounded-full bg-primary/10 p-8 shadow-xl">
-                            <CheckCircle2 className="w-20 h-20 text-primary" />
+                            <CheckCircle2 className="size-20 text-primary" />
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@ export default function ThankYouPage() {
 
             <footer className="py-12 bg-white/50 dark:bg-black/50 backdrop-blur-sm">
                 <div className="container mx-auto px-6">
-                    <div className="flex flex-col items-center space-y-8">
+                    <div className="flex flex-col items-center gap-y-8">
                         <div className="text-center text-muted-foreground font-light text-lg">
                             <p className="mb-2">Hospodárska 53, 91701 Trnava</p>
                             <p className="mb-2">0902 163 144</p>
@@ -97,7 +97,7 @@ export default function ThankYouPage() {
                                 className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
                                 aria-label="Instagram Diara Manicure"
                             >
-                                <Instagram className="h-6 w-6 text-gray-600 hover:text-gray-400" />
+                                <Instagram className="size-6 text-zinc-600 hover:text-zinc-400" />
                             </a>
                             <a
                                 href="https://facebook.com/diaramanicure"
@@ -106,7 +106,7 @@ export default function ThankYouPage() {
                                 className="p-3 rounded-full bg-white hover:bg-primary hover:text-primary-foreground transition-all duration-300 shadow-sm"
                                 aria-label="Facebook Diara Manicure"
                             >
-                                <Facebook className="h-6 w-6 text-gray-600 hover:text-gray-400" />
+                                <Facebook className="size-6 text-zinc-600 hover:text-zinc-400" />
                             </a>
                         </div>
 

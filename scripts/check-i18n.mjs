@@ -25,8 +25,6 @@ function assertNotIncludes(source, forbidden, label) {
 }
 
 const i18n = read("lib/i18n.ts")
-const provider = read("components/language-provider.tsx")
-const switcher = read("components/language-switcher.tsx")
 const navbar = read("components/navbar.tsx")
 const services = read("components/sections/Services.tsx")
 const sheets = read("lib/sheets.ts")
@@ -37,11 +35,6 @@ for (const code of ["sk", "en", "uk", "sr"]) {
 }
 
 assertIncludes(i18n, "export type Language", "Language type")
-assertIncludes(provider, "localStorage", "persisted language selection")
-assertIncludes(switcher, "languages.map", "flag language buttons")
-assertIncludes(switcher, "function FlagIcon", "SVG flag renderer")
-assertIncludes(switcher, "variant === \"compact\"", "compact mobile switcher")
-assertNotIncludes(switcher, "text-base leading-none", "emoji flag rendering")
 assertIncludes(navbar, "const languageSwitcher", "navbar language switcher")
 assertIncludes(navbar, "languages.map", "navbar language options")
 assertIncludes(navbar, "hrefLang={item.htmlLang}", "navbar hreflang links")

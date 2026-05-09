@@ -1,3 +1,4 @@
+export const siteRuntimeScript = String.raw`
 (() => {
   const consentKey = "cookie-consent-prefs";
   const consentEvent = "diara:consent-changed";
@@ -346,6 +347,196 @@
     observer.observe(root);
   }
 
+  function initGoogleReviews() {
+    const root = document.querySelector("[data-google-reviews-root]");
+    if (!root) return;
+
+    const list = root.querySelector("[data-google-reviews-list]");
+    const status = root.querySelector("[data-google-reviews-status]");
+    const apiKey = root.dataset.googleMapsKey || "";
+    const placeQuery = root.dataset.placeQuery || "Diara Manicure, Hospodárska 53, Trnava, Slovakia";
+    const loadingLabel = root.dataset.loadingLabel || "Načítavame recenzie z Google Maps...";
+    const errorLabel = root.dataset.errorLabel || "Recenzie sa nepodarilo načítať.";
+
+    function setStatus(message) {
+      if (status) status.textContent = message;
+    }
+
+    function renderFallback(message) {
+      setStatus(message);
+      if (!list) return;
+      list.innerHTML = "";
+      const item = document.createElement("div");
+      item.className = "google-review-placeholder";
+      item.textContent = message;
+      list.appendChild(item);
+    }
+
+    function waitForGoogleMaps() {
+      return new Promise((resolve, reject) => {
+        let attempts = 0;
+        const interval = window.setInterval(() => {
+          attempts += 1;
+          if (window.google && window.google.maps && window.google.maps.importLibrary) {
+            window.clearInterval(interval);
+            resolve();
+            return;
+          }
+          if (attempts >= 40) {
+            window.clearInterval(interval);
+            reject(new Error("Google Maps API did not become available"));
+          }
+        }, 250);
+      });
+    }
+
+    function loadGoogleMapsScript() {
+      if (window.google && window.google.maps && window.google.maps.importLibrary) {
+        return Promise.resolve();
+      }
+      if (!apiKey) {
+        return Promise.reject(new Error("Missing Google Maps API key"));
+      }
+
+      const existing = document.querySelector("script[data-google-maps-places]");
+      if (existing) return waitForGoogleMaps();
+
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.async = true;
+        script.defer = true;
+        script.dataset.googleMapsPlaces = "true";
+        script.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(apiKey) + "&libraries=places&v=weekly&loading=async";
+        script.addEventListener("load", () => {
+          waitForGoogleMaps().then(resolve).catch(reject);
+        });
+        script.addEventListener("error", () => reject(new Error("Google Maps script failed")));
+        document.head.appendChild(script);
+      });
+    }
+
+    function reviewText(review) {
+      const text = review && review.text;
+      if (typeof text === "string") return text.trim();
+      return ((text && text.text) || "").trim();
+    }
+
+    function reviewTime(review) {
+      if (!review) return 0;
+      if (review.publishTime) return new Date(review.publishTime).getTime();
+      if (review.time) return review.time * 1000;
+      return 0;
+    }
+
+    function renderStars(rating) {
+      const stars = document.createElement("div");
+      stars.className = "google-review-stars";
+      const score = Math.max(0, Math.min(5, Number(rating) || 0));
+      for (let index = 1; index <= 5; index += 1) {
+        const star = document.createElement("span");
+        star.textContent = "★";
+        star.className = index <= score ? "google-review-star-filled" : "google-review-star-empty";
+        stars.appendChild(star);
+      }
+      return stars;
+    }
+
+    function renderReviews(reviews) {
+      const usableReviews = (reviews || [])
+        .filter((review) => Number(review.rating) >= 4 && reviewText(review).length > 0)
+        .sort((a, b) => reviewTime(b) - reviewTime(a))
+        .slice(0, 8);
+
+      if (!usableReviews.length) {
+        renderFallback(errorLabel);
+        return;
+      }
+
+      setStatus("Google Maps");
+      if (!list) return;
+      list.innerHTML = "";
+
+      usableReviews.forEach((review) => {
+        const card = document.createElement("article");
+        card.className = "google-review-card";
+
+        const top = document.createElement("div");
+        top.className = "google-review-topline";
+        top.appendChild(renderStars(review.rating));
+
+        const source = document.createElement("span");
+        source.className = "google-review-source";
+        source.textContent = "Google";
+        top.appendChild(source);
+
+        const text = document.createElement("p");
+        text.className = "google-review-text";
+        text.textContent = reviewText(review);
+
+        const author = document.createElement("div");
+        author.className = "google-review-author";
+
+        const photoUri = review.authorAttribution && review.authorAttribution.photoURI;
+        if (photoUri) {
+          const photo = document.createElement("img");
+          photo.src = photoUri;
+          photo.alt = "";
+          photo.loading = "lazy";
+          photo.decoding = "async";
+          photo.referrerPolicy = "no-referrer";
+          author.appendChild(photo);
+        }
+
+        const name = document.createElement("span");
+        name.textContent = (review.authorAttribution && review.authorAttribution.displayName) || "Google recenzia";
+        author.appendChild(name);
+
+        card.appendChild(top);
+        card.appendChild(text);
+        card.appendChild(author);
+        list.appendChild(card);
+      });
+    }
+
+    async function loadReviews() {
+      setStatus(loadingLabel);
+      await loadGoogleMapsScript();
+      const googleMaps = window.google && window.google.maps;
+      if (!googleMaps || !googleMaps.importLibrary) throw new Error("Google Maps unavailable");
+      const placesLibrary = await googleMaps.importLibrary("places");
+      const Place = placesLibrary && placesLibrary.Place;
+      if (!Place || !Place.searchByText) throw new Error("Google Places unavailable");
+
+      const result = await Place.searchByText({
+        textQuery: placeQuery,
+        fields: ["id", "displayName"],
+        language: "sk",
+      });
+      const places = result && result.places;
+      if (!places || !places.length) throw new Error("Place not found");
+
+      const place = places[0];
+      await place.fetchFields({ fields: ["reviews"] });
+      renderReviews(place.reviews || []);
+    }
+
+    function startLoading() {
+      loadReviews().catch(() => renderFallback(errorLabel));
+    }
+
+    if (!("IntersectionObserver" in window)) {
+      startLoading();
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      observer.disconnect();
+      startLoading();
+    }, { rootMargin: "700px 0px" });
+    observer.observe(root);
+  }
+
   function initLazyImages() {
     const images = Array.from(document.querySelectorAll("img[data-lazy-src]"));
     if (!images.length) return;
@@ -377,4 +568,7 @@
   initAnalyticsLoading();
   initLazyImages();
   initGallery();
+  initGoogleReviews();
 })();
+
+`

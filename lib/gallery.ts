@@ -34,11 +34,9 @@ export const gallerySectionImageIds = {
   delicateArt: ["51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
 } as const
 
-export type GalleryCategory = keyof typeof gallerySectionImageIds
-
 export const galleryCategories = ["french", "singleColor", "delicateArt"] as const
 
-export const galleryImageAltById: Record<string, string> = {
+const galleryImageAltById: Record<string, string> = {
   "1": "Neonovo oranzove gelove nechty s mandlovym tvarom v salone diara manicure v Trnave",
   "2": "Sytoruzove gelove nechty s lesklym povrchom v nechtovom studiu Trnava",
   "3": "Ruzove gelove nechty so striebornym akcentom a mandlovym tvarom",
@@ -95,6 +93,25 @@ export const galleryImageAltById: Record<string, string> = {
   "54": "Ruzova francuzska manikura s jemnym bielym zdobenim",
 }
 
+const galleryImageCaptionById: Record<string, string> = {
+  "8": "Mliečna francúzska manikúra",
+  "9": "Krátka francúzska manikúra",
+  "12": "Klasická francúzska manikúra",
+  "17": "Bielo-ružová francúzska manikúra",
+  "21": "Jemné kvetinové zdobenie",
+  "24": "Krátka francúzska manikúra",
+  "25": "Jemná francúzska manikúra",
+  "32": "Ružový gél lak",
+  "34": "Prirodzené nude nechty",
+  "40": "Jemná francúzska manikúra",
+  "41": "Ružové ombre nechty",
+  "44": "Ružová francúzska manikúra",
+  "47": "Biela francúzska manikúra",
+  "49": "Nude gélové nechty",
+  "53": "Ružové ombre gélové nechty",
+  "54": "Ružová francúzska manikúra",
+}
+
 export function galleryImageSrc(id: string) {
   return `/gelove-nechty-trnava-gallery-${id}.${id === "5" ? "jpg" : "jpeg"}`
 }
@@ -103,11 +120,11 @@ export function galleryImageAlt(id: string) {
   return galleryImageAltById[id] ?? `Gelove nechty Trnava - ukazka prace ${id}`
 }
 
-export function galleryImageAbsoluteUrl(id: string, baseUrl = "https://www.diaramanicure.sk") {
-  return `${baseUrl}${galleryImageSrc(id)}`
+export function galleryImageCaption(id: string) {
+  return galleryImageCaptionById[id] ?? "Gélové nechty Trnava"
 }
 
-export const galleryImageIds = galleryCategories.flatMap((category) => [
+const galleryImageIds = galleryCategories.flatMap((category) => [
   ...gallerySectionImageIds[category],
 ])
 

@@ -1,10 +1,12 @@
+import Link from "next/link"
 import { Instagram, Facebook } from "lucide-react"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 import type { TranslationMessages } from "@/lib/i18n"
+import { ServiceLinks } from "@/components/service-links"
 
 export function Footer({ t }: { t: TranslationMessages }) {
     return (
-        <footer className="py-10 bg-beige dark:bg-black">
+        <footer className="py-10 bg-beige dark:bg-[#050403]">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-8">
                     <div className="flex flex-col items-center gap-3">
@@ -20,12 +22,15 @@ export function Footer({ t }: { t: TranslationMessages }) {
 
                     <div className="text-center">
                         <p className="text-sm text-foreground/80">{t.footer.rights}</p>
-                        <a
+                        <Link
                             href="/darcekove-poukazy"
                             className="mt-2 inline-block text-sm text-muted-foreground transition-colors hover:text-primary"
                         >
                             {t.footer.giftCards}
-                        </a>
+                        </Link>
+                        <div className="mt-4">
+                            <ServiceLinks />
+                        </div>
                     </div>
 
                     <div className="flex gap-6">
@@ -36,7 +41,7 @@ export function Footer({ t }: { t: TranslationMessages }) {
                             className="p-3 rounded-full bg-white hover:bg-primary text-black hover:text-primary-foreground transition-all duration-300 shadow-sm"
                             aria-label="Instagram Diara Manicure"
                         >
-                            <Instagram className="h-5 w-5" />
+                            <Instagram className="size-5" />
                         </a>
                         <a
                             href="https://facebook.com/diaramanicure"
@@ -45,7 +50,7 @@ export function Footer({ t }: { t: TranslationMessages }) {
                             className="p-3 rounded-full bg-white hover:bg-primary text-black hover:text-primary-foreground transition-all duration-300 shadow-sm"
                             aria-label="Facebook Diara Manicure"
                         >
-                            <Facebook className="h-5 w-5" />
+                            <Facebook className="size-5" />
                         </a>
                     </div>
                 </div>

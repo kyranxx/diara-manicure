@@ -1,5 +1,6 @@
 import type { Service } from "@/lib/sheets"
 import type { TranslationMessages } from "@/lib/i18n"
+import { ServiceLinks } from "@/components/service-links"
 
 interface ServicesProps {
     services: Service[]
@@ -9,7 +10,7 @@ interface ServicesProps {
 
 export function Services({ services, bookingUrl, t }: ServicesProps) {
     return (
-        <section id="cennik" className="py-16 bg-beige dark:bg-black">
+        <section id="cennik" className="py-16 bg-beige dark:bg-[#050403]">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">{t.services.heading}</h2>
@@ -23,11 +24,11 @@ export function Services({ services, bookingUrl, t }: ServicesProps) {
                 <div className="max-w-5xl mx-auto">
                     {services.length > 0 ? (
                         <div className="grid md:grid-cols-2 gap-6">
-                            {services.map((service, index) => {
+                            {services.map((service) => {
                                 const hasDiscount = service.discountedPrice && service.discountedPrice.trim() !== '';
                                 return (
                                     <a
-                                        key={index}
+                                        key={`${service.title}-${service.price}`}
                                         href={bookingUrl}
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -59,6 +60,13 @@ export function Services({ services, bookingUrl, t }: ServicesProps) {
                     ) : (
                         <div className="text-center text-muted-foreground">{t.services.unavailable}</div>
                     )}
+
+                    <div className="mt-10 space-y-4 text-center">
+                        <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+                            {t.gallery.servicesLabel}
+                        </p>
+                        <ServiceLinks />
+                    </div>
                 </div>
             </div>
         </section>

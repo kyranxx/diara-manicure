@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 import { Phone, MessageCircle } from "lucide-react"
@@ -11,11 +11,11 @@ interface HeroProps {
 
 export function Hero({ bookingUrl, t }: HeroProps) {
     return (
-        <section className="relative min-h-[auto] md:min-h-[90vh] xl:min-h-[860px] flex flex-col justify-start pt-20 md:pt-20 pb-10 items-center text-center px-6 overflow-hidden bg-beige dark:bg-black">
+        <section className="relative min-h-[auto] md:min-h-[90vh] xl:min-h-[860px] flex flex-col justify-start pt-20 md:pt-20 pb-10 items-center text-center px-6 overflow-hidden bg-beige dark:bg-[#050403]">
             {/* Background Elements */}
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-40 pointer-events-none">
-                <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-3xl" />
-                <div className="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-gradient-to-bl from-primary/5 to-transparent blur-3xl" />
+                <div className="absolute -top-[20%] -left-[10%] size-[50%] rounded-full bg-gradient-to-br from-primary/5 to-transparent blur-3xl" />
+                <div className="absolute top-[40%] -right-[10%] size-[40%] rounded-full bg-gradient-to-bl from-primary/5 to-transparent blur-3xl" />
             </div>
 
             <div className="mb-8 relative w-full max-w-[260px] md:max-w-[780px] mx-auto">
@@ -56,14 +56,14 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                             <span>{t.hero.bookingCta}</span>
                                 <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
                                     <div className="relative h-4 w-16">
-                                        <img
+                                        <Image
                                             src="/bookio_logo-128.webp"
                                             alt="Bookio"
                                             width={128}
                                             height={28}
                                             loading="lazy"
                                             decoding="async"
-                                            className="h-full w-full object-contain"
+                                            className="size-full object-contain"
                                         />
                                     </div>
                                 </div>
@@ -82,14 +82,14 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                         className="w-full py-3 px-6 text-center rounded-full border-2 border-pink-400/50 hover:border-pink-500/80 bg-gradient-to-r from-pink-50 to-red-50 hover:from-pink-100 hover:to-red-100 dark:from-pink-950/30 dark:to-red-950/30 dark:hover:from-pink-900/40 dark:hover:to-red-900/40 transition-all duration-300 group flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover:shadow-pink-200/50 dark:hover:shadow-pink-900/30"
                     >
                         <span className="text-lg animate-pulse">💝</span>
-                        <span className="font-medium text-foreground bg-gradient-to-r from-pink-600 to-red-500 bg-clip-text text-transparent dark:from-pink-400 dark:to-red-400">{t.hero.giftCardsCta}</span>
+                        <span className="font-medium text-pink-700 dark:text-pink-300">{t.hero.giftCardsCta}</span>
                         <span className="text-lg animate-pulse">✨</span>
                     </a>
 
                     {/* Phone Reservation - Anti-scam protected */}
                     <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-primary/10 shadow-sm">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/10">
-                            <Phone className="w-5 h-5 text-primary" />
+                        <div className="flex items-center justify-center size-10 rounded-full bg-primary/10">
+                            <Phone className="size-5 text-primary" />
                         </div>
                         <div className="text-left">
                             <p className="text-xs text-foreground/70 font-medium uppercase tracking-wider dark:text-white/75">{t.hero.phoneLabel}</p>
@@ -109,8 +109,8 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                         rel="noopener noreferrer"
                         className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-[#0084FF]/10 hover:bg-[#0084FF]/20 backdrop-blur-sm border border-[#0084FF]/20 shadow-sm transition-all duration-300 hover:scale-[1.02]"
                     >
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0084FF]/20">
-                            <MessageCircle className="w-5 h-5 text-[#0084FF]" />
+                        <div className="flex items-center justify-center size-10 rounded-full bg-[#0084FF]/20">
+                            <MessageCircle className="size-5 text-[#0084FF]" />
                         </div>
                         <div className="text-left">
                             <p className="text-xs text-black font-semibold uppercase tracking-wider dark:text-white">{t.hero.messengerLabel}</p>
@@ -129,15 +129,12 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                     {/* Quality Message Bubble - Desktop: Upper Left, Mobile: Below buttons */}
                     <div className="relative mt-0 flex w-full max-w-[420px] flex-col items-center gap-4 mx-auto xl:absolute xl:left-20 xl:top-[620px] xl:mt-0 xl:block xl:h-[430px]">
                         <div className="relative z-10 h-80 w-60 overflow-hidden rounded-[2rem] border-4 border-white/60 shadow-xl xl:absolute xl:left-0 xl:top-0">
-                            <img
-                                src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
-                                data-lazy-src="/andrea-480.webp"
-                                data-lazy-srcset="/andrea-240.webp 240w, /andrea-480.webp 480w"
+                            <Image
+                                src="/andrea-480.webp"
                                 alt={t.hero.founderImageAlt}
-                                width={480}
-                                height={855}
+                                fill
                                 decoding="async"
-                                className="h-full w-full object-cover object-top sepia-[.15]"
+                                className="object-cover object-top sepia-[.15]"
                                 sizes="(max-width: 1279px) 232px, 240px"
                             />
                         </div>

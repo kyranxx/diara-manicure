@@ -100,26 +100,28 @@ export default function GiftCardPage() {
       <Script
         id="schema-gift-card-page"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema).replace(/</g, "\\u003c") }}
-      />
+      >
+        {JSON.stringify(pageSchema).replace(/</g, "\\u003c")}
+      </Script>
       <Script
         id="schema-gift-card-faq"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c") }}
-      />
+      >
+        {JSON.stringify(faqSchema).replace(/</g, "\\u003c")}
+      </Script>
       <GiftCardPageAnalytics />
 
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
 
-        <main className="bg-beige dark:bg-black">
+        <main className="bg-beige dark:bg-[#050403]">
           <section className="container mx-auto px-6 py-12 md:py-20">
             <div className="mx-auto max-w-5xl">
               <Link
                 href="/"
                 className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
               >
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="size-4" />
                 Späť na hlavnú stránku
               </Link>
 
@@ -141,7 +143,7 @@ export default function GiftCardPage() {
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                     <Button asChild className="h-12 rounded-full px-7">
                       <GiftCardTrackedLink source="gift_card_page_hero">
-                        <ShoppingBasket className="h-4 w-4" />
+                        <ShoppingBasket className="size-4" />
                         Kúpiť poukaz cez Bookio
                       </GiftCardTrackedLink>
                     </Button>
@@ -165,25 +167,25 @@ export default function GiftCardPage() {
             </div>
           </section>
 
-          <section className="bg-background py-14 dark:bg-black">
+          <section className="bg-background py-14 dark:bg-[#050403]">
             <div className="container mx-auto px-6">
               <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
                 <div className="rounded-xl border border-primary/10 bg-beige/55 p-6 dark:bg-card">
-                  <Mail className="mb-4 h-5 w-5 text-primary" />
+                  <Mail className="mb-4 size-5 text-primary" />
                   <h2 className="text-lg font-medium">Doručenie emailom</h2>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     Poukaz nemusíte vyzdvihovať osobne. Po kúpe príde emailom.
                   </p>
                 </div>
                 <div className="rounded-xl border border-primary/10 bg-beige/55 p-6 dark:bg-card">
-                  <Check className="mb-4 h-5 w-5 text-primary" />
+                  <Check className="mb-4 size-5 text-primary" />
                   <h2 className="text-lg font-medium">Hodnoty podľa rozpočtu</h2>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     V Bookio sú dostupné poukazy v hodnotách 30 €, 40 €, 50 € a 100 €.
                   </p>
                 </div>
                 <div className="rounded-xl border border-primary/10 bg-beige/55 p-6 dark:bg-card">
-                  <ShoppingBasket className="mb-4 h-5 w-5 text-primary" />
+                  <ShoppingBasket className="mb-4 size-5 text-primary" />
                   <h2 className="text-lg font-medium">Platba kartou</h2>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     Nákup prebieha bezpečne cez oficiálny systém Bookio.
@@ -261,7 +263,7 @@ export default function GiftCardPage() {
                 </p>
                 <Button asChild className="h-12 rounded-full px-7">
                   <GiftCardTrackedLink source="gift_card_page_bottom">
-                    <ShoppingBasket className="h-4 w-4" />
+                    <ShoppingBasket className="size-4" />
                     Prejsť na poukazy
                   </GiftCardTrackedLink>
                 </Button>

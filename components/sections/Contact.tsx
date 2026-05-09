@@ -10,7 +10,7 @@ interface ContactProps {
 
 export function Contact({ bookingUrl, t }: ContactProps) {
     return (
-        <section id="visit" className="pt-16 pb-10 bg-beige dark:bg-black">
+        <section id="visit" className="pt-16 pb-10 bg-beige dark:bg-[#050403]">
             <div className="container mx-auto px-6">
                 <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
                     <div>
@@ -20,7 +20,7 @@ export function Contact({ bookingUrl, t }: ContactProps) {
                             <div className="space-y-8">
                                 <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 text-center lg:text-left">
                                     <div className="p-3 rounded-full bg-white dark:bg-white text-primary dark:text-black shadow-sm">
-                                        <MapPin className="w-6 h-6" />
+                                        <MapPin className="size-6" />
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-medium mb-1 text-black dark:text-white">{t.contact.addressLabel}</h3>
@@ -30,7 +30,7 @@ export function Contact({ bookingUrl, t }: ContactProps) {
 
                                 <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 text-center lg:text-left">
                                     <div className="p-3 rounded-full bg-white dark:bg-white text-primary dark:text-black shadow-sm">
-                                        <Phone className="w-6 h-6" />
+                                        <Phone className="size-6" />
                                     </div>
                                     <div>
                                         <h3 className="text-xl font-medium mb-1 text-black dark:text-white">{t.contact.phoneLabel}</h3>

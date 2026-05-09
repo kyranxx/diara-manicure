@@ -8,6 +8,8 @@ export type Service = {
   discountedPrice?: string
 }
 
+export type ServiceData = Service
+
 const cache: {
   data: Service[] | null
   timestamp: number
@@ -77,18 +79,20 @@ async function fetchSheetsData(): Promise<Service[]> {
 
     const rows = response.data.values;
 
-    let services: Service[] = [];
+    const services: Service[] = [];
     if (rows && rows.length > 0) {
-      services = rows.map((row: string[]) => {
+      for (const row of rows as string[][]) {
         const discountedPrice = row[3]?.trim();
 
-        return {
+        if (!row[0]) continue;
+
+        services.push({
           title: row[0] || '',
           description: row[1] || '',
           price: row[2] || '',
           ...(discountedPrice ? { discountedPrice } : {}),
-        };
-      }).filter(s => s.title);
+        });
+      }
     }
 
     if (process.env.NODE_ENV === 'development') {

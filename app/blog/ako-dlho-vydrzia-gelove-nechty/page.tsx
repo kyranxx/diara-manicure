@@ -20,7 +20,7 @@ export default function BlogArticle1() {
                             href="/blog"
                             className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
                         >
-                            <ArrowLeft className="w-4 h-4" />
+                            <ArrowLeft className="size-4" />
                             Späť na blog
                         </Link>
 
@@ -32,15 +32,15 @@ export default function BlogArticle1() {
 
                             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground mb-8">
                                 <div className="flex items-center gap-2">
-                                    <Calendar className="w-4 h-4" />
+                                    <Calendar className="size-4" />
                                     <span>5. január 2026</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Clock className="w-4 h-4" />
+                                    <Clock className="size-4" />
                                     <span>8 min čítania</span>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <User className="w-4 h-4" />
+                                    <User className="size-4" />
                                     <span>Andrea Hečková</span>
                                 </div>
                             </div>
@@ -52,6 +52,7 @@ export default function BlogArticle1() {
                                     fill
                                     className="object-cover"
                                     priority
+                                    sizes="(max-width: 768px) 100vw, 768px"
                                 />
                             </div>
                         </header>

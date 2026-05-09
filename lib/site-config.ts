@@ -10,6 +10,8 @@ export const siteConfig = {
   messengerUrl: "https://m.me/diaramanicure",
   instagramUrl: "https://instagram.com/diaramanicure",
   facebookUrl: "https://facebook.com/diaramanicure",
+  googleReviewsUrl:
+    "https://www.google.com/maps/search/?api=1&query=Diara%20Manicure%20Hospod%C3%A1rska%2053%20Trnava",
   ownerName: "Andrea Hečkova",
   addressLine1: "Hospodárska 53",
   postalCode: "917 01",

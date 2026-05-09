@@ -87,7 +87,7 @@ export function getApiCatalogDocument() {
   }
 }
 
-export function getAgentSkills(): AgentSkill[] {
+function getAgentSkills(): AgentSkill[] {
   const skills: AgentSkill[] = [
     {
       name: "book-appointment",

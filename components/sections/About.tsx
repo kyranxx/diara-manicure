@@ -1,16 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image"
 import type { TranslationMessages } from "@/lib/i18n"
 
 export function About({ t }: { t: TranslationMessages }) {
     return (
-        <section className="py-12 bg-beige dark:bg-black overflow-hidden">
+        <section className="py-12 bg-beige dark:bg-[#050403] overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-2 gap-8 items-center max-w-5xl mx-auto">
                     {/* Images Column */}
                     <div className="relative h-[420px] w-full max-w-xl mx-auto md:h-[520px] md:mx-0">
-                        <img
+                        <Image
                             src="/studio-960.webp"
-                            srcSet="/studio-640.webp 640w, /studio-960.webp 960w"
                             alt={t.about.imageAlt}
                             width={960}
                             height={1130}

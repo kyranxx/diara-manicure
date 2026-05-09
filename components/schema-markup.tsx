@@ -1,5 +1,11 @@
+import Script from "next/script";
 import { galleryImages } from "@/lib/gallery";
+import { servicePages } from "@/lib/service-pages";
 import { siteConfig } from "@/lib/site-config";
+
+function jsonLd(data: unknown) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
 
 const SchemaMarkup = () => {
   const galleryImageObjects = galleryImages.map((image) => ({
@@ -80,45 +86,16 @@ const SchemaMarkup = () => {
       "@type": "OfferCatalog",
       "name": "Nechtové služby",
       "itemListElement": [
-        {
+        ...servicePages.map((page) => ({
           "@type": "Offer",
+          "url": `${siteConfig.baseUrl}/${page.slug}`,
           "itemOffered": {
             "@type": "Service",
-            "name": "Gélové nechty - nová modelácia",
-            "description": "Kompletná modelácia gélových nechtov s kvalitným európskym gélom"
+            "name": page.serviceName,
+            "description": page.heroIntro
           },
           "priceCurrency": "EUR"
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Doplnenie gélových nechtov",
-            "description": "Pravidelné doplnenie a údržba gélových nechtov"
-          },
-          "priceCurrency": "EUR"
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Gél lak manikúra",
-            "description": "Klasická manikúra s gél lakom dlhej výdrže"
-          },
-          "priceSpecification": {
-            "@type": "PriceSpecification",
-            "price": "20.00",
-            "priceCurrency": "EUR"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Nail art a zdobenie",
-            "description": "Kreatívny nail art a dizajn podľa požiadaviek"
-          }
-        },
+        })),
         {
           "@type": "Offer",
           "name": "Darčekový poukaz na manikúru",
@@ -227,21 +204,24 @@ const SchemaMarkup = () => {
 
   return (
     <>
-      <script
+      <Script
         id="schema-local-business"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema).replace(/</g, '\\u003c') }}
-      />
-      <script
+      >
+        {jsonLd(localBusinessSchema)}
+      </Script>
+      <Script
         id="schema-image-gallery"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(imageGallerySchema).replace(/</g, '\\u003c') }}
-      />
-      <script
+      >
+        {jsonLd(imageGallerySchema)}
+      </Script>
+      <Script
         id="schema-faq"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
-      />
+      >
+        {jsonLd(faqSchema)}
+      </Script>
     </>
   );
 };

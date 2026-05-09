@@ -1,7 +1,9 @@
 import type { TranslationMessages } from "@/lib/i18n"
-import { galleryCategories, galleryImageAlt, galleryImageSrc, gallerySectionImageIds } from "@/lib/gallery"
-import { Instagram, ZoomIn } from "lucide-react"
+import { galleryCategories, galleryImageAlt, galleryImageCaption, galleryImageSrc, gallerySectionImageIds } from "@/lib/gallery"
+import { siteConfig } from "@/lib/site-config"
+import { CalendarDays, Instagram, ZoomIn } from "lucide-react"
 import Image from "next/image"
+import { ServiceLinks } from "@/components/service-links"
 
 export function GalleryShell({ t }: { t: TranslationMessages }) {
   const sectionTitles = {
@@ -26,7 +28,7 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
       data-alt-prefix={t.gallery.imageAltPrefix}
       data-open-label={t.gallery.openImageAria}
       data-instagram={t.gallery.instagramCta}
-      className="relative overflow-hidden bg-beige pt-10 pb-16 dark:bg-black"
+      className="relative overflow-hidden bg-beige pt-10 pb-16 dark:bg-[#050403]"
     >
       <div className="container mx-auto px-6">
         <div className="mb-12 text-center">
@@ -49,6 +51,7 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
                 {gallerySectionImageIds[category].map((id, index) => {
                   const src = galleryImageSrc(id)
                   const alt = galleryImageAlt(id)
+                  const caption = galleryImageCaption(id)
                   const tilt = subtleTilt[index % subtleTilt.length]
                   const lift = subtleLift[index % subtleLift.length]
 
@@ -67,7 +70,7 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
                       >
                         <span className="absolute inset-0 z-10 bg-gradient-to-t from-black/25 via-transparent to-black/10 transition-colors group-hover:from-black/40" />
                         <span className="absolute inset-0 z-20 flex items-center justify-center">
-                          <ZoomIn className="h-5 w-5 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:h-6 md:w-6" />
+                          <ZoomIn className="size-5 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:h-6 md:w-6" />
                         </span>
                         <Image
                           src={src}
@@ -79,7 +82,9 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
                           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </a>
-                      <figcaption className="sr-only">{alt}</figcaption>
+                      <figcaption className="mt-2 min-h-8 text-center text-[0.68rem] font-medium leading-tight text-muted-foreground">
+                        {caption}
+                      </figcaption>
                     </figure>
                   )
                 })}
@@ -88,6 +93,19 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
           ))}
 
           <div className="mt-10 flex flex-col items-center gap-4 text-center">
+            <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+              {t.gallery.servicesLabel}
+            </p>
+            <ServiceLinks />
+            <a
+              href={siteConfig.bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-14 items-center gap-2 rounded-full bg-primary px-8 text-base font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+            >
+              <CalendarDays className="size-4" aria-hidden="true" />
+              {t.gallery.bookingCta}
+            </a>
             <a
               href="https://instagram.com/diaramanicure"
               target="_blank"
@@ -95,7 +113,7 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
               className="inline-flex h-16 items-center gap-2 rounded-2xl border border-input bg-background px-10 text-xl font-normal shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground md:h-20 md:px-12"
             >
               <span className="inline-flex h-7 w-8 items-center justify-center rounded-md bg-[radial-gradient(circle_at_30%_110%,#fdf497_0%,#fdf497_18%,#fd5949_45%,#d6249f_68%,#285AEB_100%)] shadow-sm">
-                <Instagram className="h-4 w-4 text-white" />
+                <Instagram className="size-4 text-white" />
               </span>
               {t.gallery.instagramCta}
             </a>

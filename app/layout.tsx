@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import Script from "next/script"
 import "./globals.css"
 import { AnalyticsRuntime } from "@/components/analytics-runtime"
 import { CookieConsentMarkup } from "@/components/cookie-consent-markup"
@@ -91,19 +92,16 @@ export default function RootLayout({
   return (
     <html lang="sk" suppressHydrationWarning>
       <head>
-        <script
-          id="theme-init"
-          dangerouslySetInnerHTML={{
-            __html: `
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`
             try {
               document.documentElement.classList.toggle(
                 "dark",
                 window.localStorage.getItem("theme") === "dark"
               );
             } catch (_) {}
-          `,
-          }}
-        />
+          `}
+        </Script>
       </head>
       <body suppressHydrationWarning>
         <WebMcpScript />

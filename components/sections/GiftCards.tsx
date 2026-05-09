@@ -1,4 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from "next/image"
+import Link from "next/link"
 import { Check, ShoppingBasket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { siteConfig } from "@/lib/site-config"
@@ -6,13 +7,13 @@ import type { TranslationMessages } from "@/lib/i18n"
 
 export function GiftCards({ t }: { t: TranslationMessages }) {
     return (
-        <section id="darcekove-poukazky" className="py-16 bg-beige dark:bg-black">
+        <section id="darcekove-poukazky" className="py-16 bg-beige dark:bg-[#050403]">
             <div className="container mx-auto px-6">
                 <div className="max-w-5xl mx-auto">
                     <div className="grid md:grid-cols-2 gap-10 items-center">
                         <div className="text-center md:text-left order-2 md:order-1">
                             <div className="inline-flex items-center gap-2 rounded-full border border-primary/10 bg-white/45 px-4 py-2 text-sm font-medium text-muted-foreground dark:bg-card">
-                                <ShoppingBasket className="h-4 w-4" aria-hidden="true" />
+                                <ShoppingBasket className="size-4" aria-hidden="true" />
                                 <span>{t.giftCards.label}</span>
                             </div>
 
@@ -28,18 +29,18 @@ export function GiftCards({ t }: { t: TranslationMessages }) {
                             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                                 <Button asChild className="h-12 rounded-full px-7">
                                     <a href={siteConfig.giftCardUrl} target="_blank" rel="noopener noreferrer">
-                                        <ShoppingBasket className="h-4 w-4" />
+                                        <ShoppingBasket className="size-4" />
                                         {t.giftCards.buyCta}
                                     </a>
                                 </Button>
                                 <Button asChild variant="outline" className="h-12 rounded-full px-7">
-                                    <a href="/darcekove-poukazy">{t.giftCards.moreInfoCta}</a>
+                                    <Link href="/darcekove-poukazy">{t.giftCards.moreInfoCta}</Link>
                                 </Button>
                             </div>
 
                             <div className="mt-8 flex flex-wrap gap-4 justify-center md:justify-start text-sm text-muted-foreground">
                                 <div className="flex items-center gap-2">
-                                    <Check className="h-4 w-4 text-green-700 dark:text-green-400" aria-hidden="true" />
+                                    <Check className="size-4 text-green-700 dark:text-green-400" aria-hidden="true" />
                                     <span>{t.giftCards.delivery}</span>
                                 </div>
                             </div>
@@ -48,7 +49,7 @@ export function GiftCards({ t }: { t: TranslationMessages }) {
                         <div className="relative order-1 md:order-2">
                             <div className="relative aspect-square max-w-md mx-auto">
                                 <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg border border-primary/10 bg-white dark:bg-card">
-                                    <img
+                                    <Image
                                         src="/gift-card-520.webp"
                                         alt={t.giftCards.imageAlt}
                                         width={520}

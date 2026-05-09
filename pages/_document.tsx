@@ -1,4 +1,5 @@
 import Document, { Head, Html, Main, NextScript } from "next/document"
+import Script from "next/script"
 import { defaultLanguage, getLanguageMeta, languages, type Language } from "@/lib/i18n"
 
 function isLanguage(value: unknown): value is Language {
@@ -13,7 +14,11 @@ export default class MyDocument extends Document {
 
     return (
       <Html lang={meta.htmlLang}>
-        <Head />
+        <Head>
+          <Script id="theme-init" strategy="beforeInteractive">
+            {'try{document.documentElement.classList.toggle("dark",window.localStorage.getItem("theme")==="dark")}catch(_){}'}
+          </Script>
+        </Head>
         <body>
           <Main />
           <NextScript />
