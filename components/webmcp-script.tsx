@@ -1,4 +1,3 @@
-import Script from "next/script"
 import { fullAddress, siteConfig } from "@/lib/site-config"
 
 export function WebMcpScript() {
@@ -66,8 +65,9 @@ export function WebMcpScript() {
 `
 
   return (
-    <Script id="webmcp-runtime" strategy="afterInteractive">
-      {script}
-    </Script>
+    <script
+      id="webmcp-runtime"
+      dangerouslySetInnerHTML={{ __html: script }}
+    />
   )
 }

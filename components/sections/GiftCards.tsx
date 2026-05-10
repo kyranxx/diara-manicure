@@ -7,12 +7,12 @@ import type { TranslationMessages } from "@/lib/i18n"
 
 export function GiftCards({ t }: { t: TranslationMessages }) {
     return (
-        <section id="darcekove-poukazky" className="py-16 bg-beige dark:bg-[#050403]">
+        <section id="darcekove-poukazky" className="py-20 bg-gradient-to-b from-beige via-white to-beige dark:from-[#050403] dark:via-[#120d0d] dark:to-[#050403]">
             <div className="container mx-auto px-6">
-                <div className="max-w-5xl mx-auto">
+                <div className="max-w-5xl mx-auto rounded-[2rem] border border-primary/15 bg-white/70 p-6 shadow-2xl shadow-black/5 ring-1 ring-white/60 backdrop-blur-sm dark:bg-card/70 dark:ring-white/10 md:p-10">
                     <div className="grid md:grid-cols-2 gap-10 items-center">
                         <div className="text-center md:text-left order-2 md:order-1">
-                            <div className="inline-flex items-center gap-2 rounded-full border border-primary/10 bg-white/45 px-4 py-2 text-sm font-medium text-muted-foreground dark:bg-card">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-semibold text-primary dark:bg-primary/15">
                                 <ShoppingBasket className="size-4" aria-hidden="true" />
                                 <span>{t.giftCards.label}</span>
                             </div>
@@ -27,13 +27,13 @@ export function GiftCards({ t }: { t: TranslationMessages }) {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                                <Button asChild className="h-12 rounded-full px-7">
+                                <Button asChild className="h-14 rounded-full px-8 text-base">
                                     <a href={siteConfig.giftCardUrl} target="_blank" rel="noopener noreferrer">
                                         <ShoppingBasket className="size-4" />
                                         {t.giftCards.buyCta}
                                     </a>
                                 </Button>
-                                <Button asChild variant="outline" className="h-12 rounded-full px-7">
+                                <Button asChild variant="outline" className="h-14 rounded-full px-8 text-base bg-white/50">
                                     <Link href="/darcekove-poukazy">{t.giftCards.moreInfoCta}</Link>
                                 </Button>
                             </div>
@@ -48,7 +48,7 @@ export function GiftCards({ t }: { t: TranslationMessages }) {
 
                         <div className="relative order-1 md:order-2">
                             <div className="relative aspect-square max-w-md mx-auto">
-                                <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-lg border border-primary/10 bg-white dark:bg-card">
+                                <div className="relative w-full h-full rounded-2xl overflow-hidden border border-primary/15 bg-white shadow-2xl shadow-primary/10 ring-1 ring-white dark:bg-card dark:ring-white/10">
                                     <Image
                                         src="/gift-card-520.webp"
                                         alt={t.giftCards.imageAlt}

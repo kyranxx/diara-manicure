@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-    title: "Blog | diara manicure. - Tipy o starostlivosti o nechty",
+    title: "Blog - tipy o starostlivosti o nechty",
     description: "Čítajte naše články o starostlivosti o gélové nechty, trendoch v nail arte a tipoch pre zdravé a krásne ruky. Blog nechtového štúdia diara manicure. v Trnave.",
     keywords: [
         "nechty blog",

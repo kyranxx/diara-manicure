@@ -1,8 +1,8 @@
 import Link from "next/link"
-import { Instagram, Facebook } from "lucide-react"
+import { FacebookIcon, InstagramIcon } from "@/components/social-icons"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
 import type { TranslationMessages } from "@/lib/i18n"
-import { ServiceLinks } from "@/components/service-links"
+import { siteConfig } from "@/lib/site-config"
 
 export function Footer({ t }: { t: TranslationMessages }) {
     return (
@@ -28,29 +28,26 @@ export function Footer({ t }: { t: TranslationMessages }) {
                         >
                             {t.footer.giftCards}
                         </Link>
-                        <div className="mt-4">
-                            <ServiceLinks />
-                        </div>
                     </div>
 
                     <div className="flex gap-6">
                         <a
-                            href="https://instagram.com/diaramanicure"
+                            href={siteConfig.instagramUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3 rounded-full bg-white hover:bg-primary text-black hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                            className="inline-flex size-9 items-center justify-center"
                             aria-label="Instagram Diara Manicure"
                         >
-                            <Instagram className="size-5" />
+                            <InstagramIcon className="size-6" />
                         </a>
                         <a
-                            href="https://facebook.com/diaramanicure"
+                            href={siteConfig.facebookUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-3 rounded-full bg-white hover:bg-primary text-black hover:text-primary-foreground transition-all duration-300 shadow-sm"
+                            className="inline-flex size-9 items-center justify-center"
                             aria-label="Facebook Diara Manicure"
                         >
-                            <Facebook className="size-5" />
+                            <FacebookIcon className="size-6" />
                         </a>
                     </div>
                 </div>

@@ -2,9 +2,9 @@ import { fullAddress, siteConfig } from "@/lib/site-config"
 
 const homeMarkdown = `# diara manicure.
 
-> Profesionálne nechtové štúdio v Trnave.
+> Slovenský nechtový salón v Trnave.
 
-diara manicure. ponúka gélové nechty, manikúru a darčekové poukazy v Trnave. Používajú sa kvalitné európske gély, parkovanie je zdarma a rezervácia je dostupná online.
+diara manicure. ponúka gélové nechty, manikúru a darčekové poukazy v Trnave. Dodržiavame prísne hygienické normy, parkovanie je zdarma a rezervácia je dostupná online.
 
 ## Rýchle odkazy
 

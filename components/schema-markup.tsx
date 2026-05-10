@@ -1,6 +1,5 @@
 import Script from "next/script";
 import { galleryImages } from "@/lib/gallery";
-import { servicePages } from "@/lib/service-pages";
 import { siteConfig } from "@/lib/site-config";
 
 function jsonLd(data: unknown) {
@@ -29,7 +28,7 @@ const SchemaMarkup = () => {
       "https://www.diaramanicure.sk/logo_spring_day.jpg",
       ...galleryImageObjects.slice(0, 12).map((image) => image.contentUrl)
     ],
-    "description": "Profesionálne nechtové štúdio v Trnave. Gélové nechty, manikúra, gél lak a darčekové poukazy. Kvalitné európske gély, parkovanie zdarma a online rezervácia.",
+    "description": "Slovenský nechtový salón v Trnave. Gélové nechty, manikúra, gél lak a darčekové poukazy. Prísne hygienické normy, parkovanie zdarma a online rezervácia.",
     "url": "https://www.diaramanicure.sk",
     "telephone": "+421902163144",
     "email": "andrea.heckova92@gmail.com",
@@ -86,16 +85,45 @@ const SchemaMarkup = () => {
       "@type": "OfferCatalog",
       "name": "Nechtové služby",
       "itemListElement": [
-        ...servicePages.map((page) => ({
+        {
           "@type": "Offer",
-          "url": `${siteConfig.baseUrl}/${page.slug}`,
           "itemOffered": {
             "@type": "Service",
-            "name": page.serviceName,
-            "description": page.heroIntro
+            "name": "Gélové nechty - nová modelácia",
+            "description": "Kompletná modelácia gélových nechtov s kvalitným európskym gélom"
           },
           "priceCurrency": "EUR"
-        })),
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Doplnenie gélových nechtov",
+            "description": "Pravidelné doplnenie a údržba gélových nechtov"
+          },
+          "priceCurrency": "EUR"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Gél lak manikúra",
+            "description": "Klasická manikúra s gél lakom dlhej výdrže"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "20.00",
+            "priceCurrency": "EUR"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Nail art a zdobenie",
+            "description": "Kreatívny nail art a dizajn podľa požiadaviek"
+          }
+        },
         {
           "@type": "Offer",
           "name": "Darčekový poukaz na manikúru",
@@ -140,7 +168,7 @@ const SchemaMarkup = () => {
       "name": "Andrea Hečková"
     },
     "foundingDate": "2020",
-    "slogan": "Kvalitné európske gély a precízna práca."
+    "slogan": "Slovenský nechtový salón s precíznou prácou."
   };
 
   const imageGallerySchema = {
@@ -148,7 +176,7 @@ const SchemaMarkup = () => {
     "@type": "ImageGallery",
     "@id": "https://www.diaramanicure.sk/#galeria",
     "name": "Galéria gélových nechtov v Trnave",
-    "description": "Fotogaléria práce nechtového štúdia diara manicure. v Trnave: francúzska manikúra, ružové ombre, červené, jarné a jemne zdobené gélové nechty.",
+    "description": "Galéria práce nechtového štúdia diara manicure. v Trnave.",
     "url": "https://www.diaramanicure.sk/#galeria",
     "image": galleryImageObjects
   };

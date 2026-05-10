@@ -12,7 +12,7 @@ const socialImageUrl = "/og-image.jpg?v=20260407"
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.diaramanicure.sk'),
-  title: "diara manicure. | Gélové nechty Trnava, manikúra Trnava a cenník",
+  title: "Gélové nechty v Trnave, manikúra Trnava a cenník",
   description: "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, Nails Trnava služby a darčekové poukazy.",
   keywords: [
     "nechty trnava",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "diara manicure. | Gélové nechty Trnava a manikúra Trnava",
+    title: "Gélové nechty v Trnave a manikúra Trnava",
     description: "Profesionálna manikúra a gélové nechty v Trnave. Cenník, darčekové poukazy, parkovanie zdarma a online rezervácia.",
     type: "website",
     locale: "sk_SK",
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "diara manicure. | Gélové nechty Trnava a manikúra Trnava",
+    title: "Gélové nechty v Trnave a manikúra Trnava",
     description: "Profesionálna manikúra a gélové nechty v Trnave. Cenník, darčekové poukazy, parkovanie zdarma a online rezervácia.",
     images: [socialImageUrl],
   },

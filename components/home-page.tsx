@@ -13,7 +13,7 @@ import { GalleryShell } from "@/components/sections/GalleryShell"
 import { GiftCards } from "@/components/sections/GiftCards"
 import { Hero } from "@/components/sections/Hero"
 import { Services } from "@/components/sections/Services"
-import { GoogleReviewsSection } from "@/components/sections/Testimonials"
+import { GoogleReviewsMarquee } from "@/components/sections/Testimonials"
 import { defaultLanguage, getLanguageMeta, languages, translations, type Language } from "@/lib/i18n"
 import type { ServiceData } from "@/lib/sheets"
 import { siteConfig } from "@/lib/site-config"
@@ -25,15 +25,15 @@ type HomePageProps = {
 
 const seoByLanguage: Record<Language, { title: string; description: string; keywords: string; ogLocale: string }> = {
   sk: {
-    title: "diara manicure. | Gélové nechty Trnava, manikúra Trnava a cenník",
+    title: "Gélové nechty v Trnave, manikúra Trnava a cenník",
     description:
-      "Gélové nechty a manikúra v Trnave. Cenník, online rezervácia, Google recenzie, parkovanie zdarma a kvalitné európske gély.",
+      "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, Nails Trnava služby a darčekové poukazy.",
     keywords:
       "nechty trnava, gelove nechty trnava, manikura trnava, nechtove studio trnava, nails trnava, diara manicure, nechty trnava cennik, darcekovy poukaz nechty",
     ogLocale: "sk_SK",
   },
   en: {
-    title: "diara manicure. | Gel nails and manicure in Trnava",
+    title: "Gel nails and manicure in Trnava",
     description:
       "Professional manicure and gel nails in Trnava. View prices, available appointments, nail services and gift vouchers.",
     keywords:
@@ -41,7 +41,7 @@ const seoByLanguage: Record<Language, { title: string; description: string; keyw
     ogLocale: "en_US",
   },
   uk: {
-    title: "diara manicure. | Гелеві нігті та манікюр у Трнаві",
+    title: "Гелеві нігті та манікюр у Трнаві",
     description:
       "Професійний манікюр і гелеві нігті у Трнаві. Перегляньте ціни, вільні терміни, послуги та подарункові ваучери.",
     keywords:
@@ -49,7 +49,7 @@ const seoByLanguage: Record<Language, { title: string; description: string; keyw
     ogLocale: "uk_UA",
   },
   sr: {
-    title: "diara manicure. | Gel nokti i manikir u Trnavi",
+    title: "Gel nokti i manikir u Trnavi",
     description:
       "Profesionalni manikir i gel nokti u Trnavi. Pogledajte cenovnik, slobodne termine, usluge i poklon vaučere.",
     keywords:
@@ -110,9 +110,9 @@ export function HomePage({ language, services }: HomePageProps) {
 
         <main>
           <Hero bookingUrl={siteConfig.bookingUrl} t={t} />
-          <GoogleReviewsSection t={t} />
           <Services services={services} bookingUrl={siteConfig.bookingUrl} t={t} />
           <GalleryShell t={t} />
+          <GoogleReviewsMarquee t={t} />
           <About t={t} />
           <FAQ t={t} />
           <GiftCards t={t} />

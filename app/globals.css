@@ -103,16 +103,18 @@
   }
 
   .review-marquee-track {
-    animation: review-marquee 42s linear infinite;
-  }
-
-  .review-marquee-track:hover {
-    animation-play-state: paused;
+    animation: review-marquee 40s linear infinite;
+    padding-inline: 0.75rem;
+    will-change: transform;
   }
 
   .review-marquee-track-reverse {
     animation-duration: 48s;
     animation-direction: reverse;
+  }
+
+  .review-marquee-track-third {
+    animation-duration: 44s;
   }
 
   .review-card-text {
@@ -122,31 +124,25 @@
     overflow: hidden;
   }
 
-  .google-reviews-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    max-width: 72rem;
-    margin-inline: auto;
-  }
-
   .google-review-card,
-  .google-review-placeholder {
-    min-height: 13rem;
+  .google-review-marquee-placeholder {
+    flex: 0 0 230px;
+    width: 230px;
+    min-height: 136px;
     border: 1px solid rgb(0 0 0 / 8%);
-    border-radius: 1rem;
+    border-radius: 0.85rem;
     background: rgb(255 255 255 / 55%);
-    padding: 1.25rem;
+    padding: 1rem;
     box-shadow: 0 12px 30px rgb(0 0 0 / 4%);
   }
 
   .dark .google-review-card,
-  .dark .google-review-placeholder {
+  .dark .google-review-marquee-placeholder {
     border-color: rgb(255 255 255 / 10%);
     background: hsl(var(--card));
   }
 
-  .google-review-placeholder {
+  .google-review-marquee-placeholder {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,19 +158,18 @@
   }
 
   .google-review-topline {
-    justify-content: space-between;
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.75rem;
   }
 
   .google-review-stars {
     display: flex;
     gap: 0.1rem;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     line-height: 1;
   }
 
   .google-review-star-filled {
-    color: hsl(var(--primary));
+    color: #fbbc04;
   }
 
   .google-review-star-empty {
@@ -185,33 +180,18 @@
     color: rgb(255 255 255 / 22%);
   }
 
-  .google-review-source {
-    border-radius: 9999px;
-    background: rgb(0 0 0 / 6%);
-    padding: 0.25rem 0.55rem;
-    color: hsl(var(--muted-foreground));
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .dark .google-review-source {
-    background: rgb(255 255 255 / 10%);
-  }
-
   .google-review-text {
     display: -webkit-box;
-    min-height: 5.9rem;
-    margin-bottom: 1.15rem;
+    min-height: 3.8rem;
+    margin-bottom: 0.85rem;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 4;
     color: rgb(0 0 0 / 78%);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-style: italic;
     font-weight: 300;
-    line-height: 1.55;
+    line-height: 1.45;
   }
 
   .dark .google-review-text {
@@ -219,18 +199,56 @@
   }
 
   .google-review-author img {
-    width: 1.9rem;
-    height: 1.9rem;
+    width: 1.75rem;
+    height: 1.75rem;
     border-radius: 9999px;
     object-fit: cover;
   }
 
-  .google-review-author span {
+  .google-review-author span,
+  .google-review-author a {
     color: hsl(var(--muted-foreground));
-    font-size: 0.72rem;
+    font-size: 0.66rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+
+  .social-icon-instagram {
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: 1.75rem;
+    height: 1.75rem;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/2/21/Instagram_Glyph_Gradient_RGB_logo.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  .instagram-gradient-border {
+    position: relative;
+    border: 0;
+    background: transparent;
+    color: hsl(var(--foreground));
+    text-shadow: none;
+  }
+
+  .instagram-gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 18%, #fd5949 45%, #d6249f 68%, #285aeb 100%);
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
   }
 
   .gallery-centered-grid {
@@ -253,10 +271,6 @@
   }
 
   @media (min-width: 640px) {
-    .google-reviews-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .gallery-centered-item {
       flex-basis: calc((100% - 1.5rem) / 4);
       max-width: calc((100% - 1.5rem) / 4);
@@ -264,6 +278,33 @@
   }
 
   @media (min-width: 768px) {
+    .google-review-card,
+    .google-review-marquee-placeholder {
+      flex-basis: 340px;
+      width: 340px;
+      min-height: 158px;
+      padding: 1.1rem 1.2rem;
+    }
+
+    .google-review-stars {
+      font-size: 0.95rem;
+    }
+
+    .google-review-text {
+      min-height: 4.6rem;
+      font-size: 0.92rem;
+    }
+
+    .google-review-author img {
+      width: 1.9rem;
+      height: 1.9rem;
+    }
+
+    .google-review-author span,
+    .google-review-author a {
+      font-size: 0.72rem;
+    }
+
     .gallery-centered-grid {
       gap: 0.75rem;
     }
@@ -275,10 +316,6 @@
   }
 
   @media (min-width: 1024px) {
-    .google-reviews-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
     .gallery-centered-item {
       flex-basis: calc((100% - 5.25rem) / 8);
       max-width: calc((100% - 5.25rem) / 8);
@@ -316,6 +353,19 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+    }
+
+    .review-marquee-track {
+      animation-duration: 40s !important;
+      animation-iteration-count: infinite !important;
+    }
+
+    .review-marquee-track-reverse {
+      animation-duration: 48s !important;
+    }
+
+    .review-marquee-track-third {
+      animation-duration: 44s !important;
     }
   }
 }
@@ -435,6 +485,6 @@
   }
 
   to {
-    transform: translateX(calc(-50% - 0.5rem));
+    transform: translateX(-50%);
   }
 }

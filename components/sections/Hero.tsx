@@ -1,12 +1,40 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ThemeAwareLogo } from "@/components/theme-aware-logo"
-import { Phone, MessageCircle } from "lucide-react"
+import { MessengerIcon, WhatsAppIcon } from "@/components/social-icons"
+import { MapPin, Phone } from "lucide-react"
 import type { TranslationMessages } from "@/lib/i18n"
+import { siteConfig } from "@/lib/site-config"
+
+/* eslint-disable @next/next/no-img-element */
 
 interface HeroProps {
     bookingUrl: string
     t: TranslationMessages
+}
+
+function InfoLine({ text, className = "" }: { text: string; className?: string }) {
+    const [icon, ...words] = text.split(" ")
+
+    return (
+        <span className={`inline-flex items-center justify-center gap-2 leading-snug ${className}`}>
+            <span className="inline-flex h-6 w-6 items-center justify-center leading-none">{icon}</span>
+            <span>{words.join(" ")}</span>
+        </span>
+    )
+}
+
+function SlovakFlagIcon() {
+    return (
+        <img
+            src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Flag_of_Slovakia.svg"
+            alt="Slovenská vlajka"
+            className="h-5 w-7 rounded-[3px] object-cover shadow-sm"
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
+        />
+    )
 }
 
 export function Hero({ bookingUrl, t }: HeroProps) {
@@ -18,14 +46,14 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                 <div className="absolute top-[40%] -right-[10%] size-[40%] rounded-full bg-gradient-to-bl from-primary/5 to-transparent blur-3xl" />
             </div>
 
-            <div className="mb-8 relative w-full max-w-[260px] md:max-w-[780px] mx-auto">
+            <div className="relative mx-auto mt-12 mb-24 w-[98vw] max-w-[470px] sm:max-w-[540px] md:mt-4 md:mb-12 md:max-w-[780px]">
                 <ThemeAwareLogo
                     alt={t.hero.logoAlt}
                     width={1536}
                     height={600}
                     className="w-full h-auto"
                     priority
-                    sizes="(max-width: 768px) 260px, 780px"
+                    sizes="(max-width: 640px) 470px, (max-width: 768px) 540px, 780px"
                 />
             </div>
 
@@ -38,24 +66,28 @@ export function Hero({ bookingUrl, t }: HeroProps) {
             </div>
             */}
                 <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
-                    {t.hero.titlePrefix} <span className="text-primary">{t.hero.titleBrand}</span>
+                    {t.hero.titlePrefix}
+                    {t.hero.titleBrand ? <> <span className="text-primary">{t.hero.titleBrand}</span></> : null}
                 </h1>
                 <div className="mb-10 space-y-2 text-xl font-light text-muted-foreground md:text-2xl">
-                    <p>{t.hero.subtitleMain}</p>
-                    <p className="font-serif italic text-primary/80">{t.hero.subtitleHighlight}</p>
+                    {t.hero.subtitleMain ? <p>{t.hero.subtitleMain}</p> : null}
+                    <p className="flex items-center justify-center gap-2 font-serif italic text-primary/80">
+                        <SlovakFlagIcon />
+                        {t.hero.subtitleHighlight}
+                    </p>
                 </div>
             </div>
 
-            <div className="flex flex-col items-center gap-6 w-full max-w-md mx-auto">
+            <div className="flex flex-col items-center gap-6 w-full max-w-lg mx-auto">
                 <div className="flex flex-col justify-center gap-4 w-full">
                     <Button
                         asChild
-                        className="h-auto py-2 text-xl md:text-2xl rounded-full px-12 md:px-16 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2"
+                        className="h-auto py-3 text-xl md:py-4 md:text-3xl rounded-full px-12 md:px-20 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2"
                     >
                         <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
                             <span>{t.hero.bookingCta}</span>
                                 <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
-                                    <div className="relative h-4 w-16">
+                                    <div className="relative h-5 w-20 md:h-6 md:w-24">
                                         <Image
                                             src="/bookio_logo-128.webp"
                                             alt="Bookio"
@@ -71,20 +103,11 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                     </Button>
 
                     {/* Micro-copy below booking button */}
-                    <div className="text-base md:text-lg text-foreground/75 italic text-center -mt-2 mb-4 flex flex-col items-center gap-1 dark:text-white/80">
-                        <span className="not-italic font-medium text-primary">{t.hero.cardPayment}</span>
-                        <span>{t.hero.softReservation}</span>
-                        <span>{t.hero.parkingCoffee}</span>
+                    <div className="-mt-1 mb-3 flex flex-col items-center gap-1.5 text-center text-lg text-foreground/80 md:text-xl dark:text-white/85">
+                        <InfoLine text={t.hero.cardPayment} className="font-medium text-primary" />
+                        <InfoLine text={t.hero.parkingCoffee} />
+                        <InfoLine text={t.hero.hygieneStandards} />
                     </div>
-
-                    <a
-                        href="#darcekove-poukazky"
-                        className="w-full py-3 px-6 text-center rounded-full border-2 border-pink-400/50 hover:border-pink-500/80 bg-gradient-to-r from-pink-50 to-red-50 hover:from-pink-100 hover:to-red-100 dark:from-pink-950/30 dark:to-red-950/30 dark:hover:from-pink-900/40 dark:hover:to-red-900/40 transition-all duration-300 group flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover:shadow-pink-200/50 dark:hover:shadow-pink-900/30"
-                    >
-                        <span className="text-lg animate-pulse">💝</span>
-                        <span className="font-medium text-pink-700 dark:text-pink-300">{t.hero.giftCardsCta}</span>
-                        <span className="text-lg animate-pulse">✨</span>
-                    </a>
 
                     {/* Phone Reservation - Anti-scam protected */}
                     <div className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-sm border border-primary/10 shadow-sm">
@@ -94,7 +117,7 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                         <div className="text-left">
                             <p className="text-xs text-foreground/70 font-medium uppercase tracking-wider dark:text-white/75">{t.hero.phoneLabel}</p>
                             <a
-                                href="tel:+421902163144"
+                                href={siteConfig.phoneHref}
                                 className="text-lg font-semibold text-foreground hover:text-primary transition-colors tracking-[0.15em]"
                             >
                                 <span>+421 902 163 144</span>
@@ -102,29 +125,56 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                         </div>
                     </div>
 
-                    {/* Facebook Messenger - Contact via chat */}
-                    <a
-                        href="https://m.me/diaramanicure"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-3 py-3 px-6 rounded-full bg-[#0084FF]/10 hover:bg-[#0084FF]/20 backdrop-blur-sm border border-[#0084FF]/20 shadow-sm transition-all duration-300 hover:scale-[1.02]"
-                    >
-                        <div className="flex items-center justify-center size-10 rounded-full bg-[#0084FF]/20">
-                            <MessageCircle className="size-5 text-[#0084FF]" />
-                        </div>
-                        <div className="text-left">
-                            <p className="text-xs text-black font-semibold uppercase tracking-wider dark:text-white">{t.hero.messengerLabel}</p>
-                            <span className="text-lg font-semibold text-foreground">Facebook Messenger</span>
-                        </div>
-                    </a>
+                    <div className="grid grid-cols-2 gap-3">
+                        <a
+                            href={siteConfig.messengerUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex min-h-20 flex-col items-center justify-center gap-1 rounded-2xl border border-[#0084FF]/20 bg-[#0084FF]/10 px-3 py-3 text-center shadow-sm"
+                        >
+                            <MessengerIcon className="size-8" />
+                            <span className="text-[10px] font-semibold uppercase tracking-wide text-black/60 dark:text-white/70">
+                                {t.hero.contactUsLabel}
+                            </span>
+                            <span className="text-[11px] font-semibold uppercase tracking-wide text-black dark:text-white">
+                                {t.hero.messengerLabel}
+                            </span>
+                        </a>
+                        <a
+                            href={siteConfig.whatsappUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex min-h-20 flex-col items-center justify-center gap-1 rounded-2xl border border-[#25D366]/25 bg-[#25D366]/10 px-3 py-3 text-center shadow-sm"
+                        >
+                            <WhatsAppIcon className="size-8" />
+                            <span className="text-[10px] font-semibold uppercase tracking-wide text-black/60 dark:text-white/70">
+                                {t.hero.contactUsLabel}
+                            </span>
+                            <span className="text-[11px] font-semibold uppercase tracking-wide text-black dark:text-white">
+                                {t.hero.whatsappLabel}
+                            </span>
+                        </a>
+                    </div>
 
                     <Button
                         variant="outline"
                         asChild
-                        className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full mb-8"
+                        className="h-14 md:h-16 text-xl rounded-full px-10 md:px-12 border-primary/20 hover:bg-white/50 hover:text-foreground transition-all duration-300 w-full"
                     >
-                        <a href="#visit">{t.hero.visitCta}</a>
+                        <a href="#visit">
+                            <MapPin className="mr-2 size-5" aria-hidden="true" />
+                            {t.hero.visitCta}
+                        </a>
                     </Button>
+
+                    <a
+                        href="#darcekove-poukazky"
+                        className="mb-8 w-full py-3 px-6 text-center rounded-full border-2 border-pink-400/50 hover:border-pink-500/80 bg-gradient-to-r from-pink-50 to-red-50 hover:from-pink-100 hover:to-red-100 dark:from-pink-950/30 dark:to-red-950/30 dark:hover:from-pink-900/40 dark:hover:to-red-900/40 transition-all duration-300 group flex items-center justify-center gap-2 shadow-sm hover:shadow-md hover:shadow-pink-200/50 dark:hover:shadow-pink-900/30"
+                    >
+                        <span className="text-lg animate-pulse">💝</span>
+                        <span className="font-medium text-pink-700 dark:text-pink-300">{t.hero.giftCardsCta}</span>
+                        <span className="text-lg animate-pulse">✨</span>
+                    </a>
 
                     {/* Quality Message Bubble - Desktop: Upper Left, Mobile: Below buttons */}
                     <div className="relative mt-0 flex w-full max-w-[420px] flex-col items-center gap-4 mx-auto xl:absolute xl:left-20 xl:top-[620px] xl:mt-0 xl:block xl:h-[430px]">

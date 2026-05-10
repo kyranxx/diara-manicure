@@ -1,6 +1,5 @@
 import type { Service } from "@/lib/sheets"
 import type { TranslationMessages } from "@/lib/i18n"
-import { ServiceLinks } from "@/components/service-links"
 
 interface ServicesProps {
     services: Service[]
@@ -16,9 +15,6 @@ export function Services({ services, bookingUrl, t }: ServicesProps) {
                     <h2 className="text-5xl md:text-7xl font-light mb-4 tracking-tight text-black dark:text-white">{t.services.heading}</h2>
                     <div className="w-24 h-1 bg-primary/20 mx-auto mb-4 rounded-full" />
                     <p className="text-sm text-muted-foreground uppercase tracking-widest mb-6">{t.services.validFrom}</p>
-                    <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground">
-                        {t.services.intro}
-                    </p>
                 </div>
 
                 <div className="max-w-5xl mx-auto">
@@ -61,12 +57,6 @@ export function Services({ services, bookingUrl, t }: ServicesProps) {
                         <div className="text-center text-muted-foreground">{t.services.unavailable}</div>
                     )}
 
-                    <div className="mt-10 space-y-4 text-center">
-                        <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                            {t.gallery.servicesLabel}
-                        </p>
-                        <ServiceLinks />
-                    </div>
                 </div>
             </div>
         </section>

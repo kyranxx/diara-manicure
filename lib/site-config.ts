@@ -8,6 +8,7 @@ export const siteConfig = {
   phone: "+421 902 163 144",
   phoneHref: "tel:+421902163144",
   messengerUrl: "https://m.me/diaramanicure",
+  whatsappUrl: "https://wa.me/421902163144",
   instagramUrl: "https://instagram.com/diaramanicure",
   facebookUrl: "https://facebook.com/diaramanicure",
   googleReviewsUrl:

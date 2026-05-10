@@ -42,7 +42,7 @@ assertIncludes(navbar, "languageHomeHref(item.code)", "navbar language links")
 assertNotIncludes(navbar, "md:hidden flex justify-center", "separate mobile language row")
 assertIncludes(services, "py-16 bg-beige", "original pricelist section background")
 assertIncludes(services, "bg-white/45 dark:bg-card", "original pricelist card background")
-assertIncludes(services, "t.services.intro", "pricelist intro paragraph")
+assertNotIncludes(services, "t.services.intro", "removed pricelist intro paragraph")
 assertIncludes(sheets, "Detailná suchá manikúra", "current fallback service list")
 assertNotIncludes(sheets, "Modelácia gélových nechtov (Nové nechty)", "stale fallback service list")
 

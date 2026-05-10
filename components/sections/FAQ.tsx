@@ -1,6 +1,4 @@
 import type { TranslationMessages } from "@/lib/i18n"
-import { CalendarDays } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
 
 export function FAQ({ t }: { t: TranslationMessages }) {
     return (
@@ -26,17 +24,6 @@ export function FAQ({ t }: { t: TranslationMessages }) {
                     ))}
                 </div>
 
-                <div className="mt-10 text-center">
-                    <a
-                        href={siteConfig.bookingUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-primary px-8 text-base font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
-                    >
-                        <CalendarDays className="size-4" aria-hidden="true" />
-                        {t.contact.bookingCta}
-                    </a>
-                </div>
             </div>
         </section>
     )

@@ -5,9 +5,10 @@
   "scripts": {
     "build": "next build",
     "check:i18n": "node scripts/check-i18n.mjs",
-    "check:service-pages": "node scripts/check-service-pages.mjs",
     "dev": "next dev",
     "generate:og": "node scripts/generate-og-image.mjs",
+    "gbp:auth": "node scripts/google-business-profile-oauth.mjs",
+    "gbp:locations": "node scripts/google-business-profile-locations.mjs",
     "lint": "eslint .",
     "start": "next start",
     "vercel-install": "pnpm install",

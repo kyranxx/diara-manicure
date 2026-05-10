@@ -54,6 +54,47 @@ export const siteRuntimeScript = String.raw`
     });
   }
 
+  function initMobileMenus() {
+    const roots = Array.from(document.querySelectorAll("[data-mobile-menu-root]"));
+    if (!roots.length) return;
+
+    roots.forEach((root) => {
+      const button = root.querySelector("[data-mobile-menu-toggle]");
+      const menu = root.querySelector("[data-mobile-menu]");
+      if (!button || !menu) return;
+      const openLabel = button.getAttribute("data-open-label") || "Otvoriť menu";
+      const closeLabel = button.getAttribute("data-close-label") || "Zavrieť menu";
+
+      function setOpen(open) {
+        menu.hidden = !open;
+        button.setAttribute("aria-expanded", open ? "true" : "false");
+        button.setAttribute("aria-label", open ? closeLabel : openLabel);
+      }
+
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        setOpen(menu.hidden);
+      });
+
+      menu.addEventListener("click", (event) => {
+        if (event.target && event.target.closest && event.target.closest("[data-mobile-menu-close]")) {
+          setOpen(false);
+        }
+      });
+
+      document.addEventListener("click", (event) => {
+        if (menu.hidden) return;
+        if (event.target && root.contains(event.target)) return;
+        setOpen(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") setOpen(false);
+      });
+    });
+  }
+
   function initCookieBanner() {
     const banner = document.getElementById("cookie-consent");
     if (!banner) return;
@@ -145,11 +186,17 @@ export const siteRuntimeScript = String.raw`
       } else if (href.startsWith("tel:")) {
         name = "phone_call_click";
         params = { event_category: "contact", event_label: href.slice(4) };
-      } else if (href.includes("instagram.com") || href.includes("facebook.com") || href.includes("m.me")) {
+      } else if (href.includes("instagram.com") || href.includes("facebook.com") || href.includes("m.me") || href.includes("wa.me") || href.includes("whatsapp.com")) {
         name = "social_click";
         params = {
           event_category: "social",
-          event_label: href.includes("instagram.com") ? "instagram" : href.includes("m.me") ? "messenger" : "facebook",
+          event_label: href.includes("instagram.com")
+            ? "instagram"
+            : href.includes("m.me")
+              ? "messenger"
+              : href.includes("wa.me") || href.includes("whatsapp.com")
+                ? "whatsapp"
+                : "facebook",
           link_url: href,
         };
       }
@@ -328,7 +375,7 @@ export const siteRuntimeScript = String.raw`
       });
       const cta = document.createElement("div");
       cta.className = "mt-10 flex flex-col items-center gap-4 text-center";
-      cta.innerHTML = '<a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" class="inline-flex h-16 items-center gap-2 rounded-2xl border border-input bg-background px-10 text-xl font-normal shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground md:h-20 md:px-12">' + instagramLabel + '</a>';
+      cta.innerHTML = '<a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" class="instagram-gradient-border inline-flex h-16 items-center gap-2 rounded-2xl px-10 text-xl font-normal shadow-sm md:h-20 md:px-12"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Instagram_Glyph_Gradient_RGB_logo.svg" alt="" loading="lazy" decoding="async" class="size-7" referrerpolicy="no-referrer">' + instagramLabel + '</a>';
       wrapper.appendChild(cta);
       content.appendChild(wrapper);
     }
@@ -347,14 +394,16 @@ export const siteRuntimeScript = String.raw`
     observer.observe(root);
   }
 
-  function initGoogleReviews() {
-    const root = document.querySelector("[data-google-reviews-root]");
+  function initGoogleReviewsMarquee() {
+    const root = document.querySelector("[data-google-reviews-marquee-root]");
     if (!root) return;
 
-    const list = root.querySelector("[data-google-reviews-list]");
+    const content = root.querySelector("[data-google-reviews-marquee-content]");
     const status = root.querySelector("[data-google-reviews-status]");
     const apiKey = root.dataset.googleMapsKey || "";
     const placeQuery = root.dataset.placeQuery || "Diara Manicure, Hospodárska 53, Trnava, Slovakia";
+    const googleMapsUrl = root.dataset.googleMapsUrl || "";
+    const endpoint = root.dataset.reviewsEndpoint || "/api/google-reviews";
     const loadingLabel = root.dataset.loadingLabel || "Načítavame recenzie z Google Maps...";
     const errorLabel = root.dataset.errorLabel || "Recenzie sa nepodarilo načítať.";
 
@@ -364,12 +413,12 @@ export const siteRuntimeScript = String.raw`
 
     function renderFallback(message) {
       setStatus(message);
-      if (!list) return;
-      list.innerHTML = "";
+      if (!content) return;
+      content.innerHTML = "";
       const item = document.createElement("div");
-      item.className = "google-review-placeholder";
+      item.className = "google-review-marquee-placeholder mx-auto";
       item.textContent = message;
-      list.appendChild(item);
+      content.appendChild(item);
     }
 
     function waitForGoogleMaps() {
@@ -441,83 +490,185 @@ export const siteRuntimeScript = String.raw`
       return stars;
     }
 
-    function renderReviews(reviews) {
-      const usableReviews = (reviews || [])
-        .filter((review) => Number(review.rating) >= 4 && reviewText(review).length > 0)
-        .sort((a, b) => reviewTime(b) - reviewTime(a))
-        .slice(0, 8);
+    function createCard(review) {
+      const card = document.createElement("article");
+      card.className = "google-review-card";
+
+      const top = document.createElement("div");
+      top.className = "google-review-topline";
+      top.appendChild(renderStars(review.rating));
+
+      const text = document.createElement("p");
+      text.className = "google-review-text";
+      text.textContent = reviewText(review);
+
+      const author = document.createElement("div");
+      author.className = "google-review-author";
+
+      const photoUri =
+        review.authorPhotoUri ||
+        (review.authorAttribution && (review.authorAttribution.photoUri || review.authorAttribution.photoURI)) ||
+        review.profile_photo_url;
+      if (photoUri) {
+        const photo = document.createElement("img");
+        photo.src = photoUri;
+        photo.alt = "";
+        photo.loading = "lazy";
+        photo.decoding = "async";
+        photo.referrerPolicy = "no-referrer";
+        author.appendChild(photo);
+      }
+
+      const authorUri = review.authorUri || (review.authorAttribution && review.authorAttribution.uri) || review.author_url;
+      const name = document.createElement(authorUri ? "a" : "span");
+      name.textContent =
+        review.author ||
+        (review.authorAttribution && review.authorAttribution.displayName) ||
+        review.author_name ||
+        "Google recenzia";
+      if (authorUri) {
+        name.href = authorUri;
+        name.target = "_blank";
+        name.rel = "noopener noreferrer";
+      }
+      author.appendChild(name);
+
+      card.appendChild(top);
+      card.appendChild(text);
+      card.appendChild(author);
+      return card;
+    }
+
+    function reviewAuthor(review) {
+      return (
+        review.author ||
+        (review.authorAttribution && review.authorAttribution.displayName) ||
+        review.author_name ||
+        "Google recenzia"
+      );
+    }
+
+    function reviewKey(review) {
+      return (reviewAuthor(review) + "|" + reviewText(review).slice(0, 120)).toLowerCase();
+    }
+
+    function uniqueReviews(reviews) {
+      const seen = new Set();
+      return reviews.filter((review) => {
+        const key = reviewKey(review);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function sequenceReviews(reviews, seed) {
+      if (!reviews.length) return [];
+      if (reviews.length === 1) return Array(8).fill(reviews[0]);
+
+      const step = reviews.length % 2 === 0 ? reviews.length - 1 : 2;
+      const targetLength = Math.max(reviews.length * 2, 10);
+      const sequence = [];
+      let offset = seed % reviews.length;
+
+      while (sequence.length < targetLength) {
+        const cycle = reviews.map((_, index) => reviews[(offset + index * step) % reviews.length]);
+        if (sequence.length && sequence[sequence.length - 1] === cycle[0]) {
+          cycle.push(cycle.shift());
+        }
+        sequence.push(...cycle);
+        offset = (offset + seed + 1) % reviews.length;
+      }
+
+      return sequence.slice(0, targetLength);
+    }
+
+    function buildTrack(reviews, reverse, seed, extraClass) {
+      const track = document.createElement("div");
+      track.className =
+        "review-marquee-track flex w-max gap-3" +
+        (reverse ? " review-marquee-track-reverse" : "") +
+        (extraClass ? " " + extraClass : "");
+      const sequence = sequenceReviews(reviews, seed);
+      sequence.concat(sequence).forEach((review) => {
+        track.appendChild(createCard(review));
+      });
+      return track;
+    }
+
+    function renderRows(reviews) {
+      if (!content) return;
+      content.innerHTML = "";
+      content.appendChild(buildTrack(reviews, false, 0, ""));
+      content.appendChild(buildTrack(reviews, true, 2, "mt-3"));
+      content.appendChild(buildTrack(reviews, false, 4, "review-marquee-track-third mt-3"));
+    }
+
+    function renderReviews(reviews, googleMapsUrl, sourceLabel) {
+      const usableReviews = uniqueReviews(
+        (reviews || [])
+          .filter((review) => Number(review.rating) >= 4 && reviewText(review).length > 0)
+          .sort((a, b) => reviewTime(b) - reviewTime(a)),
+      ).slice(0, 10);
 
       if (!usableReviews.length) {
         renderFallback(errorLabel);
         return;
       }
 
-      setStatus("Google Maps");
-      if (!list) return;
-      list.innerHTML = "";
-
-      usableReviews.forEach((review) => {
-        const card = document.createElement("article");
-        card.className = "google-review-card";
-
-        const top = document.createElement("div");
-        top.className = "google-review-topline";
-        top.appendChild(renderStars(review.rating));
-
-        const source = document.createElement("span");
-        source.className = "google-review-source";
-        source.textContent = "Google";
-        top.appendChild(source);
-
-        const text = document.createElement("p");
-        text.className = "google-review-text";
-        text.textContent = reviewText(review);
-
-        const author = document.createElement("div");
-        author.className = "google-review-author";
-
-        const photoUri = review.authorAttribution && review.authorAttribution.photoURI;
-        if (photoUri) {
-          const photo = document.createElement("img");
-          photo.src = photoUri;
-          photo.alt = "";
-          photo.loading = "lazy";
-          photo.decoding = "async";
-          photo.referrerPolicy = "no-referrer";
-          author.appendChild(photo);
-        }
-
-        const name = document.createElement("span");
-        name.textContent = (review.authorAttribution && review.authorAttribution.displayName) || "Google recenzia";
-        author.appendChild(name);
-
-        card.appendChild(top);
-        card.appendChild(text);
-        card.appendChild(author);
-        list.appendChild(card);
-      });
+      setStatus(sourceLabel || "Google Maps");
+      renderRows(usableReviews);
+      if (googleMapsUrl) {
+        root.querySelectorAll('a[href*="google.com/maps"]').forEach((anchor) => {
+          anchor.href = googleMapsUrl;
+        });
+      }
     }
 
     async function loadReviews() {
       setStatus(loadingLabel);
-      await loadGoogleMapsScript();
-      const googleMaps = window.google && window.google.maps;
-      if (!googleMaps || !googleMaps.importLibrary) throw new Error("Google Maps unavailable");
-      const placesLibrary = await googleMaps.importLibrary("places");
-      const Place = placesLibrary && placesLibrary.Place;
-      if (!Place || !Place.searchByText) throw new Error("Google Places unavailable");
+      try {
+        const response = await fetch(endpoint, {
+          headers: {
+            Accept: "application/json",
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (!data.error && data.reviews && data.reviews.length) {
+            renderReviews(data.reviews, data.googleMapsUrl || googleMapsUrl, data.source);
+            return;
+          }
+        }
+      } catch (_) {}
 
-      const result = await Place.searchByText({
-        textQuery: placeQuery,
-        fields: ["id", "displayName"],
-        language: "sk",
-      });
-      const places = result && result.places;
-      if (!places || !places.length) throw new Error("Place not found");
+      if (apiKey) {
+        try {
+          await loadGoogleMapsScript();
+          const googleMaps = window.google && window.google.maps;
+          if (!googleMaps || !googleMaps.importLibrary) throw new Error("Google Maps unavailable");
+          const placesLibrary = await googleMaps.importLibrary("places");
+          const Place = placesLibrary && placesLibrary.Place;
+          if (!Place || !Place.searchByText) throw new Error("Google Places unavailable");
 
-      const place = places[0];
-      await place.fetchFields({ fields: ["reviews"] });
-      renderReviews(place.reviews || []);
+          const result = await Place.searchByText({
+            textQuery: placeQuery,
+            fields: ["id", "displayName"],
+            language: "sk",
+          });
+          const places = result && result.places;
+          if (!places || !places.length) throw new Error("Place not found");
+
+          const place = places[0];
+          await place.fetchFields({ fields: ["reviews", "googleMapsURI"] });
+          renderReviews(place.reviews || [], place.googleMapsURI || googleMapsUrl, "Google Maps");
+          return;
+        } catch (error) {
+          setStatus(loadingLabel);
+        }
+      }
+
+      renderFallback(errorLabel);
     }
 
     function startLoading() {
@@ -563,12 +714,13 @@ export const siteRuntimeScript = String.raw`
   }
 
   initThemeButtons();
+  initMobileMenus();
   initCookieBanner();
   initTracking();
   initAnalyticsLoading();
   initLazyImages();
   initGallery();
-  initGoogleReviews();
+  initGoogleReviewsMarquee();
 })();
 
 `

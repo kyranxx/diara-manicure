@@ -14,7 +14,7 @@ import { siteConfig } from "@/lib/site-config"
 const pageUrl = `${siteConfig.baseUrl}/darcekove-poukazy`
 
 export const metadata: Metadata = {
-  title: "Darček pre ženu v Trnave | Poukaz na manikúru | diara manicure.",
+  title: "Darček pre ženu v Trnave | Poukaz na manikúru",
   description:
     "Darčekový poukaz na manikúru v Trnave pre manželku, priateľku, mamu alebo kolegyňu. Online kúpa cez Bookio a doručenie emailom.",
   alternates: {

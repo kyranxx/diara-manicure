@@ -111,7 +111,7 @@ export default function ThankYouPage() {
                         </div>
 
                         <div className="text-center pt-4 border-t border-primary/10 w-full max-w-xs mx-auto">
-                            <p className="text-sm text-muted-foreground font-light">© 2025 diara manicure</p>
+                            <p className="text-sm text-muted-foreground font-light">© 2026 diara manicure</p>
                         </div>
                     </div>
                 </div>
