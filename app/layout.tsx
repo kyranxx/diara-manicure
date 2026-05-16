@@ -43,19 +43,13 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.png', sizes: '128x128', type: 'image/png' },
+      { url: '/favicon.ico?v=dm-20260516-d', sizes: 'any' },
+      { url: '/favicon.svg?v=dm-20260516-d', type: 'image/svg+xml' },
+      { url: '/favicon.png?v=dm-20260516-d', sizes: '180x180', type: 'image/png' },
     ],
-    shortcut: "/favicon.ico",
+    shortcut: "/favicon.ico?v=dm-20260516-d",
     apple: [
-      { url: '/favicon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      {
-        rel: 'mask-icon',
-        url: '/favicon.png',
-        color: '#2563eb', // Blue color for Safari pinned tabs
-      },
+      { url: '/favicon.png?v=dm-20260516-d', sizes: '180x180', type: 'image/png' },
     ],
   },
   openGraph: {
