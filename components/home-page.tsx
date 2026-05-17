@@ -25,9 +25,9 @@ type HomePageProps = {
 
 const seoByLanguage: Record<Language, { title: string; description: string; keywords: string; ogLocale: string }> = {
   sk: {
-    title: "Gélové nechty v Trnave, manikúra Trnava a cenník",
+    title: "Gélové nechty a manikúra v Trnave | Cenník",
     description:
-      "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, Nails Trnava služby a darčekové poukazy.",
+      "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, nechtové služby a darčekové poukazy.",
     keywords:
       "nechty trnava, gelove nechty trnava, manikura trnava, nechtove studio trnava, nails trnava, diara manicure, nechty trnava cennik, darcekovy poukaz nechty",
     ogLocale: "sk_SK",

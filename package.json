@@ -10,6 +10,7 @@
     "gbp:auth": "node scripts/google-business-profile-oauth.mjs",
     "gbp:locations": "node scripts/google-business-profile-locations.mjs",
     "lint": "eslint .",
+    "test:seo": "node scripts/seo-regression.test.mjs",
     "start": "next start",
     "vercel-install": "pnpm install",
     "vercel-build": "next build"

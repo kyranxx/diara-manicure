@@ -22,12 +22,26 @@ export function Footer({ t }: { t: TranslationMessages }) {
 
                     <div className="text-center">
                         <p className="text-sm text-foreground/80">{t.footer.rights}</p>
-                        <Link
-                            href="/darcekove-poukazy"
-                            className="mt-2 inline-block text-sm text-muted-foreground transition-colors hover:text-primary"
-                        >
-                            {t.footer.giftCards}
-                        </Link>
+                        <div className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+                            <Link href="/darcekove-poukazy" className="transition-colors hover:text-primary">
+                                {t.footer.giftCards}
+                            </Link>
+                            <Link href="/blog" className="transition-colors hover:text-primary">
+                                {t.footer.blog}
+                            </Link>
+                        </div>
+                        <div className="mt-4 flex max-w-md flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+                            <span className="font-medium text-foreground/70">{t.footer.serviceGuides}</span>
+                            <Link href="/sluzby/gelove-nechty-trnava" className="transition-colors hover:text-primary">
+                                {t.footer.gelNails}
+                            </Link>
+                            <Link href="/sluzby/gel-lak-trnava" className="transition-colors hover:text-primary">
+                                {t.footer.gelPolish}
+                            </Link>
+                            <Link href="/sluzby/manikura-trnava" className="transition-colors hover:text-primary">
+                                {t.footer.manicure}
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="flex gap-6">

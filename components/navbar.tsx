@@ -1,4 +1,4 @@
-import { Menu, Moon, Sun } from "lucide-react"
+import { Globe2, Menu, Moon, Sun } from "lucide-react"
 import { FacebookIcon, InstagramIcon } from "@/components/social-icons"
 import { defaultLanguage, languages, translations, type Language, type TranslationMessages } from "@/lib/i18n"
 import { siteConfig } from "@/lib/site-config"
@@ -62,31 +62,40 @@ export function Navbar({ language = defaultLanguage, t = translations[defaultLan
     { href: sectionHref(language, "galeria"), label: t.nav.items.gallery },
     { href: sectionHref(language, "faq"), label: t.nav.items.faq },
     { href: sectionHref(language, "visit"), label: t.nav.items.contact },
+    { href: "/blog", label: t.nav.items.blog },
   ]
+  const currentLanguage = languages.find((item) => item.code === language) ?? languages[0]
   const languageSwitcher = (
-    <div
-      className="flex items-center gap-0.5 rounded-full border border-primary/10 bg-white/45 p-0.5 text-[11px] font-semibold dark:bg-white/10"
-      aria-label={t.languageSwitcher.label}
-    >
-      {languages.map((item) => {
-        const active = item.code === language
-        return (
-          <a
-            key={item.code}
-            href={languageHomeHref(item.code)}
-            hrefLang={item.htmlLang}
-            aria-current={active ? "page" : undefined}
-            className={
-              active
-                ? "rounded-full bg-primary px-2 py-1 text-primary-foreground"
-                : "rounded-full px-2 py-1 text-foreground/70 transition-colors hover:bg-white/70 hover:text-foreground dark:hover:bg-white/15"
-            }
-          >
-            {item.shortLabel}
-          </a>
-        )
-      })}
-    </div>
+    <details className="group/language relative">
+      <summary
+        className="flex h-10 cursor-pointer list-none items-center gap-1.5 rounded-full border border-primary/10 bg-white/45 px-3 text-[11px] font-semibold text-foreground/80 transition-colors hover:bg-white/70 hover:text-foreground dark:bg-white/10 dark:hover:bg-white/15 [&::-webkit-details-marker]:hidden"
+        aria-label={t.languageSwitcher.label}
+      >
+        <Globe2 className="size-3.5" aria-hidden="true" />
+        <span>{currentLanguage.shortLabel}</span>
+      </summary>
+      <div className="absolute right-0 top-full z-50 mt-2 min-w-44 rounded-xl border border-primary/15 bg-beige p-2 text-sm shadow-xl ring-1 ring-black/5 dark:bg-[#050403] dark:ring-white/10">
+        {languages.map((item) => {
+          const active = item.code === language
+          return (
+            <a
+              key={item.code}
+              href={languageHomeHref(item.code)}
+              hrefLang={item.htmlLang}
+              aria-current={active ? "page" : undefined}
+              className={
+                active
+                  ? "flex items-center justify-between rounded-lg bg-primary px-3 py-2 text-primary-foreground"
+                  : "flex items-center justify-between rounded-lg px-3 py-2 text-foreground/75 transition-colors hover:bg-white/70 hover:text-foreground dark:hover:bg-white/15"
+              }
+            >
+              <span>{item.label}</span>
+              <span className="text-[11px] font-semibold">{item.shortLabel}</span>
+            </a>
+          )
+        })}
+      </div>
+    </details>
   )
 
   return (

@@ -42,6 +42,23 @@ export const siteRuntimeScript = String.raw`
     };
   }
 
+  function currentConsent() {
+    return readConsent() || allDenied();
+  }
+
+  function clarityConsentPayload(consent) {
+    const current = consent || allDenied();
+    return {
+      ad_Storage: current.adStorage === "granted" ? "granted" : "denied",
+      analytics_Storage: current.analyticsStorage === "granted" ? "granted" : "denied",
+    };
+  }
+
+  function updateClarityConsent(consent) {
+    if (typeof window.clarity !== "function") return;
+    window.clarity("consentv2", clarityConsentPayload(consent));
+  }
+
   function initThemeButtons() {
     document.addEventListener("click", (event) => {
       const button = event.target && event.target.closest ? event.target.closest("[data-theme-toggle]") : null;
@@ -148,17 +165,19 @@ export const siteRuntimeScript = String.raw`
   }
 
   function loadClarity(consent) {
-    if (clarityLoaded || !consent || consent.analyticsStorage !== "granted") return;
-    clarityLoaded = true;
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "ugccqd16dq");
+    if (!clarityLoaded) {
+      clarityLoaded = true;
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "ugccqd16dq");
+    }
+    updateClarityConsent(consent);
   }
 
-  function loadGrantedScripts() {
-    const consent = readConsent();
+  function loadConsentAwareScripts() {
+    const consent = currentConsent();
     loadAnalytics(consent);
     loadClarity(consent);
   }
@@ -236,20 +255,21 @@ export const siteRuntimeScript = String.raw`
       });
     }
     function handleInteraction() {
-      loadGrantedScripts();
+      loadConsentAwareScripts();
       removeInteractionListeners(handleInteraction);
     }
+    loadClarity(currentConsent());
     window.addEventListener(consentEvent, (event) => {
       loadAnalytics(event.detail);
       loadClarity(event.detail);
     });
     if (window.location.pathname === "/dakujeme") {
-      setTimeout(loadGrantedScripts, 1000);
+      setTimeout(loadConsentAwareScripts, 1000);
     } else {
       interactionEvents.forEach((eventName) => {
         window.addEventListener(eventName, handleInteraction, { once: true, passive: true, capture: true });
       });
-      setTimeout(loadGrantedScripts, 45000);
+      setTimeout(loadConsentAwareScripts, 45000);
     }
   }
 

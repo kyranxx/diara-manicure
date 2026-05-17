@@ -26,6 +26,7 @@ const sk = {
       gallery: "Galéria",
       faq: "FAQ",
       contact: "Kontakt",
+      blog: "Blog",
     },
   },
   hero: {
@@ -99,7 +100,7 @@ const sk = {
     paragraph1End:
       "som si splnila sen o vytvorení miesta, kde sa každá klientka bude cítiť výnimočne.",
     paragraph2:
-      "Používame len tie najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch, aby sme vám priniesli tú najlepšiu starostlivosť a najkrajšie nails v Trnave.",
+      "Používame len tie najkvalitnejšie materiály a neustále sa vzdelávame v nových trendoch, aby sme vám priniesli tú najlepšiu starostlivosť a najkrajšie nechty v Trnave.",
     founderLabel: "Zakladateľka",
   },
   faq: {
@@ -141,11 +142,16 @@ const sk = {
   },
   footer: {
     logoAlt: "DIARA - Jarné logo",
-    tagline: "Professional Nails & Manicure in Trnava",
+    tagline: "Nechtové štúdio a manikúra v Trnave",
     rights: "© 2026 diara manicure. Všetky práva vyhradené.",
     giftCards: "Darčekové poukazy",
+    blog: "Blog",
+    serviceGuides: "Služby",
+    gelNails: "Gélové nechty",
+    gelPolish: "Gél lak",
+    manicure: "Manikúra",
     keywords:
-      "Populárne vyhľadávania: Nechty Trnava | Gélové nechty v Trnave | Manikúra Trnava | Nails Trnava | Nechtové štúdio Trnava | Modelácia nechtov | Gél lak Trnava | Nechty Cenník | Voľné termíny na nechty | Darčekové poukazy nechty Trnava | Voucher manikúra",
+      "Najčastejšie hľadané služby: gélové nechty v Trnave, gél lak, manikúra, nechtové štúdio, cenník a darčekové poukazy.",
   },
   cookie: {
     title: "Cookie nastavenia",
@@ -198,6 +204,7 @@ const en: TranslationMessages = {
       gallery: "Gallery",
       faq: "FAQ",
       contact: "Contact",
+      blog: "Blog",
     },
   },
   hero: {
@@ -316,6 +323,11 @@ const en: TranslationMessages = {
     tagline: "Professional Nails & Manicure in Trnava",
     rights: "© 2026 diara manicure. All rights reserved.",
     giftCards: "Gift vouchers",
+    blog: "Blog",
+    serviceGuides: "Services",
+    gelNails: "Gel nails",
+    gelPolish: "Gel polish",
+    manicure: "Manicure",
     keywords:
       "Popular searches: Nails Trnava | Gel nails Trnava | Manicure Trnava | Nail studio Trnava | Nail modelling | Gel polish Trnava | Nail prices | Available nail appointments | Gift vouchers nails Trnava | Manicure voucher",
   },
@@ -368,6 +380,7 @@ const uk: TranslationMessages = {
       gallery: "Галерея",
       faq: "FAQ",
       contact: "Контакт",
+      blog: "Blog",
     },
   },
   hero: {
@@ -441,7 +454,7 @@ const uk: TranslationMessages = {
     paragraph1End:
       "я здійснила мрію створити місце, де кожна клієнтка почуватиметься особливою.",
     paragraph2:
-      "Ми використовуємо лише якісні матеріали та постійно вивчаємо нові тренди, щоб дати вам найкращий догляд і найкрасивіші nails у Трнаві.",
+      "Ми використовуємо лише якісні матеріали та постійно вивчаємо нові тренди, щоб дати вам найкращий догляд і найкрасивіші нігті у Трнаві.",
     founderLabel: "Засновниця",
   },
   faq: {
@@ -483,9 +496,14 @@ const uk: TranslationMessages = {
   },
   footer: {
     logoAlt: "DIARA - весняний логотип",
-    tagline: "Professional Nails & Manicure in Trnava",
+    tagline: "Нігтьовий салон і манікюр у Трнаві",
     rights: "© 2026 diara manicure. Усі права захищено.",
     giftCards: "Подарункові сертифікати",
+    blog: "Blog",
+    serviceGuides: "Послуги",
+    gelNails: "Гелеві нігті",
+    gelPolish: "Гель-лак",
+    manicure: "Манікюр",
     keywords:
       "Популярні пошуки: Нігті Трнава | Гелеві нігті Трнава | Манікюр Трнава | Нігтьова студія Трнава | Моделювання нігтів | Гель-лак Трнава | Ціни на нігті | Вільні терміни на нігті | Подарункові сертифікати нігті Трнава | Сертифікат на манікюр",
   },
@@ -538,6 +556,7 @@ const sr: TranslationMessages = {
       gallery: "Galerija",
       faq: "FAQ",
       contact: "Kontakt",
+      blog: "Blog",
     },
   },
   hero: {
@@ -611,7 +630,7 @@ const sr: TranslationMessages = {
     paragraph1End:
       "ispunila sam san da napravim mesto u kojem se svaka klijentkinja oseća posebno.",
     paragraph2:
-      "Koristimo samo najkvalitetnije materijale i stalno učimo nove trendove kako bismo vam pružili najbolju negu i najlepše nails u Trnavi.",
+      "Koristimo samo najkvalitetnije materijale i stalno učimo nove trendove kako bismo vam pružili najbolju negu i najlepše nokte u Trnavi.",
     founderLabel: "Osnivačica",
   },
   faq: {
@@ -653,9 +672,14 @@ const sr: TranslationMessages = {
   },
   footer: {
     logoAlt: "DIARA - prolećni logo",
-    tagline: "Professional Nails & Manicure in Trnava",
+    tagline: "Salon za nokte i manikir u Trnavi",
     rights: "© 2026 diara manicure. Sva prava zadržana.",
     giftCards: "Poklon vaučeri",
+    blog: "Blog",
+    serviceGuides: "Usluge",
+    gelNails: "Gel nokti",
+    gelPolish: "Gel lak",
+    manicure: "Manikir",
     keywords:
       "Popularne pretrage: Nokti Trnava | Gel nokti Trnava | Manikir Trnava | Studio za nokte Trnava | Modeliranje noktiju | Gel lak Trnava | Cenovnik noktiju | Slobodni termini za nokte | Poklon vaučeri nokti Trnava | Vaučer za manikir",
   },
