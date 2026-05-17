@@ -1,10 +1,6 @@
-import Script from "next/script";
 import { galleryImages } from "@/lib/gallery";
 import { siteConfig } from "@/lib/site-config";
-
-function jsonLd(data: unknown) {
-  return JSON.stringify(data).replace(/</g, "\\u003c");
-}
+import { JsonLd } from "@/components/json-ld";
 
 const SchemaMarkup = () => {
   const galleryImageObjects = galleryImages.map((image) => ({
@@ -23,7 +19,17 @@ const SchemaMarkup = () => {
     "@type": "BeautySalon",
     "@id": "https://www.diaramanicure.sk/#beautysalon",
     "name": "diara manicure.",
-    "alternateName": ["Diara Manicure", "Diara Manicure Trnava", "Nechty Trnava"],
+    "alternateName": [
+      "Diara Manicure",
+      "Diara Manicure Trnava",
+      "Nechty Trnava",
+      "Nails Trnava",
+      "Nail Studio Trnava",
+      "Gel Nails Trnava",
+      "Manicure Trnava",
+      "Gelove nechty Trnava",
+      "Manikura Trnava"
+    ],
     "image": [
       "https://www.diaramanicure.sk/logo_spring_day.jpg",
       ...galleryImageObjects.slice(0, 12).map((image) => image.contentUrl)
@@ -232,24 +238,18 @@ const SchemaMarkup = () => {
 
   return (
     <>
-      <Script
+      <JsonLd
         id="schema-local-business"
-        type="application/ld+json"
-      >
-        {jsonLd(localBusinessSchema)}
-      </Script>
-      <Script
+        data={localBusinessSchema}
+      />
+      <JsonLd
         id="schema-image-gallery"
-        type="application/ld+json"
-      >
-        {jsonLd(imageGallerySchema)}
-      </Script>
-      <Script
+        data={imageGallerySchema}
+      />
+      <JsonLd
         id="schema-faq"
-        type="application/ld+json"
-      >
-        {jsonLd(faqSchema)}
-      </Script>
+        data={faqSchema}
+      />
     </>
   );
 };

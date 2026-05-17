@@ -3,6 +3,10 @@ import { siteConfig } from "@/lib/site-config"
 export async function GET() {
   const robots = `User-agent: *
 Allow: /
+Allow: /api/health
+Allow: /api/services
+Allow: /api/openapi
+Allow: /api/markdown
 Disallow: /api/
 Disallow: /dakujeme
 Sitemap: ${siteConfig.baseUrl}/sitemap.xml

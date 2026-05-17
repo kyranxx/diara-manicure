@@ -25,9 +25,9 @@ type HomePageProps = {
 
 const seoByLanguage: Record<Language, { title: string; description: string; keywords: string; ogLocale: string }> = {
   sk: {
-    title: "Gélové nechty v Trnave, manikúra Trnava a cenník",
+    title: "Gélové nechty a manikúra v Trnave | Cenník",
     description:
-      "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, Nails Trnava služby a darčekové poukazy.",
+      "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, nechtové služby a darčekové poukazy.",
     keywords:
       "nechty trnava, gelove nechty trnava, manikura trnava, nechtove studio trnava, nails trnava, diara manicure, nechty trnava cennik, darcekovy poukaz nechty",
     ogLocale: "sk_SK",
@@ -87,9 +87,10 @@ export function HomePage({ language, services }: HomePageProps) {
           />
         ))}
         <link rel="alternate" hrefLang="x-default" href={siteConfig.baseUrl} />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.png" sizes="128x128" type="image/png" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico?v=dm-20260516-d" sizes="any" />
+        <link rel="icon" href="/favicon.svg?v=dm-20260516-d" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.png?v=dm-20260516-d" sizes="180x180" type="image/png" />
+        <link rel="apple-touch-icon" href="/favicon.png?v=dm-20260516-d" />
         <meta property="og:title" content={seo.title} />
         <meta property="og:description" content={seo.description} />
         <meta property="og:type" content="website" />

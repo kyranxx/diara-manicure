@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import Script from "next/script"
 import { ArrowLeft, Check, Mail, ShoppingBasket } from "lucide-react"
+import { JsonLd } from "@/components/json-ld"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/button"
@@ -35,6 +35,13 @@ export const metadata: Metadata = {
         alt: "Darčekový poukaz diara manicure.",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Darček pre ženu v Trnave | Poukaz na manikúru",
+    description:
+      "Darčekový poukaz na manikúru pre manželku, priateľku, mamu alebo kolegyňu v Trnave.",
+    images: ["/gift-card.jpg"],
   },
 }
 
@@ -97,18 +104,14 @@ export default function GiftCardPage() {
 
   return (
     <>
-      <Script
+      <JsonLd
         id="schema-gift-card-page"
-        type="application/ld+json"
-      >
-        {JSON.stringify(pageSchema).replace(/</g, "\\u003c")}
-      </Script>
-      <Script
+        data={pageSchema}
+      />
+      <JsonLd
         id="schema-gift-card-faq"
-        type="application/ld+json"
-      >
-        {JSON.stringify(faqSchema).replace(/</g, "\\u003c")}
-      </Script>
+        data={faqSchema}
+      />
       <GiftCardPageAnalytics />
 
       <div className="min-h-screen bg-background text-foreground">

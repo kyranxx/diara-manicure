@@ -1,3 +1,4 @@
+import Link from "next/link"
 import type { Service } from "@/lib/sheets"
 import type { TranslationMessages } from "@/lib/i18n"
 
@@ -56,6 +57,27 @@ export function Services({ services, bookingUrl, t }: ServicesProps) {
                     ) : (
                         <div className="text-center text-muted-foreground">{t.services.unavailable}</div>
                     )}
+
+                    <div className="mt-8 flex flex-wrap justify-center gap-3 text-sm">
+                        <Link
+                            href="/sluzby/gelove-nechty-trnava"
+                            className="rounded-full border border-primary/10 px-4 py-2 text-muted-foreground transition-colors hover:text-primary"
+                        >
+                            {t.footer.gelNails}
+                        </Link>
+                        <Link
+                            href="/sluzby/gel-lak-trnava"
+                            className="rounded-full border border-primary/10 px-4 py-2 text-muted-foreground transition-colors hover:text-primary"
+                        >
+                            {t.footer.gelPolish}
+                        </Link>
+                        <Link
+                            href="/sluzby/manikura-trnava"
+                            className="rounded-full border border-primary/10 px-4 py-2 text-muted-foreground transition-colors hover:text-primary"
+                        >
+                            {t.footer.manicure}
+                        </Link>
+                    </div>
 
                 </div>
             </div>

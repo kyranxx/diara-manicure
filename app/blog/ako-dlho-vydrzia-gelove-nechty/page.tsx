@@ -1,28 +1,115 @@
-"use client"
-
+import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { Navbar } from "@/components/navbar"
 import { ArrowLeft, Clock, Calendar, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { JsonLd } from "@/components/json-ld"
+import { siteConfig } from "@/lib/site-config"
 
-export const dynamic = "force-dynamic"
+const pageUrl = `${siteConfig.baseUrl}/blog/ako-dlho-vydrzia-gelove-nechty`
+const title = "Ako dlho vydržia gélové nechty? | diara manicure."
+const description =
+    "Profesionálny sprievodca výdržou gélových nechtov, starostlivosťou a správnym intervalom doplnenia od diara manicure. v Trnave."
+const imageUrl = `${siteConfig.baseUrl}/gelove-nechty-trnava-gallery-1.jpeg`
+
+export const metadata: Metadata = {
+    title,
+    description,
+    alternates: {
+        canonical: pageUrl,
+    },
+    openGraph: {
+        title,
+        description,
+        url: pageUrl,
+        type: "article",
+        locale: "sk_SK",
+        publishedTime: "2026-01-05",
+        authors: ["Andrea Hečková"],
+        images: [
+            {
+                url: imageUrl,
+                width: 1200,
+                height: 630,
+                alt: "Gélové nechty v nechtovom štúdiu diara manicure Trnava",
+            },
+        ],
+    },
+    twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        images: [imageUrl],
+    },
+}
 
 export default function BlogArticle1() {
-    return (
-        <div className="min-h-screen bg-background text-foreground">
-            <Navbar />
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": `${pageUrl}#article`,
+        mainEntityOfPage: pageUrl,
+        headline: "Ako dlho vydržia gélové nechty? Kompletný sprievodca výdržou a starostlivosťou",
+        description,
+        image: imageUrl,
+        datePublished: "2026-01-05",
+        dateModified: "2026-01-05",
+        inLanguage: "sk-SK",
+        author: {
+            "@type": "Person",
+            name: "Andrea Hečková",
+        },
+        publisher: {
+            "@type": "BeautySalon",
+            name: siteConfig.name,
+            url: siteConfig.baseUrl,
+        },
+        about: ["gélové nechty", "starostlivosť o nechty", "manikúra Trnava"],
+    }
 
-            <main className="pt-24 pb-16">
-                <article className="container mx-auto px-6">
-                    <div className="max-w-3xl mx-auto">
-                        <Link
-                            href="/blog"
-                            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
-                        >
-                            <ArrowLeft className="size-4" />
-                            Späť na blog
-                        </Link>
+    const breadcrumbSchema = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            {
+                "@type": "ListItem",
+                position: 1,
+                name: "Domov",
+                item: siteConfig.baseUrl,
+            },
+            {
+                "@type": "ListItem",
+                position: 2,
+                name: "Blog",
+                item: `${siteConfig.baseUrl}/blog`,
+            },
+            {
+                "@type": "ListItem",
+                position: 3,
+                name: "Ako dlho vydržia gélové nechty?",
+                item: pageUrl,
+            },
+        ],
+    }
+
+    return (
+        <>
+            <JsonLd id="schema-article" data={articleSchema} />
+            <JsonLd id="schema-breadcrumbs" data={breadcrumbSchema} />
+            <div className="min-h-screen bg-background text-foreground">
+                <Navbar />
+
+                <main className="pt-24 pb-16">
+                    <article className="container mx-auto px-6">
+                        <div className="max-w-3xl mx-auto">
+                            <Link
+                                href="/blog"
+                                className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors mb-8"
+                            >
+                                <ArrowLeft className="size-4" />
+                                Späť na blog
+                            </Link>
 
                         {/* Article Header */}
                         <header className="mb-12">
@@ -202,9 +289,10 @@ export default function BlogArticle1() {
                                 </Button>
                             </div>
                         </div>
-                    </div>
-                </article>
-            </main>
-        </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </>
     )
 }

@@ -1,38 +1,15 @@
-/* eslint-disable @next/next/no-img-element */
-
-const instagramIconUrl =
-  "https://upload.wikimedia.org/wikipedia/commons/2/21/Instagram_Glyph_Gradient_RGB_logo.svg"
-const facebookIconUrl =
-  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/2023_Facebook_icon.svg/960px-2023_Facebook_icon.svg.png"
+import { Facebook, Instagram } from "lucide-react"
 
 type SocialIconProps = {
   className?: string
 }
 
 export function InstagramIcon({ className = "size-5" }: SocialIconProps) {
-  return (
-    <img
-      src={instagramIconUrl}
-      alt=""
-      className={className}
-      loading="lazy"
-      decoding="async"
-      referrerPolicy="no-referrer"
-    />
-  )
+  return <Instagram className={className} aria-hidden="true" focusable="false" />
 }
 
 export function FacebookIcon({ className = "size-5" }: SocialIconProps) {
-  return (
-    <img
-      src={facebookIconUrl}
-      alt=""
-      className={className}
-      loading="lazy"
-      decoding="async"
-      referrerPolicy="no-referrer"
-    />
-  )
+  return <Facebook className={className} aria-hidden="true" focusable="false" />
 }
 
 export function MessengerIcon({ className = "size-5" }: SocialIconProps) {
