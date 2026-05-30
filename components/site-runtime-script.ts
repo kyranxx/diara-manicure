@@ -617,12 +617,21 @@ export const siteRuntimeScript = String.raw`
       return track;
     }
 
+    function setTrackSpeed(track, pixelsPerSecond) {
+      const distance = track.scrollWidth / 2;
+      track.style.setProperty("--review-marquee-duration", distance / pixelsPerSecond + "s");
+    }
+
     function renderRows(reviews) {
       if (!content) return;
       content.innerHTML = "";
-      content.appendChild(buildTrack(reviews, false, 0, ""));
-      content.appendChild(buildTrack(reviews, true, 2, "mt-3"));
-      content.appendChild(buildTrack(reviews, false, 4, "review-marquee-track-third mt-3"));
+      const rows = [
+        { track: buildTrack(reviews, false, 0, ""), pixelsPerSecond: 34 },
+        { track: buildTrack(reviews, true, 2, "mt-3"), pixelsPerSecond: 30 },
+        { track: buildTrack(reviews, false, 4, "review-marquee-track-third mt-3"), pixelsPerSecond: 32 },
+      ];
+      rows.forEach(({ track }) => content.appendChild(track));
+      rows.forEach(({ track, pixelsPerSecond }) => setTrackSpeed(track, pixelsPerSecond));
     }
 
     function renderReviews(reviews, googleMapsUrl, sourceLabel) {
