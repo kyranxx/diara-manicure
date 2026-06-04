@@ -280,8 +280,8 @@ export const siteRuntimeScript = String.raw`
     if (!content) return;
     const fallbackIds = {
       french: ["60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
-      singleColor: ["62", "58", "53", "52", "50", "46", "42", "39", "37", "33", "32", "30", "29", "28", "27", "26", "23", "20", "19", "16", "15", "14", "13", "11", "10", "6", "5", "4", "3", "2", "1"],
-      delicateArt: ["63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
+      singleColor: ["64", "62", "58", "53", "52", "50", "46", "42", "39", "37", "33", "32", "30", "29", "28", "27", "26", "23", "20", "19", "16", "15", "14", "13", "11", "10", "6", "5", "4", "3", "2", "1"],
+      delicateArt: ["67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
     };
     function parseIds(value, fallback) {
       const ids = (value || "").split(",").map((id) => id.trim()).filter(Boolean);
@@ -295,7 +295,7 @@ export const siteRuntimeScript = String.raw`
     const altPrefix = root.dataset.altPrefix || "Gélové nechty Trnava";
     const openLabel = root.dataset.openLabel || "Otvoriť obrázok";
     const instagramLabel = root.dataset.instagram || "Instagram";
-    const jpgImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63"]);
+    const jpgImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67"]);
 
     function imageSrc(id) {
       return "/gelove-nechty-trnava-gallery-" + id + "." + (jpgImageIds.has(id) ? "jpg" : "jpeg");

@@ -1,6 +1,7 @@
 export const gallerySectionImageIds = {
   french: ["60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
   singleColor: [
+    "64",
     "62",
     "58",
     "53",
@@ -33,7 +34,7 @@ export const gallerySectionImageIds = {
     "2",
     "1",
   ],
-  delicateArt: ["63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
+  delicateArt: ["67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
 } as const
 
 export const galleryCategories = ["french", "singleColor", "delicateArt"] as const
@@ -102,6 +103,10 @@ const galleryImageAltById: Record<string, string> = {
   "61": "Jemne zdobene nechty pre prirodzenu manikuru",
   "62": "Jednofarebna gelova manikura v Trnave",
   "63": "Gelove nechty s jemnym zdobenim v galerii prac",
+  "64": "Cyklamenove jednofarebne gelove nechty s mandlovym tvarom",
+  "65": "Francuzska manikura s cervenym kvetinovym zdobenim a zlatymi detailmi",
+  "66": "Jemne ruzove gelove nechty s prirodzenym leskom a mandlovym tvarom",
+  "67": "Ruzove gelove nechty s bielymi linkami a jahodovym zdobenim",
 }
 
 const galleryImageCaptionById: Record<string, string> = {
@@ -130,9 +135,13 @@ const galleryImageCaptionById: Record<string, string> = {
   "61": "Jemné zdobenie",
   "62": "Jednofarebné gélové nechty",
   "63": "Jemné zdobenie",
+  "64": "Jednofarebné gélové nechty",
+  "65": "Kvetinové zdobenie",
+  "66": "Jemné ružové zdobenie",
+  "67": "Jahodové zdobenie",
 }
 
-const jpgGalleryImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63"])
+const jpgGalleryImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67"])
 
 export function galleryImageSrc(id: string) {
   return `/gelove-nechty-trnava-gallery-${id}.${jpgGalleryImageIds.has(id) ? "jpg" : "jpeg"}`
