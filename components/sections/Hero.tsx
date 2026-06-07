@@ -69,7 +69,7 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                     {t.hero.titlePrefix}
                     {t.hero.titleBrand ? <> <span className="text-primary">{t.hero.titleBrand}</span></> : null}
                 </h1>
-                <div className="mb-10 space-y-2 text-xl font-light text-muted-foreground md:text-2xl">
+                <div className="mb-10 space-y-2 text-base font-light text-muted-foreground md:text-lg">
                     {t.hero.subtitleMain ? <p>{t.hero.subtitleMain}</p> : null}
                     <p className="flex items-center justify-center gap-2 font-serif italic text-primary/80">
                         <SlovakFlagIcon />
@@ -80,15 +80,16 @@ export function Hero({ bookingUrl, t }: HeroProps) {
 
             <div className="flex flex-col items-center gap-6 w-full max-w-lg mx-auto">
                 <div className="flex flex-col justify-center gap-4 w-full">
-                    <div className="mx-auto -mb-1 inline-flex items-center justify-center rounded-full border border-primary/20 bg-white/75 px-5 py-2 text-sm font-semibold uppercase tracking-wide text-primary shadow-sm backdrop-blur dark:bg-white/10 dark:text-primary">
-                        {t.hero.newClientsBadge}
-                    </div>
-                    <Button
-                        asChild
-                        className="h-auto py-3 text-xl md:py-4 md:text-3xl rounded-full px-12 md:px-20 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2"
-                    >
-                        <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
-                            <span>{t.hero.bookingCta}</span>
+                    <div className="relative pt-3">
+                        <div className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -rotate-2 whitespace-nowrap rounded-full border border-white/70 bg-gradient-to-r from-pink-500 via-rose-400 to-amber-300 px-3.5 py-1 text-[11px] font-bold uppercase tracking-wide text-white shadow-md">
+                            {t.hero.newClientsBadge}
+                        </div>
+                        <Button
+                            asChild
+                            className="h-auto py-3 text-xl md:py-4 md:text-3xl rounded-full px-12 md:px-20 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2"
+                        >
+                            <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
+                                <span>{t.hero.bookingCta}</span>
                                 <div className="bg-beige rounded-full px-4 py-1.5 mt-1">
                                     <div className="relative h-5 w-20 md:h-6 md:w-24">
                                         <Image
@@ -103,7 +104,8 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                                     </div>
                                 </div>
                             </a>
-                    </Button>
+                        </Button>
+                    </div>
 
                     {/* Micro-copy below booking button */}
                     <div className="-mt-1 mb-3 flex flex-col items-center gap-1.5 text-center text-lg text-foreground/80 md:text-xl dark:text-white/85">
