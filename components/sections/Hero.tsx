@@ -80,6 +80,9 @@ export function Hero({ bookingUrl, t }: HeroProps) {
 
             <div className="flex flex-col items-center gap-6 w-full max-w-lg mx-auto">
                 <div className="flex flex-col justify-center gap-4 w-full">
+                    <div className="mx-auto -mb-1 inline-flex items-center justify-center rounded-full border border-primary/20 bg-white/75 px-5 py-2 text-sm font-semibold uppercase tracking-wide text-primary shadow-sm backdrop-blur dark:bg-white/10 dark:text-primary">
+                        {t.hero.newClientsBadge}
+                    </div>
                     <Button
                         asChild
                         className="h-auto py-3 text-xl md:py-4 md:text-3xl rounded-full px-12 md:px-20 shadow-lg hover:shadow-xl transition-all duration-300 bg-primary text-primary-foreground hover:bg-primary/90 w-full flex flex-col items-center gap-2"
