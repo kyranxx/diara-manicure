@@ -65,7 +65,7 @@ export function Hero({ bookingUrl, t }: HeroProps) {
               <span className="text-2xl font-bold">25€</span>
             </div>
             */}
-                <h1 className="text-4xl md:text-6xl font-light tracking-tight mb-6 leading-tight">
+                <h1 className="text-3xl md:text-5xl font-light tracking-tight mb-6 leading-tight">
                     {t.hero.titlePrefix}
                     {t.hero.titleBrand ? <> <span className="text-primary">{t.hero.titleBrand}</span></> : null}
                 </h1>
