@@ -279,9 +279,9 @@ export const siteRuntimeScript = String.raw`
     const content = root.querySelector("[data-gallery-content]");
     if (!content) return;
     const fallbackIds = {
-      french: ["54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
-      singleColor: ["53", "52", "50", "46", "42", "39", "37", "33", "32", "30", "29", "28", "27", "26", "23", "20", "19", "16", "15", "14", "13", "11", "10", "6", "5", "4", "3", "2", "1"],
-      delicateArt: ["51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
+      french: ["60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
+      singleColor: ["64", "62", "58", "53", "52", "50", "46", "42", "39", "37", "33", "32", "30", "29", "28", "27", "26", "23", "20", "19", "16", "15", "14", "13", "11", "10", "6", "5", "4", "3", "2", "1"],
+      delicateArt: ["67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
     };
     function parseIds(value, fallback) {
       const ids = (value || "").split(",").map((id) => id.trim()).filter(Boolean);
@@ -295,9 +295,10 @@ export const siteRuntimeScript = String.raw`
     const altPrefix = root.dataset.altPrefix || "Gélové nechty Trnava";
     const openLabel = root.dataset.openLabel || "Otvoriť obrázok";
     const instagramLabel = root.dataset.instagram || "Instagram";
+    const jpgImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67"]);
 
     function imageSrc(id) {
-      return "/gelove-nechty-trnava-gallery-" + id + "." + (id === "5" ? "jpg" : "jpeg");
+      return "/gelove-nechty-trnava-gallery-" + id + "." + (jpgImageIds.has(id) ? "jpg" : "jpeg");
     }
 
     function enhanceExistingGallery() {
@@ -587,7 +588,7 @@ export const siteRuntimeScript = String.raw`
       if (reviews.length === 1) return Array(8).fill(reviews[0]);
 
       const step = reviews.length % 2 === 0 ? reviews.length - 1 : 2;
-      const targetLength = Math.max(reviews.length * 2, 10);
+      const targetLength = Math.max(reviews.length, 10);
       const sequence = [];
       let offset = seed % reviews.length;
 
@@ -616,12 +617,21 @@ export const siteRuntimeScript = String.raw`
       return track;
     }
 
+    function setTrackSpeed(track, pixelsPerSecond) {
+      const distance = track.scrollWidth / 2;
+      track.style.setProperty("--review-marquee-duration", distance / pixelsPerSecond + "s");
+    }
+
     function renderRows(reviews) {
       if (!content) return;
       content.innerHTML = "";
-      content.appendChild(buildTrack(reviews, false, 0, ""));
-      content.appendChild(buildTrack(reviews, true, 2, "mt-3"));
-      content.appendChild(buildTrack(reviews, false, 4, "review-marquee-track-third mt-3"));
+      const rows = [
+        { track: buildTrack(reviews, false, 0, ""), pixelsPerSecond: 34 },
+        { track: buildTrack(reviews, true, 2, "mt-3"), pixelsPerSecond: 30 },
+        { track: buildTrack(reviews, false, 4, "review-marquee-track-third mt-3"), pixelsPerSecond: 32 },
+      ];
+      rows.forEach(({ track }) => content.appendChild(track));
+      rows.forEach(({ track, pixelsPerSecond }) => setTrackSpeed(track, pixelsPerSecond));
     }
 
     function renderReviews(reviews, googleMapsUrl, sourceLabel) {
@@ -629,7 +639,7 @@ export const siteRuntimeScript = String.raw`
         (reviews || [])
           .filter((review) => Number(review.rating) >= 4 && reviewText(review).length > 0)
           .sort((a, b) => reviewTime(b) - reviewTime(a)),
-      ).slice(0, 10);
+      ).slice(0, 50);
 
       if (!usableReviews.length) {
         renderFallback(errorLabel);

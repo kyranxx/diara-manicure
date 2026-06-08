@@ -1444,12 +1444,12 @@ def main() -> None:
     )
     parser.add_argument(
         "--html-output",
-        default=Path("public/customer-analysis.html"),
+        default=Path("private/customer-analysis.html"),
         type=Path,
     )
     parser.add_argument(
         "--json-output",
-        default=Path("public/customer-analysis-data.json"),
+        default=Path("private/customer-analysis-data.json"),
         type=Path,
     )
     args = parser.parse_args()

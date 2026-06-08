@@ -38,17 +38,14 @@ async function sendMeasurementProtocolEvent({
 export function trackApiCall(
   endpoint: string,
   status: number,
-  clientIp: string,
-  userAgent: string
+  _clientIp: string,
+  _userAgent: string
 ): void {
   sendMeasurementProtocolEvent({
     name: "api_request",
     params: {
       endpoint,
       status_code: status,
-      client_ip: clientIp,
-      user_agent: userAgent.slice(0, 256),
     },
-    clientId: clientIp,
   })
 }

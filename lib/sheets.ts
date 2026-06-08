@@ -1,5 +1,6 @@
 import { google } from 'googleapis'
 import { unstable_cache } from 'next/cache'
+import { fetchBookioServices } from './bookio'
 
 export type Service = {
   title: string
@@ -40,6 +41,21 @@ const FALLBACK_SERVICES: Service[] = [
 async function fetchSheetsData(): Promise<Service[]> {
   if (canUseCache()) {
     return cache.data!;
+  }
+
+  try {
+    const bookioServices = await fetchBookioServices();
+
+    if (bookioServices?.length) {
+      if (process.env.NODE_ENV === 'development') {
+        cache.data = bookioServices;
+        cache.timestamp = Date.now();
+      }
+
+      return bookioServices;
+    }
+  } catch (_error) {
+    // Keep the public services endpoint available if Bookio is temporarily down.
   }
 
   try {

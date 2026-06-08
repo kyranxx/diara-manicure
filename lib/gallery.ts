@@ -1,6 +1,9 @@
 export const gallerySectionImageIds = {
-  french: ["54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
+  french: ["60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
   singleColor: [
+    "64",
+    "62",
+    "58",
     "53",
     "52",
     "50",
@@ -31,7 +34,7 @@ export const gallerySectionImageIds = {
     "2",
     "1",
   ],
-  delicateArt: ["51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
+  delicateArt: ["67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
 } as const
 
 export const galleryCategories = ["french", "singleColor", "delicateArt"] as const
@@ -91,6 +94,19 @@ const galleryImageAltById: Record<string, string> = {
   "52": "Ruzove gelove nechty s prirodzenym leskom",
   "53": "Ruzove ombre gelove nechty na dlhych nechtoch",
   "54": "Ruzova francuzska manikura s jemnym bielym zdobenim",
+  "55": "Francuzska manikura z galerie diara manicure Trnava",
+  "56": "Gelove nechty s jemnym zdobenim z nechtoveho studia Trnava",
+  "57": "Jemne zdobene gelove nechty v salone diara manicure",
+  "58": "Jednofarebne gelove nechty s lesklym finisom",
+  "59": "Gelove nechty s decentnym nail art zdobenim",
+  "60": "Elegantna francuzska manikura v salone diara manicure Trnava",
+  "61": "Jemne zdobene nechty pre prirodzenu manikuru",
+  "62": "Jednofarebna gelova manikura v Trnave",
+  "63": "Gelove nechty s jemnym zdobenim v galerii prac",
+  "64": "Cyklamenove jednofarebne gelove nechty s mandlovym tvarom",
+  "65": "Francuzska manikura s cervenym kvetinovym zdobenim a zlatymi detailmi",
+  "66": "Jemne ruzove gelove nechty s prirodzenym leskom a mandlovym tvarom",
+  "67": "Ruzove gelove nechty s bielymi linkami a jahodovym zdobenim",
 }
 
 const galleryImageCaptionById: Record<string, string> = {
@@ -110,10 +126,25 @@ const galleryImageCaptionById: Record<string, string> = {
   "49": "Nude gélové nechty",
   "53": "Ružové ombre gélové nechty",
   "54": "Ružová francúzska manikúra",
+  "55": "Francúzska manikúra",
+  "56": "Jemné zdobenie",
+  "57": "Jemné zdobenie",
+  "58": "Jednofarebné gélové nechty",
+  "59": "Jemné zdobenie",
+  "60": "Francúzska manikúra",
+  "61": "Jemné zdobenie",
+  "62": "Jednofarebné gélové nechty",
+  "63": "Jemné zdobenie",
+  "64": "Jednofarebné gélové nechty",
+  "65": "Kvetinové zdobenie",
+  "66": "Jemné ružové zdobenie",
+  "67": "Jahodové zdobenie",
 }
 
+const jpgGalleryImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67"])
+
 export function galleryImageSrc(id: string) {
-  return `/gelove-nechty-trnava-gallery-${id}.${id === "5" ? "jpg" : "jpeg"}`
+  return `/gelove-nechty-trnava-gallery-${id}.${jpgGalleryImageIds.has(id) ? "jpg" : "jpeg"}`
 }
 
 export function galleryImageAlt(id: string) {
@@ -132,4 +163,5 @@ export const galleryImages = galleryImageIds.map((id) => ({
   id,
   src: galleryImageSrc(id),
   alt: galleryImageAlt(id),
+  caption: galleryImageCaption(id),
 }))

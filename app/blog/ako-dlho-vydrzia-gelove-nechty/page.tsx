@@ -276,6 +276,19 @@ export default function BlogArticle1() {
                                 Ponúkame aj bezplatné parkovanie priamo pred salónom a kávu zdarma počas procedúry.
                             </p>
 
+                            <div className="bg-beige dark:bg-card p-8 rounded-2xl my-8">
+                                <h2 className="text-2xl font-light mb-4 text-foreground">
+                                    Chcete gélové nechty darovať?
+                                </h2>
+                                <p className="text-muted-foreground leading-relaxed mb-4">
+                                    Ak hľadáte darčekový poukaz na nechty v Trnave, poukaz môže obdarovaná osoba využiť
+                                    aj na gélové nechty podľa aktuálnej ponuky a stavu nechtov.
+                                </p>
+                                <Link href="/darcekove-poukazy" className="font-medium text-primary hover:underline">
+                                    Pozrieť darčekové poukazy
+                                </Link>
+                            </div>
+
                             <div className="flex flex-col sm:flex-row gap-4 mt-12">
                                 <Button asChild className="rounded-full h-14 px-8">
                                     <a href="https://services.bookio.com/diaramanicure/widget?lang=sk" target="_blank" rel="noopener noreferrer">

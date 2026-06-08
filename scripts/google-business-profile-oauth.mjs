@@ -1,5 +1,5 @@
 import http from "node:http"
-import { readFileSync } from "node:fs"
+import { readFileSync, writeFileSync } from "node:fs"
 import { resolve } from "node:path"
 
 const scope = "https://www.googleapis.com/auth/business.manage"
@@ -55,11 +55,13 @@ const server = http.createServer(async (request, response) => {
       throw new Error("Google did not return a refresh_token. Re-run and make sure prompt=consent is used.")
     }
 
-    response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" })
-    response.end("Done. You can close this tab and copy the refresh token from the terminal.")
+    saveEnvValue(".env.local", "GOOGLE_BUSINESS_PROFILE_REFRESH_TOKEN", tokenData.refresh_token)
 
-    console.log("\nAdd this to .env.local:")
-    console.log(`GOOGLE_BUSINESS_PROFILE_REFRESH_TOKEN=${tokenData.refresh_token}`)
+    response.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" })
+    response.end("Done. You can close this tab. The refresh token was saved to .env.local.")
+
+    console.log("\nGoogle Business Profile refresh token was saved to .env.local.")
+    console.log("Restart the dev server, or update the same secret in Vercel for production.")
     server.close()
   } catch (error) {
     response.writeHead(500, { "Content-Type": "text/plain; charset=utf-8" })
@@ -92,4 +94,23 @@ function loadEnvFile(path) {
   } catch {
     return {}
   }
+}
+
+function saveEnvValue(path, key, value) {
+  const resolvedPath = resolve(path)
+  let content = ""
+
+  try {
+    content = readFileSync(resolvedPath, "utf8")
+  } catch {
+    content = ""
+  }
+
+  const line = `${key}=${value}`
+  const keyPattern = new RegExp(`^${key}=.*$`, "m")
+  const nextContent = keyPattern.test(content)
+    ? content.replace(keyPattern, line)
+    : `${content.trimEnd()}${content.trimEnd() ? "\n" : ""}${line}\n`
+
+  writeFileSync(resolvedPath, nextContent, "utf8")
 }

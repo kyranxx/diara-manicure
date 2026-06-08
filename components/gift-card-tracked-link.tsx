@@ -16,21 +16,36 @@ type WindowWithGtag = Window & {
   ) => void
 }
 
+function giftCardUrlWithUtm(source: string) {
+  const [baseUrl, hash = ""] = siteConfig.giftCardUrl.split("#")
+  const separator = baseUrl.includes("?") ? "&" : "?"
+  const params = new URLSearchParams({
+    utm_source: "diaramanicure.sk",
+    utm_medium: "website",
+    utm_campaign: "darcekove_poukazy",
+    utm_content: source,
+  })
+
+  return `${baseUrl}${separator}${params.toString()}${hash ? `#${hash}` : ""}`
+}
+
 export function GiftCardTrackedLink({
   source,
-  href = siteConfig.giftCardUrl,
+  href,
   onClick,
   children,
   ref,
   ...props
 }: GiftCardTrackedLinkProps) {
+  const trackedHref = href ?? giftCardUrlWithUtm(source)
+
   const trackGiftCardOutbound = (event: React.MouseEvent<HTMLAnchorElement>) => {
     const win = window as WindowWithGtag
 
     win.gtag?.("event", "bookio_giftcard_outbound", {
       event_category: "gift_card",
       event_label: source,
-      link_url: href,
+      link_url: trackedHref,
     })
 
     onClick?.(event)
@@ -39,7 +54,7 @@ export function GiftCardTrackedLink({
   return (
     <a
       ref={ref}
-      href={href}
+      href={trackedHref}
       target="_blank"
       rel="noopener noreferrer"
       onClick={trackGiftCardOutbound}

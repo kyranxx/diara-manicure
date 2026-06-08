@@ -6,44 +6,35 @@
     "build": "next build",
     "check:i18n": "node scripts/check-i18n.mjs",
     "dev": "next dev",
-    "generate:og": "node scripts/generate-og-image.mjs",
     "gbp:auth": "node scripts/google-business-profile-oauth.mjs",
     "gbp:locations": "node scripts/google-business-profile-locations.mjs",
     "lint": "eslint .",
+    "test:security": "node scripts/security-regression.test.mjs",
     "test:seo": "node scripts/seo-regression.test.mjs",
     "start": "next start",
-    "vercel-install": "pnpm install",
+    "vercel-install": "npm ci",
     "vercel-build": "next build"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=9.0.0"
+    "node": ">=18.0.0"
   },
   "dependencies": {
-    "@radix-ui/react-dialog": "1.1.4",
     "@radix-ui/react-slot": "1.1.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "framer-motion": "^12.23.24",
     "googleapis": "^164.1.0",
     "lucide-react": "^0.454.0",
-    "next": "16.0.7",
-    "next-themes": "^0.4.4",
+    "next": "16.2.7",
     "react": "^19",
     "react-dom": "^19",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
     "@types/node": "^22",
     "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "autoprefixer": "^10.4.20",
-    "critters": "^0.0.25",
     "eslint": "^9.31.0",
-    "eslint-config-next": "15.3.5",
-    "postcss": "^8.5",
+    "eslint-config-next": "16.2.7",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"
   },
@@ -55,10 +46,7 @@
     "ios >= 15.4",
     "not dead"
   ],
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp",
-      "unrs-resolver"
-    ]
+  "overrides": {
+    "postcss": "8.5.15"
   }
 }

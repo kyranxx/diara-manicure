@@ -1,8 +1,10 @@
 import type { TranslationMessages } from "@/lib/i18n"
 import { galleryCategories, galleryImageAlt, galleryImageSrc, gallerySectionImageIds } from "@/lib/gallery"
 import { InstagramIcon } from "@/components/social-icons"
+import { Button } from "@/components/ui/button"
 import { ZoomIn } from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
 
 export function GalleryShell({ t }: { t: TranslationMessages }) {
   const sectionTitles = {
@@ -77,6 +79,9 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
           ))}
 
           <div className="mt-10 flex flex-col items-center gap-4 text-center">
+            <Button asChild variant="outline" className="h-12 rounded-full px-7">
+              <Link href="/galeria">Pozrieť celú galériu</Link>
+            </Button>
             <a
               href="https://instagram.com/diaramanicure"
               target="_blank"

@@ -66,11 +66,22 @@ export function normalizeBusinessProfileReview(
     authorUri: "",
     authorPhotoUri: reviewer.isAnonymous ? "" : reviewer.profilePhotoUrl || "",
     rating: starRatingValue(review.starRating),
-    text: (review.comment ?? "").trim(),
+    text: cleanReviewComment(review.comment),
     publishTime: review.createTime || review.updateTime || "",
     relativeTime: "",
     googleMapsUri: googleMapsUrl,
   }
+}
+
+function cleanReviewComment(comment: string | undefined) {
+  const text = (comment ?? "").trim()
+  const originalPrefixMatch = text.match(/\n\s*\((?:Original|Pôvodné)\)\s*/i)
+
+  if (originalPrefixMatch?.index !== undefined) {
+    return text.slice(originalPrefixMatch.index + originalPrefixMatch[0].length).trim()
+  }
+
+  return text.replace(/\s*\((?:Translated by Google|Preložené Googlom|Preložené službou Google)\)[\s\S]*$/i, "").trim()
 }
 
 export function businessProfileConfigFromEnv(env: EnvLike = process.env): BusinessProfileConfig | null {

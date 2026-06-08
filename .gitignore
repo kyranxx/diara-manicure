@@ -29,7 +29,9 @@ service-account.json
 *.tsbuildinfo
 next-env.d.ts
 
-# local SEO exports and generated audit artifacts
+# local exports, private reports, and generated audit artifacts
 /seo-data/
+/exports/
+/private/
 
 .vercel

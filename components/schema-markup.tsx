@@ -1,4 +1,5 @@
 import { galleryImages } from "@/lib/gallery";
+import { galleryLandingUrl } from "@/lib/gallery-pages";
 import { siteConfig } from "@/lib/site-config";
 import { JsonLd } from "@/components/json-ld";
 
@@ -7,9 +8,9 @@ const SchemaMarkup = () => {
     "@type": "ImageObject",
     "@id": `${siteConfig.baseUrl}${image.src}#image`,
     "contentUrl": `${siteConfig.baseUrl}${image.src}`,
-    "url": `${siteConfig.baseUrl}/#galeria`,
+    "url": galleryLandingUrl,
     "name": image.alt,
-    "caption": image.alt,
+    "caption": image.caption,
     "representativeOfPage": false
   }));
 
@@ -180,10 +181,10 @@ const SchemaMarkup = () => {
   const imageGallerySchema = {
     "@context": "https://schema.org",
     "@type": "ImageGallery",
-    "@id": "https://www.diaramanicure.sk/#galeria",
+    "@id": `${galleryLandingUrl}#gallery`,
     "name": "Galéria gélových nechtov v Trnave",
     "description": "Galéria práce nechtového štúdia diara manicure. v Trnave.",
-    "url": "https://www.diaramanicure.sk/#galeria",
+    "url": galleryLandingUrl,
     "image": galleryImageObjects
   };
 

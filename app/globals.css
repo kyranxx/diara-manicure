@@ -103,18 +103,19 @@
   }
 
   .review-marquee-track {
-    animation: review-marquee 40s linear infinite;
+    --review-marquee-duration: 80s;
+    animation: review-marquee var(--review-marquee-duration) linear infinite;
     padding-inline: 0.75rem;
     will-change: transform;
   }
 
   .review-marquee-track-reverse {
-    animation-duration: 48s;
+    --review-marquee-duration: 96s;
     animation-direction: reverse;
   }
 
   .review-marquee-track-third {
-    animation-duration: 44s;
+    --review-marquee-duration: 88s;
   }
 
   .review-card-text {
@@ -356,16 +357,8 @@
     }
 
     .review-marquee-track {
-      animation-duration: 40s !important;
+      animation-duration: var(--review-marquee-duration) !important;
       animation-iteration-count: infinite !important;
-    }
-
-    .review-marquee-track-reverse {
-      animation-duration: 48s !important;
-    }
-
-    .review-marquee-track-third {
-      animation-duration: 44s !important;
     }
   }
 }

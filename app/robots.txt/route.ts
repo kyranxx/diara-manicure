@@ -10,6 +10,7 @@ Allow: /api/markdown
 Disallow: /api/
 Disallow: /dakujeme
 Sitemap: ${siteConfig.baseUrl}/sitemap.xml
+Sitemap: ${siteConfig.baseUrl}/image-sitemap.xml
 `
 
   return new Response(robots, {

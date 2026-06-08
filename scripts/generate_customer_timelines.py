@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CUSTOMER_EXPORT = Path(r"C:\Users\User\Downloads\customerExport_1777475891692.xlsx")
 MAILING_EXPORT = Path(r"C:\Users\User\Downloads\customerForMailingExport_1777475924651.xlsx")
 RESERVATION_EXPORT = Path(r"C:\Users\User\Downloads\reservationExport_1777475887081.xlsx")
-OUTPUT = ROOT / "exports" / "customer_timelines.html"
+OUTPUT = ROOT / "private" / "customer_timelines.html"
 
 NS = {"x": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 SERVICE_COLORS = [

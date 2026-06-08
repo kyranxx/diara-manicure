@@ -2,10 +2,6 @@ import { HomePage } from "@/components/home-page"
 import { defaultLanguage } from "@/lib/i18n"
 import { getSheetsData, type ServiceData } from "@/lib/sheets"
 
-export const config = {
-  unstable_runtimeJS: false,
-}
-
 type HomeProps = {
   services: ServiceData[]
 }

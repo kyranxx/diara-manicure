@@ -1,10 +1,6 @@
 import { HomePage } from "@/components/home-page"
 import { getSheetsData, type ServiceData } from "@/lib/sheets"
 
-export const config = {
-  unstable_runtimeJS: false,
-}
-
 type EnglishHomeProps = {
   services: ServiceData[]
 }

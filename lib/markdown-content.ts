@@ -1,3 +1,4 @@
+import { giftCardIntentPages } from "@/lib/gift-card-pages"
 import { fullAddress, siteConfig } from "@/lib/site-config"
 
 const homeMarkdown = `# diara manicure.
@@ -151,6 +152,44 @@ Poukaz je vhodný ako darček pre manželku, priateľku, mamu, sestru alebo kole
 - Cenník služieb: ${siteConfig.baseUrl}/#cennik
 `
 
+function giftCardIntentMarkdown(page: (typeof giftCardIntentPages)[number]) {
+  return `# ${page.title}
+
+${page.description}
+
+${page.intro}
+
+## Pre koho je vhodný
+
+${page.buyerNote}
+
+## Dôležité frázy
+
+- ${page.primaryPhrase}
+- ${page.title}
+- darčekový poukaz na nechty
+- poukaz na manikúru Trnava
+
+## Odporúčaná hodnota
+
+${page.recommendedValue}
+
+## Prečo je to dobrá voľba
+
+${page.reasons.map((reason) => `- ${reason}`).join("\n")}
+
+## Kedy sa hodí
+
+${page.situations.map((situation) => `- ${situation}`).join("\n")}
+
+## Odkazy
+
+- Kúpiť poukaz online: ${siteConfig.giftCardUrl}
+- Všetky darčekové poukazy: ${siteConfig.giftCardPageUrl}
+- Cenník služieb: ${siteConfig.baseUrl}/#cennik
+`
+}
+
 const gelNailsMarkdown = `# Gélové nechty Trnava
 
 Gélové nechty v salóne diara manicure. sú vhodné pre klientky, ktoré chcú pevnejší a dlhotrvajúci výsledok, predĺženie alebo korekciu tvaru nechtov.
@@ -235,6 +274,10 @@ const markdownByPath = new Map<string, string>([
   ["/blog/ako-dlho-vydrzia-gelove-nechty", articleOneMarkdown],
   ["/blog/rozdiel-gel-lak-gelova-modelacia", articleTwoMarkdown],
   ["/darcekove-poukazy", giftCardsMarkdown],
+  ...giftCardIntentPages.map((page) => [
+    `/darcekove-poukazy/${page.slug}`,
+    giftCardIntentMarkdown(page),
+  ] as const),
   ["/sluzby/gelove-nechty-trnava", gelNailsMarkdown],
   ["/sluzby/gel-lak-trnava", gelPolishMarkdown],
   ["/sluzby/manikura-trnava", manicureMarkdown],

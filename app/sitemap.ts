@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next'
 import { galleryImages } from '@/lib/gallery'
+import { galleryImagesForCategory, galleryLandingUrl, galleryPages, galleryPageUrl } from '@/lib/gallery-pages'
+import { giftCardImagePath, giftCardIntentPages, giftCardIntentPageUrl } from '@/lib/gift-card-pages'
 import { servicePages, servicePageUrl } from '@/lib/service-pages'
 import { siteConfig } from '@/lib/site-config'
 
@@ -53,11 +55,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
             },
         },
         {
+            url: galleryLandingUrl,
+            lastModified: now,
+            changeFrequency: 'weekly',
+            priority: 0.72,
+            images: galleryImageUrls,
+        },
+        ...galleryPages.map((page) => ({
+            url: galleryPageUrl(page.slug),
+            lastModified: now,
+            changeFrequency: 'weekly' as const,
+            priority: 0.64,
+            images: galleryImagesForCategory(page.category).map((image) => `${baseUrl}${image.src}`),
+        })),
+        {
             url: `${baseUrl}/darcekove-poukazy`,
             lastModified: now,
             changeFrequency: 'monthly',
             priority: 0.65,
         },
+        ...giftCardIntentPages.map((page) => ({
+            url: giftCardIntentPageUrl(page.slug),
+            lastModified: now,
+            changeFrequency: 'monthly' as const,
+            priority: 0.55,
+            images: [`${baseUrl}${giftCardImagePath}`],
+        })),
         {
             url: `${baseUrl}/blog`,
             lastModified: now,

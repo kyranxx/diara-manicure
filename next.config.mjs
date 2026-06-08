@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -99,9 +96,6 @@ const nextConfig = {
         statusCode: 308,
       },
     ];
-  },
-  experimental: {
-    optimizeCss: true,
   },
 }
 

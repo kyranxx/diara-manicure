@@ -43,6 +43,38 @@ test("normalizes a Business Profile review for the public marquee", () => {
   })
 })
 
+test("removes Google translation suffixes from Business Profile review text", () => {
+  const review = normalizeBusinessProfileReview(
+    {
+      reviewer: {
+        displayName: "Katarina",
+      },
+      starRating: "FIVE",
+      comment: "Krasny salon 😊\n\n(Translated by Google)\nBeautiful salon 😊",
+      createTime: "2026-05-01T12:00:00Z",
+    },
+    "https://maps.example/reviews",
+  )
+
+  assert.equal(review.text, "Krasny salon 😊")
+})
+
+test("keeps the original text when Google prefixes a translated review", () => {
+  const review = normalizeBusinessProfileReview(
+    {
+      reviewer: {
+        displayName: "Katarina",
+      },
+      starRating: "FIVE",
+      comment: "(Translated by Google)\nBeautiful salon 😊\n\n(Original)\nKrasny salon 😊",
+      createTime: "2026-05-01T12:00:00Z",
+    },
+    "https://maps.example/reviews",
+  )
+
+  assert.equal(review.text, "Krasny salon 😊")
+})
+
 test("reads Business Profile config only when all required env vars exist", () => {
   assert.equal(businessProfileConfigFromEnv({}), null)
 

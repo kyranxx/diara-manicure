@@ -44,6 +44,10 @@ function requestReferer(request: NextRequest) {
   return request.headers.get("referer") || `${siteConfig.baseUrl}/`
 }
 
+function logGoogleReviewsError(source: string, error: unknown) {
+  console.error("[google-reviews]", source, error)
+}
+
 async function findPlaceId(apiKey: string, referer: string) {
   const response = await fetch("https://places.googleapis.com/v1/places:searchText", {
     method: "POST",
@@ -95,7 +99,7 @@ async function fetchPlaceDetails(apiKey: string, placeId: string, referer: strin
 
 export async function GET(request: NextRequest) {
   const businessProfileConfig = businessProfileConfigFromEnv()
-  let businessProfileError = ""
+  let businessProfileUnavailable = false
 
   if (businessProfileConfig) {
     try {
@@ -116,7 +120,8 @@ export async function GET(request: NextRequest) {
         )
       }
     } catch (error) {
-      businessProfileError = error instanceof Error ? error.message : "Google Business Profile reviews unavailable"
+      businessProfileUnavailable = true
+      logGoogleReviewsError("business-profile", error)
     }
   }
 
@@ -126,8 +131,7 @@ export async function GET(request: NextRequest) {
   if (!apiKey) {
     return NextResponse.json({
       reviews: [],
-      error: businessProfileError ? "google_business_profile_unavailable" : "missing_google_maps_api_key",
-      message: businessProfileError,
+      error: businessProfileUnavailable ? "google_business_profile_unavailable" : "google_reviews_unavailable",
     })
   }
 
@@ -163,7 +167,6 @@ export async function GET(request: NextRequest) {
         reviews,
         googleMapsUrl: place.googleMapsUri || siteConfig.googleReviewsUrl,
         source: "Google Maps",
-        businessProfileError,
       },
       {
         headers: {
@@ -172,12 +175,12 @@ export async function GET(request: NextRequest) {
       },
     )
   } catch (error) {
+    logGoogleReviewsError("places", error)
+
     return NextResponse.json(
       {
         reviews: [],
         error: "google_reviews_unavailable",
-        message: error instanceof Error ? error.message : "Google reviews unavailable",
-        businessProfileError,
       },
     )
   }

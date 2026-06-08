@@ -8,20 +8,29 @@ import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/button"
 import { GiftCardPageAnalytics } from "@/components/gift-card-page-analytics"
 import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
+import { giftCardImagePath, giftCardIntentPages } from "@/lib/gift-card-pages"
 import { defaultLanguage, translations } from "@/lib/i18n"
 import { siteConfig } from "@/lib/site-config"
 
 const pageUrl = `${siteConfig.baseUrl}/darcekove-poukazy`
 
 export const metadata: Metadata = {
-  title: "Darček pre ženu v Trnave | Poukaz na manikúru",
+  title: "Poukaz na nechty Trnava | Darček pre ženu",
   description:
-    "Darčekový poukaz na manikúru v Trnave pre manželku, priateľku, mamu alebo kolegyňu. Online kúpa cez Bookio a doručenie emailom.",
+    "Darčekový poukaz na nechty v Trnave pre manželku, priateľku, mamu alebo kolegyňu. Online kúpa cez Bookio a doručenie emailom.",
+  keywords: [
+    "darčekový poukaz na nechty",
+    "poukaz na nechty v Trnave",
+    "poukaz na manikúru Trnava",
+    "darček pre manželku Trnava",
+    "darček pre priateľku Trnava",
+    "darček pre mamu Trnava",
+  ],
   alternates: {
     canonical: pageUrl,
   },
   openGraph: {
-    title: "Darček pre ženu v Trnave | Poukaz na manikúru",
+    title: "Poukaz na nechty Trnava | Darček pre ženu",
     description:
       "Darčekový poukaz na manikúru pre manželku, priateľku, mamu alebo kolegyňu v Trnave.",
     url: pageUrl,
@@ -29,7 +38,7 @@ export const metadata: Metadata = {
     locale: "sk_SK",
     images: [
       {
-        url: "/gift-card.jpg",
+        url: giftCardImagePath,
         width: 1200,
         height: 630,
         alt: "Darčekový poukaz diara manicure.",
@@ -38,10 +47,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Darček pre ženu v Trnave | Poukaz na manikúru",
+    title: "Poukaz na nechty Trnava | Darček pre ženu",
     description:
       "Darčekový poukaz na manikúru pre manželku, priateľku, mamu alebo kolegyňu v Trnave.",
-    images: ["/gift-card.jpg"],
+    images: [giftCardImagePath],
   },
 }
 
@@ -55,7 +64,7 @@ export default function GiftCardPage() {
     url: pageUrl,
     name: "Darčekové poukazy na manikúru v Trnave",
     description:
-      "Informácie o darčekových poukazoch na manikúru v Trnave. Online kúpa cez Bookio a doručenie emailom.",
+      "Informácie o darčekových poukazoch na nechty a manikúru v Trnave. Online kúpa cez Bookio a doručenie emailom.",
     inLanguage: "sk-SK",
     about: {
       "@type": "Thing",
@@ -69,10 +78,10 @@ export default function GiftCardPage() {
     mainEntity: [
       {
         "@type": "Question",
-        name: "Je poukaz vhodný ako darček pre ženu v Trnave?",
+        name: "Je poukaz vhodný ako darček pre manželku alebo priateľku?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Áno, poukaz je vhodný ako darček pre manželku, priateľku, mamu, sestru alebo kolegyňu, ktorá býva v Trnave alebo sa vie do salónu v Trnave dostať.",
+          text: "Áno, darčekový poukaz na nechty je vhodný ako darček pre manželku, priateľku, mamu, sestru alebo kolegyňu, ktorá býva v Trnave alebo sa vie do salónu v Trnave dostať.",
         },
       },
       {
@@ -85,10 +94,18 @@ export default function GiftCardPage() {
       },
       {
         "@type": "Question",
-        name: "Dá sa poukaz použiť aj na gélové nechty?",
+        name: "Dá sa poukaz použiť aj ako poukaz na nechty v Trnave?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Áno, poukaz je možné využiť na služby v ponuke štúdia, napríklad manikúru, gél lak alebo gélové nechty podľa aktuálnej dostupnosti služieb.",
+          text: "Áno, poukaz na nechty v Trnave je možné využiť na služby v ponuke štúdia, napríklad manikúru, gél lak alebo gélové nechty podľa aktuálnej dostupnosti služieb.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Akú hodnotu poukazu vybrať?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Ak si nie ste istý, hodnota 50 € je jednoduchá stredná voľba. V Bookio sú dostupné aj hodnoty 30 €, 40 € a 100 €.",
         },
       },
       {
@@ -142,6 +159,11 @@ export default function GiftCardPage() {
                     ruky a chvíľu pre seba. Využije ho v štúdiu diara manicure. na
                     Hospodárskej 53 v Trnave.
                   </p>
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+                    Ak hľadáte darčekový poukaz na nechty, poukaz na nechty v Trnave
+                    alebo rýchly poukaz na manikúru Trnava, vyberte hodnotu, zaplaťte
+                    kartou a poukaz príde emailom.
+                  </p>
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                     <Button asChild className="h-12 rounded-full px-7">
@@ -158,8 +180,8 @@ export default function GiftCardPage() {
 
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-primary/10 bg-white shadow-sm dark:bg-card">
                   <Image
-                    src="/gift-card.jpg"
-                    alt="Darčekový poukaz diara manicure. Trnava"
+                    src={giftCardImagePath}
+                    alt="Darčekový poukaz na nechty v Trnave od diara manicure."
                     fill
                     className="object-cover"
                     priority
@@ -199,6 +221,87 @@ export default function GiftCardPage() {
           </section>
 
           <section className="container mx-auto px-6 py-14">
+            <div className="mx-auto grid max-w-5xl gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+              <div>
+                <h2 className="text-3xl font-light tracking-tight text-black dark:text-white md:text-4xl">
+                  Rýchly lokálny darček bez hádania
+                </h2>
+                <p className="mt-4 leading-relaxed text-muted-foreground">
+                  Pre mužov, ktorí kupujú darček pre manželku alebo priateľku, aj pre
+                  každého, kto chce rýchlo vybaviť darček pre mamu v Trnave. Nemusíte
+                  vyberať konkrétnu službu ani termín.
+                </p>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-3">
+                {[
+                  {
+                    title: "1. Vyberte hodnotu",
+                    text: "30 €, 40 €, 50 € alebo 100 € podľa rozpočtu.",
+                  },
+                  {
+                    title: "2. Zaplaťte kartou",
+                    text: "Nákup prebieha v oficiálnom systéme Bookio.",
+                  },
+                  {
+                    title: "3. Pošlite email",
+                    text: "Poukaz príde emailom a môžete ho rovno darovať.",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-xl border border-primary/10 bg-white/55 p-5 dark:bg-card"
+                  >
+                    <h3 className="text-base font-medium text-black dark:text-white">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="bg-background py-14 dark:bg-[#050403]">
+            <div className="container mx-auto px-6">
+              <div className="mx-auto max-w-5xl">
+                <div className="grid gap-8 md:grid-cols-[1fr_1fr] md:items-center">
+                  <div>
+                    <h2 className="text-3xl font-light tracking-tight text-black dark:text-white md:text-4xl">
+                      Odporúčaná jednoduchá voľba: 50 €
+                    </h2>
+                    <p className="mt-4 leading-relaxed text-muted-foreground">
+                      Ak si nie ste istý, 50 € je praktická stredná voľba. Obdarovaná
+                      osoba si potom vyberie službu podľa seba: manikúru, gél lak alebo
+                      gélové nechty podľa aktuálnej ponuky.
+                    </p>
+                  </div>
+                  <div className="rounded-xl border border-primary/10 bg-beige/55 p-6 dark:bg-card">
+                    <h3 className="text-lg font-medium text-black dark:text-white">
+                      Najčastejšie darčekové situácie
+                    </h3>
+                    <div className="mt-5 grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
+                      {[
+                        "darček pre manželku",
+                        "darček pre priateľku",
+                        "darček pre mamu",
+                        "darček pre ženu v Trnave",
+                        "darčekový poukaz na nechty",
+                        "poukaz na manikúru Trnava",
+                      ].map((label) => (
+                        <span
+                          key={label}
+                          className="rounded-full border border-primary/10 bg-white px-4 py-2 dark:bg-background"
+                        >
+                          {label}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="container mx-auto px-6 py-14">
             <div className="mx-auto max-w-5xl">
               <h2 className="text-3xl font-light tracking-tight text-black dark:text-white md:text-4xl">
                 Pre koho je poukaz vhodný
@@ -222,6 +325,36 @@ export default function GiftCardPage() {
                     {label}
                   </div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="bg-background py-14 dark:bg-[#050403]">
+            <div className="container mx-auto px-6">
+              <div className="mx-auto max-w-5xl">
+                <h2 className="text-3xl font-light tracking-tight text-black dark:text-white md:text-4xl">
+                  Vyberte podľa toho, pre koho kupujete
+                </h2>
+                <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
+                  Ak riešite konkrétnu situáciu, tieto krátke stránky pomôžu vybrať
+                  hodnotu a vysvetlia, ako poukaz funguje.
+                </p>
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  {giftCardIntentPages.map((page) => (
+                    <Link
+                      key={page.slug}
+                      href={`/darcekove-poukazy/${page.slug}`}
+                      className="rounded-xl border border-primary/10 bg-white/55 p-5 transition-colors hover:text-primary dark:bg-card"
+                    >
+                      <h3 className="text-lg font-medium text-black dark:text-white">
+                        {page.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                        {page.description}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
