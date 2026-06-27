@@ -1,6 +1,7 @@
 export const gallerySectionImageIds = {
-  french: ["60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
+  french: ["75", "69", "60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
   singleColor: [
+    "68",
     "64",
     "62",
     "58",
@@ -34,7 +35,7 @@ export const gallerySectionImageIds = {
     "2",
     "1",
   ],
-  delicateArt: ["67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
+  delicateArt: ["76", "74", "73", "72", "71", "70", "67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
 } as const
 
 export const galleryCategories = ["french", "singleColor", "delicateArt"] as const
@@ -107,6 +108,15 @@ const galleryImageAltById: Record<string, string> = {
   "65": "Francuzska manikura s cervenym kvetinovym zdobenim a zlatymi detailmi",
   "66": "Jemne ruzove gelove nechty s prirodzenym leskom a mandlovym tvarom",
   "67": "Ruzove gelove nechty s bielymi linkami a jahodovym zdobenim",
+  "68": "Perletove biele gelove nechty s kratkym elegantnym tvarom",
+  "69": "Ruzova francuzska manikura s vyraznou farebnou spickou",
+  "70": "Fialove gelove nechty s kvetinovym nail art zdobenim",
+  "71": "Jemne ruzove nechty s bielymi detailmi a decentnym zdobenim",
+  "72": "Zelene gelove nechty s prirodnym listkovym zdobenim",
+  "73": "Zlte a ruzove gelove nechty s kvetinovym zdobenim",
+  "74": "Zlte gelove nechty s bodkovanym a jemnym bielym zdobenim",
+  "75": "Francuzska manikura s ciernou linkou a modernym detailom",
+  "76": "Francuzska manikura so zlatymi linkami a jemnym zdobenim",
 }
 
 const galleryImageCaptionById: Record<string, string> = {
@@ -139,9 +149,41 @@ const galleryImageCaptionById: Record<string, string> = {
   "65": "Kvetinové zdobenie",
   "66": "Jemné ružové zdobenie",
   "67": "Jahodové zdobenie",
+  "68": "Perleťové biele gélové nechty",
+  "69": "Ružová francúzska manikúra",
+  "70": "Fialové nechty s kvetinovým zdobením",
+  "71": "Jemné ružové zdobenie",
+  "72": "Zelené nechty s jemným zdobením",
+  "73": "Žlté nechty s kvetinovým zdobením",
+  "74": "Žlté nechty s jemným zdobením",
+  "75": "Francúzska manikúra s čiernou linkou",
+  "76": "Zlaté line art zdobenie",
 }
 
-const jpgGalleryImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67"])
+const jpgGalleryImageIds = new Set([
+  "5",
+  "56",
+  "57",
+  "58",
+  "59",
+  "60",
+  "61",
+  "62",
+  "63",
+  "64",
+  "65",
+  "66",
+  "67",
+  "68",
+  "69",
+  "70",
+  "71",
+  "72",
+  "73",
+  "74",
+  "75",
+  "76",
+])
 
 export function galleryImageSrc(id: string) {
   return `/gelove-nechty-trnava-gallery-${id}.${jpgGalleryImageIds.has(id) ? "jpg" : "jpeg"}`

@@ -201,7 +201,7 @@ expectTitle(galleryLanding, "Galéria nechtov Trnava | Gélové nechty a manikú
 expectCanonical(galleryLanding, `${baseUrl}/galeria`, "gallery canonical")
 expectOgUrl(galleryLanding, `${baseUrl}/galeria`, "gallery og:url")
 expectIncludes(galleryLanding, "ImageGallery", "gallery ImageGallery schema")
-expectIncludes(galleryLanding, "gelove-nechty-trnava-gallery-67.jpg", "gallery includes newest image")
+expectIncludes(galleryLanding, "gelove-nechty-trnava-gallery-76.jpg", "gallery includes newest image")
 expectIncludes(galleryLanding, "Francúzska manikúra Trnava", "gallery links french image intent")
 expectIncludes(galleryLanding, "Jemné zdobenie nechtov Trnava", "gallery links nail art image intent")
 
@@ -211,21 +211,21 @@ const galleryIntentPages = [
     url: `${baseUrl}/galeria/francuzska-manikura-trnava`,
     title: "Francúzska manikúra Trnava | Galéria nechtov",
     h1: "Francúzska manikúra Trnava",
-    image: "gelove-nechty-trnava-gallery-60.jpg",
+    image: "gelove-nechty-trnava-gallery-75.jpg",
   },
   {
     file: ".next/server/app/galeria/gelove-nechty-trnava.html",
     url: `${baseUrl}/galeria/gelove-nechty-trnava`,
     title: "Gélové nechty Trnava | Galéria prác",
     h1: "Gélové nechty Trnava",
-    image: "gelove-nechty-trnava-gallery-64.jpg",
+    image: "gelove-nechty-trnava-gallery-68.jpg",
   },
   {
     file: ".next/server/app/galeria/jemne-zdobenie-nechtov-trnava.html",
     url: `${baseUrl}/galeria/jemne-zdobenie-nechtov-trnava`,
     title: "Jemné zdobenie nechtov Trnava | Nail art galéria",
     h1: "Jemné zdobenie nechtov Trnava",
-    image: "gelove-nechty-trnava-gallery-67.jpg",
+    image: "gelove-nechty-trnava-gallery-76.jpg",
   },
 ]
 
@@ -292,11 +292,11 @@ expectIncludes(sitemap, `<loc>${baseUrl}/galeria</loc>`, "sitemap includes galle
 for (const page of galleryIntentPages) {
   expectIncludes(sitemap, `<loc>${page.url}</loc>`, `sitemap includes ${page.url}`)
 }
-expectIncludes(sitemap, "gelove-nechty-trnava-gallery-67.jpg", "sitemap includes newest gallery image")
+expectIncludes(sitemap, "gelove-nechty-trnava-gallery-76.jpg", "sitemap includes newest gallery image")
 
 const imageSitemap = readBuiltFile(".next/server/app/image-sitemap.xml.body")
 expectIncludes(imageSitemap, `<loc>${baseUrl}/galeria</loc>`, "image sitemap includes gallery page")
-expectIncludes(imageSitemap, "gelove-nechty-trnava-gallery-67.jpg", "image sitemap includes newest gallery photo")
+expectIncludes(imageSitemap, "gelove-nechty-trnava-gallery-76.jpg", "image sitemap includes newest gallery photo")
 expectIncludes(imageSitemap, "<image:title>Jemné zdobenie</image:title>", "image sitemap includes image title")
 expectIncludes(imageSitemap, "<image:geo_location>Trnava, Slovakia</image:geo_location>", "image sitemap includes local geo signal")
 
