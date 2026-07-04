@@ -192,12 +192,12 @@ ${page.situations.map((situation) => `- ${situation}`).join("\n")}
 
 const gelNailsMarkdown = `# Gélové nechty Trnava
 
-Gélové nechty v salóne diara manicure. sú vhodné pre klientky, ktoré chcú pevnejší a dlhotrvajúci výsledok, predĺženie alebo korekciu tvaru nechtov.
+Gélové nechty v salóne diara manicure. sú vhodné pre klientky, ktoré chcú pevnejší a dlhotrvajúci výsledok, predĺženie alebo korekciu tvaru nechtov. Častou voľbou sú aj jemné gélové nechty s prirodzeným vzhľadom.
 
 ## Pre koho sú vhodné
 
 - pevnejšie nechty na viac týždňov
-- francúzska manikúra, babyboomer alebo jemné zdobenie
+- jemné gélové nechty, francúzska manikúra, babyboomer alebo decentné zdobenie
 - klientky, ktoré chcú pravidelné doplnenie približne po 3 týždňoch
 
 ## Odkazy

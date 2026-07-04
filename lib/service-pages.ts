@@ -24,16 +24,23 @@ export const servicePages: ServicePage[] = [
     title: "Gélové nechty v Trnave",
     shortTitle: "Gélové nechty",
     description:
-      "Gélové nechty v Trnave s precíznou modeláciou, doplnením a odporúčaním starostlivosti. Pozrite si cenník a voľné termíny.",
+      "Jemné gélové nechty v Trnave s precíznou modeláciou, doplnením a odporúčaním starostlivosti. Pozrite si cenník a voľné termíny.",
     image: "/gelove-nechty-trnava-gallery-47.jpeg",
     heroAlt: "Biela francúzska manikúra na gélových nechtoch v diara manicure. Trnava",
-    searchAliases: ["Nails Trnava", "Gel Nails Trnava", "Gelove nechty Trnava", "Nechty Trnava"],
+    searchAliases: [
+      "Nails Trnava",
+      "Gel Nails Trnava",
+      "Gelove nechty Trnava",
+      "Jemné gélové nechty",
+      "Jemne gelove nechty",
+      "Nechty Trnava",
+    ],
     intro:
-      "Gélová modelácia je vhodná, keď chcete pevnejšie nechty, možnosť predĺženia alebo upravený tvar na viac týždňov. V salóne pracujeme pokojne, detailne a s dôrazom na prípravu prirodzeného nechta.",
+      "Gélová modelácia je vhodná, keď chcete pevnejšie nechty, možnosť predĺženia alebo jemné gélové nechty na viac týždňov. V salóne pracujeme pokojne, detailne a s dôrazom na prípravu prirodzeného nechta.",
     bestFor: [
       "klientky, ktoré chcú pevnejší a odolnejší výsledok",
       "predĺženie nechtov alebo korekciu tvaru",
-      "francúzsku manikúru, babyboomer alebo jemné zdobenie",
+      "jemné gélové nechty, francúzsku manikúru, babyboomer alebo decentné zdobenie",
     ],
     process: [
       "najprv skontrolujeme stav prirodzených nechtov",

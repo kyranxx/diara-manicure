@@ -15,7 +15,7 @@ Vítame vás v našom salóne, kde sa staráme o krásu a zdravie vašich nechto
 
 - [Cenník služieb](https://www.diaramanicure.sk/#cennik): Kompletný cenník služieb nechtového štúdia – gélové nechty, gél lak, klasická manikúra. Cenník platný od 24.1.2026. Ceny sa načítavajú dynamicky z Google Sheets.
 - [Pozrieť voľné termíny](https://services.bookio.com/diaramanicure/widget?lang=sk): Online rezervácia termínu cez systém Bookio. Nezáväzná rezervácia.
-- [Gélové nechty Trnava](https://www.diaramanicure.sk/sluzby/gelove-nechty-trnava): Sprievodca gélovou modeláciou, priebehom návštevy a starostlivosťou po návšteve.
+- [Gélové nechty Trnava](https://www.diaramanicure.sk/sluzby/gelove-nechty-trnava): Sprievodca gélovou modeláciou vrátane jemných gélových nechtov, priebehom návštevy a starostlivosťou po návšteve.
 - [Gél lak Trnava](https://www.diaramanicure.sk/sluzby/gel-lak-trnava): Informácie pre klientky, ktoré chcú prirodzenejší výsledok bez predlžovania.
 - [Manikúra Trnava](https://www.diaramanicure.sk/sluzby/manikura-trnava): Suchá manikúra, úprava prirodzených nechtov a nechtového okolia.
 
