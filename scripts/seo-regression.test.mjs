@@ -117,6 +117,7 @@ expectIncludes(giftCard, "darcekovy-poukaz-na-nechty-trnava.jpg", "gift card use
 expectIncludes(giftCard, "utm_campaign=darcekove_poukazy", "gift card outbound links carry campaign attribution")
 expectIncludes(giftCard, "Darčekový poukaz od 30", "gift card has sticky buy bar copy")
 expectIncludes(giftCard, "gift_card_sticky_bar", "gift card has sticky buy bar tracking source")
+expectIncludes(giftCard, "Kúpiť poukaz teraz", "gift card hero has prominent buy button")
 expectIncludes(giftCard, "Darčekový poukaz v Trnave na nechty a manikúru", "gift card H1 targets voucher plus local service")
 expectIncludes(giftCard, "darčekový poukaz Trnava", "gift card targets broad local voucher")
 expectIncludes(giftCard, "kozmetický poukaz", "gift card targets beauty voucher")
@@ -133,7 +134,7 @@ expectIncludes(giftCard, "darček pre priateľku", "gift card targets girlfriend
 expectIncludes(giftCard, "Hlohovca", "gift card mentions nearby towns")
 expectIncludes(giftCard, "Serede", "gift card mentions nearby towns")
 expectIncludes(giftCard, "Najjednoduchšia voľba: poukaz 50", "gift card recommends one simple value")
-expectIncludes(giftCard, "vyberte hodnotu, zaplaťte kartou a poukaz príde emailom", "gift card explains fast purchase flow")
+expectIncludes(giftCard, "Vyberte hodnotu, zaplaťte kartou a poukaz príde emailom", "gift card explains fast purchase flow")
 expectNotIncludes(home, "Najjednoduchšia voľba: poukaz 50", "home does not carry gift-card buyer copy")
 
 const giftCardIntentPages = [

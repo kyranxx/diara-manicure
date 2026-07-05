@@ -178,7 +178,7 @@ export default function GiftCardPage() {
         </div>
 
         <main className="bg-beige dark:bg-[#050403]">
-          <section className="container mx-auto px-6 py-12 md:py-20">
+          <section className="container mx-auto px-6 py-8 md:py-14">
             <div className="mx-auto max-w-5xl">
               <Link
                 href="/"
@@ -193,31 +193,52 @@ export default function GiftCardPage() {
                   <p className="mb-3 text-sm font-medium uppercase tracking-wide text-muted-foreground">
                     Darčekový poukaz Trnava
                   </p>
-                  <h1 className="text-4xl font-light tracking-tight text-black dark:text-white md:text-6xl">
+                  <h1 className="max-w-3xl text-4xl font-light tracking-tight text-black dark:text-white md:text-5xl">
                     Darčekový poukaz v Trnave na nechty a manikúru
                   </h1>
-                  <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-                    Hľadáte darček pre manželku, priateľku, mamu, sestru alebo kolegyňu?
-                    Tento darčekový poukaz v Trnave je praktický kozmetický poukaz pre
-                    ženu, ktorá má rada upravené ruky a chvíľu pre seba. Využije ho v
-                    štúdiu diara manicure. na Hospodárskej 53 v Trnave.
-                  </p>
-                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-                    Ak hľadáte darčekový poukaz na nechty, poukaz na nechty v Trnave,
-                    poukaz na manikúru Trnava, salón krásy darčekový poukaz Trnava
-                    alebo rýchly darček pre ženu v Trnave a okolí, vyberte hodnotu,
-                    zaplaťte kartou a poukaz príde emailom.
+                  <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+                    Rýchly kozmetický poukaz pre ženu, ktorá má rada upravené ruky.
+                    Kúpite ho online, príde emailom a obdarovaná si sama vyberie službu aj termín.
                   </p>
 
-                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                     <Button
                       asChild
-                      className="h-14 rounded-full bg-black px-8 text-base text-white shadow-xl shadow-black/20 hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
+                      className="h-16 rounded-full bg-black px-10 text-lg text-white shadow-xl shadow-black/20 hover:bg-black/90 dark:bg-white dark:text-black dark:hover:bg-white/90"
                     >
                       <GiftCardTrackedLink source="gift_card_page_hero">
-                        <ShoppingBasket className="size-4" />
-                        Kúpiť poukaz cez Bookio
+                        <ShoppingBasket className="size-5" />
+                        Kúpiť poukaz teraz
                       </GiftCardTrackedLink>
+                    </Button>
+                    <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+                      Najjednoduchšia voľba je 50 €. Dostupné sú aj hodnoty 30 €, 40 € a 100 €.
+                    </p>
+                  </div>
+
+                  <div className="mt-7 grid gap-3 text-sm text-black dark:text-white sm:grid-cols-3">
+                    {[
+                      ["Od 30 €", "hodnoty 30, 40, 50, 100 €"],
+                      ["Emailom", "bez osobného vyzdvihnutia"],
+                      ["Na služby", "manikúra, gél lak, gélové nechty"],
+                    ].map(([title, text]) => (
+                      <div
+                        key={title}
+                        className="rounded-xl border border-primary/10 bg-white/70 p-4 shadow-sm dark:bg-card"
+                      >
+                        <p className="text-lg font-medium">{title}</p>
+                        <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{text}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-12 rounded-full bg-white/80 px-7 dark:bg-card"
+                    >
+                      <Link href="#ako-to-funguje">Ako to funguje</Link>
                     </Button>
                     <Button asChild variant="outline" className="h-12 rounded-full px-7">
                       <Link href="/#cennik">Pozrieť služby a cenník</Link>
@@ -234,12 +255,20 @@ export default function GiftCardPage() {
                     priority
                     sizes="(max-width: 768px) 100vw, 520px"
                   />
+                  <div className="absolute inset-x-4 bottom-4 rounded-xl bg-white/92 p-4 shadow-lg backdrop-blur dark:bg-[#050403]/92">
+                    <p className="text-sm font-medium text-black dark:text-white">
+                      Online kúpa cez Bookio
+                    </p>
+                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                      Vyberte hodnotu, zaplaťte kartou a poukaz príde emailom.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="bg-background py-14 dark:bg-[#050403]">
+          <section id="ako-to-funguje" className="bg-background py-10 dark:bg-[#050403]">
             <div className="container mx-auto px-6">
               <div className="mx-auto grid max-w-5xl gap-5 md:grid-cols-3">
                 <div className="rounded-xl border border-primary/10 bg-beige/55 p-6 dark:bg-card">
