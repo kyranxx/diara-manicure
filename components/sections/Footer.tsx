@@ -29,6 +29,9 @@ export function Footer({ t }: { t: TranslationMessages }) {
                             <Link href="/blog" className="transition-colors hover:text-primary">
                                 {t.footer.blog}
                             </Link>
+                            <Link href="/site-map" className="transition-colors hover:text-primary">
+                                Mapa stránky
+                            </Link>
                         </div>
                         <div className="mt-4 flex max-w-md flex-wrap justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
                             <span className="font-medium text-foreground/70">{t.footer.serviceGuides}</span>

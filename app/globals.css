@@ -103,14 +103,15 @@
   }
 
   .review-marquee-track {
-    --review-marquee-duration: 80s;
+    --review-marquee-duration: 58s;
     animation: review-marquee var(--review-marquee-duration) linear infinite;
-    padding-inline: 0.75rem;
+    gap: clamp(1rem, 1.4vw, 1.6rem) !important;
+    padding-inline: 0;
     will-change: transform;
   }
 
   .review-marquee-track-reverse {
-    --review-marquee-duration: 96s;
+    --review-marquee-duration: 64s;
     animation-direction: reverse;
   }
 
@@ -127,14 +128,14 @@
 
   .google-review-card,
   .google-review-marquee-placeholder {
-    flex: 0 0 230px;
-    width: 230px;
-    min-height: 136px;
-    border: 1px solid rgb(0 0 0 / 8%);
-    border-radius: 0.85rem;
-    background: rgb(255 255 255 / 55%);
-    padding: 1rem;
-    box-shadow: 0 12px 30px rgb(0 0 0 / 4%);
+    flex: 0 0 clamp(20rem, 28vw, 29.5rem);
+    width: clamp(20rem, 28vw, 29.5rem);
+    min-height: 12rem;
+    border: 1px solid rgb(41 35 30 / 11%);
+    border-radius: 0.75rem;
+    background: rgb(255 255 255 / 92%);
+    padding: clamp(1.25rem, 1vw + 0.9rem, 1.65rem);
+    box-shadow: 0 1.1rem 2.4rem rgb(31 25 21 / 7%);
   }
 
   .dark .google-review-card,
@@ -159,13 +160,13 @@
   }
 
   .google-review-topline {
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
   }
 
   .google-review-stars {
     display: flex;
-    gap: 0.1rem;
-    font-size: 0.9rem;
+    gap: 0.12rem;
+    font-size: 1rem;
     line-height: 1;
   }
 
@@ -183,16 +184,16 @@
 
   .google-review-text {
     display: -webkit-box;
-    min-height: 3.8rem;
-    margin-bottom: 0.85rem;
+    min-height: 5.4rem;
+    margin-bottom: 1.1rem;
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
-    color: rgb(0 0 0 / 78%);
-    font-size: 0.85rem;
-    font-style: italic;
-    font-weight: 300;
-    line-height: 1.45;
+    color: rgb(28 24 21 / 76%);
+    font-size: clamp(0.98rem, 0.22vw + 0.92rem, 1.08rem);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.52;
   }
 
   .dark .google-review-text {
@@ -200,19 +201,23 @@
   }
 
   .google-review-author img {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 2.1rem;
+    height: 2.1rem;
     border-radius: 9999px;
     object-fit: cover;
   }
 
   .google-review-author span,
   .google-review-author a {
-    color: hsl(var(--muted-foreground));
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    color: rgb(42 35 30 / 82%);
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.045em;
     text-transform: uppercase;
+  }
+
+  .review-marquee-track + .review-marquee-track {
+    margin-top: clamp(1rem, 1.5vw, 1.5rem) !important;
   }
 
   .social-icon-instagram {
@@ -271,6 +276,14 @@
     transform: rotate(-4deg);
   }
 
+  @media (max-width: 639px) {
+    .google-review-card,
+    .google-review-marquee-placeholder {
+      flex-basis: min(86vw, 21.5rem);
+      width: min(86vw, 21.5rem);
+    }
+  }
+
   @media (min-width: 640px) {
     .gallery-centered-item {
       flex-basis: calc((100% - 1.5rem) / 4);
@@ -279,33 +292,6 @@
   }
 
   @media (min-width: 768px) {
-    .google-review-card,
-    .google-review-marquee-placeholder {
-      flex-basis: 340px;
-      width: 340px;
-      min-height: 158px;
-      padding: 1.1rem 1.2rem;
-    }
-
-    .google-review-stars {
-      font-size: 0.95rem;
-    }
-
-    .google-review-text {
-      min-height: 4.6rem;
-      font-size: 0.92rem;
-    }
-
-    .google-review-author img {
-      width: 1.9rem;
-      height: 1.9rem;
-    }
-
-    .google-review-author span,
-    .google-review-author a {
-      font-size: 0.72rem;
-    }
-
     .gallery-centered-grid {
       gap: 0.75rem;
     }

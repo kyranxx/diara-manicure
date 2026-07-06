@@ -43,6 +43,14 @@ assert.doesNotMatch(googleReviewsRoute, /message:\s*businessProfileError/, "publ
 assert.doesNotMatch(googleReviewsRoute, /businessProfileError,\s*$/m, "public reviews response must not expose raw upstream errors")
 assert.doesNotMatch(googleReviewsRoute, /message:\s*error instanceof Error/, "public reviews response must not expose raw Places errors")
 assert.match(googleReviewsRoute, /console\.error\("\[google-reviews\]/, "server logs should keep review errors visible")
+assert.doesNotMatch(googleReviewsRoute, /NEXT_PUBLIC_GOOGLE_MAPS_API_KEY/, "reviews API must not use a browser-restricted public Maps key")
+
+const testimonials = read("components/sections/Testimonials.tsx")
+assert.doesNotMatch(testimonials, /data-google-maps-key/, "reviews section must not expose a public Maps key")
+
+const runtimeScript = read("components/site-runtime-script.ts")
+assert.doesNotMatch(runtimeScript, /Place\.searchByText/, "reviews runtime must not call browser Places search")
+assert.doesNotMatch(runtimeScript, /fetchFields\(\{\s*fields:\s*\[[^\]]*reviews/, "reviews runtime must not fetch reviews through browser Places")
 
 const measurementProtocol = read("lib/measurement-protocol.ts")
 assert.doesNotMatch(measurementProtocol, /client_ip/, "GA4 events must not include raw client IP")

@@ -9,6 +9,7 @@
     "gbp:auth": "node scripts/google-business-profile-oauth.mjs",
     "gbp:locations": "node scripts/google-business-profile-locations.mjs",
     "lint": "eslint .",
+    "test:runtime": "node scripts/runtime-regression.test.mjs",
     "test:security": "node scripts/security-regression.test.mjs",
     "test:seo": "node scripts/seo-regression.test.mjs",
     "start": "next start",

@@ -421,8 +421,6 @@ export const siteRuntimeScript = String.raw`
 
     const content = root.querySelector("[data-google-reviews-marquee-content]");
     const status = root.querySelector("[data-google-reviews-status]");
-    const apiKey = root.dataset.googleMapsKey || "";
-    const placeQuery = root.dataset.placeQuery || "Diara Manicure, Hospodárska 53, Trnava, Slovakia";
     const googleMapsUrl = root.dataset.googleMapsUrl || "";
     const endpoint = root.dataset.reviewsEndpoint || "/api/google-reviews";
     const loadingLabel = root.dataset.loadingLabel || "Načítavame recenzie z Google Maps...";
@@ -440,49 +438,6 @@ export const siteRuntimeScript = String.raw`
       item.className = "google-review-marquee-placeholder mx-auto";
       item.textContent = message;
       content.appendChild(item);
-    }
-
-    function waitForGoogleMaps() {
-      return new Promise((resolve, reject) => {
-        let attempts = 0;
-        const interval = window.setInterval(() => {
-          attempts += 1;
-          if (window.google && window.google.maps && window.google.maps.importLibrary) {
-            window.clearInterval(interval);
-            resolve();
-            return;
-          }
-          if (attempts >= 40) {
-            window.clearInterval(interval);
-            reject(new Error("Google Maps API did not become available"));
-          }
-        }, 250);
-      });
-    }
-
-    function loadGoogleMapsScript() {
-      if (window.google && window.google.maps && window.google.maps.importLibrary) {
-        return Promise.resolve();
-      }
-      if (!apiKey) {
-        return Promise.reject(new Error("Missing Google Maps API key"));
-      }
-
-      const existing = document.querySelector("script[data-google-maps-places]");
-      if (existing) return waitForGoogleMaps();
-
-      return new Promise((resolve, reject) => {
-        const script = document.createElement("script");
-        script.async = true;
-        script.defer = true;
-        script.dataset.googleMapsPlaces = "true";
-        script.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(apiKey) + "&libraries=places&v=weekly&loading=async";
-        script.addEventListener("load", () => {
-          waitForGoogleMaps().then(resolve).catch(reject);
-        });
-        script.addEventListener("error", () => reject(new Error("Google Maps script failed")));
-        document.head.appendChild(script);
-      });
     }
 
     function reviewText(review) {
@@ -626,9 +581,8 @@ export const siteRuntimeScript = String.raw`
       if (!content) return;
       content.innerHTML = "";
       const rows = [
-        { track: buildTrack(reviews, false, 0, ""), pixelsPerSecond: 34 },
-        { track: buildTrack(reviews, true, 2, "mt-3"), pixelsPerSecond: 30 },
-        { track: buildTrack(reviews, false, 4, "review-marquee-track-third mt-3"), pixelsPerSecond: 32 },
+        { track: buildTrack(reviews, false, 0, ""), pixelsPerSecond: 46 },
+        { track: buildTrack(reviews, true, 2, "mt-4"), pixelsPerSecond: 42 },
       ];
       rows.forEach(({ track }) => content.appendChild(track));
       rows.forEach(({ track, pixelsPerSecond }) => setTrackSpeed(track, pixelsPerSecond));
@@ -671,32 +625,6 @@ export const siteRuntimeScript = String.raw`
           }
         }
       } catch (_) {}
-
-      if (apiKey) {
-        try {
-          await loadGoogleMapsScript();
-          const googleMaps = window.google && window.google.maps;
-          if (!googleMaps || !googleMaps.importLibrary) throw new Error("Google Maps unavailable");
-          const placesLibrary = await googleMaps.importLibrary("places");
-          const Place = placesLibrary && placesLibrary.Place;
-          if (!Place || !Place.searchByText) throw new Error("Google Places unavailable");
-
-          const result = await Place.searchByText({
-            textQuery: placeQuery,
-            fields: ["id", "displayName"],
-            language: "sk",
-          });
-          const places = result && result.places;
-          if (!places || !places.length) throw new Error("Place not found");
-
-          const place = places[0];
-          await place.fetchFields({ fields: ["reviews", "googleMapsURI"] });
-          renderReviews(place.reviews || [], place.googleMapsURI || googleMapsUrl, "Google Maps");
-          return;
-        } catch (error) {
-          setStatus(loadingLabel);
-        }
-      }
 
       renderFallback(errorLabel);
     }
