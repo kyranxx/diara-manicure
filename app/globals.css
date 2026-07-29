@@ -279,8 +279,15 @@
   @media (max-width: 639px) {
     .google-review-card,
     .google-review-marquee-placeholder {
-      flex-basis: min(82vw, 19.5rem);
-      width: min(82vw, 19.5rem);
+      flex-basis: min(58vw, 14.25rem);
+      width: min(58vw, 14.25rem);
+      min-height: 14.5rem;
+      padding: 0.95rem;
+    }
+
+    .google-review-text {
+      min-height: 8.25rem;
+      -webkit-line-clamp: 5;
     }
   }
 
