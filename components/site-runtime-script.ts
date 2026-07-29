@@ -588,10 +588,14 @@ export const siteRuntimeScript = String.raw`
     function renderRows(reviews) {
       if (!content) return;
       content.innerHTML = "";
+      const rowReviews = [[], [], []];
+      shuffledReviews(reviews).forEach((review, index) => {
+        rowReviews[index % rowReviews.length].push(review);
+      });
       const rows = [
-        { track: buildTrack(reviews, false, ""), pixelsPerSecond: 58 },
-        { track: buildTrack(reviews, true, "mt-4"), pixelsPerSecond: 54 },
-        { track: buildTrack(reviews, false, "review-marquee-track-third mt-4"), pixelsPerSecond: 61 },
+        { track: buildTrack(rowReviews[0], false, ""), pixelsPerSecond: 58 },
+        { track: buildTrack(rowReviews[1], true, "mt-4"), pixelsPerSecond: 54 },
+        { track: buildTrack(rowReviews[2], false, "review-marquee-track-third mt-4"), pixelsPerSecond: 61 },
       ];
       rows.forEach(({ track }) => content.appendChild(track));
       rows.forEach(({ track, pixelsPerSecond }) => setTrackSpeed(track, pixelsPerSecond));
