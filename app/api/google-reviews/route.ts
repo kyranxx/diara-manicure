@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server"
 
-import { businessProfileConfigFromEnv, fetchBusinessProfileReviews } from "@/lib/google-business-profile"
 import { siteConfig } from "@/lib/site-config"
+import { verifiedGoogleReviews, type PublicGoogleReview } from "@/lib/verified-google-reviews"
 
 const googleReviewsCacheSeconds = 3600
-const businessProfileReviewsCacheSeconds = Math.min(
-  2592000,
-  Math.max(300, Number(process.env.GOOGLE_BUSINESS_PROFILE_CACHE_SECONDS) || 21600),
-)
 
 export const dynamic = "force-dynamic"
 
@@ -39,8 +35,26 @@ function mapsApiKey() {
   return process.env.GOOGLE_MAPS_API_KEY || ""
 }
 
+function placesApiHeaders(apiKey: string, fieldMask: string) {
+  return {
+    "X-Goog-Api-Key": apiKey,
+    "X-Goog-FieldMask": fieldMask,
+  }
+}
+
 function logGoogleReviewsError(source: string, error: unknown) {
   console.error("[google-reviews]", source, error)
+}
+
+function mergeReviews(liveReviews: PublicGoogleReview[]) {
+  const seen = new Set<string>()
+
+  return [...liveReviews, ...verifiedGoogleReviews].filter((review) => {
+    const key = `${review.author}|${review.text.slice(0, 120)}`.toLocaleLowerCase("sk")
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
 }
 
 async function findPlaceId(apiKey: string) {
@@ -48,8 +62,7 @@ async function findPlaceId(apiKey: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "X-Goog-Api-Key": apiKey,
-      "X-Goog-FieldMask": "places.id,places.displayName,places.formattedAddress",
+      ...placesApiHeaders(apiKey, "places.id,places.displayName,places.formattedAddress"),
     },
     body: JSON.stringify({
       textQuery: `${siteConfig.name} ${siteConfig.addressLine1}, ${siteConfig.city}, Slovakia`,
@@ -72,10 +85,7 @@ async function findPlaceId(apiKey: string) {
 async function fetchPlaceDetails(apiKey: string, placeId: string) {
   const placeResource = placeId.startsWith("places/") ? placeId : `places/${placeId}`
   const response = await fetch(`https://places.googleapis.com/v1/${placeResource}?languageCode=sk`, {
-    headers: {
-      "X-Goog-Api-Key": apiKey,
-      "X-Goog-FieldMask": "id,displayName,rating,userRatingCount,googleMapsUri,reviews",
-    },
+    headers: placesApiHeaders(apiKey, "id,displayName,rating,userRatingCount,googleMapsUri,reviews"),
     cache: "no-store",
   })
 
@@ -91,44 +101,18 @@ async function fetchPlaceDetails(apiKey: string, placeId: string) {
 }
 
 export async function GET() {
-  const businessProfileConfig = businessProfileConfigFromEnv()
-  let businessProfileUnavailable = false
-
-  if (businessProfileConfig) {
-    try {
-      const reviews = await fetchBusinessProfileReviews(fetch, businessProfileConfig, siteConfig.googleReviewsUrl)
-
-      if (reviews.length) {
-        return NextResponse.json(
-          {
-            reviews,
-            googleMapsUrl: siteConfig.googleReviewsUrl,
-            source: "Google Business Profile",
-          },
-          {
-            headers: {
-              "Cache-Control": `s-maxage=${businessProfileReviewsCacheSeconds}, stale-while-revalidate=86400`,
-            },
-          },
-        )
-      }
-    } catch (error) {
-      businessProfileUnavailable = true
-      logGoogleReviewsError("business-profile", error)
-    }
-  }
-
   const apiKey = mapsApiKey()
 
   if (!apiKey) {
     return NextResponse.json({
-      reviews: [],
-      error: businessProfileUnavailable ? "google_business_profile_unavailable" : "google_reviews_unavailable",
+      reviews: verifiedGoogleReviews,
+      googleMapsUrl: siteConfig.googleReviewsUrl,
+      source: "Google Maps",
     })
   }
 
   try {
-    const configuredPlaceId = process.env.GOOGLE_PLACE_ID || ""
+    const configuredPlaceId = process.env.GOOGLE_PLACE_ID || "ChIJ4QlldRZfa0cRJniFYeWSC1M"
     const placeId = configuredPlaceId || (await findPlaceId(apiKey))
 
     if (!placeId) {
@@ -136,7 +120,7 @@ export async function GET() {
     }
 
     const place = await fetchPlaceDetails(apiKey, placeId)
-    const reviews = (place.reviews ?? [])
+    const liveReviews = (place.reviews ?? [])
       .map((review) => {
         const text = localizedText(review.text) || localizedText(review.originalText)
         const authorAttribution = review.authorAttribution ?? {}
@@ -153,6 +137,7 @@ export async function GET() {
         }
       })
       .filter((review) => review.text && review.rating >= 4)
+    const reviews = mergeReviews(liveReviews)
 
     return NextResponse.json(
       {
@@ -171,8 +156,9 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        reviews: [],
-        error: "google_reviews_unavailable",
+        reviews: verifiedGoogleReviews,
+        googleMapsUrl: siteConfig.googleReviewsUrl,
+        source: "Google Maps",
       },
     )
   }

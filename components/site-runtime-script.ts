@@ -581,8 +581,9 @@ export const siteRuntimeScript = String.raw`
       if (!content) return;
       content.innerHTML = "";
       const rows = [
-        { track: buildTrack(reviews, false, 0, ""), pixelsPerSecond: 46 },
-        { track: buildTrack(reviews, true, 2, "mt-4"), pixelsPerSecond: 42 },
+        { track: buildTrack(reviews, false, 0, ""), pixelsPerSecond: 58 },
+        { track: buildTrack(reviews, true, 2, "mt-4"), pixelsPerSecond: 54 },
+        { track: buildTrack(reviews, false, 4, "review-marquee-track-third mt-4"), pixelsPerSecond: 61 },
       ];
       rows.forEach(({ track }) => content.appendChild(track));
       rows.forEach(({ track, pixelsPerSecond }) => setTrackSpeed(track, pixelsPerSecond));

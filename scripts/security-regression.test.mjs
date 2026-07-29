@@ -43,6 +43,12 @@ assert.doesNotMatch(googleReviewsRoute, /message:\s*businessProfileError/, "publ
 assert.doesNotMatch(googleReviewsRoute, /businessProfileError,\s*$/m, "public reviews response must not expose raw upstream errors")
 assert.doesNotMatch(googleReviewsRoute, /message:\s*error instanceof Error/, "public reviews response must not expose raw Places errors")
 assert.match(googleReviewsRoute, /console\.error\("\[google-reviews\]/, "server logs should keep review errors visible")
+assert.doesNotMatch(googleReviewsRoute, /Referer:/, "server-side Places requests must not spoof a browser referrer")
+assert.doesNotMatch(
+  googleReviewsRoute,
+  /fetchBusinessProfileReviews/,
+  "reviews route should not depend on expiring Business Profile OAuth",
+)
 assert.doesNotMatch(googleReviewsRoute, /NEXT_PUBLIC_GOOGLE_MAPS_API_KEY/, "reviews API must not use a browser-restricted public Maps key")
 
 const testimonials = read("components/sections/Testimonials.tsx")
