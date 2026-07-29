@@ -538,34 +538,42 @@ export const siteRuntimeScript = String.raw`
       });
     }
 
-    function sequenceReviews(reviews, seed) {
+    function shuffledReviews(reviews) {
+      const shuffled = reviews.slice();
+      for (let index = shuffled.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        const current = shuffled[index];
+        shuffled[index] = shuffled[randomIndex];
+        shuffled[randomIndex] = current;
+      }
+      return shuffled;
+    }
+
+    function sequenceReviews(reviews) {
       if (!reviews.length) return [];
       if (reviews.length === 1) return Array(8).fill(reviews[0]);
 
-      const step = reviews.length % 2 === 0 ? reviews.length - 1 : 2;
       const targetLength = Math.max(reviews.length, 10);
       const sequence = [];
-      let offset = seed % reviews.length;
 
       while (sequence.length < targetLength) {
-        const cycle = reviews.map((_, index) => reviews[(offset + index * step) % reviews.length]);
+        const cycle = shuffledReviews(reviews);
         if (sequence.length && sequence[sequence.length - 1] === cycle[0]) {
           cycle.push(cycle.shift());
         }
         sequence.push(...cycle);
-        offset = (offset + seed + 1) % reviews.length;
       }
 
       return sequence.slice(0, targetLength);
     }
 
-    function buildTrack(reviews, reverse, seed, extraClass) {
+    function buildTrack(reviews, reverse, extraClass) {
       const track = document.createElement("div");
       track.className =
         "review-marquee-track flex w-max gap-3" +
         (reverse ? " review-marquee-track-reverse" : "") +
         (extraClass ? " " + extraClass : "");
-      const sequence = sequenceReviews(reviews, seed);
+      const sequence = sequenceReviews(reviews);
       sequence.concat(sequence).forEach((review) => {
         track.appendChild(createCard(review));
       });
@@ -581,9 +589,9 @@ export const siteRuntimeScript = String.raw`
       if (!content) return;
       content.innerHTML = "";
       const rows = [
-        { track: buildTrack(reviews, false, 0, ""), pixelsPerSecond: 58 },
-        { track: buildTrack(reviews, true, 2, "mt-4"), pixelsPerSecond: 54 },
-        { track: buildTrack(reviews, false, 4, "review-marquee-track-third mt-4"), pixelsPerSecond: 61 },
+        { track: buildTrack(reviews, false, ""), pixelsPerSecond: 58 },
+        { track: buildTrack(reviews, true, "mt-4"), pixelsPerSecond: 54 },
+        { track: buildTrack(reviews, false, "review-marquee-track-third mt-4"), pixelsPerSecond: 61 },
       ];
       rows.forEach(({ track }) => content.appendChild(track));
       rows.forEach(({ track, pixelsPerSecond }) => setTrackSpeed(track, pixelsPerSecond));
