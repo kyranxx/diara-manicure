@@ -593,9 +593,9 @@ export const siteRuntimeScript = String.raw`
         rowReviews[index % rowReviews.length].push(review);
       });
       const rows = [
-        { track: buildTrack(rowReviews[0], false, ""), pixelsPerSecond: 58 },
-        { track: buildTrack(rowReviews[1], true, "mt-4"), pixelsPerSecond: 54 },
-        { track: buildTrack(rowReviews[2], false, "review-marquee-track-third mt-4"), pixelsPerSecond: 61 },
+        { track: buildTrack(rowReviews[0], false, ""), pixelsPerSecond: 39 },
+        { track: buildTrack(rowReviews[1], true, "mt-4"), pixelsPerSecond: 36 },
+        { track: buildTrack(rowReviews[2], false, "review-marquee-track-third mt-4"), pixelsPerSecond: 41 },
       ];
       rows.forEach(({ track }) => content.appendChild(track));
       rows.forEach(({ track, pixelsPerSecond }) => setTrackSpeed(track, pixelsPerSecond));
