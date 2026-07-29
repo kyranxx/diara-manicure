@@ -79,7 +79,7 @@ const sk = {
     eyebrow: "Google Maps recenzie",
     heading: "Čo hovoria klientky",
     description:
-      "Recenzie načítavame priamo z Google Maps, aby boli na stránke aktuálne a overiteľné.",
+      "Výber zo skutočných recenzií, ktoré sme overili na Google Maps.",
     loading: "Načítavame recenzie z Google Maps...",
     error: "Recenzie sa nepodarilo načítať. Môžete si ich pozrieť priamo na Google Maps.",
     googleCta: "Pozrieť recenzie na Google Maps",
@@ -258,7 +258,7 @@ const en: TranslationMessages = {
     eyebrow: "Google Maps reviews",
     heading: "What clients say",
     description:
-      "Reviews are loaded directly from Google Maps so they stay current and verifiable.",
+      "A selection of real reviews verified on Google Maps.",
     loading: "Loading reviews from Google Maps...",
     error: "Reviews could not be loaded. You can view them directly on Google Maps.",
     googleCta: "View reviews on Google Maps",
@@ -435,7 +435,7 @@ const uk: TranslationMessages = {
     eyebrow: "Відгуки Google Maps",
     heading: "Що кажуть клієнтки",
     description:
-      "Відгуки завантажуються напряму з Google Maps, щоб вони були актуальні та перевірені.",
+      "Добірка справжніх відгуків, перевірених у Google Maps.",
     loading: "Завантажуємо відгуки з Google Maps...",
     error: "Не вдалося завантажити відгуки. Ви можете переглянути їх напряму на Google Maps.",
     googleCta: "Переглянути відгуки на Google Maps",
@@ -612,7 +612,7 @@ const sr: TranslationMessages = {
     eyebrow: "Google Maps recenzije",
     heading: "Šta kažu klijentkinje",
     description:
-      "Recenzije učitavamo direktno sa Google Maps da bi bile aktuelne i proverljive.",
+      "Izbor stvarnih recenzija proverenih na Google Maps.",
     loading: "Učitavamo recenzije sa Google Maps...",
     error: "Recenzije nije moguće učitati. Možete ih pogledati direktno na Google Maps.",
     googleCta: "Pogledajte recenzije na Google Maps",

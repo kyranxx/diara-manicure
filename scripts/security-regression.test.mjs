@@ -39,16 +39,10 @@ assert.doesNotMatch(oauthScript, /GOOGLE_BUSINESS_PROFILE_REFRESH_TOKEN=\$\{/, "
 assert.match(oauthScript, /refresh token was saved/i, "OAuth helper should confirm safe token storage")
 
 const googleReviewsRoute = read("app/api/google-reviews/route.ts")
-assert.doesNotMatch(googleReviewsRoute, /message:\s*businessProfileError/, "public reviews response must not expose Business Profile error details")
-assert.doesNotMatch(googleReviewsRoute, /businessProfileError,\s*$/m, "public reviews response must not expose raw upstream errors")
-assert.doesNotMatch(googleReviewsRoute, /message:\s*error instanceof Error/, "public reviews response must not expose raw Places errors")
-assert.match(googleReviewsRoute, /console\.error\("\[google-reviews\]/, "server logs should keep review errors visible")
-assert.doesNotMatch(googleReviewsRoute, /Referer:/, "server-side Places requests must not spoof a browser referrer")
-assert.doesNotMatch(
-  googleReviewsRoute,
-  /fetchBusinessProfileReviews/,
-  "reviews route should not depend on expiring Business Profile OAuth",
-)
+assert.match(googleReviewsRoute, /verifiedGoogleReviews/, "reviews route must use the verified static review database")
+assert.doesNotMatch(googleReviewsRoute, /fetch\s*\(/, "reviews route must not fetch reviews from an external service")
+assert.doesNotMatch(googleReviewsRoute, /places\.googleapis\.com/, "reviews route must not call Google Places")
+assert.doesNotMatch(googleReviewsRoute, /fetchBusinessProfileReviews/, "reviews route must not call Business Profile")
 assert.doesNotMatch(googleReviewsRoute, /NEXT_PUBLIC_GOOGLE_MAPS_API_KEY/, "reviews API must not use a browser-restricted public Maps key")
 
 const testimonials = read("components/sections/Testimonials.tsx")
