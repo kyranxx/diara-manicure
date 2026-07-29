@@ -606,7 +606,7 @@ export const siteRuntimeScript = String.raw`
         (reviews || [])
           .filter((review) => Number(review.rating) >= 4 && reviewText(review).length > 0)
           .sort((a, b) => reviewTime(b) - reviewTime(a)),
-      ).slice(0, 50);
+      );
 
       if (!usableReviews.length) {
         renderFallback(errorLabel);
