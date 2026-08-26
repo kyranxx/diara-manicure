@@ -109,7 +109,7 @@ export default function BlogPage() {
             <div className="min-h-screen bg-background text-foreground">
                 <Navbar />
 
-                <main className="pt-24 pb-16">
+                <main id="main-content" tabIndex={-1} className="pt-24 pb-16">
                     <div className="container mx-auto px-6">
                         <div className="max-w-4xl mx-auto">
                             <Link

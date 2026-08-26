@@ -99,7 +99,14 @@ export function Navbar({ language = defaultLanguage, t = translations[defaultLan
   )
 
   return (
-    <nav className="relative z-50 w-full bg-beige dark:bg-[#050403]">
+    <>
+      <a
+        href="#main-content"
+        className="fixed left-4 top-4 z-[10000] -translate-y-24 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground opacity-0 shadow-lg transition focus:translate-y-0 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+      >
+        {t.nav.skipToContent}
+      </a>
+      <nav className="relative z-50 w-full bg-beige dark:bg-[#050403]">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
         <a href={languageHomeHref(language)} className="flex-shrink-0 group">
           <span className="text-lg font-light tracking-tighter transition-colors group-hover:text-primary sm:text-xl">
@@ -165,6 +172,7 @@ export function Navbar({ language = defaultLanguage, t = translations[defaultLan
           </div>
         </div>
       </div>
-    </nav>
+      </nav>
+    </>
   )
 }

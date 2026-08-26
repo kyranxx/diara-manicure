@@ -115,11 +115,19 @@ export const siteRuntimeScript = String.raw`
   function initCookieBanner() {
     const banner = document.getElementById("cookie-consent");
     if (!banner) return;
+    const mobileBookingBar = document.querySelector("[data-mobile-booking-bar]");
+
+    function setBannerOpen(open) {
+      banner.hidden = !open;
+      if (mobileBookingBar) mobileBookingBar.hidden = open;
+    }
 
     if (!readConsent()) {
       setTimeout(() => {
-        banner.hidden = false;
+        setBannerOpen(true);
       }, 800);
+    } else {
+      setBannerOpen(false);
     }
 
     banner.addEventListener("click", (event) => {
@@ -127,7 +135,7 @@ export const siteRuntimeScript = String.raw`
       if (!button) return;
       const action = button.getAttribute("data-cookie-action");
       writeConsent(action === "accept" ? allGranted() : allDenied());
-      banner.hidden = true;
+      setBannerOpen(false);
     });
   }
 

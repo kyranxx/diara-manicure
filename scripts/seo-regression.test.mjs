@@ -74,6 +74,9 @@ expectNotIncludes(home, "Nails Trnava služby", "home Slovak description avoids 
 expectNotIncludes(home, "Professional Nails &amp; Manicure in Trnava", "home Slovak footer tagline")
 expectNotIncludes(home, "najkrajšie nails v Trnave", "home Slovak about copy")
 expectIncludes(home, 'href="/galeria"', "home links to full gallery page")
+expectIncludes(home, `content="${baseUrl}/og-image.jpg?v=20260407"`, "home social images use absolute URLs")
+expectIncludes(home, 'href="#main-content"', "home exposes a skip link")
+expectIncludes(home, '<main id="main-content" tabindex="-1">', "home skip link has a focusable target")
 expectMatchCount(home, /<h1\b/gi, 1, "home has one H1")
 
 const blog = readBuiltFile(".next/server/app/blog.html")
@@ -252,6 +255,16 @@ for (const page of galleryIntentPages) {
   expectIncludes(html, page.image, `${page.url} includes newest matching gallery image`)
   expectIncludes(html, "ImageGallery", `${page.url} ImageGallery schema`)
   expectIncludes(html, "BreadcrumbList", `${page.url} breadcrumb schema`)
+  expectIncludes(html, 'href="#main-content"', `${page.url} exposes a skip link`)
+  expectIncludes(html, '<main id="main-content" tabindex="-1">', `${page.url} skip link has a focusable target`)
+}
+
+const frenchGallery = readBuiltFile(".next/server/app/galeria/francuzska-manikura-trnava.html")
+expectIncludes(frenchGallery, "Ako si vybrať francúzsku manikúru", "French gallery adds decision-helping copy")
+expectIncludes(frenchGallery, "Mliečna francúzska", "French gallery covers the supported milky French intent")
+expectIncludes(frenchGallery, 'href="/sluzby/gelove-nechty-trnava"', "French gallery links to the relevant service")
+if (visibleWordCount(frenchGallery) < 300) {
+  throw new Error("French gallery content: expected at least 300 visible words")
 }
 
 const servicePages = [

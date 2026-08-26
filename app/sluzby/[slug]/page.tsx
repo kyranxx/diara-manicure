@@ -142,7 +142,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
 
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <section className="bg-beige px-6 py-12 dark:bg-[#050403] md:py-20">
             <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-center">
               <div>

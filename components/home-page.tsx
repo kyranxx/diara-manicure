@@ -68,7 +68,7 @@ export function HomePage({ language, services }: HomePageProps) {
   const seo = seoByLanguage[language]
   const path = languagePath(language)
   const canonicalUrl = `${siteConfig.baseUrl}${path}`
-  const socialImageUrl = "/og-image.jpg?v=20260407"
+  const socialImageUrl = `${siteConfig.baseUrl}/og-image.jpg?v=20260407`
 
   return (
     <>
@@ -109,7 +109,7 @@ export function HomePage({ language, services }: HomePageProps) {
       <div className="min-h-screen bg-background pb-20 text-foreground selection:bg-primary/20 md:pb-0">
         <Navbar language={language} t={t} />
 
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <Hero bookingUrl={siteConfig.bookingUrl} t={t} />
           <Services services={services} bookingUrl={siteConfig.bookingUrl} t={t} />
           <GalleryShell t={t} />

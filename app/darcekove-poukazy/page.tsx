@@ -177,7 +177,7 @@ export default function GiftCardPage() {
           </div>
         </div>
 
-        <main className="bg-beige dark:bg-[#050403]">
+        <main id="main-content" tabIndex={-1} className="bg-beige dark:bg-[#050403]">
           <section className="container mx-auto px-6 py-8 md:py-14">
             <div className="mx-auto max-w-5xl">
               <Link

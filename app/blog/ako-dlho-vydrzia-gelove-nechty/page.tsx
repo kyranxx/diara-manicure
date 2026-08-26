@@ -100,7 +100,7 @@ export default function BlogArticle1() {
             <div className="min-h-screen bg-background text-foreground">
                 <Navbar />
 
-                <main className="pt-24 pb-16">
+                <main id="main-content" tabIndex={-1} className="pt-24 pb-16">
                     <article className="container mx-auto px-6">
                         <div className="max-w-3xl mx-auto">
                             <Link

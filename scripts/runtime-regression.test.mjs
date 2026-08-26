@@ -9,6 +9,8 @@ function read(relativePath) {
 }
 
 const analyticsRuntime = read("components/analytics-runtime.tsx")
+const mobileBookingBar = read("components/mobile-booking-bar.tsx")
+const siteRuntime = read("components/site-runtime-script.ts")
 
 assert.match(
   analyticsRuntime,
@@ -24,6 +26,22 @@ assert.doesNotMatch(
   analyticsRuntime,
   /<script\s/,
   "site runtime must not render as a raw lowercase script tag",
+)
+
+assert.match(
+  mobileBookingBar,
+  /data-mobile-booking-bar/,
+  "mobile booking bar should expose a stable hook for consent visibility",
+)
+assert.match(
+  siteRuntime,
+  /mobileBookingBar\.hidden = open/,
+  "cookie consent should hide the mobile booking bar while the banner is open",
+)
+assert.match(
+  siteRuntime,
+  /setBannerOpen\(false\)/,
+  "mobile booking bar should return after consent is stored",
 )
 
 console.log("runtime regression check passed")

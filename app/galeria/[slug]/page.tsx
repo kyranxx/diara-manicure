@@ -113,7 +113,7 @@ export default async function GalleryCategoryPage({ params }: GalleryRouteProps)
       <JsonLd id="schema-gallery-category-breadcrumbs" data={breadcrumbSchema} />
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
-        <main>
+        <main id="main-content" tabIndex={-1}>
           <section className="bg-beige px-6 py-12 dark:bg-[#050403] md:py-20">
             <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-center">
               <div>
@@ -153,6 +153,48 @@ export default async function GalleryCategoryPage({ params }: GalleryRouteProps)
               </div>
             </div>
           </section>
+
+          {page.guide ? (
+            <section className="bg-beige/55 px-6 py-14 dark:bg-card/45">
+              <div className="mx-auto max-w-6xl">
+                <div className="max-w-4xl">
+                  <h2 className="text-3xl font-light tracking-tight text-black dark:text-white md:text-4xl">
+                    {page.guide.heading}
+                  </h2>
+                  <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+                    {page.guide.paragraphs.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+                <div className="mt-10 grid gap-4 md:grid-cols-3">
+                  {page.guide.options.map((option) => (
+                    <article
+                      key={option.title}
+                      className="rounded-xl border border-primary/10 bg-white/60 p-6 dark:bg-background/60"
+                    >
+                      <h3 className="text-lg font-medium text-black dark:text-white">{option.title}</h3>
+                      <p className="mt-3 leading-relaxed text-muted-foreground">{option.description}</p>
+                    </article>
+                  ))}
+                </div>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link
+                    href="/sluzby/gelove-nechty-trnava"
+                    className="text-sm font-medium text-primary underline underline-offset-4"
+                  >
+                    Ako prebieha modelácia gélových nechtov
+                  </Link>
+                  <Link
+                    href="/#cennik"
+                    className="text-sm font-medium text-primary underline underline-offset-4"
+                  >
+                    Aktuálny cenník služieb
+                  </Link>
+                </div>
+              </div>
+            </section>
+          ) : null}
 
           <section className="px-6 py-14">
             <div className="mx-auto max-w-6xl">

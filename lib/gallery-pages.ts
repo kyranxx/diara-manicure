@@ -15,6 +15,14 @@ export type GalleryPage = {
   description: string
   intro: string
   searchPhrase: string
+  guide?: {
+    heading: string
+    paragraphs: string[]
+    options: Array<{
+      title: string
+      description: string
+    }>
+  }
 }
 
 type GalleryImage = (typeof galleryImages)[number]
@@ -30,6 +38,28 @@ const galleryPagesByCategory: Record<GalleryCategory, GalleryPage> = {
     intro:
       "Ukážky francúzskej manikúry a jemných nude nechtov z nášho salónu v Trnave. Fotky pomáhajú lepšie vybrať štýl pred návštevou.",
     searchPhrase: "francúzska manikúra Trnava",
+    guide: {
+      heading: "Ako si vybrať francúzsku manikúru",
+      paragraphs: [
+        "Francúzska manikúra môže pôsobiť veľmi prirodzene alebo výraznejšie podľa šírky špičky, zvoleného podkladu, tvaru a dĺžky nechtov. Pred návštevou si môžete v galérii vybrať fotografie, ktoré najlepšie vystihujú vašu predstavu. V salóne potom spolu doladíme riešenie podľa aktuálneho stavu prirodzených nechtov a výsledku, ktorý chcete dosiahnuť.",
+        "Pri kratších nechtoch vyzerá jemne tenká línia, pri dlhšom mandľovom alebo oválnom tvare môže byť biela špička výraznejšia. Obľúbená je aj mliečna francúzska manikúra s mäkkým nude podkladom. Konkrétny postup a vhodný materiál sa vyberajú individuálne, aby bol výsledok upravený, nositeľný a primeraný vašej dĺžke nechtov.",
+        "Na termín si pokojne prineste vlastnú inšpiráciu alebo ukážte fotografiu priamo z tejto galérie. Aktuálne ceny nájdete v cenníku a dostupné termíny v online rezervácii. Ak si nie ste istá tvarom, dĺžkou alebo odtieňom, odporúčanie dostanete pred začiatkom služby.",
+      ],
+      options: [
+        {
+          title: "Klasická francúzska",
+          description: "Čistá biela špička a prirodzený podklad pre elegantný, nadčasový vzhľad.",
+        },
+        {
+          title: "Mliečna francúzska",
+          description: "Jemnejší prechod a mäkký nude alebo mliečny podklad pre prirodzený výsledok.",
+        },
+        {
+          title: "Tvar a dĺžka",
+          description: "Línia francúzskej manikúry sa prispôsobí krátkym, oválnym, mandľovým aj dlhším nechtom.",
+        },
+      ],
+    },
   },
   singleColor: {
     category: "singleColor",

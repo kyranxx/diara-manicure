@@ -18,6 +18,7 @@ const sk = {
     toggle: "Prepnúť tému",
   },
   nav: {
+    skipToContent: "Preskočiť na hlavný obsah",
     openMenu: "Otvoriť menu",
     closeMenu: "Zavrieť menu",
     items: {
@@ -197,6 +198,7 @@ const en: TranslationMessages = {
     toggle: "Toggle theme",
   },
   nav: {
+    skipToContent: "Skip to main content",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     items: {
@@ -374,6 +376,7 @@ const uk: TranslationMessages = {
     toggle: "Перемкнути тему",
   },
   nav: {
+    skipToContent: "Перейти до основного вмісту",
     openMenu: "Відкрити меню",
     closeMenu: "Закрити меню",
     items: {
@@ -551,6 +554,7 @@ const sr: TranslationMessages = {
     toggle: "Promeni temu",
   },
   nav: {
+    skipToContent: "Pređi na glavni sadržaj",
     openMenu: "Otvori meni",
     closeMenu: "Zatvori meni",
     items: {
