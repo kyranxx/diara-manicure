@@ -58,7 +58,7 @@ const sk = {
   },
   services: {
     heading: "Cenník služieb",
-    validFrom: "Cenník platný od 24.1.2026",
+    validFrom: "Cenník platný od 18.9.2026",
     intro:
       "Aktuálny cenník pre manikúru v Trnave, gélové nechty, gél lak a doplnenie nechtov. Po kliknutí na službu si môžete rovno pozrieť voľné termíny.",
     mostRequested: "Najžiadanejšie",
