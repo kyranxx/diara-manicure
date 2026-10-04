@@ -65,7 +65,8 @@ def api_get(path: str, token: str, params: dict) -> dict:
     raise SystemExit("Bookio API rate limit kept failing after 5 retries")
 
 
-def fetch_reservations(token: str, facility_id: int, date_from: str) -> list[dict]:
+def fetch_reservations(token: str, facility_id: int, date_from: str) -> tuple[list[dict], int]:
+    """Return (reservations, total the API reported)."""
     reservations: list[dict] = []
     offset = 0
     while True:
@@ -79,7 +80,7 @@ def fetch_reservations(token: str, facility_id: int, date_from: str) -> list[dic
         reservations.extend(batch)
         offset += PAGE_LIMIT
         if not batch or offset >= data["pagination"]["total"]:
-            return reservations
+            return reservations, data["pagination"]["total"]
 
 
 def normalize_phone(value: str | None) -> str:
@@ -176,7 +177,7 @@ def main() -> None:
 
     now = datetime.now()
     date_from = (now - timedelta(days=30 * args.months)).date().isoformat()
-    reservations = fetch_reservations(token, args.facility_id, date_from)
+    reservations, api_total = fetch_reservations(token, args.facility_id, date_from)
     rows = analyse(reservations, now)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -189,7 +190,12 @@ def main() -> None:
                 writer.writerow({**row, "sms": sms_text(row["name"], args.sms_template)})
 
     with_phone = sum(1 for r in rows if r["has_phone"])
-    print(f"Reservations read: {len(reservations)}")
+    all_customers = {customer_key(r) for r in reservations} - {""}
+    starts = sorted(r["dateFrom"] for r in reservations if r.get("dateFrom"))
+    print(f"Reservations read: {len(reservations)} (API reported total: {api_total})")
+    print(f"Unique customers in data: {len(all_customers)}")
+    if starts:
+        print(f"Reservation dates: {starts[0][:10]} .. {starts[-1][:10]} (from --months {args.months})")
     print(f"Customers to remind: {len(rows)} ({with_phone} with phone) -> {args.output}")
 
 
