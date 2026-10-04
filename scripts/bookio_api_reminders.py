@@ -44,7 +44,13 @@ DEAD_STATUSES = {"CANCELLED", "REFUNDED", "DID_NOT_COME", "WAITING", "UNCONFIRME
 def api_get(path: str, token: str, params: dict) -> dict:
     url = f"{BASE_URL}{path}?{urllib.parse.urlencode(params)}"
     request = urllib.request.Request(
-        url, headers={"Authorization": f"Bearer {token}", "Accept": "application/json"}
+        url,
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            # Cloudflare in front of Bookio rejects the default "Python-urllib" agent (error 1010).
+            "User-Agent": "diara-manicure-reminders/1.0",
+        },
     )
     for attempt in range(5):
         try:
