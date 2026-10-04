@@ -104,7 +104,7 @@ def parse_dt(value: str) -> datetime:
     return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
 
 
-def analyse(reservations: list[dict], now: datetime) -> list[dict]:
+def group_by_customer(reservations: list[dict]) -> list[list[dict]]:
     grouped: dict[str, list[dict]] = defaultdict(list)
     for reservation in reservations:
         if reservation.get("status") in DEAD_STATUSES or not reservation.get("dateFrom"):
@@ -112,9 +112,12 @@ def analyse(reservations: list[dict], now: datetime) -> list[dict]:
         key = customer_key(reservation)
         if key:
             grouped[key].append(reservation)
+    return list(grouped.values())
 
+
+def analyse(reservations: list[dict], now: datetime) -> list[dict]:
     rows = []
-    for items in grouped.values():
+    for items in group_by_customer(reservations):
         items.sort(key=lambda r: r["dateFrom"])
         visits = [parse_dt(r["dateFrom"]) for r in items if parse_dt(r["dateFrom"]) <= now]
         has_future = any(parse_dt(r["dateFrom"]) > now for r in items)
@@ -150,6 +153,48 @@ def analyse(reservations: list[dict], now: datetime) -> list[dict]:
     return rows
 
 
+def pick_regulars(
+    reservations: list[dict], now: datetime, top: int, min_days: int, max_days: int, min_visits: int
+) -> list[dict]:
+    """Regular customers (stable rhythm, several visits) who have not come for `min_days`+."""
+    rows = []
+    for items in group_by_customer(reservations):
+        items.sort(key=lambda r: r["dateFrom"])
+        visits = [parse_dt(r["dateFrom"]) for r in items if parse_dt(r["dateFrom"]) <= now]
+        has_future = any(parse_dt(r["dateFrom"]) > now for r in items)
+        if has_future or len(visits) < min_visits:
+            continue
+        days_since = (now - visits[-1]).days
+        if not min_days <= days_since <= max_days:
+            continue
+        gaps = [(b - a).days for a, b in zip(visits, visits[1:]) if (b - a).days > 0]
+        if len(gaps) < min_visits - 1:
+            continue
+        cycle = statistics.median(gaps)
+        spread = statistics.pstdev(gaps) / cycle if cycle else 1
+        # Regular = typical gap within ~2 months and gaps do not vary wildly.
+        if cycle > 60 or spread > 0.5:
+            continue
+        latest = items[-1]
+        phone = (latest.get("phone") or "").strip()
+        if not phone:
+            continue
+        rows.append(
+            {
+                "name": (latest.get("name") or "").strip(),
+                "phone": phone,
+                "visits": len(visits),
+                "last_visit": visits[-1].date().isoformat(),
+                "days_since_last_visit": days_since,
+                "typical_cycle_days": round(cycle),
+                "weeks_beyond_usual": round((days_since - cycle) / 7, 1),
+                "regularity": round(1 - min(spread, 1), 2),
+            }
+        )
+    rows.sort(key=lambda r: (-r["visits"], -r["regularity"], r["days_since_last_visit"]))
+    return rows[:top]
+
+
 def first_name(full_name: str) -> str:
     return full_name.split()[0] if full_name else ""
 
@@ -164,6 +209,10 @@ def main() -> None:
     parser.add_argument("--facility-id", type=int, default=DEFAULT_FACILITY_ID)
     parser.add_argument("--months", type=int, default=24, help="How far back to read reservations.")
     parser.add_argument("--output", type=Path, default=Path("private/sms_reminders.csv"))
+    parser.add_argument("--top", type=int, help="Instead of all overdue customers, pick the N best regulars.")
+    parser.add_argument("--min-weeks", type=int, default=4, help="--top: minimum weeks since last visit.")
+    parser.add_argument("--max-weeks", type=int, default=26, help="--top: maximum weeks since last visit.")
+    parser.add_argument("--min-visits", type=int, default=3, help="--top: minimum number of visits.")
     parser.add_argument(
         "--sms-template",
         default="{greeting}, tu Diara Manicure. Už je čas na nové nechtíky 💅 Termín si vyberieš tu: https://diaramanicure.sk",
@@ -178,7 +227,14 @@ def main() -> None:
     now = datetime.now()
     date_from = (now - timedelta(days=30 * args.months)).date().isoformat()
     reservations, api_total = fetch_reservations(token, args.facility_id, date_from)
-    rows = analyse(reservations, now)
+    if args.top:
+        rows = pick_regulars(
+            reservations, now, args.top, args.min_weeks * 7, args.max_weeks * 7, args.min_visits
+        )
+        if args.output == Path("private/sms_reminders.csv"):
+            args.output = Path("private/sms_top.csv")
+    else:
+        rows = analyse(reservations, now)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     fields = list(rows[0].keys()) + ["sms"] if rows else []
@@ -189,7 +245,7 @@ def main() -> None:
             for row in rows:
                 writer.writerow({**row, "sms": sms_text(row["name"], args.sms_template)})
 
-    with_phone = sum(1 for r in rows if r["has_phone"])
+    with_phone = sum(1 for r in rows if r.get("has_phone", True))
     all_customers = {customer_key(r) for r in reservations} - {""}
     starts = sorted(r["dateFrom"] for r in reservations if r.get("dateFrom"))
     print(f"Reservations read: {len(reservations)} (API reported total: {api_total})")
