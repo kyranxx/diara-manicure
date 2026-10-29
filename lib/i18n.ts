@@ -238,7 +238,7 @@ const en: TranslationMessages = {
   },
   services: {
     heading: "Service prices",
-    validFrom: "Price list valid from 24 Jan 2026",
+    validFrom: "Price list valid from 18 Sep 2026",
     intro:
       "Current prices for manicure in Trnava, gel nails, gel polish and nail refills. Click a service to view available appointments right away.",
     mostRequested: "Most requested",
@@ -416,7 +416,7 @@ const uk: TranslationMessages = {
   },
   services: {
     heading: "Ціни на послуги",
-    validFrom: "Прайс діє з 24.1.2026",
+    validFrom: "Прайс діє з 18.9.2026",
     intro:
       "Актуальні ціни на манікюр у Трнаві, гелеві нігті, гель-лак та корекцію нігтів. Натисніть на послугу, щоб одразу переглянути вільні терміни.",
     mostRequested: "Найпопулярніше",
@@ -594,7 +594,7 @@ const sr: TranslationMessages = {
   },
   services: {
     heading: "Cenovnik usluga",
-    validFrom: "Cenovnik važi od 24.1.2026",
+    validFrom: "Cenovnik važi od 18.9.2026",
     intro:
       "Aktuelni cenovnik za manikir u Trnavi, gel nokte, gel lak i dopunu noktiju. Kliknite na uslugu i odmah pogledajte slobodne termine.",
     mostRequested: "Najtraženije",
