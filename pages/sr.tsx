@@ -1,21 +1,24 @@
 import { HomePage } from "@/components/home-page"
+import { getReviewsData, type ReviewsData } from "@/lib/bookio-reviews"
 import { getSheetsData, type ServiceData } from "@/lib/sheets"
 
 type SerbianHomeProps = {
   services: ServiceData[]
+  reviewsData: ReviewsData
 }
 
 export async function getStaticProps() {
-  const services = await getSheetsData()
+  const [services, reviewsData] = await Promise.all([getSheetsData(), getReviewsData()])
 
   return {
     props: {
       services,
+      reviewsData,
     },
     revalidate: 30,
   }
 }
 
-export default function SerbianHome({ services }: SerbianHomeProps) {
-  return <HomePage language="sr" services={services} />
+export default function SerbianHome({ services, reviewsData }: SerbianHomeProps) {
+  return <HomePage language="sr" services={services} reviewsData={reviewsData} />
 }

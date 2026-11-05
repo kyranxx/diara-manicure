@@ -1,18 +1,19 @@
 import { NextResponse } from "next/server"
 
 import { siteConfig } from "@/lib/site-config"
-import { verifiedGoogleReviews } from "@/lib/verified-google-reviews"
+import { getReviewsData } from "@/lib/bookio-reviews"
 
 const googleReviewsCacheSeconds = 86400
 
 export const dynamic = "force-dynamic"
 
 export async function GET() {
+  const { reviews, sourceLabel } = await getReviewsData()
   return NextResponse.json(
     {
-      reviews: verifiedGoogleReviews,
+      reviews,
       googleMapsUrl: siteConfig.googleReviewsUrl,
-      source: "Google Maps",
+      source: sourceLabel,
     },
     {
       headers: {

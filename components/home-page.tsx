@@ -15,17 +15,19 @@ import { Hero } from "@/components/sections/Hero"
 import { Services } from "@/components/sections/Services"
 import { GoogleReviewsMarquee } from "@/components/sections/Testimonials"
 import { defaultLanguage, getLanguageMeta, languages, translations, type Language } from "@/lib/i18n"
+import type { ReviewsData } from "@/lib/bookio-reviews"
 import type { ServiceData } from "@/lib/sheets"
 import { siteConfig } from "@/lib/site-config"
 
 type HomePageProps = {
   language: Language
   services: ServiceData[]
+  reviewsData: ReviewsData
 }
 
 const seoByLanguage: Record<Language, { title: string; description: string; keywords: string; ogLocale: string }> = {
   sk: {
-    title: "Gélové nechty a manikúra v Trnave | Cenník",
+    title: "Nechtové štúdio Trnava – gélové nechty a manikúra | Cenník",
     description:
       "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, nechtové služby a darčekové poukazy.",
     keywords:
@@ -62,7 +64,7 @@ function languagePath(language: Language) {
   return language === defaultLanguage ? "" : `/${language}`
 }
 
-export function HomePage({ language, services }: HomePageProps) {
+export function HomePage({ language, services, reviewsData }: HomePageProps) {
   const t = translations[language]
   const meta = getLanguageMeta(language)
   const seo = seoByLanguage[language]
@@ -113,7 +115,7 @@ export function HomePage({ language, services }: HomePageProps) {
           <Hero bookingUrl={siteConfig.bookingUrl} t={t} />
           <Services services={services} bookingUrl={siteConfig.bookingUrl} t={t} />
           <GalleryShell t={t} />
-          <GoogleReviewsMarquee t={t} />
+          <GoogleReviewsMarquee t={t} reviewsData={reviewsData} />
           <About t={t} />
           <FAQ t={t} />
           <GiftCards t={t} />

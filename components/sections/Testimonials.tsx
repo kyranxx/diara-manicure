@@ -1,7 +1,8 @@
+import type { ReviewsData } from "@/lib/bookio-reviews"
 import type { TranslationMessages } from "@/lib/i18n"
 import { siteConfig } from "@/lib/site-config"
 
-export function GoogleReviewsMarquee({ t }: { t: TranslationMessages }) {
+export function GoogleReviewsMarquee({ t, reviewsData }: { t: TranslationMessages; reviewsData: ReviewsData }) {
   return (
     <section
       id="recenzie"
@@ -24,13 +25,26 @@ export function GoogleReviewsMarquee({ t }: { t: TranslationMessages }) {
         className="w-screen max-w-none overflow-hidden"
         aria-live="polite"
       >
-        <div className="google-review-marquee-placeholder mx-auto">
-          {t.reviews.loading}
+        {/* Server-rendered so search engines read every review; the runtime script turns it into the marquee. */}
+        <div className="review-marquee-track flex w-max gap-3">
+          {reviewsData.reviews.map((review) => (
+            <article key={review.author + review.text.slice(0, 40)} className="google-review-card">
+              <div className="google-review-topline">
+                <div className="google-review-stars" aria-label={`${review.rating}/5`}>
+                  {"★".repeat(review.rating)}
+                </div>
+              </div>
+              <p className="google-review-text">{review.text}</p>
+              <div className="google-review-author">
+                <span>{review.author}</span>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
 
       <div className="mt-6 px-6 text-center text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        <span data-google-reviews-status>Google Maps</span>
+        <span data-google-reviews-status>{reviewsData.sourceLabel}</span>
         <a
           href={siteConfig.googleReviewsUrl}
           target="_blank"

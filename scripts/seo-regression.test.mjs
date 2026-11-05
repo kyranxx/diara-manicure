@@ -65,7 +65,7 @@ const navbarSource = fs.readFileSync(path.join(root, "components/navbar.tsx"), "
 expectIncludes(navbarSource, "<details", "language switcher stays collapsed by default")
 
 const home = readBuiltFile(".next/server/pages/index.html")
-expectTitle(home, "Gélové nechty a manikúra v Trnave | Cenník", "home natural Slovak title")
+expectTitle(home, "Nechtové štúdio Trnava – gélové nechty a manikúra | Cenník", "home natural Slovak title")
 expectIncludes(home, "application/ld+json", "home JSON-LD")
 expectIncludes(home, "BeautySalon", "home LocalBusiness schema")
 expectIncludes(home, "#beautysalon", "home stable business id")
