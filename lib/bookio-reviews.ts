@@ -29,7 +29,12 @@ async function fetchBookioRatings() {
   return { ratings, total }
 }
 
+// The homepage regenerates every 30 s for the price list; Bookio ratings change rarely.
+const cacheMs = 60 * 60 * 1000
+let cached: { at: number; data: ReviewsData } | null = null
+
 export async function getReviewsData(): Promise<ReviewsData> {
+  if (cached && Date.now() - cached.at < cacheMs) return cached.data
   try {
     const { ratings, total } = await fetchBookioRatings()
     const bookioReviews = ratings
@@ -46,10 +51,12 @@ export async function getReviewsData(): Promise<ReviewsData> {
         googleMapsUri: siteConfig.bookingUrl,
       }))
     const average = ratings.reduce((sum, rating) => sum + Number(rating.average || 0), 0) / ratings.length
-    return {
+    const data = {
       reviews: [...verifiedGoogleReviews, ...bookioReviews],
       sourceLabel: `Google Maps · Bookio ★ ${average.toFixed(1).replace(".", ",")} (${total})`,
     }
+    cached = { at: Date.now(), data }
+    return data
   } catch (error) {
     console.error(error)
     return { reviews: verifiedGoogleReviews, sourceLabel: "Google Maps" }

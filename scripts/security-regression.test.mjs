@@ -39,8 +39,12 @@ assert.doesNotMatch(oauthScript, /GOOGLE_BUSINESS_PROFILE_REFRESH_TOKEN=\$\{/, "
 assert.match(oauthScript, /refresh token was saved/i, "OAuth helper should confirm safe token storage")
 
 const googleReviewsRoute = read("app/api/google-reviews/route.ts")
-assert.match(googleReviewsRoute, /verifiedGoogleReviews/, "reviews route must use the verified static review database")
+assert.match(googleReviewsRoute, /getReviewsData/, "reviews route must use the shared review loader")
 assert.doesNotMatch(googleReviewsRoute, /fetch\s*\(/, "reviews route must not fetch reviews from an external service")
+const reviewsLoader = read("lib/bookio-reviews.ts")
+assert.match(reviewsLoader, /verifiedGoogleReviews/, "review loader must use the verified static Google review database")
+assert.match(reviewsLoader, /services\.bookio\.com\/widget\/api\/ratings/, "review loader may only fetch public Bookio ratings")
+assert.doesNotMatch(reviewsLoader, /googleapis\.com|API_KEY|Authorization/, "review loader must not call Google APIs or send credentials")
 assert.doesNotMatch(googleReviewsRoute, /places\.googleapis\.com/, "reviews route must not call Google Places")
 assert.doesNotMatch(googleReviewsRoute, /fetchBusinessProfileReviews/, "reviews route must not call Business Profile")
 assert.doesNotMatch(googleReviewsRoute, /NEXT_PUBLIC_GOOGLE_MAPS_API_KEY/, "reviews API must not use a browser-restricted public Maps key")

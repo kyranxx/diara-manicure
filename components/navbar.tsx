@@ -69,7 +69,7 @@ export function Navbar({ language = defaultLanguage, t = translations[defaultLan
     <details className="group/language relative">
       <summary
         className="flex h-10 cursor-pointer list-none items-center gap-1.5 rounded-full border border-primary/10 bg-white/45 px-3 text-[11px] font-semibold text-foreground/80 transition-colors hover:bg-white/70 hover:text-foreground dark:bg-white/10 dark:hover:bg-white/15 [&::-webkit-details-marker]:hidden"
-        aria-label={t.languageSwitcher.label}
+        aria-label={`${currentLanguage.shortLabel} – ${t.languageSwitcher.label}`}
       >
         <Globe2 className="size-3.5" aria-hidden="true" />
         <span>{currentLanguage.shortLabel}</span>

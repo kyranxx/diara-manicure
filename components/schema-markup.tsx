@@ -52,19 +52,13 @@ const SchemaMarkup = () => {
       "latitude": 48.3794,
       "longitude": 17.5854
     },
-    "hasMap": "https://maps.google.com/?q=Diara+Manicure,+Hospodárska+53,+Trnava",
+    "hasMap": siteConfig.googleReviewsUrl,
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "10:00",
-        "closes": "20:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Saturday", "Sunday"],
-        "opens": "10:00",
-        "closes": "18:00"
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": siteConfig.opens,
+        "closes": siteConfig.closes
       }
     ],
     "priceRange": "€€",
@@ -146,7 +140,10 @@ const SchemaMarkup = () => {
     },
     "sameAs": [
       "https://www.instagram.com/diaramanicure",
-      "https://www.facebook.com/diaramanicure"
+      "https://www.facebook.com/diaramanicure",
+      siteConfig.googleReviewsUrl,
+      siteConfig.bookingUrl,
+      siteConfig.quickbookUrl
     ],
     "areaServed": [
       {

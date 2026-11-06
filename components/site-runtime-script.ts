@@ -4,7 +4,6 @@ export const siteRuntimeScript = String.raw`
   const consentEvent = "diara:consent-changed";
   const interactionEvents = ["scroll", "pointerdown", "keydown", "touchstart"];
   let analyticsLoaded = false;
-  let clarityLoaded = false;
   const trackedScrollPoints = new Set();
   const trackedLinks = new WeakSet();
 
@@ -44,19 +43,6 @@ export const siteRuntimeScript = String.raw`
 
   function currentConsent() {
     return readConsent() || allDenied();
-  }
-
-  function clarityConsentPayload(consent) {
-    const current = consent || allDenied();
-    return {
-      ad_Storage: current.adStorage === "granted" ? "granted" : "denied",
-      analytics_Storage: current.analyticsStorage === "granted" ? "granted" : "denied",
-    };
-  }
-
-  function updateClarityConsent(consent) {
-    if (typeof window.clarity !== "function") return;
-    window.clarity("consentv2", clarityConsentPayload(consent));
   }
 
   function initThemeButtons() {
@@ -172,22 +158,9 @@ export const siteRuntimeScript = String.raw`
     document.head.appendChild(script);
   }
 
-  function loadClarity(consent) {
-    if (!clarityLoaded) {
-      clarityLoaded = true;
-      (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-      })(window, document, "clarity", "script", "ugccqd16dq");
-    }
-    updateClarityConsent(consent);
-  }
-
   function loadConsentAwareScripts() {
     const consent = currentConsent();
     loadAnalytics(consent);
-    loadClarity(consent);
   }
 
   function trackEvent(name, params) {
@@ -266,10 +239,8 @@ export const siteRuntimeScript = String.raw`
       loadConsentAwareScripts();
       removeInteractionListeners(handleInteraction);
     }
-    loadClarity(currentConsent());
     window.addEventListener(consentEvent, (event) => {
       loadAnalytics(event.detail);
-      loadClarity(event.detail);
     });
     if (window.location.pathname === "/dakujeme") {
       setTimeout(loadConsentAwareScripts, 1000);

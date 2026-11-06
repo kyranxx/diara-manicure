@@ -29,7 +29,7 @@ const seoByLanguage: Record<Language, { title: string; description: string; keyw
   sk: {
     title: "Nechtové štúdio Trnava – gélové nechty a manikúra | Cenník",
     description:
-      "Profesionálna manikúra a gélové nechty v Trnave. Pozrite si cenník, voľné termíny, nechtové služby a darčekové poukazy.",
+      "Nechtové štúdio v Trnave, Hospodárska 53. Gélové nechty, gél lak a manikúra · 5,0 ★ na Google aj Bookio · parkovanie zdarma · voľné termíny online.",
     keywords:
       "nechty trnava, gelove nechty trnava, manikura trnava, nechtove studio trnava, nails trnava, diara manicure, nechty trnava cennik, darcekovy poukaz nechty",
     ogLocale: "sk_SK",

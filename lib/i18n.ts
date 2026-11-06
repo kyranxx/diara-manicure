@@ -32,7 +32,7 @@ const sk = {
   },
   hero: {
     logoAlt: "Diara Manicure - Nechty Trnava - Jarné logo",
-    titlePrefix: "Gélové nechty v Trnave",
+    titlePrefix: "Nechtové štúdio v Trnave",
     titleBrand: "",
     subtitleMain: "",
     subtitleHighlight: "Slovenský nechtový salón.",
@@ -84,6 +84,7 @@ const sk = {
     loading: "Načítavame recenzie z Google Maps...",
     error: "Recenzie sa nepodarilo načítať. Môžete si ich pozrieť priamo na Google Maps.",
     googleCta: "Pozrieť recenzie na Google Maps",
+    writeReviewCta: "Napísať recenziu",
   },
   lightbox: {
     dialogLabel: "Prehliadač galérie",
@@ -140,6 +141,8 @@ const sk = {
     heading: "Kde nás nájdete",
     addressLabel: "Adresa",
     phoneLabel: "Telefón",
+    hoursLabel: "Otváracie hodiny",
+    hoursDays: "Po – Ne",
     bookingCta: "Pozrieť voľné termíny",
   },
   footer: {
@@ -178,10 +181,6 @@ const sk = {
       {
         title: "Marketingové",
         description: "Google Ads — sledovanie konverzií a personalizácia reklám.",
-      },
-      {
-        title: "Funkčné",
-        description: "Microsoft Clarity — nahrávky správania a heatmapy.",
       },
     ],
   },
@@ -264,6 +263,7 @@ const en: TranslationMessages = {
     loading: "Loading reviews from Google Maps...",
     error: "Reviews could not be loaded. You can view them directly on Google Maps.",
     googleCta: "View reviews on Google Maps",
+    writeReviewCta: "Write a review",
   },
   lightbox: {
     dialogLabel: "Gallery viewer",
@@ -320,6 +320,8 @@ const en: TranslationMessages = {
     heading: "Where to find us",
     addressLabel: "Address",
     phoneLabel: "Phone",
+    hoursLabel: "Opening hours",
+    hoursDays: "Mon – Sun",
     bookingCta: "See available appointments",
   },
   footer: {
@@ -358,10 +360,6 @@ const en: TranslationMessages = {
       {
         title: "Marketing",
         description: "Google Ads - conversion tracking and ad personalization.",
-      },
-      {
-        title: "Functional",
-        description: "Microsoft Clarity - behavior recordings and heatmaps.",
       },
     ],
   },
@@ -442,6 +440,7 @@ const uk: TranslationMessages = {
     loading: "Завантажуємо відгуки з Google Maps...",
     error: "Не вдалося завантажити відгуки. Ви можете переглянути їх напряму на Google Maps.",
     googleCta: "Переглянути відгуки на Google Maps",
+    writeReviewCta: "Написати відгук",
   },
   lightbox: {
     dialogLabel: "Перегляд галереї",
@@ -498,6 +497,8 @@ const uk: TranslationMessages = {
     heading: "Де нас знайти",
     addressLabel: "Адреса",
     phoneLabel: "Телефон",
+    hoursLabel: "Години роботи",
+    hoursDays: "Пн – Нд",
     bookingCta: "Переглянути вільні терміни",
   },
   footer: {
@@ -536,10 +537,6 @@ const uk: TranslationMessages = {
       {
         title: "Маркетингові",
         description: "Google Ads - відстеження конверсій і персоналізація реклами.",
-      },
-      {
-        title: "Функціональні",
-        description: "Microsoft Clarity - записи поведінки та теплові карти.",
       },
     ],
   },
@@ -620,6 +617,7 @@ const sr: TranslationMessages = {
     loading: "Učitavamo recenzije sa Google Maps...",
     error: "Recenzije nije moguće učitati. Možete ih pogledati direktno na Google Maps.",
     googleCta: "Pogledajte recenzije na Google Maps",
+    writeReviewCta: "Napišite recenziju",
   },
   lightbox: {
     dialogLabel: "Pregled galerije",
@@ -676,6 +674,8 @@ const sr: TranslationMessages = {
     heading: "Gde nas možete naći",
     addressLabel: "Adresa",
     phoneLabel: "Telefon",
+    hoursLabel: "Radno vreme",
+    hoursDays: "Pon – Ned",
     bookingCta: "Pogledajte slobodne termine",
   },
   footer: {
@@ -714,10 +714,6 @@ const sr: TranslationMessages = {
       {
         title: "Marketing",
         description: "Google Ads - praćenje konverzija i personalizacija oglasa.",
-      },
-      {
-        title: "Funkcionalni",
-        description: "Microsoft Clarity - snimci ponašanja i heatmap analize.",
       },
     ],
   },

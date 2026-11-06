@@ -17,6 +17,7 @@ diara manicure. ponúka gélové nechty, manikúru a darčekové poukazy v Trnav
 ## Kontakt
 
 - Adresa: ${fullAddress}
+- Otváracie hodiny: Po – Ne ${siteConfig.opens.replace(/^0/, "")} – ${siteConfig.closes}
 - Facebook: ${siteConfig.facebookUrl}
 - Instagram: ${siteConfig.instagramUrl}
 

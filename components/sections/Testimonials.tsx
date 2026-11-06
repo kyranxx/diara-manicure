@@ -53,6 +53,14 @@ export function GoogleReviewsMarquee({ t, reviewsData }: { t: TranslationMessage
         >
           {t.reviews.googleCta}
         </a>
+        <a
+          href={siteConfig.googleWriteReviewUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-3 underline-offset-4 hover:underline"
+        >
+          {t.reviews.writeReviewCta}
+        </a>
       </div>
     </section>
   )

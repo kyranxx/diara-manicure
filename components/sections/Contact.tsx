@@ -1,4 +1,5 @@
-import { MapPin, Phone } from "lucide-react"
+import { Clock, MapPin, Phone } from "lucide-react"
+import { siteConfig } from "@/lib/site-config"
 import { Button } from "@/components/ui/button"
 import Map from "@/components/ui/custom-map"
 import type { TranslationMessages } from "@/lib/i18n"
@@ -40,6 +41,18 @@ export function Contact({ bookingUrl, t }: ContactProps) {
                                         >
                                             <span>+421 902 163 144</span>
                                         </a>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 text-center lg:text-left">
+                                    <div className="p-3 rounded-full bg-white dark:bg-white text-primary dark:text-black shadow-sm">
+                                        <Clock className="size-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-medium mb-1 text-black dark:text-white">{t.contact.hoursLabel}</h3>
+                                        <p className="text-muted-foreground text-lg">
+                                            {t.contact.hoursDays} {siteConfig.opens.replace(/^0/, "")} – {siteConfig.closes}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
