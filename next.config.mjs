@@ -95,6 +95,9 @@ const nextConfig = {
         destination: 'https://www.diaramanicure.sk/:path*',
         statusCode: 308,
       },
+      // Thin per-occasion and per-style pages merged into their main pages (Nov 2026).
+      { source: '/darcekove-poukazy/:slug', destination: '/darcekove-poukazy', permanent: true },
+      { source: '/galeria/:slug', destination: '/galeria', permanent: true },
     ];
   },
 }

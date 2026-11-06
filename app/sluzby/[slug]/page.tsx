@@ -8,8 +8,10 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/button"
 import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
+import { getReviewsData } from "@/lib/bookio-reviews"
 import { defaultLanguage, translations } from "@/lib/i18n"
 import { getServicePage, servicePageUrl, servicePages } from "@/lib/service-pages"
+import { getSheetsData } from "@/lib/sheets"
 import { siteConfig } from "@/lib/site-config"
 
 type ServiceRouteProps = {
@@ -17,6 +19,8 @@ type ServiceRouteProps = {
     slug: string
   }>
 }
+
+export const revalidate = 3600
 
 export function generateStaticParams() {
   return servicePages.map((page) => ({
@@ -74,6 +78,19 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
 
   const t = translations[defaultLanguage]
   const url = servicePageUrl(page.slug)
+  const [priceList, { reviews }] = await Promise.all([getSheetsData(), getReviewsData()])
+  const prices = priceList.filter((item) => page.priceMatch.test(item.title))
+  const matchingReviews = reviews.filter((review) => page.reviewMatch.test(review.text))
+  const serviceReviews = (matchingReviews.length ? matchingReviews : reviews).slice(0, 4)
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: page.faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
+  }
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -139,6 +156,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
     <>
       <JsonLd id="schema-service" data={serviceSchema} />
       <JsonLd id="schema-breadcrumbs" data={breadcrumbSchema} />
+      <JsonLd id="schema-faq" data={faqSchema} />
       <div className="min-h-screen bg-background text-foreground">
         <Navbar />
 
@@ -188,6 +206,63 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
               <InfoList title="Pre koho je vhodná" items={page.bestFor} />
               <InfoList title="Ako prebieha návšteva" items={page.process} />
               <InfoList title="Starostlivosť po návšteve" items={page.aftercare} />
+            </div>
+          </section>
+
+          {prices.length > 0 && (
+            <section className="bg-beige px-6 py-14 dark:bg-[#050403]">
+              <div className="mx-auto max-w-4xl">
+                <h2 className="text-3xl font-light tracking-tight text-black dark:text-white">
+                  Cenník – {page.shortTitle.toLowerCase()} v Trnave
+                </h2>
+                <ul className="mt-6 divide-y divide-primary/10">
+                  {prices.map((item) => (
+                    <li key={item.title} className="flex gap-6 py-4">
+                      <div className="flex-1">
+                        <h3 className="font-medium text-black dark:text-white">{item.title}</h3>
+                        {item.description && (
+                          <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
+                        )}
+                      </div>
+                      <span className="shrink-0 font-medium text-black dark:text-white">{item.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )}
+
+          {serviceReviews.length > 0 && (
+            <section className="px-6 py-14">
+              <div className="mx-auto max-w-6xl">
+                <h2 className="text-3xl font-light tracking-tight text-black dark:text-white">Čo hovoria klientky</h2>
+                <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  {serviceReviews.map((review) => (
+                    <figure
+                      key={review.author + review.text.slice(0, 40)}
+                      className="rounded-xl border border-primary/10 bg-white/55 p-5 dark:bg-card"
+                    >
+                      <div className="text-primary" aria-label={`${review.rating}/5`}>{"★".repeat(review.rating)}</div>
+                      <blockquote className="mt-3 leading-relaxed text-muted-foreground">{review.text}</blockquote>
+                      <figcaption className="mt-3 text-sm font-medium">{review.author}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          <section className="bg-beige px-6 py-14 dark:bg-[#050403]">
+            <div className="mx-auto max-w-4xl">
+              <h2 className="text-3xl font-light tracking-tight text-black dark:text-white">Časté otázky</h2>
+              <div className="mt-6 space-y-6">
+                {page.faqs.map((faq) => (
+                  <div key={faq.question}>
+                    <h3 className="text-lg font-medium text-black dark:text-white">{faq.question}</h3>
+                    <p className="mt-2 leading-relaxed text-muted-foreground">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
 

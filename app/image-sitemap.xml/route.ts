@@ -1,5 +1,5 @@
 import { galleryImages } from "@/lib/gallery"
-import { galleryImagesForCategory, galleryLandingUrl, galleryPages, galleryPageUrl } from "@/lib/gallery-pages"
+import { galleryLandingUrl } from "@/lib/gallery-pages"
 import { siteConfig } from "@/lib/site-config"
 
 export const dynamic = "force-static"
@@ -35,7 +35,6 @@ function urlEntry(url: string, images: typeof galleryImages) {
 export async function GET() {
   const entries = [
     urlEntry(galleryLandingUrl, galleryImages),
-    ...galleryPages.map((page) => urlEntry(galleryPageUrl(page.slug), galleryImagesForCategory(page.category))),
   ]
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

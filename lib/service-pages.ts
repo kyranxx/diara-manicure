@@ -16,6 +16,23 @@ export type ServicePage = {
     title: string
     href: string
   }>
+  /** Matches price list item titles shown on this page. */
+  priceMatch: RegExp
+  /** Matches review texts about this service. */
+  reviewMatch: RegExp
+  faqs: Array<{ question: string; answer: string }>
+}
+
+const locationFaq = {
+  question: "Kde sa nachádzate a dá sa pri salóne parkovať?",
+  answer:
+    "Salón diara manicure. nájdete v Trnave na Hospodárskej 53. Priamo pred vchodom máme vlastné parkovanie zdarma.",
+}
+
+const bookingFaq = {
+  question: "Ako sa objednám?",
+  answer:
+    "Termín si rezervujete online cez Bookio, kde vidíte všetky voľné termíny. Platiť môžete v hotovosti aj kartou.",
 }
 
 export const servicePages: ServicePage[] = [
@@ -51,6 +68,26 @@ export const servicePages: ServicePage[] = [
       "nepoužívajte nechty ako nástroj",
       "pri vode a čistiacich prostriedkoch používajte rukavice",
       "na doplnenie príďte približne po 3 týždňoch",
+    ],
+    priceMatch: /modelácia|spevnenie prirodzených nechtov gélom|odstránenie gélových|predĺženie nechtu/i,
+    reviewMatch: /gél|gel/i,
+    faqs: [
+      {
+        question: "Koľko stoja gélové nechty v Trnave?",
+        answer:
+          "Aktuálne ceny nových gélových nechtov, doplnenia, spevnenia aj odstránenia sú v cenníku vyššie. Nové nechty, doplnenie aj spevnenie zahŕňajú detailnú manikúru a výber farby, francúzskej manikúry alebo jemného zdobenia.",
+      },
+      {
+        question: "Ako dlho vydržia gélové nechty?",
+        answer:
+          "Pri správnej aplikácii a starostlivosti vydržia gélové nechty 3 až 4 týždne. Na doplnenie odporúčame prísť približne každé 3 týždne.",
+      },
+      {
+        question: "Ako dlho trvá modelácia gélových nechtov?",
+        answer: "Nové gélové nechty trvajú približne 1,5 až 2 hodiny. Doplnenie je zvyčajne rýchlejšie.",
+      },
+      locationFaq,
+      bookingFaq,
     ],
     relatedArticles: [
       {
@@ -89,6 +126,27 @@ export const servicePages: ServicePage[] = [
       "olejček na kožičku pomáha udržať okolie nechtu hydratované",
       "pri poškodení gél lak neodtrhávajte",
     ],
+    priceMatch: /gél ?lak|géllak/i,
+    reviewMatch: /gél ?lak|géllak|gellak/i,
+    faqs: [
+      {
+        question: "Koľko stojí gél lak v Trnave?",
+        answer:
+          "Aktuálnu cenu gélovej bázy s gél lakom nájdete v cenníku vyššie. Služba zahŕňa detailnú manikúru a výber farby, francúzskej manikúry alebo jemného zdobenia.",
+      },
+      {
+        question: "Ako dlho vydrží gél lak?",
+        answer:
+          "Gél lak vydrží zvyčajne 2 až 3 týždne. Ak chcete dlhšiu výdrž alebo predĺženie, vhodnejšie sú gélové nechty.",
+      },
+      {
+        question: "Pre aké nechty je gél lak vhodný?",
+        answer:
+          "Gél lak je vhodný najmä na krátke prirodzené nechty, ktoré chcete spevniť a mať na nich farbu bez predlžovania.",
+      },
+      locationFaq,
+      bookingFaq,
+    ],
     relatedArticles: [
       {
         title: "Gél lak alebo gélová modelácia?",
@@ -121,6 +179,27 @@ export const servicePages: ServicePage[] = [
       "pravidelne hydratujte ruky a kožičku",
       "nezastrihávajte podráždené nechtové okolie doma príliš hlboko",
       "pri lámavosti nechtov sa poraďte pred výberom služby",
+    ],
+    priceMatch: /manikúra/i,
+    reviewMatch: /manik/i,
+    faqs: [
+      {
+        question: "Čo zahŕňa suchá manikúra?",
+        answer:
+          "Detailná suchá manikúra zahŕňa čistenie nechtov, odstránenie kožičky, úpravu tvaru nechtov a olejček. Je bez lakovania.",
+      },
+      {
+        question: "Koľko stojí a ako dlho trvá manikúra?",
+        answer:
+          "Aktuálnu cenu nájdete v cenníku vyššie. Detailná suchá manikúra trvá približne 30 minút.",
+      },
+      {
+        question: "Dá sa manikúra spojiť s gél lakom alebo gélovými nechtami?",
+        answer:
+          "Áno. Detailná manikúra je súčasťou gél laku, spevnenia aj gélových nechtov, takže ju pri týchto službách nemusíte objednávať zvlášť.",
+      },
+      locationFaq,
+      bookingFaq,
     ],
     relatedArticles: [
       {

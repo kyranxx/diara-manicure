@@ -140,78 +140,6 @@ expectIncludes(giftCard, "Najjednoduchšia voľba: poukaz 50", "gift card recomm
 expectIncludes(giftCard, "Vyberte hodnotu, zaplaťte kartou a poukaz príde emailom", "gift card explains fast purchase flow")
 expectNotIncludes(home, "Najjednoduchšia voľba: poukaz 50", "home does not carry gift-card buyer copy")
 
-const giftCardIntentPages = [
-  {
-    file: ".next/server/app/darcekove-poukazy/poukaz-na-nechty-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/poukaz-na-nechty-trnava`,
-    title: "Poukaz na nechty v Trnave | diara manicure.",
-    h1: "Poukaz na nechty v Trnave",
-    phrase: "darčekový poukaz na nechty",
-  },
-  {
-    file: ".next/server/app/darcekove-poukazy/darcek-pre-manzelku-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/darcek-pre-manzelku-trnava`,
-    title: "Darček pre manželku v Trnave | diara manicure.",
-    h1: "Darček pre manželku v Trnave",
-    phrase: "poukaz na manikúru Trnava",
-  },
-  {
-    file: ".next/server/app/darcekove-poukazy/darcek-pre-priatelku-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/darcek-pre-priatelku-trnava`,
-    title: "Darček pre priateľku v Trnave | diara manicure.",
-    h1: "Darček pre priateľku v Trnave",
-    phrase: "poukaz na nechty v Trnave",
-  },
-  {
-    file: ".next/server/app/darcekove-poukazy/darcek-pre-mamu-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/darcek-pre-mamu-trnava`,
-    title: "Darček pre mamu v Trnave | diara manicure.",
-    h1: "Darček pre mamu v Trnave",
-    phrase: "darčekový poukaz na manikúru",
-  },
-  {
-    file: ".next/server/app/darcekove-poukazy/darcek-na-vianoce-nechty-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/darcek-na-vianoce-nechty-trnava`,
-    title: "Darček na Vianoce pre ženu v Trnave | diara manicure.",
-    h1: "Darček na Vianoce pre ženu v Trnave",
-    phrase: "vianočný darčekový poukaz na nechty",
-  },
-  {
-    file: ".next/server/app/darcekove-poukazy/darcek-na-den-matiek-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/darcek-na-den-matiek-trnava`,
-    title: "Darček na Deň matiek v Trnave | diara manicure.",
-    h1: "Darček na Deň matiek v Trnave",
-    phrase: "darček pre mamu na Deň matiek",
-  },
-  {
-    file: ".next/server/app/darcekove-poukazy/darcek-na-valentina-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/darcek-na-valentina-trnava`,
-    title: "Darček na Valentína pre priateľku v Trnave | diara manicure.",
-    h1: "Darček na Valentína pre priateľku v Trnave",
-    phrase: "darček na Valentína pre priateľku",
-  },
-  {
-    file: ".next/server/app/darcekove-poukazy/darcek-na-poslednu-chvilu-trnava.html",
-    url: `${baseUrl}/darcekove-poukazy/darcek-na-poslednu-chvilu-trnava`,
-    title: "Darček na poslednú chvíľu v Trnave | diara manicure.",
-    h1: "Darček na poslednú chvíľu v Trnave",
-    phrase: "darčekový poukaz emailom",
-  },
-]
-
-for (const page of giftCardIntentPages) {
-  const html = readBuiltFile(page.file)
-  expectTitle(html, page.title, page.url)
-  expectCanonical(html, page.url, page.url)
-  expectOgUrl(html, page.url, page.url)
-  expectIncludes(html, `<h1 class="`, `${page.url} has rendered H1`)
-  expectIncludes(html, page.h1, `${page.url} targets exact intent`)
-  expectIncludes(html, page.phrase, `${page.url} includes supporting phrase`)
-  expectIncludes(html, "darcekovy-poukaz-na-nechty-trnava.jpg", `${page.url} uses SEO image filename`)
-  expectIncludes(html, "BreadcrumbList", `${page.url} breadcrumb schema`)
-  expectIncludes(html, "FAQPage", `${page.url} FAQ schema`)
-  expectIncludes(giftCard, `href="/darcekove-poukazy/${page.url.split("/").pop()}"`, `gift card page links ${page.url}`)
-}
 
 const galleryLanding = readBuiltFile(".next/server/app/galeria.html")
 expectTitle(galleryLanding, "Galéria nechtov Trnava | Gélové nechty a manikúra", "gallery title")
@@ -219,53 +147,6 @@ expectCanonical(galleryLanding, `${baseUrl}/galeria`, "gallery canonical")
 expectOgUrl(galleryLanding, `${baseUrl}/galeria`, "gallery og:url")
 expectIncludes(galleryLanding, "ImageGallery", "gallery ImageGallery schema")
 expectIncludes(galleryLanding, "gelove-nechty-trnava-gallery-76.jpg", "gallery includes newest image")
-expectIncludes(galleryLanding, "Francúzska manikúra Trnava", "gallery links french image intent")
-expectIncludes(galleryLanding, "Jemné zdobenie nechtov Trnava", "gallery links nail art image intent")
-
-const galleryIntentPages = [
-  {
-    file: ".next/server/app/galeria/francuzska-manikura-trnava.html",
-    url: `${baseUrl}/galeria/francuzska-manikura-trnava`,
-    title: "Francúzska manikúra Trnava | Galéria nechtov",
-    h1: "Francúzska manikúra Trnava",
-    image: "gelove-nechty-trnava-gallery-75.jpg",
-  },
-  {
-    file: ".next/server/app/galeria/gelove-nechty-trnava.html",
-    url: `${baseUrl}/galeria/gelove-nechty-trnava`,
-    title: "Gélové nechty Trnava | Galéria prác",
-    h1: "Gélové nechty Trnava",
-    image: "gelove-nechty-trnava-gallery-68.jpg",
-  },
-  {
-    file: ".next/server/app/galeria/jemne-zdobenie-nechtov-trnava.html",
-    url: `${baseUrl}/galeria/jemne-zdobenie-nechtov-trnava`,
-    title: "Jemné zdobenie nechtov Trnava | Nail art galéria",
-    h1: "Jemné zdobenie nechtov Trnava",
-    image: "gelove-nechty-trnava-gallery-76.jpg",
-  },
-]
-
-for (const page of galleryIntentPages) {
-  const html = readBuiltFile(page.file)
-  expectTitle(html, page.title, page.url)
-  expectCanonical(html, page.url, page.url)
-  expectOgUrl(html, page.url, page.url)
-  expectIncludes(html, page.h1, `${page.url} targets exact image intent`)
-  expectIncludes(html, page.image, `${page.url} includes newest matching gallery image`)
-  expectIncludes(html, "ImageGallery", `${page.url} ImageGallery schema`)
-  expectIncludes(html, "BreadcrumbList", `${page.url} breadcrumb schema`)
-  expectIncludes(html, 'href="#main-content"', `${page.url} exposes a skip link`)
-  expectIncludes(html, '<main id="main-content" tabindex="-1">', `${page.url} skip link has a focusable target`)
-}
-
-const frenchGallery = readBuiltFile(".next/server/app/galeria/francuzska-manikura-trnava.html")
-expectIncludes(frenchGallery, "Ako si vybrať francúzsku manikúru", "French gallery adds decision-helping copy")
-expectIncludes(frenchGallery, "Mliečna francúzska", "French gallery covers the supported milky French intent")
-expectIncludes(frenchGallery, 'href="/sluzby/gelove-nechty-trnava"', "French gallery links to the relevant service")
-if (visibleWordCount(frenchGallery) < 300) {
-  throw new Error("French gallery content: expected at least 300 visible words")
-}
 
 const servicePages = [
   {
@@ -295,6 +176,11 @@ for (const page of servicePages) {
   expectIncludes(html, "BreadcrumbList", `${page.url} breadcrumb schema`)
   expectIncludes(html, "Túto službu môžete darovať ako poukaz", `${page.url} links service to gift card`)
   expectIncludes(html, 'href="/darcekove-poukazy"', `${page.url} has internal gift-card link`)
+  expectIncludes(html, "FAQPage", `${page.url} FAQ schema`)
+  expectIncludes(html, "Časté otázky", `${page.url} shows FAQ`)
+  if (visibleWordCount(html) < 400) {
+    throw new Error(`${page.url}: expected at least 400 visible words`)
+  }
 }
 
 expectIncludes(
@@ -312,13 +198,9 @@ const sitemap = readBuiltFile(".next/server/app/sitemap.xml.body")
 for (const page of servicePages) {
   expectIncludes(sitemap, `<loc>${page.url}</loc>`, `sitemap includes ${page.url}`)
 }
-for (const page of giftCardIntentPages) {
-  expectIncludes(sitemap, `<loc>${page.url}</loc>`, `sitemap includes ${page.url}`)
-}
 expectIncludes(sitemap, `<loc>${baseUrl}/galeria</loc>`, "sitemap includes gallery")
-for (const page of galleryIntentPages) {
-  expectIncludes(sitemap, `<loc>${page.url}</loc>`, `sitemap includes ${page.url}`)
-}
+expectNotIncludes(sitemap, `${baseUrl}/galeria/`, "sitemap drops merged gallery subpages")
+expectNotIncludes(sitemap, `${baseUrl}/darcekove-poukazy/`, "sitemap drops merged gift subpages")
 expectIncludes(sitemap, "gelove-nechty-trnava-gallery-76.jpg", "sitemap includes newest gallery image")
 
 const imageSitemap = readBuiltFile(".next/server/app/image-sitemap.xml.body")

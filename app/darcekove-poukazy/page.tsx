@@ -8,7 +8,7 @@ import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/button"
 import { GiftCardPageAnalytics } from "@/components/gift-card-page-analytics"
 import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
-import { giftCardImagePath, giftCardIntentPages } from "@/lib/gift-card-pages"
+import { giftCardImagePath } from "@/lib/gift-card-pages"
 import { defaultLanguage, translations } from "@/lib/i18n"
 import { siteConfig } from "@/lib/site-config"
 
@@ -449,36 +449,6 @@ export default function GiftCardPage() {
                     {label}
                   </div>
                 ))}
-              </div>
-            </div>
-          </section>
-
-          <section className="bg-background py-14 dark:bg-[#050403]">
-            <div className="container mx-auto px-6">
-              <div className="mx-auto max-w-5xl">
-                <h2 className="text-3xl font-light tracking-tight text-black dark:text-white md:text-4xl">
-                  Vyberte podľa toho, pre koho kupujete
-                </h2>
-                <p className="mt-4 max-w-2xl leading-relaxed text-muted-foreground">
-                  Ak riešite konkrétnu situáciu, tieto krátke stránky pomôžu vybrať
-                  hodnotu a vysvetlia, ako poukaz funguje.
-                </p>
-                <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                  {giftCardIntentPages.map((page) => (
-                    <Link
-                      key={page.slug}
-                      href={`/darcekove-poukazy/${page.slug}`}
-                      className="rounded-xl border border-primary/10 bg-white/55 p-5 transition-colors hover:text-primary dark:bg-card"
-                    >
-                      <h3 className="text-lg font-medium text-black dark:text-white">
-                        {page.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                        {page.description}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
               </div>
             </div>
           </section>

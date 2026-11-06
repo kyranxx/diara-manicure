@@ -1,14 +1,14 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Images } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { JsonLd } from "@/components/json-ld"
 import { GallerySeoGrid } from "@/components/gallery-seo-grid"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/sections/Footer"
 import { Button } from "@/components/ui/button"
 import { galleryImages } from "@/lib/gallery"
-import { galleryLandingUrl, galleryPages, galleryImagesForCategory } from "@/lib/gallery-pages"
+import { galleryLandingUrl } from "@/lib/gallery-pages"
 import { defaultLanguage, translations } from "@/lib/i18n"
 import { siteConfig } from "@/lib/site-config"
 
@@ -114,35 +114,6 @@ export default function GalleryLandingPage() {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 520px"
                 />
-              </div>
-            </div>
-          </section>
-
-          <section className="px-6 py-14">
-            <div className="mx-auto max-w-6xl">
-              <div className="mb-8 flex items-center gap-3">
-                <Images className="size-5 text-primary" />
-                <h2 className="text-3xl font-light tracking-tight text-black dark:text-white">
-                  Vyberte štýl
-                </h2>
-              </div>
-              <div className="grid gap-4 md:grid-cols-3">
-                {galleryPages.map((page) => {
-                  const images = galleryImagesForCategory(page.category)
-                  return (
-                    <Link
-                      key={page.slug}
-                      href={`/galeria/${page.slug}`}
-                      className="rounded-xl border border-primary/10 bg-beige/55 p-5 transition-colors hover:text-primary dark:bg-card"
-                    >
-                      <span className="text-lg font-medium">{page.title}</span>
-                      <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
-                        {page.description}
-                      </span>
-                      <span className="mt-3 block text-sm text-primary">{images.length} fotiek</span>
-                    </Link>
-                  )
-                })}
               </div>
             </div>
           </section>
