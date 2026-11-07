@@ -1,6 +1,8 @@
 export const gallerySectionImageIds = {
-  french: ["85", "75", "69", "60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "21", "17", "9"],
+  french: ["97", "94", "93", "92", "85", "75", "69", "60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "21", "17", "9"],
   singleColor: [
+    "96",
+    "95",
     "90",
     "86",
     "80",
@@ -34,7 +36,7 @@ export const gallerySectionImageIds = {
     "2",
     "1",
   ],
-  delicateArt: ["91", "89", "88", "87", "84", "83", "82", "81", "79", "78", "76", "74", "73", "72", "71", "70", "67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
+  delicateArt: ["99", "98", "91", "89", "88", "87", "84", "83", "82", "81", "79", "78", "76", "74", "73", "72", "71", "70", "67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
 } as const
 
 export const galleryCategories = ["french", "singleColor", "delicateArt"] as const
@@ -131,6 +133,14 @@ const galleryImageAltById: Record<string, string> = {
   "89": "Ruzove gelove nechty s jemnym ciernym a bielym nail artom",
   "90": "Cervene a tyrkysove gelove nechty s vyraznou farbou",
   "91": "Cervene a zlte gelove nechty s jemnym zdobenim",
+  "92": "Zlta francuzska manikura s cervenymi kvetmi na gelovych nechtoch v Trnave",
+  "93": "Cierno biela zebra francuzska manikura na mandlovych nechtoch",
+  "94": "Hneda mikro francuzska manikura na mandlovych gelovych nechtoch",
+  "95": "Mliecne ruzove kratke gelove nechty",
+  "96": "Hnede jednofarebne gelove nechty na jesen",
+  "97": "Bordovy mramor a bordove francuzske spicky na gelovych nechtoch",
+  "98": "Ruzove gelove nechty s jesennym hnedym zdobenim",
+  "99": "Cervene a biele gelove nechty s cislom a zdobenim",
 }
 
 const galleryImageCaptionById: Record<string, string> = {
@@ -187,6 +197,14 @@ const galleryImageCaptionById: Record<string, string> = {
   "89": "Jemný nail art",
   "90": "Červeno-tyrkysové nechty",
   "91": "Červené a žlté zdobenie",
+  "92": "Žltá francúzska s kvetmi",
+  "93": "Čierno-biela francúzska",
+  "94": "Hnedá francúzska manikúra",
+  "95": "Mliečne ružové nechty",
+  "96": "Hnedé nechty",
+  "97": "Bordový mramor",
+  "98": "Jesenné zdobenie",
+  "99": "Červeno-biele zdobenie",
 }
 
 const jpgGalleryImageIds = new Set([
@@ -227,6 +245,14 @@ const jpgGalleryImageIds = new Set([
   "89",
   "90",
   "91",
+  "92",
+  "93",
+  "94",
+  "95",
+  "96",
+  "97",
+  "98",
+  "99",
 ])
 
 export function galleryImageSrc(id: string) {
