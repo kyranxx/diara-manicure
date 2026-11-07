@@ -20,7 +20,7 @@ export function ThemeAwareLogo({
   return (
     <>
       <Image
-        src="/logo_autumn_day-780.webp"
+        src="/logo_autumn_day_t-780.webp"
         alt={alt}
         width={width}
         height={height}
@@ -31,7 +31,7 @@ export function ThemeAwareLogo({
         sizes={sizes}
       />
       <Image
-        src="/logo_autumn_night-780.webp"
+        src="/logo_autumn_night_t-780.webp"
         alt={alt}
         width={width}
         height={height}
