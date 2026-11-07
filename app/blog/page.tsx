@@ -2,30 +2,17 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { Navbar } from "@/components/navbar"
-import { ArrowLeft, Calendar } from "lucide-react"
+import { ArrowLeft, Calendar, CalendarDays } from "lucide-react"
 import { JsonLd } from "@/components/json-ld"
 import { siteConfig } from "@/lib/site-config"
+import { blogAuthor, blogPosts, formatBlogDate } from "@/lib/blog-posts"
+import { servicePages } from "@/lib/service-pages"
+import { Button } from "@/components/ui/button"
+import { Footer } from "@/components/sections/Footer"
+import { defaultLanguage, translations } from "@/lib/i18n"
 
 const pageUrl = `${siteConfig.baseUrl}/blog`
 
-const blogPosts = [
-    {
-        slug: "ako-dlho-vydrzia-gelove-nechty",
-        title: "Ako dlho vydržia gélové nechty? Kompletný sprievodca",
-        excerpt: "Zistite, ako maximalizovať výdrž vašich gélových nechtov a na čo si dávať pozor pri starostlivosti o ne.",
-        date: "5. január 2026",
-        datePublished: "2026-01-05",
-        image: "/gelove-nechty-trnava-gallery-1.jpeg"
-    },
-    {
-        slug: "rozdiel-gel-lak-gelova-modelacia",
-        title: "Rozdiel medzi gél lakom a gélovou modeláciou",
-        excerpt: "Neviete sa rozhodnúť medzi gél lakom a gélovou modeláciou? Vysvetlíme vám rozdiely a pomôžeme vybrať.",
-        date: "5. január 2026",
-        datePublished: "2026-01-05",
-        image: "/gelove-nechty-trnava-gallery-2.jpeg"
-    }
-]
 
 export const metadata: Metadata = {
     title: "Blog o nechtoch v Trnave",
@@ -72,11 +59,12 @@ export default function BlogPage() {
         hasPart: blogPosts.map((post) => ({
             "@type": "Article",
             headline: post.title,
-            description: post.excerpt,
-            datePublished: post.datePublished,
+            description: post.description,
+            datePublished: post.published,
+            dateModified: post.modified,
             author: {
                 "@type": "Person",
-                name: "Andrea Hečková",
+                name: blogAuthor,
             },
             url: `${pageUrl}/${post.slug}`,
             image: `${siteConfig.baseUrl}${post.image}`,
@@ -140,9 +128,20 @@ export default function BlogPage() {
                                     neviete, či je pre vás lepší gél lak, gélová modelácia alebo klasická suchá manikúra,
                                     začnite tu a potom si pozrite cenník alebo voľný termín.
                                 </p>
+                                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                                    <Button asChild className="h-12 rounded-full px-7">
+                                        <a href={siteConfig.bookingUrl} target="_blank" rel="noopener noreferrer">
+                                            <CalendarDays className="size-4" />
+                                            Pozrieť voľné termíny
+                                        </a>
+                                    </Button>
+                                    <Button asChild variant="outline" className="h-12 rounded-full px-7">
+                                        <Link href="/#cennik">Pozrieť aktuálny cenník</Link>
+                                    </Button>
+                                </div>
                             </div>
 
-                            <div className="grid md:grid-cols-2 gap-6">
+                            <div className="grid gap-6 md:grid-cols-2">
                                 {blogPosts.map((post) => (
                                     <Link
                                         key={post.slug}
@@ -152,7 +151,7 @@ export default function BlogPage() {
                                         <div className="relative aspect-[4/3] overflow-hidden">
                                             <Image
                                                 src={post.image}
-                                                alt={post.title}
+                                                alt={post.imageAlt}
                                                 fill
                                                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                                                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -161,19 +160,36 @@ export default function BlogPage() {
                                         <div className="p-6">
                                             <div className="mb-3 flex items-center gap-2 text-xs text-muted-foreground">
                                                 <Calendar className="size-4" />
-                                                <span>{post.date}</span>
+                                                <time dateTime={post.published}>{formatBlogDate(post.published)}</time>
                                             </div>
                                             <h2 className="mb-3 text-xl font-medium transition-colors group-hover:text-primary">
                                                 {post.title}
                                             </h2>
-                                            <p className="text-sm leading-relaxed text-muted-foreground">{post.excerpt}</p>
+                                            <p className="text-sm leading-relaxed text-muted-foreground">{post.description}</p>
                                         </div>
                                     </Link>
                                 ))}
                             </div>
+
+                            <section className="mt-16">
+                                <h2 className="mb-4 text-2xl font-light">Služby v Trnave</h2>
+                                <div className="grid gap-3 sm:grid-cols-3">
+                                    {servicePages.map((service) => (
+                                        <Link
+                                            key={service.slug}
+                                            href={`/sluzby/${service.slug}`}
+                                            className="rounded-xl border border-primary/10 bg-white/55 p-5 text-sm font-medium transition-colors hover:text-primary dark:bg-card"
+                                        >
+                                            {service.title}
+                                        </Link>
+                                    ))}
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </main>
+
+                <Footer t={translations[defaultLanguage]} />
             </div>
         </>
     )

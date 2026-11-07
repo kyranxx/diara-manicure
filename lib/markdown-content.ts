@@ -1,4 +1,5 @@
 import { fullAddress, siteConfig } from "@/lib/site-config"
+import { blogAuthor, blogPostUrl, blogPosts, formatBlogDate, type BlogPost } from "@/lib/blog-posts"
 
 const homeMarkdown = `# diara manicure.
 
@@ -35,84 +36,29 @@ diara manicure. ponúka gélové nechty, manikúru a darčekové poukazy v Trnav
 
 const blogIndexMarkdown = `# Blog
 
-Tipy, trendy a novinky zo sveta nechtov od diara manicure.
+Tipy, trendy a praktické odpovede o nechtoch od diara manicure. v Trnave.
 
 ## Články
 
-1. [Ako dlho vydržia gélové nechty?](${siteConfig.baseUrl}/blog/ako-dlho-vydrzia-gelove-nechty)
-2. [Rozdiel medzi gél lakom a gélovou modeláciou](${siteConfig.baseUrl}/blog/rozdiel-gel-lak-gelova-modelacia)
+${blogPosts.map((post, index) => `${index + 1}. [${post.shortTitle}](${blogPostUrl(post.slug)}) - ${post.description}`).join("\n")}
 `
 
-const articleOneMarkdown = `# Ako dlho vydržia gélové nechty?
+const blogPostMarkdown = (post: BlogPost) => `# ${post.title}
 
-- Autor: Andrea Hečková
-- Dátum: 5. január 2026
-- Čas čítania: 8 minút
+- Autor: ${blogAuthor}
+- Publikované: ${formatBlogDate(post.published)}
+- Aktualizované: ${formatBlogDate(post.modified)}
+- Čas čítania: ${post.readMinutes} minút
 
-## Priemerná výdrž
+${post.description}
 
-Pri správnej aplikácii a starostlivosti vydržia gélové nechty zvyčajne 3 až 4 týždne.
+## V skratke
 
-## Čo ovplyvňuje výdrž
+${post.keyPoints.map((point) => `- ${point}`).join("\n")}
 
-1. Kvalita použitých materiálov
-2. Príprava prirodzeného nechta
-3. Životný štýl a práca
-4. Stav prirodzených nechtov
+## Odkazy
 
-## Ako predĺžiť výdrž
-
-- Používajte rukavice pri domácich prácach
-- Nepoužívajte nechty ako nástroj
-- Aplikujte olejíček na kutikuly
-- Chodievajte na doplnenie približne každé 3 týždne
-
-## Rezervácia
-
-- Objednanie: ${siteConfig.bookingUrl}
-- Cenník: ${siteConfig.baseUrl}/#cennik
-`
-
-const articleTwoMarkdown = `# Rozdiel medzi gél lakom a gélovou modeláciou
-
-- Autor: Andrea Hečková
-- Dátum: 5. január 2026
-- Čas čítania: 10 minút
-
-## Gél lak
-
-Gél lak je vhodný pre prirodzené nechty, rýchlejšiu aplikáciu a prirodzenejší vzhľad.
-
-### Výhody
-
-- Rýchlejšia aplikácia
-- Prirodzený vzhľad
-- Nižšia cena
-
-### Nevýhody
-
-- Kratšia výdrž
-- Nepredĺži nechty
-- Menšia pevnosť
-
-## Gélová modelácia
-
-Gélová modelácia je vhodná pre pevnejší výsledok, predĺženie nechtov a náročnejšie zdobenie.
-
-### Výhody
-
-- Dlhšia výdrž
-- Možnosť predĺženia
-- Vyššia pevnosť
-
-### Nevýhody
-
-- Dlhší čas aplikácie
-- Vyššia cena
-- Zložitejšie odstránenie
-
-## Rezervácia
-
+- Celý článok: ${blogPostUrl(post.slug)}
 - Objednanie: ${siteConfig.bookingUrl}
 - Cenník: ${siteConfig.baseUrl}/#cennik
 `
@@ -233,8 +179,7 @@ The published HTTP endpoints are public and currently do not require OAuth or OI
 const markdownByPath = new Map<string, string>([
   ["/", homeMarkdown],
   ["/blog", blogIndexMarkdown],
-  ["/blog/ako-dlho-vydrzia-gelove-nechty", articleOneMarkdown],
-  ["/blog/rozdiel-gel-lak-gelova-modelacia", articleTwoMarkdown],
+  ...blogPosts.map((post): [string, string] => [`/blog/${post.slug}`, blogPostMarkdown(post)]),
   ["/darcekove-poukazy", giftCardsMarkdown],
   ["/sluzby/gelove-nechty-trnava", gelNailsMarkdown],
   ["/sluzby/gel-lak-trnava", gelPolishMarkdown],

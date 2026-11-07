@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { galleryImages } from '@/lib/gallery'
 import { galleryLandingUrl } from '@/lib/gallery-pages'
 import { servicePages, servicePageUrl } from '@/lib/service-pages'
+import { blogPosts } from '@/lib/blog-posts'
 import { siteConfig } from '@/lib/site-config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -72,18 +73,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.7,
         },
-        {
-            url: `${baseUrl}/blog/ako-dlho-vydrzia-gelove-nechty`,
-            lastModified: now,
-            changeFrequency: 'monthly',
+        ...blogPosts.map((post) => ({
+            url: `${baseUrl}/blog/${post.slug}`,
+            lastModified: new Date(post.modified),
+            changeFrequency: 'monthly' as const,
             priority: 0.6,
-        },
-        {
-            url: `${baseUrl}/blog/rozdiel-gel-lak-gelova-modelacia`,
-            lastModified: now,
-            changeFrequency: 'monthly',
-            priority: 0.6,
-        },
+            images: [`${baseUrl}${post.image}`],
+        })),
         ...servicePages.map((page) => ({
             url: servicePageUrl(page.slug),
             lastModified: now,
