@@ -16,16 +16,10 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
     <section
       id="galeria"
       data-gallery-root
-      data-heading={t.gallery.heading}
-      data-french={t.gallery.categories.french}
-      data-single-color={t.gallery.categories.singleColor}
-      data-delicate-art={t.gallery.categories.delicateArt}
-      data-french-ids={gallerySectionImageIds.french.join(",")}
-      data-single-color-ids={gallerySectionImageIds.singleColor.join(",")}
-      data-delicate-art-ids={gallerySectionImageIds.delicateArt.join(",")}
       data-alt-prefix={t.gallery.imageAltPrefix}
-      data-open-label={t.gallery.openImageAria}
-      data-instagram={t.gallery.instagramCta}
+      data-close-label={t.lightbox.close}
+      data-prev-label={t.lightbox.previous}
+      data-next-label={t.lightbox.next}
       className="relative overflow-hidden bg-beige pt-10 pb-16 dark:bg-[#050403]"
     >
       <div className="container mx-auto px-6">
@@ -80,7 +74,7 @@ export function GalleryShell({ t }: { t: TranslationMessages }) {
 
           <div className="mt-10 flex flex-col items-center gap-4 text-center">
             <Button asChild variant="outline" className="h-12 rounded-full px-7">
-              <Link href="/galeria">Pozrieť celú galériu</Link>
+              <Link href="/galeria">{t.gallery.fullGalleryCta}</Link>
             </Button>
             <a
               href="https://instagram.com/diaramanicure"

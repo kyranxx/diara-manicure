@@ -75,14 +75,13 @@ const sk = {
     imageAltPrefix: "Gélové nechty Trnava - ukážka práce",
     openImageAria: "Otvoriť obrázok:",
     instagramCta: "Sledujte nás na Instagrame",
+    fullGalleryCta: "Pozrieť celú galériu",
   },
   reviews: {
     eyebrow: "Google Maps recenzie",
     heading: "Čo hovoria klientky",
     description:
       "Výber zo skutočných recenzií, ktoré sme overili na Google Maps.",
-    loading: "Načítavame recenzie z Google Maps...",
-    error: "Recenzie sa nepodarilo načítať. Môžete si ich pozrieť priamo na Google Maps.",
     googleCta: "Pozrieť recenzie na Google Maps",
     writeReviewCta: "Napísať recenziu",
   },
@@ -155,6 +154,8 @@ const sk = {
     gelNails: "Gélové nechty",
     gelPolish: "Gél lak",
     manicure: "Manikúra",
+    siteMap: "Mapa stránky",
+    cookieSettings: "Nastavenia cookies",
   },
   cookie: {
     title: "Cookie nastavenia",
@@ -252,14 +253,13 @@ const en: TranslationMessages = {
     imageAltPrefix: "Gel nails Trnava - work example",
     openImageAria: "Open image:",
     instagramCta: "Follow us on Instagram",
+    fullGalleryCta: "View the full gallery",
   },
   reviews: {
     eyebrow: "Google Maps reviews",
     heading: "What clients say",
     description:
       "A selection of real reviews verified on Google Maps.",
-    loading: "Loading reviews from Google Maps...",
-    error: "Reviews could not be loaded. You can view them directly on Google Maps.",
     googleCta: "View reviews on Google Maps",
     writeReviewCta: "Write a review",
   },
@@ -332,6 +332,8 @@ const en: TranslationMessages = {
     gelNails: "Gel nails",
     gelPolish: "Gel polish",
     manicure: "Manicure",
+    siteMap: "Site map",
+    cookieSettings: "Cookie settings",
   },
   cookie: {
     title: "Cookie settings",
@@ -427,14 +429,13 @@ const uk: TranslationMessages = {
     imageAltPrefix: "Гелеві нігті Трнава - приклад роботи",
     openImageAria: "Відкрити зображення:",
     instagramCta: "Стежте за нами в Instagram",
+    fullGalleryCta: "Переглянути всю галерею",
   },
   reviews: {
     eyebrow: "Відгуки Google Maps",
     heading: "Що кажуть клієнтки",
     description:
       "Добірка справжніх відгуків, перевірених у Google Maps.",
-    loading: "Завантажуємо відгуки з Google Maps...",
-    error: "Не вдалося завантажити відгуки. Ви можете переглянути їх напряму на Google Maps.",
     googleCta: "Переглянути відгуки на Google Maps",
     writeReviewCta: "Написати відгук",
   },
@@ -507,6 +508,8 @@ const uk: TranslationMessages = {
     gelNails: "Гелеві нігті",
     gelPolish: "Гель-лак",
     manicure: "Манікюр",
+    siteMap: "Карта сайту",
+    cookieSettings: "Налаштування cookie",
   },
   cookie: {
     title: "Налаштування cookie",
@@ -602,14 +605,13 @@ const sr: TranslationMessages = {
     imageAltPrefix: "Gel nokti Trnava - primer rada",
     openImageAria: "Otvori sliku:",
     instagramCta: "Pratite nas na Instagramu",
+    fullGalleryCta: "Pogledajte celu galeriju",
   },
   reviews: {
     eyebrow: "Google Maps recenzije",
     heading: "Šta kažu klijentkinje",
     description:
       "Izbor stvarnih recenzija proverenih na Google Maps.",
-    loading: "Učitavamo recenzije sa Google Maps...",
-    error: "Recenzije nije moguće učitati. Možete ih pogledati direktno na Google Maps.",
     googleCta: "Pogledajte recenzije na Google Maps",
     writeReviewCta: "Napišite recenziju",
   },
@@ -682,6 +684,8 @@ const sr: TranslationMessages = {
     gelNails: "Gel nokti",
     gelPolish: "Gel lak",
     manicure: "Manikir",
+    siteMap: "Mapa sajta",
+    cookieSettings: "Podešavanja kolačića",
   },
   cookie: {
     title: "Podešavanja kolačića",

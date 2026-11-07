@@ -43,7 +43,6 @@ assertNotIncludes(navbar, "md:hidden flex justify-center", "separate mobile lang
 assertIncludes(services, "py-16 bg-beige", "original pricelist section background")
 assertIncludes(services, "bg-white/45 dark:bg-card", "original pricelist card background")
 assertNotIncludes(services, "t.services.intro", "removed pricelist intro paragraph")
-assertIncludes(sheets, "Detailná suchá manikúra", "current fallback service list")
 assertNotIncludes(sheets, "Modelácia gélových nechtov (Nové nechty)", "stale fallback service list")
 
 console.log("i18n wiring check passed")

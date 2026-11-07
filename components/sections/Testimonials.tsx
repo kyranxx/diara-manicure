@@ -9,8 +9,6 @@ export function GoogleReviewsMarquee({ t, reviewsData }: { t: TranslationMessage
       data-google-reviews-marquee-root
       data-google-maps-url={siteConfig.googleReviewsUrl}
       data-reviews-endpoint="/api/google-reviews"
-      data-loading-label={t.reviews.loading}
-      data-error-label={t.reviews.error}
       className="relative left-1/2 w-screen -translate-x-1/2 overflow-hidden border-y border-black/10 bg-[#ece9e5] py-14 dark:border-white/10 dark:bg-[#050403] md:py-20"
     >
       <div className="mx-auto mb-8 max-w-6xl px-6 text-center md:mb-10">
@@ -23,7 +21,6 @@ export function GoogleReviewsMarquee({ t, reviewsData }: { t: TranslationMessage
       <div
         data-google-reviews-marquee-content
         className="w-screen max-w-none overflow-hidden"
-        aria-live="polite"
       >
         {/* Server-rendered so search engines read every review; the runtime script turns it into the marquee. */}
         <div className="review-marquee-track flex w-max gap-3">

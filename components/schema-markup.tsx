@@ -100,11 +100,6 @@ const SchemaMarkup = () => {
             "@type": "Service",
             "name": "Gél lak manikúra",
             "description": "Klasická manikúra s gél lakom dlhej výdrže"
-          },
-          "priceSpecification": {
-            "@type": "PriceSpecification",
-            "price": "20.00",
-            "priceCurrency": "EUR"
           }
         },
         {

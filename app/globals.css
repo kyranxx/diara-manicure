@@ -110,6 +110,11 @@
     will-change: transform;
   }
 
+  .review-marquee-track:hover,
+  .review-marquee-track:focus-within {
+    animation-play-state: paused;
+  }
+
   .review-marquee-track-reverse {
     --review-marquee-duration: 64s;
     animation-direction: reverse;
@@ -126,8 +131,7 @@
     overflow: hidden;
   }
 
-  .google-review-card,
-  .google-review-marquee-placeholder {
+  .google-review-card {
     flex: 0 0 clamp(18rem, 24vw, 25rem);
     width: clamp(18rem, 24vw, 25rem);
     min-height: 10.75rem;
@@ -138,18 +142,9 @@
     box-shadow: 0 1.1rem 2.4rem rgb(31 25 21 / 7%);
   }
 
-  .dark .google-review-card,
-  .dark .google-review-marquee-placeholder {
+  .dark .google-review-card {
     border-color: rgb(255 255 255 / 10%);
     background: hsl(var(--card));
-  }
-
-  .google-review-marquee-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: hsl(var(--muted-foreground));
-    text-align: center;
   }
 
   .google-review-topline,
@@ -277,8 +272,7 @@
   }
 
   @media (max-width: 639px) {
-    .google-review-card,
-    .google-review-marquee-placeholder {
+    .google-review-card {
       flex-basis: min(58vw, 14.25rem);
       width: min(58vw, 14.25rem);
       min-height: 14.5rem;
@@ -347,11 +341,6 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
-    }
-
-    .review-marquee-track {
-      animation-duration: var(--review-marquee-duration) !important;
-      animation-iteration-count: infinite !important;
     }
   }
 }

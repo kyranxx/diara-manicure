@@ -60,7 +60,7 @@ export function Contact({ bookingUrl, t }: ContactProps) {
                             <div className="mt-12 flex flex-col items-center lg:items-start gap-4">
                                 <Button
                                     asChild
-                                    className="h-16 md:h-20 text-xl rounded-full px-16 md:px-20 bg-primary text-primary-foreground hover:bg-primary/90 min-w-[250px]"
+                                    className="h-16 md:h-20 text-xl rounded-full w-full max-w-sm px-8 bg-primary text-primary-foreground hover:bg-primary/90"
                                 >
                                     <a href={bookingUrl} target="_blank" rel="noopener noreferrer">
                                         {t.contact.bookingCta}

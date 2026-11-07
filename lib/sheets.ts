@@ -27,17 +27,6 @@ function canUseCache(): boolean {
   return cache.data !== null && (now - cache.timestamp) < CACHE_DURATION;
 }
 
-const FALLBACK_SERVICES: Service[] = [
-  { title: 'Detailná suchá manikúra', description: 'Suchá manikúra. Čistenie nechtov, odstránenie kožičky, úprava, olejček - bez lakovania.', price: '20€' },
-  { title: 'Gélová báza + géllak', description: 'Vhodné na krátke nechty. Spevnenie prirodzených nechtov gélovou bázou s výberom farby gél laku, francúzskej manikúry, zdobenie. Zahŕňa detailnú manikúru.', price: '29€' },
-  { title: 'Spevnenie prirodzených nechtov gélom', description: 'Spevnenie prirodzených nechtov gélom s výberom farby, francúzskej manikúry, zdobenia. Zahŕňa detailnú manikúru.', price: '32€' },
-  { title: 'Modelácia gélových nechtov - nové', description: 'Predlžovanie, nové gélové nechty s výberom farby, francúzskej manikúry, zdobenie. Zahŕňa detailnú manikúru.', price: '38€' },
-  { title: 'Modelácia gélových nechtov - doplnenie', description: 'Doplnenie gélových nechtov s výberom farby, francúzskej manikúry, zdobenie. Zahŕňa detailnú manikúru.', price: '32€' },
-  { title: 'Odstránenie gélových nechtov', description: 'iba ak je gél, polygél. S akrylom nepracujeme.', price: '15€' },
-  { title: 'Výmena / oprava / predĺženie nechtu mimo doplnenia - iba po telefonickej dohode, sms', description: '', price: '5€' },
-  { title: 'Termín mimo kalendár', description: '1 ks', price: '10€' },
-];
-
 async function fetchSheetsData(): Promise<Service[]> {
   if (canUseCache()) {
     return cache.data!;
@@ -62,9 +51,9 @@ async function fetchSheetsData(): Promise<Service[]> {
     const credentialsEnv = process.env.GOOGLE_CREDENTIALS;
     const spreadsheetId = process.env.SPREADSHEET_ID;
 
-    // Fallback data if credentials are missing
+    // No outdated prices: an empty list shows the "unavailable" message with the booking link.
     if (!credentialsEnv || !spreadsheetId) {
-      return FALLBACK_SERVICES;
+      return [];
     }
 
     const credentials = JSON.parse(credentialsEnv);
@@ -118,7 +107,7 @@ async function fetchSheetsData(): Promise<Service[]> {
 
     return services;
   } catch (_error) {
-    return FALLBACK_SERVICES;
+    return [];
   }
 }
 

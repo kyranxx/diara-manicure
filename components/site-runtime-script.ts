@@ -123,6 +123,10 @@ export const siteRuntimeScript = String.raw`
       writeConsent(action === "accept" ? allGranted() : allDenied());
       setBannerOpen(false);
     });
+
+    document.addEventListener("click", (event) => {
+      if (event.target && event.target.closest && event.target.closest("[data-cookie-settings]")) setBannerOpen(true);
+    });
   }
 
   function shouldLoadAnalytics(consent) {
@@ -147,7 +151,12 @@ export const siteRuntimeScript = String.raw`
     analyticsLoaded = true;
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function gtag(){ window.dataLayer.push(arguments); };
-    window.gtag("consent", "default", consent);
+    window.gtag("consent", "default", {
+      ad_storage: consent.adStorage,
+      analytics_storage: consent.analyticsStorage,
+      ad_user_data: consent.adUserData,
+      ad_personalization: consent.adPersonalization,
+    });
     window.gtag("js", new Date());
     const userId = getUserId();
     window.gtag("config", "G-QCMMZCQZTP", { user_id: userId || undefined });
@@ -257,32 +266,14 @@ export const siteRuntimeScript = String.raw`
     if (!root) return;
     const content = root.querySelector("[data-gallery-content]");
     if (!content) return;
-    const fallbackIds = {
-      french: ["60", "55", "54", "49", "47", "44", "41", "40", "34", "25", "24", "21", "17", "12", "9"],
-      singleColor: ["64", "62", "58", "53", "52", "50", "46", "42", "39", "37", "33", "32", "30", "29", "28", "27", "26", "23", "20", "19", "16", "15", "14", "13", "11", "10", "6", "5", "4", "3", "2", "1"],
-      delicateArt: ["67", "66", "65", "63", "61", "59", "57", "56", "51", "48", "45", "43", "38", "36", "35", "31", "22", "18", "8", "7"],
-    };
-    function parseIds(value, fallback) {
-      const ids = (value || "").split(",").map((id) => id.trim()).filter(Boolean);
-      return ids.length ? ids : fallback;
-    }
-    const sections = [
-      { title: root.dataset.french || "", ids: parseIds(root.dataset.frenchIds, fallbackIds.french) },
-      { title: root.dataset.singleColor || "", ids: parseIds(root.dataset.singleColorIds, fallbackIds.singleColor) },
-      { title: root.dataset.delicateArt || "", ids: parseIds(root.dataset.delicateArtIds, fallbackIds.delicateArt) },
-    ];
     const altPrefix = root.dataset.altPrefix || "Gélové nechty Trnava";
-    const openLabel = root.dataset.openLabel || "Otvoriť obrázok";
-    const instagramLabel = root.dataset.instagram || "Instagram";
-    const jpgImageIds = new Set(["5", "56", "57", "58", "59", "60", "61", "62", "63", "64", "65", "66", "67"]);
-
-    function imageSrc(id) {
-      return "/gelove-nechty-trnava-gallery-" + id + "." + (jpgImageIds.has(id) ? "jpg" : "jpeg");
-    }
+    const closeLabel = root.dataset.closeLabel || "Zavrieť";
+    const prevLabel = root.dataset.prevLabel || "Predchádzajúci";
+    const nextLabel = root.dataset.nextLabel || "Ďalší";
 
     function enhanceExistingGallery() {
       const triggers = Array.from(content.querySelectorAll("[data-gallery-trigger]"));
-      if (!triggers.length) return false;
+      if (!triggers.length) return;
       const allImages = triggers.map((trigger) => {
         const image = trigger.querySelector("img");
         return {
@@ -298,7 +289,6 @@ export const siteRuntimeScript = String.raw`
           openLightbox(allImages, index);
         });
       });
-      return true;
     }
 
     function openLightbox(images, index) {
@@ -306,7 +296,7 @@ export const siteRuntimeScript = String.raw`
       overlay.className = "runtime-lightbox-overlay";
       overlay.setAttribute("role", "dialog");
       overlay.setAttribute("aria-modal", "true");
-      overlay.innerHTML = '<button type="button" data-lightbox-close class="runtime-lightbox-button runtime-lightbox-close" aria-label="Zavrieť">×</button><button type="button" data-prev class="runtime-lightbox-button runtime-lightbox-prev" aria-label="Predchádzajúci">‹</button><button type="button" data-next class="runtime-lightbox-button runtime-lightbox-next" aria-label="Ďalší">›</button><img class="runtime-lightbox-image" alt=""><div class="runtime-lightbox-counter"></div>';
+      overlay.innerHTML = '<button type="button" data-lightbox-close class="runtime-lightbox-button runtime-lightbox-close" aria-label="' + closeLabel + '">×</button><button type="button" data-prev class="runtime-lightbox-button runtime-lightbox-prev" aria-label="' + prevLabel + '">‹</button><button type="button" data-next class="runtime-lightbox-button runtime-lightbox-next" aria-label="' + nextLabel + '">›</button><img class="runtime-lightbox-image" alt=""><div class="runtime-lightbox-counter"></div>';
       const img = overlay.querySelector("img");
       const counter = overlay.querySelector(".runtime-lightbox-counter");
       let current = index;
@@ -348,50 +338,7 @@ export const siteRuntimeScript = String.raw`
       render();
     }
 
-    function renderGallery() {
-      const allImages = sections.flatMap((section) => section.ids.map((id) => ({ id, src: imageSrc(id), alt: altPrefix + " " + id })));
-      const wrapper = document.createElement("div");
-      wrapper.className = "mx-auto mt-12 max-w-6xl space-y-12";
-      sections.forEach((section) => {
-        const block = document.createElement("div");
-        block.innerHTML = '<h3 class="mb-6 text-center text-3xl font-light tracking-tight text-black md:text-4xl dark:text-white"></h3><div class="gallery-centered-grid"></div>';
-        block.querySelector("h3").textContent = section.title;
-        const grid = block.querySelector(".gallery-centered-grid");
-        section.ids.forEach((id) => {
-          const item = document.createElement("div");
-          item.className = "gallery-centered-item";
-          const src = imageSrc(id);
-          const alt = altPrefix + " " + id;
-          item.innerHTML = '<button type="button" class="group relative aspect-[4/5] w-full overflow-hidden rounded-xl border border-black/10 bg-white/40 shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 hover:z-20 hover:shadow-xl dark:border-white/15 dark:bg-white/5"><div class="absolute inset-0 z-10 bg-gradient-to-t from-black/25 via-transparent to-black/10 transition-colors group-hover:from-black/40"></div><img loading="lazy" decoding="async" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" alt=""></button>';
-          const button = item.querySelector("button");
-          const image = item.querySelector("img");
-          button.setAttribute("aria-label", openLabel + " " + alt);
-          image.src = src;
-          image.alt = alt;
-          button.addEventListener("click", () => openLightbox(allImages, allImages.findIndex((image) => image.src === src)));
-          grid.appendChild(item);
-        });
-        wrapper.appendChild(block);
-      });
-      const cta = document.createElement("div");
-      cta.className = "mt-10 flex flex-col items-center gap-4 text-center";
-      cta.innerHTML = '<a href="https://instagram.com/diaramanicure" target="_blank" rel="noopener noreferrer" class="instagram-gradient-border inline-flex h-16 items-center gap-2 rounded-2xl px-10 text-xl font-normal shadow-sm md:h-20 md:px-12"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Instagram_Glyph_Gradient_RGB_logo.svg" alt="" loading="lazy" decoding="async" class="size-7" referrerpolicy="no-referrer">' + instagramLabel + '</a>';
-      wrapper.appendChild(cta);
-      content.appendChild(wrapper);
-    }
-
-    if (enhanceExistingGallery()) return;
-
-    if (!("IntersectionObserver" in window)) {
-      renderGallery();
-      return;
-    }
-    const observer = new IntersectionObserver((entries) => {
-      if (!entries.some((entry) => entry.isIntersecting)) return;
-      observer.disconnect();
-      renderGallery();
-    }, { rootMargin: "1200px 0px" });
-    observer.observe(root);
+    enhanceExistingGallery();
   }
 
   function initGoogleReviewsMarquee() {
@@ -402,21 +349,9 @@ export const siteRuntimeScript = String.raw`
     const status = root.querySelector("[data-google-reviews-status]");
     const googleMapsUrl = root.dataset.googleMapsUrl || "";
     const endpoint = root.dataset.reviewsEndpoint || "/api/google-reviews";
-    const loadingLabel = root.dataset.loadingLabel || "Načítavame recenzie z Google Maps...";
-    const errorLabel = root.dataset.errorLabel || "Recenzie sa nepodarilo načítať.";
 
     function setStatus(message) {
       if (status) status.textContent = message;
-    }
-
-    function renderFallback(message) {
-      setStatus(message);
-      if (!content) return;
-      content.innerHTML = "";
-      const item = document.createElement("div");
-      item.className = "google-review-marquee-placeholder mx-auto";
-      item.textContent = message;
-      content.appendChild(item);
     }
 
     function reviewText(review) {
@@ -587,10 +522,7 @@ export const siteRuntimeScript = String.raw`
           .sort((a, b) => reviewTime(b) - reviewTime(a)),
       );
 
-      if (!usableReviews.length) {
-        renderFallback(errorLabel);
-        return;
-      }
+      if (!usableReviews.length) return;
 
       setStatus(sourceLabel || "Google Maps");
       renderRows(usableReviews);
@@ -602,7 +534,6 @@ export const siteRuntimeScript = String.raw`
     }
 
     async function loadReviews() {
-      setStatus(loadingLabel);
       try {
         const response = await fetch(endpoint, {
           headers: {
@@ -617,12 +548,10 @@ export const siteRuntimeScript = String.raw`
           }
         }
       } catch (_) {}
-
-      renderFallback(errorLabel);
     }
 
     function startLoading() {
-      loadReviews().catch(() => renderFallback(errorLabel));
+      loadReviews().catch(() => {});
     }
 
     if (!("IntersectionObserver" in window)) {

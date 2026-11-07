@@ -27,12 +27,11 @@ function InfoLine({ text, className = "" }: { text: string; className?: string }
 function SlovakFlagIcon() {
     return (
         <img
-            src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Flag_of_Slovakia.svg"
+            src="/flag-sk.svg"
             alt="Slovenská vlajka"
             className="h-5 w-7 rounded-[3px] object-cover shadow-sm"
             loading="lazy"
             decoding="async"
-            referrerPolicy="no-referrer"
         />
     )
 }
@@ -46,7 +45,7 @@ export function Hero({ bookingUrl, t }: HeroProps) {
                 <div className="absolute top-[40%] -right-[10%] size-[40%] rounded-full bg-gradient-to-bl from-primary/5 to-transparent blur-3xl" />
             </div>
 
-            <div className="relative mx-auto mt-12 mb-24 w-[98vw] max-w-[470px] sm:max-w-[540px] md:mt-4 md:mb-12 md:max-w-[780px]">
+            <div className="relative mx-auto mt-12 mb-24 w-full max-w-[470px] sm:max-w-[540px] md:mt-4 md:mb-12 md:max-w-[780px]">
                 <ThemeAwareLogo
                     alt={t.hero.logoAlt}
                     width={1536}
