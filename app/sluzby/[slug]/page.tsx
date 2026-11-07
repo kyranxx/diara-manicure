@@ -96,7 +96,6 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
     "@type": "Service",
     "@id": `${url}#service`,
     name: page.title,
-    alternateName: page.searchAliases,
     description: page.description,
     url,
     image: `${siteConfig.baseUrl}${page.image}`,

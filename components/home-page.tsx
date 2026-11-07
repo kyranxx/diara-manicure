@@ -25,37 +25,29 @@ type HomePageProps = {
   reviewsData: ReviewsData
 }
 
-const seoByLanguage: Record<Language, { title: string; description: string; keywords: string; ogLocale: string }> = {
+const seoByLanguage: Record<Language, { title: string; description: string; ogLocale: string }> = {
   sk: {
-    title: "Nechtové štúdio Trnava – gélové nechty a manikúra | Cenník",
+    title: "Nechty Trnava – gélové nechty a manikúra | diara manicure.",
     description:
       "Nechtové štúdio v Trnave, Hospodárska 53. Gélové nechty, gél lak a manikúra · 5,0 ★ na Google aj Bookio · parkovanie zdarma · voľné termíny online.",
-    keywords:
-      "nechty trnava, gelove nechty trnava, manikura trnava, nechtove studio trnava, nails trnava, diara manicure, nechty trnava cennik, darcekovy poukaz nechty",
     ogLocale: "sk_SK",
   },
   en: {
-    title: "Gel nails and manicure in Trnava",
+    title: "Gel nails and manicure in Trnava | diara manicure.",
     description:
       "Professional manicure and gel nails in Trnava. View prices, available appointments, nail services and gift vouchers.",
-    keywords:
-      "nails trnava, gel nails trnava, manicure trnava, nail studio trnava, diara manicure, nail prices trnava, gift voucher nails",
     ogLocale: "en_US",
   },
   uk: {
-    title: "Гелеві нігті та манікюр у Трнаві",
+    title: "Гелеві нігті та манікюр у Трнаві | diara manicure.",
     description:
       "Професійний манікюр і гелеві нігті у Трнаві. Перегляньте ціни, вільні терміни, послуги та подарункові ваучери.",
-    keywords:
-      "нігті трнава, гелеві нігті трнава, манікюр трнава, студія нігтів трнава, diara manicure, подарунковий ваучер",
     ogLocale: "uk_UA",
   },
   sr: {
-    title: "Gel nokti i manikir u Trnavi",
+    title: "Gel nokti i manikir u Trnavi | diara manicure.",
     description:
       "Profesionalni manikir i gel nokti u Trnavi. Pogledajte cenovnik, slobodne termine, usluge i poklon vaučere.",
-    keywords:
-      "nokti trnava, gel nokti trnava, manikir trnava, studio za nokte trnava, diara manicure, cenovnik noktiju, poklon vaučer",
     ogLocale: "sr_RS",
   },
 }
@@ -77,7 +69,6 @@ export function HomePage({ language, services, reviewsData }: HomePageProps) {
       <Head>
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
-        <meta name="keywords" content={seo.keywords} />
         <meta httpEquiv="content-language" content={meta.htmlLang} />
         <link rel="canonical" href={canonicalUrl} />
         {languages.map((item) => (

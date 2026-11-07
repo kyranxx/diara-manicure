@@ -82,7 +82,6 @@ export default async function BlogArticlePage({ params }: BlogRouteProps) {
             name: siteConfig.name,
             url: siteConfig.baseUrl,
         },
-        about: post.about,
     }
 
     const breadcrumbSchema = {

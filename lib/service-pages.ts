@@ -7,7 +7,6 @@ export type ServicePage = {
   description: string
   image: string
   heroAlt: string
-  searchAliases: string[]
   intro: string
   bestFor: string[]
   process: string[]
@@ -44,14 +43,6 @@ export const servicePages: ServicePage[] = [
       "Jemné gélové nechty v Trnave s precíznou modeláciou, doplnením a odporúčaním starostlivosti. Pozrite si cenník a voľné termíny.",
     image: "/gelove-nechty-trnava-gallery-47.jpeg",
     heroAlt: "Biela francúzska manikúra na gélových nechtoch v diara manicure. Trnava",
-    searchAliases: [
-      "Nails Trnava",
-      "Gel Nails Trnava",
-      "Gelove nechty Trnava",
-      "Jemné gélové nechty",
-      "Jemne gelove nechty",
-      "Nechty Trnava",
-    ],
     intro:
       "Gélová modelácia je vhodná, keď chcete pevnejšie nechty, možnosť predĺženia alebo jemné gélové nechty na viac týždňov. V salóne pracujeme pokojne, detailne a s dôrazom na prípravu prirodzeného nechta.",
     bestFor: [
@@ -108,7 +99,6 @@ export const servicePages: ServicePage[] = [
       "Gél lak v Trnave pre prirodzené nechty s lesklou farbou a rýchlejšou aplikáciou. Pozrite si cenník a voľné termíny.",
     image: "/gelove-nechty-trnava-gallery-32.jpeg",
     heroAlt: "Ružový gél lak na kratšie nechty v Trnave",
-    searchAliases: ["Nails Trnava", "Gel Polish Trnava", "Gel lak Trnava", "Nechty Trnava"],
     intro:
       "Gél lak je dobrá voľba, keď chcete prirodzený vzhľad, farbu a spevnenie bez predlžovania. Najlepšie funguje na zdravých kratších nechtoch.",
     bestFor: [
@@ -162,7 +152,6 @@ export const servicePages: ServicePage[] = [
       "Suchá manikúra v Trnave so zameraním na čisté nechtové okolie, upravený tvar a zdravý prirodzený vzhľad rúk.",
     image: "/studio-960.webp",
     heroAlt: "Interiér salónu diara manicure. v Trnave",
-    searchAliases: ["Nails Trnava", "Manicure Trnava", "Manikura Trnava", "Nechtove studio Trnava"],
     intro:
       "Manikúra je základ upravených rúk. Hodí sa samostatne aj pred aplikáciou gél laku alebo gélovej modelácie. Pri práci sa sústredíme na čistý detail a prirodzený výsledok.",
     bestFor: [

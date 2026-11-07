@@ -68,13 +68,6 @@ export function Footer({ t }: { t: TranslationMessages }) {
                         </a>
                     </div>
                 </div>
-
-                {/* SEO Keywords Line */}
-                <div className="mt-8 pt-6 border-t border-primary/10 text-center">
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                        {t.footer.keywords}
-                    </p>
-                </div>
             </div>
         </footer>
     )

@@ -14,7 +14,6 @@ export type BlogPost = {
   imageAlt: string
   readMinutes: number
   keyPoints: string[]
-  about: string[]
   services: string[]
   showPrices?: boolean
 }
@@ -40,7 +39,6 @@ const posts: BlogPost[] = [
       "Príplatok sa platí len za extra dizajn alebo extrémne dlhé nechty.",
       "Doplnenie je lacnejšie ako nové nechty, preto sa oplatí chodiť približne každé 3 týždne.",
     ],
-    about: ["cena gélových nechtov", "gélové nechty Trnava", "cenník manikúra Trnava"],
     services: ["gelove-nechty-trnava", "gel-lak-trnava", "manikura-trnava"],
     showPrices: true,
   },
@@ -62,7 +60,6 @@ const posts: BlogPost[] = [
       "Ak pokračujete novou službou, odstránenie je súčasťou návštevy.",
       "Po odstránení pomáha olejček na kožičku a pár dní bez zaťaženia nechtov.",
     ],
-    about: ["odstránenie gél laku", "odstránenie gélových nechtov", "starostlivosť o nechty"],
     services: ["gel-lak-trnava", "gelove-nechty-trnava", "manikura-trnava"],
   },
   {
@@ -83,7 +80,6 @@ const posts: BlogPost[] = [
       "Jemné zdobenie, napríklad lístky, bodky alebo čiary, je v cene služby.",
       "Všetky fotky v článku sú práce z nášho salóna v Trnave.",
     ],
-    about: ["jesenné nechty", "trendy nechty 2026", "gélové nechty Trnava"],
     services: ["gelove-nechty-trnava", "gel-lak-trnava"],
   },
   {
@@ -104,7 +100,6 @@ const posts: BlogPost[] = [
       "Pre nevestu sa najčastejšie hodí francúzska manikúra, mliečna ružová alebo jemné ombré.",
       "Ak nechty nosíte prvýkrát, zvoľte stredne dlhý tvar, na ktorý si rýchlo zvyknete.",
     ],
-    about: ["svadobné nechty", "nechty na ples", "gélové nechty Trnava"],
     services: ["gelove-nechty-trnava", "gel-lak-trnava"],
   },
   {
@@ -125,7 +120,6 @@ const posts: BlogPost[] = [
       "Výdrž najviac ovplyvňuje príprava nechta, kvalita materiálu a každodenná záťaž rúk.",
       "Gélové nechty nikdy neodtrhávajte, odstránenie nechajte na salón.",
     ],
-    about: ["gélové nechty", "starostlivosť o nechty", "manikúra Trnava"],
     services: ["gelove-nechty-trnava", "manikura-trnava"],
   },
   {
@@ -146,7 +140,6 @@ const posts: BlogPost[] = [
       "Gél lak trvá kratšie, modelácia približne 1,5 až 2 hodiny.",
       "Pri prvej návšteve vám poradíme podľa stavu vašich nechtov.",
     ],
-    about: ["gél lak", "gélová modelácia", "manikúra Trnava"],
     services: ["gel-lak-trnava", "gelove-nechty-trnava"],
   },
 ]

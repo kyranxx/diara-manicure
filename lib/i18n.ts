@@ -31,7 +31,7 @@ const sk = {
     },
   },
   hero: {
-    logoAlt: "Diara Manicure - Nechty Trnava - Jarné logo",
+    logoAlt: "Logo diara manicure.",
     titlePrefix: "Nechtové štúdio v Trnave",
     titleBrand: "",
     subtitleMain: "",
@@ -146,7 +146,7 @@ const sk = {
     bookingCta: "Pozrieť voľné termíny",
   },
   footer: {
-    logoAlt: "DIARA - Jarné logo",
+    logoAlt: "Logo diara manicure.",
     tagline: "Nechtové štúdio a manikúra v Trnave",
     rights: "© 2026 diara manicure. Všetky práva vyhradené.",
     giftCards: "Darčekové poukazy",
@@ -155,8 +155,6 @@ const sk = {
     gelNails: "Gélové nechty",
     gelPolish: "Gél lak",
     manicure: "Manikúra",
-    keywords:
-      "Najčastejšie hľadané služby: gélové nechty v Trnave, gél lak, manikúra, nechtové štúdio, cenník a darčekové poukazy.",
   },
   cookie: {
     title: "Cookie nastavenia",
@@ -210,7 +208,7 @@ const en: TranslationMessages = {
     },
   },
   hero: {
-    logoAlt: "Diara Manicure - Nails Trnava - Spring logo",
+    logoAlt: "diara manicure. logo",
     titlePrefix: "Gel nails in Trnava",
     titleBrand: "",
     subtitleMain: "",
@@ -325,7 +323,7 @@ const en: TranslationMessages = {
     bookingCta: "See available appointments",
   },
   footer: {
-    logoAlt: "DIARA - Spring logo",
+    logoAlt: "diara manicure. logo",
     tagline: "Professional Nails & Manicure in Trnava",
     rights: "© 2026 diara manicure. All rights reserved.",
     giftCards: "Gift vouchers",
@@ -334,8 +332,6 @@ const en: TranslationMessages = {
     gelNails: "Gel nails",
     gelPolish: "Gel polish",
     manicure: "Manicure",
-    keywords:
-      "Popular searches: Nails Trnava | Gel nails Trnava | Manicure Trnava | Nail studio Trnava | Nail modelling | Gel polish Trnava | Nail prices | Available nail appointments | Gift vouchers nails Trnava | Manicure voucher",
   },
   cookie: {
     title: "Cookie settings",
@@ -387,7 +383,7 @@ const uk: TranslationMessages = {
     },
   },
   hero: {
-    logoAlt: "Diara Manicure - Нігті Трнава - весняний логотип",
+    logoAlt: "Логотип diara manicure.",
     titlePrefix: "Гелеві нігті у Трнаві",
     titleBrand: "",
     subtitleMain: "",
@@ -502,7 +498,7 @@ const uk: TranslationMessages = {
     bookingCta: "Переглянути вільні терміни",
   },
   footer: {
-    logoAlt: "DIARA - весняний логотип",
+    logoAlt: "Логотип diara manicure.",
     tagline: "Нігтьовий салон і манікюр у Трнаві",
     rights: "© 2026 diara manicure. Усі права захищено.",
     giftCards: "Подарункові сертифікати",
@@ -511,8 +507,6 @@ const uk: TranslationMessages = {
     gelNails: "Гелеві нігті",
     gelPolish: "Гель-лак",
     manicure: "Манікюр",
-    keywords:
-      "Популярні пошуки: Нігті Трнава | Гелеві нігті Трнава | Манікюр Трнава | Нігтьова студія Трнава | Моделювання нігтів | Гель-лак Трнава | Ціни на нігті | Вільні терміни на нігті | Подарункові сертифікати нігті Трнава | Сертифікат на манікюр",
   },
   cookie: {
     title: "Налаштування cookie",
@@ -564,7 +558,7 @@ const sr: TranslationMessages = {
     },
   },
   hero: {
-    logoAlt: "Diara Manicure - Nokti Trnava - prolećni logo",
+    logoAlt: "Logo diara manicure.",
     titlePrefix: "Gel nokti u Trnavi",
     titleBrand: "",
     subtitleMain: "",
@@ -679,7 +673,7 @@ const sr: TranslationMessages = {
     bookingCta: "Pogledajte slobodne termine",
   },
   footer: {
-    logoAlt: "DIARA - prolećni logo",
+    logoAlt: "Logo diara manicure.",
     tagline: "Salon za nokte i manikir u Trnavi",
     rights: "© 2026 diara manicure. Sva prava zadržana.",
     giftCards: "Poklon vaučeri",
@@ -688,8 +682,6 @@ const sr: TranslationMessages = {
     gelNails: "Gel nokti",
     gelPolish: "Gel lak",
     manicure: "Manikir",
-    keywords:
-      "Popularne pretrage: Nokti Trnava | Gel nokti Trnava | Manikir Trnava | Studio za nokte Trnava | Modeliranje noktiju | Gel lak Trnava | Cenovnik noktiju | Slobodni termini za nokte | Poklon vaučeri nokti Trnava | Vaučer za manikir",
   },
   cookie: {
     title: "Podešavanja kolačića",
