@@ -16,7 +16,7 @@ export const siteConfig = {
   quickbookUrl: "https://quickbook.sk/nechty/diara-manicure",
   // Opening hours, every day. Change here when the salon changes them.
   opens: "08:00",
-  closes: "21:00",
+  closes: "22:00",
   ownerName: "Andrea Hečkova",
   addressLine1: "Hospodárska 53",
   postalCode: "917 01",
