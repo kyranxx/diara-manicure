@@ -25,7 +25,7 @@ export function ThemeAwareLogo({
         width={width}
         height={height}
         className={`${className ?? ""} dark:hidden`}
-        priority={priority}
+        fetchPriority={priority ? "high" : undefined}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
         sizes={sizes}

@@ -20,17 +20,7 @@ const SchemaMarkup = () => {
     "@type": "BeautySalon",
     "@id": "https://www.diaramanicure.sk/#beautysalon",
     "name": "diara manicure.",
-    "alternateName": [
-      "Diara Manicure",
-      "Diara Manicure Trnava",
-      "Nechty Trnava",
-      "Nails Trnava",
-      "Nail Studio Trnava",
-      "Gel Nails Trnava",
-      "Manicure Trnava",
-      "Gelove nechty Trnava",
-      "Manikura Trnava"
-    ],
+    "alternateName": "Diara Manicure",
     "image": [
       "https://www.diaramanicure.sk/logo_spring_day.jpg",
       ...galleryImageObjects.slice(0, 12).map((image) => image.contentUrl)
