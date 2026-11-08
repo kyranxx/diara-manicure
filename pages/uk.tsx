@@ -1,6 +1,6 @@
 import { HomePage } from "@/components/home-page"
 import { getReviewsData, type ReviewsData } from "@/lib/bookio-reviews"
-import { getSheetsData, type ServiceData } from "@/lib/sheets"
+import { getServices, type ServiceData } from "@/lib/services"
 
 type UkrainianHomeProps = {
   services: ServiceData[]
@@ -8,7 +8,7 @@ type UkrainianHomeProps = {
 }
 
 export async function getStaticProps() {
-  const [services, reviewsData] = await Promise.all([getSheetsData(), getReviewsData()])
+  const [services, reviewsData] = await Promise.all([getServices("uk"), getReviewsData()])
 
   return {
     props: {

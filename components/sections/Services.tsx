@@ -1,5 +1,5 @@
 import Link from "next/link"
-import type { Service } from "@/lib/sheets"
+import type { Service } from "@/lib/services"
 import type { TranslationMessages } from "@/lib/i18n"
 
 interface ServicesProps {

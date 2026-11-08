@@ -1,4 +1,4 @@
-import type { Service } from './sheets'
+import type { Service } from './services'
 
 type BookioApiResponse<T> = {
   result?: {
@@ -9,6 +9,7 @@ type BookioApiResponse<T> = {
 }
 
 type BookioService = {
+  id?: number
   name?: string | null
   note?: string | null
   price?: number | string | null
@@ -31,7 +32,6 @@ function bookioConfigFromEnv() {
     apiKey,
     facilityId,
     baseUrl: process.env.BOOKIO_API_BASE_URL || DEFAULT_BOOKIO_BASE_URL,
-    lang: process.env.BOOKIO_LANG || 'sk',
   }
 }
 
@@ -65,12 +65,9 @@ function formatPrice(price: BookioService['price'], currency: BookioService['cur
   return currency === 'EUR' || !currency ? `${displayPrice}€` : `${displayPrice} ${currency}`
 }
 
-export async function fetchBookioServices(): Promise<Service[] | null> {
-  const config = bookioConfigFromEnv()
-  if (!config) return null
-
+async function requestBookioServices(config: NonNullable<ReturnType<typeof bookioConfigFromEnv>>, lang: string) {
   const response = await fetch(
-    `${config.baseUrl}/facilities/${encodeURIComponent(config.facilityId)}/services?lang=${encodeURIComponent(config.lang)}`,
+    `${config.baseUrl}/facilities/${encodeURIComponent(config.facilityId)}/services?lang=${encodeURIComponent(lang)}`,
     {
       headers: {
         Authorization: `Bearer ${config.apiKey}`,
@@ -92,11 +89,24 @@ export async function fetchBookioServices(): Promise<Service[] | null> {
     throw new Error(payload.result?.errors?.join(', ') || 'Bookio services request failed')
   }
 
-  const services = payload.result.data?.services || []
+  return payload.result.data?.services || []
+}
+
+// Bookio returns name null for a language without a translation, so fall back to the Slovak name.
+export async function fetchBookioServices(lang = 'sk'): Promise<Service[] | null> {
+  const config = bookioConfigFromEnv()
+  if (!config) return null
+
+  const [services, slovak] = await Promise.all([
+    requestBookioServices(config, lang),
+    lang === 'sk' ? Promise.resolve([]) : requestBookioServices(config, 'sk'),
+  ])
+  const slovakNames = new Map(slovak.map((service) => [service.id, service.name]))
 
   return services
     .map((service) => {
-      const { title, description } = splitServiceName(String(service.name || '').trim(), service.note)
+      const name = service.name || slovakNames.get(service.id) || ''
+      const { title, description } = splitServiceName(String(name).trim(), service.note)
 
       return {
         title,

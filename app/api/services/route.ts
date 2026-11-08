@@ -1,4 +1,4 @@
-import { getSheetsData } from '@/lib/sheets'
+import { getServices } from '@/lib/services'
 import { NextResponse } from 'next/server'
 import { securityMonitor } from '@/lib/security-monitor'
 import { trackApiCall } from '@/lib/measurement-protocol'
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
       )
     }
 
-    const data = await getSheetsData()
+    const data = await getServices()
 
     // Sanitize data to ensure it's safe for JSON serialization
     const sanitizedData = data.map(service => ({

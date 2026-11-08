@@ -1,7 +1,7 @@
 import { HomePage } from "@/components/home-page"
 import { defaultLanguage } from "@/lib/i18n"
 import { getReviewsData, type ReviewsData } from "@/lib/bookio-reviews"
-import { getSheetsData, type ServiceData } from "@/lib/sheets"
+import { getServices, type ServiceData } from "@/lib/services"
 
 type HomeProps = {
   services: ServiceData[]
@@ -9,7 +9,7 @@ type HomeProps = {
 }
 
 export async function getStaticProps() {
-  const [services, reviewsData] = await Promise.all([getSheetsData(), getReviewsData()])
+  const [services, reviewsData] = await Promise.all([getServices(), getReviewsData()])
 
   return {
     props: {

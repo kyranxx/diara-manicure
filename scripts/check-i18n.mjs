@@ -27,7 +27,6 @@ function assertNotIncludes(source, forbidden, label) {
 const i18n = read("lib/i18n.ts")
 const navbar = read("components/navbar.tsx")
 const services = read("components/sections/Services.tsx")
-const sheets = read("lib/sheets.ts")
 
 for (const code of ["sk", "en", "uk", "sr"]) {
   assertIncludes(i18n, `code: "${code}"`, `language option ${code}`)
@@ -43,6 +42,5 @@ assertNotIncludes(navbar, "md:hidden flex justify-center", "separate mobile lang
 assertIncludes(services, "py-16 bg-beige", "original pricelist section background")
 assertIncludes(services, "bg-white/45 dark:bg-card", "original pricelist card background")
 assertNotIncludes(services, "t.services.intro", "removed pricelist intro paragraph")
-assertNotIncludes(sheets, "Modelácia gélových nechtov (Nové nechty)", "stale fallback service list")
 
 console.log("i18n wiring check passed")

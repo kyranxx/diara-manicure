@@ -16,7 +16,7 @@ import { Services } from "@/components/sections/Services"
 import { GoogleReviewsMarquee } from "@/components/sections/Testimonials"
 import { defaultLanguage, getLanguageMeta, languages, translations, type Language } from "@/lib/i18n"
 import type { ReviewsData } from "@/lib/bookio-reviews"
-import type { ServiceData } from "@/lib/sheets"
+import type { ServiceData } from "@/lib/services"
 import { siteConfig } from "@/lib/site-config"
 
 type HomePageProps = {

@@ -11,7 +11,7 @@ import { GiftCardTrackedLink } from "@/components/gift-card-tracked-link"
 import { getReviewsData } from "@/lib/bookio-reviews"
 import { defaultLanguage, translations } from "@/lib/i18n"
 import { getServicePage, servicePageUrl, servicePages } from "@/lib/service-pages"
-import { getSheetsData } from "@/lib/sheets"
+import { getServices } from "@/lib/services"
 import { siteConfig } from "@/lib/site-config"
 
 type ServiceRouteProps = {
@@ -78,7 +78,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
 
   const t = translations[defaultLanguage]
   const url = servicePageUrl(page.slug)
-  const [priceList, { reviews }] = await Promise.all([getSheetsData(), getReviewsData()])
+  const [priceList, { reviews }] = await Promise.all([getServices(), getReviewsData()])
   const prices = priceList.filter((item) => page.priceMatch.test(item.title))
   const matchingReviews = reviews.filter((review) => page.reviewMatch.test(review.text))
   const serviceReviews = (matchingReviews.length ? matchingReviews : reviews).slice(0, 4)

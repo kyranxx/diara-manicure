@@ -11,7 +11,7 @@ import { blogContent } from "@/lib/blog-content"
 import { blogAuthor, blogPostUrl, blogPosts, blogUrl, formatBlogDate, getBlogPost } from "@/lib/blog-posts"
 import { defaultLanguage, translations } from "@/lib/i18n"
 import { getServicePage } from "@/lib/service-pages"
-import { getSheetsData } from "@/lib/sheets"
+import { getServices } from "@/lib/services"
 import { siteConfig } from "@/lib/site-config"
 
 type BlogRouteProps = { params: Promise<{ slug: string }> }
@@ -60,7 +60,7 @@ export default async function BlogArticlePage({ params }: BlogRouteProps) {
     if (!post) notFound()
 
     const url = blogPostUrl(post.slug)
-    const prices = post.showPrices ? await getSheetsData() : []
+    const prices = post.showPrices ? await getServices() : []
     const services = post.services.map(getServicePage).filter((page) => page !== null)
     const otherPosts = blogPosts.filter((other) => other.slug !== post.slug).slice(0, 4)
 
