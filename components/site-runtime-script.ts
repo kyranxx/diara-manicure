@@ -299,6 +299,8 @@ export const siteRuntimeScript = String.raw`
       overlay.innerHTML = '<button type="button" data-lightbox-close class="runtime-lightbox-button runtime-lightbox-close" aria-label="' + closeLabel + '">×</button><button type="button" data-prev class="runtime-lightbox-button runtime-lightbox-prev" aria-label="' + prevLabel + '">‹</button><button type="button" data-next class="runtime-lightbox-button runtime-lightbox-next" aria-label="' + nextLabel + '">›</button><img class="runtime-lightbox-image" alt=""><div class="runtime-lightbox-counter"></div>';
       const img = overlay.querySelector("img");
       const counter = overlay.querySelector(".runtime-lightbox-counter");
+      const buttons = Array.from(overlay.querySelectorAll("button"));
+      const opener = document.activeElement;
       let current = index;
       function render() {
         img.src = images[current].src;
@@ -309,9 +311,17 @@ export const siteRuntimeScript = String.raw`
         overlay.remove();
         document.body.style.overflow = "";
         document.removeEventListener("keydown", handleKey);
+        if (opener && opener.focus) opener.focus();
       }
       function handleKey(event) {
         if (event.key === "Escape") close();
+        if (event.key === "Tab") {
+          // Keep keyboard focus inside the viewer.
+          const i = buttons.indexOf(document.activeElement);
+          const next = event.shiftKey ? (i <= 0 ? buttons.length - 1 : i - 1) : (i + 1) % buttons.length;
+          buttons[next].focus();
+          event.preventDefault();
+        }
         if (event.key === "ArrowLeft") {
           current = current === 0 ? images.length - 1 : current - 1;
           render();
@@ -336,6 +346,7 @@ export const siteRuntimeScript = String.raw`
       document.body.style.overflow = "hidden";
       document.body.appendChild(overlay);
       render();
+      buttons[0].focus();
     }
 
     enhanceExistingGallery();

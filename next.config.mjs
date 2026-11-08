@@ -1,12 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
       {
         protocol: "https",
         hostname: "*.googleusercontent.com",
@@ -14,18 +11,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "*.ggpht.com",
-      },
-      {
-        protocol: "https",
-        hostname: "www.gravatar.com",
-      },
-      {
-        protocol: "https",
-        hostname: "raw.githubusercontent.com",
-      },
-      {
-        protocol: "https",
-        hostname: "upload.wikimedia.org",
       },
     ],
   },
@@ -77,6 +62,11 @@ const nextConfig = {
           {
             key: 'X-XSS-Protection',
             value: '1; mode=block',
+          },
+          {
+            // Safe baseline: blocks plugins, <base> hijacking and framing by other sites without limiting scripts.
+            key: 'Content-Security-Policy',
+            value: "object-src 'none'; base-uri 'self'; frame-ancestors 'self'",
           },
         ],
       },

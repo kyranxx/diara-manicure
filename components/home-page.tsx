@@ -62,6 +62,8 @@ export function HomePage({ language, services, reviewsData }: HomePageProps) {
   const seo = seoByLanguage[language]
   const path = languagePath(language)
   const canonicalUrl = `${siteConfig.baseUrl}${path}`
+  // Bookio has sk, en and uk; Serbian visitors get English.
+  const bookingUrl = siteConfig.bookingUrl.replace("lang=sk", `lang=${language === "sr" ? "en" : language}`)
   const socialImageUrl = `${siteConfig.baseUrl}/og-image.jpg?v=20260407`
 
   return (
@@ -103,18 +105,18 @@ export function HomePage({ language, services, reviewsData }: HomePageProps) {
         <Navbar language={language} t={t} />
 
         <main id="main-content" tabIndex={-1}>
-          <Hero bookingUrl={siteConfig.bookingUrl} t={t} />
-          <Services services={services} bookingUrl={siteConfig.bookingUrl} t={t} />
+          <Hero bookingUrl={bookingUrl} t={t} />
+          <Services services={services} bookingUrl={bookingUrl} t={t} />
           <GalleryShell t={t} />
           <GoogleReviewsMarquee t={t} reviewsData={reviewsData} />
           <About t={t} />
           <FAQ t={t} />
           <GiftCards t={t} />
-          <Contact bookingUrl={siteConfig.bookingUrl} t={t} />
+          <Contact bookingUrl={bookingUrl} t={t} />
         </main>
 
         <Footer t={t} />
-        <MobileBookingBar href={siteConfig.bookingUrl} label={t.hero.bookingCta} />
+        <MobileBookingBar href={bookingUrl} label={t.hero.bookingCta} />
       </div>
       <SchemaMarkup />
       <WebMcpScript />
