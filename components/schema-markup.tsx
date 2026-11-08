@@ -28,7 +28,6 @@ const SchemaMarkup = () => {
     "description": "Slovenský nechtový salón v Trnave. Gélové nechty, manikúra, gél lak a darčekové poukazy. Prísne hygienické normy, parkovanie zdarma a online rezervácia.",
     "url": "https://www.diaramanicure.sk",
     "telephone": "+421902163144",
-    "email": "andrea.heckova92@gmail.com",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Hospodárska 53",
