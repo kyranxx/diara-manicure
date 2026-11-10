@@ -88,6 +88,13 @@ const nextConfig = {
       // Thin per-occasion and per-style pages merged into their main pages (Nov 2026).
       { source: '/darcekove-poukazy/:slug', destination: '/darcekove-poukazy', permanent: true },
       { source: '/galeria/:slug', destination: '/galeria', permanent: true },
+      // Old top-level service pages (removed May 2026) now live under /sluzby.
+      { source: '/gelove-nechty-trnava', destination: '/sluzby/gelove-nechty-trnava', permanent: true },
+      { source: '/gel-lak-trnava', destination: '/sluzby/gel-lak-trnava', permanent: true },
+      { source: '/manikura-trnava', destination: '/sluzby/manikura-trnava', permanent: true },
+      { source: '/doplnenie-nechtov-trnava', destination: '/sluzby/gelove-nechty-trnava', permanent: true },
+      // Google reads the gallery image-name prefix in our JS as a page address; send it to the gallery.
+      { source: '/gelove-nechty-trnava-gallery-', destination: '/galeria', permanent: true },
     ];
   },
 }
