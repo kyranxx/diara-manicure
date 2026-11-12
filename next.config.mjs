@@ -3,6 +3,8 @@ const nextConfig = {
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Keep resized photos 1 day instead of 4 hours; photos are sometimes replaced under the same name, so not longer.
+    minimumCacheTTL: 86400,
     remotePatterns: [
       {
         protocol: "https",

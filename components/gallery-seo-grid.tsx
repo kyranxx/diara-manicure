@@ -22,6 +22,7 @@ export function GallerySeoGrid({ images }: { images: GallerySeoImage[] }) {
               alt={image.alt}
               width={800}
               height={1000}
+              sizes="(min-width: 1024px) 160px, (min-width: 768px) 17vw, (min-width: 640px) 25vw, 33vw"
               loading="lazy"
               decoding="async"
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
