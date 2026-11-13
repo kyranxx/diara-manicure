@@ -69,7 +69,7 @@ expectTitle(home, "Nechty Trnava – gélové nechty a manikúra | diara manicur
 expectNotIncludes(home, "name=\"keywords\"", "home has no keyword meta")
 expectNotIncludes(home, "\"Nechty Trnava\"", "salon schema has no keyword alternate names")
 expectIncludes(home, "application/ld+json", "home JSON-LD")
-expectIncludes(home, "BeautySalon", "home LocalBusiness schema")
+expectIncludes(home, "NailSalon", "home LocalBusiness schema")
 expectIncludes(home, "#beautysalon", "home stable business id")
 expectNotIncludes(home, "Nail Studio Trnava", "home schema has no English keyword alias")
 expectNotIncludes(home, "Nails Trnava služby", "home Slovak description avoids mixed English copy")

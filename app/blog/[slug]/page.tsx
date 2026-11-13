@@ -77,7 +77,7 @@ export default async function BlogArticlePage({ params }: BlogRouteProps) {
         inLanguage: "sk-SK",
         author: { "@type": "Person", name: blogAuthor },
         publisher: {
-            "@type": "BeautySalon",
+            "@type": "NailSalon",
             "@id": `${siteConfig.baseUrl}/#beautysalon`,
             name: siteConfig.name,
             url: siteConfig.baseUrl,

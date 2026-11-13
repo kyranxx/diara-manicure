@@ -100,7 +100,7 @@ export default async function ServicePage({ params }: ServiceRouteProps) {
     url,
     image: `${siteConfig.baseUrl}${page.image}`,
     provider: {
-      "@type": "BeautySalon",
+      "@type": "NailSalon",
       "@id": `${siteConfig.baseUrl}/#beautysalon`,
       name: siteConfig.name,
       telephone: siteConfig.phone,

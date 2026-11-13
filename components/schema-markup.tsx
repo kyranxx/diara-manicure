@@ -17,7 +17,7 @@ const SchemaMarkup = () => {
   // LocalBusiness Schema with enhanced data
   const localBusinessSchema = {
     "@context": "https://schema.org",
-    "@type": "BeautySalon",
+    "@type": "NailSalon",
     "@id": "https://www.diaramanicure.sk/#beautysalon",
     "name": "diara manicure.",
     "alternateName": "Diara Manicure",
