@@ -2,6 +2,7 @@ import { siteConfig } from "@/lib/site-config"
 
 export async function GET() {
   const robots = `User-agent: *
+Content-Signal: ${siteConfig.contentSignal}
 Allow: /
 Allow: /api/health
 Allow: /api/services
