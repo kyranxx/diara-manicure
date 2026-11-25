@@ -9,8 +9,8 @@
     --foreground: 0 0% 0%;
     /* Black for high contrast */
 
-    --beige: 30 14% 91%;
-    /* #EDE9E5 */
+    --beige: 40 38% 90%;
+    /* #EFE9DC */
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
@@ -21,15 +21,15 @@
     --primary: 0 0% 0%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 30 14% 91%;
+    --secondary: 40 38% 90%;
     /* Beige as secondary */
     --secondary-foreground: 0 0% 0%;
 
-    --muted: 30 14% 91%;
+    --muted: 40 38% 90%;
     --muted-foreground: 0 0% 30%;
     /* Darker gray for better visibility */
 
-    --accent: 30 14% 91%;
+    --accent: 40 38% 90%;
     --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
